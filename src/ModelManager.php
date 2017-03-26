@@ -2,7 +2,7 @@
 
 namespace Railken\Laravel\Manager;
 
-use Railken\Laravel\Manager\ManagerEntityContract;
+use Railken\Laravel\Manager\ModelContract;
 use Railken\Laravel\Manager\Exceptions\InvalidParamValueException;
 use Railken\Laravel\Manager\Exceptions\MissingParamException;
 
@@ -53,11 +53,11 @@ abstract class ModelManager
 	}
 
 	/**
-	 * Create a new ManagerEntityContract given array
+	 * Create a new ModelContract given array
 	 *
 	 * @param array $params
 	 *
-	 * @return Railken\Laravel\Manager\ManagerEntityContract
+	 * @return Railken\Laravel\Manager\ModelContract
 	 */
 	public function create(array $params)
 	{
@@ -70,13 +70,13 @@ abstract class ModelManager
 	}
 
 	/**
-	 * Update a ManagerEntityContract given array
+	 * Update a ModelContract given array
 	 *
 	 * @param array $params
 	 *
-	 * @return Railken\Laravel\Manager\ManagerEntityContract
+	 * @return Railken\Laravel\Manager\ModelContract
 	 */
-	public function update(ManagerEntityContract $entity, array $params)
+	public function update(ModelContract $entity, array $params)
 	{
 
 		$this->fill($entity, $params);
@@ -86,27 +86,27 @@ abstract class ModelManager
 	}
 
 	/**
-	 * Fill entity ManagerEntityContract with array
+	 * Fill entity ModelContract with array
 	 *
-	 * @param Railken\Laravel\Manager\ManagerEntityContract $entity
+	 * @param Railken\Laravel\Manager\ModelContract $entity
 	 * @param array $params
 	 *
 	 * @return void
 	 */
-	abstract public function fill(ManagerEntityContract $entity, array $params);
+	abstract public function fill(ModelContract $entity, array $params);
 
 	/**
 	 * Convert entity to array
 	 *
-	 * @param  Railken\Laravel\Manager\ManagerEntityContract $entity
+	 * @param  Railken\Laravel\Manager\ModelContract $entity
 	 *
 	 * @return array
 	 */
-	abstract public function toArray(ManagerEntityContract $entity);
+	abstract public function toArray(ModelContract $entity);
 
 
 	/**
-	 * Remove multiple ManagerEntityContract
+	 * Remove multiple ModelContract
 	 *
 	 * @param array $entities
 	 *
@@ -120,13 +120,13 @@ abstract class ModelManager
 	}
 
 	/**
-	 * Remove a ManagerEntityContract
+	 * Remove a ModelContract
 	 *
-	 * @param Railken\Laravel\Manager\ManagerEntityContract $entity
+	 * @param Railken\Laravel\Manager\ModelContract $entity
 	 *
 	 * @return void
 	 */
-	public function delete(ManagerEntityContract $entity)
+	public function delete(ModelContract $entity)
 	{
 		$entity->delete();
 	}
@@ -134,11 +134,11 @@ abstract class ModelManager
 	/**
 	 * Save the entity
 	 *
-	 * @param  Railken\Laravel\Manager\ManagerEntityContract $entity
+	 * @param  Railken\Laravel\Manager\ModelContract $entity
 	 *
-	 * @return ManagerEntityContract
+	 * @return ModelContract
 	 */
-	 public function save(ManagerEntityContract $entity)
+	 public function save(ModelContract $entity)
 	 {
 		 $entity->save();
 	 }
