@@ -60,7 +60,7 @@ class Generate extends Command{
             return;
         }
 
-        $v = $this->laravel->make('src.version')."/";
+        $v = "5.0"."/";
 
         $vars = [
             'NAMESPACE' => $namespace,

@@ -33,19 +33,10 @@ class AppServiceProvider extends ServiceProvider
 
         $this->commands([Commands\Generate::class]);
 
-        echo "a";
-
         $v = explode(".",$this->app->version());
-        $v = $v[0].".".$v[1];
 
         if (!in_array($v[0], $this->versions))
             throw new \Exception("Version {$this->app->version()} not supported");
-
-        $this->version = $v;
-
-        $this->app->bind('src.version',function() {
-            return "5.0";
-        });
 
     }
 
@@ -68,40 +59,5 @@ class AppServiceProvider extends ServiceProvider
     public function provides()
     {
         return [];
-    }
-
-    /**
-     * Load package
-     *
-     * @return void
-     */
-    public function loadPackages()
-    {
-        $path = base_path('src');
-        
-        $packages = collect();
-
-        foreach(glob($path."/*") as $directory){
-        
-            $name = basename($directory);
-
-            $file = $directory."/Package.php";
-            $class = "{$name}\Package";
-
-            if(File::exists($file)){
-                require $file;
-                $class = new $class($this,$directory,$name);
-                $class->boot();
-
-                $packages[] = $class;
-            }
-        }
-
-
-        $packages->map(function($package){
-            $package->register();
-        });
-
-
     }
 }
