@@ -15,7 +15,7 @@ Organize your models with a specific criteria: Model + Repository + Manager
 - Add the service provider to the `providers` array in `config/app.php`
 
 ```php
-Railken\Laravel\Manager\AppServiceProvider::class,
+Railken\Laravel\Manager\ManagerServiceProvider::class,
 ```
 
 ## Usage
