@@ -7,7 +7,7 @@ use Railken\Laravel\Manager\ModelManager;
 
 use $NAMESPACE$\$NAME$;
 
-class $NAME$Manager extends Manager
+class $NAME$Manager extends ModelManager
 {
 
     /**

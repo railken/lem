@@ -6,7 +6,7 @@ use Railken\Laravel\Manager\ManagerEntityContract;
 use Railken\Laravel\Manager\Exceptions\InvalidParamValueException;
 use Railken\Laravel\Manager\Exceptions\MissingParamException;
 
-abstract class Manager
+abstract class ModelManager
 {
 
 	/**
