@@ -21,7 +21,9 @@ abstract class ModelRepository
 	 */
 	public function newEntity(array $params = [])
 	{
-		return new $this->entity($params);
+		$entity = $this->entity;
+
+		return new $entity($params);
 	}
 
 	/**
@@ -33,7 +35,19 @@ abstract class ModelRepository
 	 */
 	public function find($id)
 	{
-		return $this->getQuery()->findById($id);
+		return $this->findById($id);
+	}
+
+	/**
+	 * Find by primary
+	 *
+	 * @param integer $id
+	 *
+	 * @return User
+	 */
+	public function findById($id)
+	{
+		return $this->getQuery()->whereId($id)->first();
 	}
 
 	/**
