@@ -5,6 +5,7 @@ namespace Railken\Laravel\Manager;
 use Railken\Laravel\Manager\ModelContract;
 use Railken\Laravel\Manager\Exceptions\InvalidParamValueException;
 use Railken\Laravel\Manager\Exceptions\MissingParamException;
+use Railken\Laravel\Manager\Exceptions\ModelByIdNotFoundException;
 
 abstract class ModelManager
 {
@@ -94,6 +95,38 @@ abstract class ModelManager
 	 * @return void
 	 */
 	abstract public function fill(ModelContract $entity, array $params);
+
+	/**
+	 * Fill an attribute of relation Many to One given id or entity
+	 *
+	 * @param ModelContract $entity
+	 * @param ModelManager $manager
+	 * @param array $params
+	 * @param string $attribute
+	 * @param string $attribute_id
+	 *
+	 * @return $entity
+	 */
+	public function fillManyToOneById(ModelContract $entity, ModelManager $manager, array $params, $attribute, $attribute_id = null)
+	{
+
+		if ($attribute_id == null)
+			$attribute_id = $attribute."_id";
+
+		if (isset($params[$attribute_id])) {
+
+			$value = $manager->getRepository()->findById($params[$attribute]);
+
+			if (!$value)
+				throw new ModelByIdNotFoundException($attribute_id, $params[$attribute_id]);
+
+			$params[$attribute] = $value;
+		}
+
+		if (isset($params[$attribute])) {
+			$entity->container()->save($value);
+		}
+	}
 
 	/**
 	 * Convert entity to array
