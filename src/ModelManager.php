@@ -10,6 +10,8 @@ use Railken\Laravel\Manager\Exceptions\ModelByIdNotFoundException;
 abstract class ModelManager
 {
 
+	public $queue = [];
+
 	/**
 	 * Construct
 	 *
@@ -152,6 +154,7 @@ abstract class ModelManager
 		}
 	}
 
+
 	/**
 	 * Remove a ModelContract
 	 *
@@ -171,20 +174,20 @@ abstract class ModelManager
 	 *
 	 * @return ModelContract
 	 */
-	 public function save(ModelContract $entity)
-	 {
-		 $entity->save();
-	 }
+	public function save(ModelContract $entity)
+	{
+		$entity->save();
+	}
 
-	 /**
-	  * Throw an exception if a value is invalid
-	  *
-	  * @param string $name
-		  * @param string $value
-		  * @param mixed $accepted
-	  *
-	  * @return void
-	  */
+	/**
+	 * Throw an exception if a value is invalid
+	 *
+	 * @param string $name
+	 * @param string $value
+	 * @param mixed $accepted
+	 *
+	 * @return void
+	 */
 	public function throwExceptionInvalidParamValue($name, $value, $accepted)
 	{
 		if (is_array($accepted)) {
@@ -220,5 +223,54 @@ abstract class ModelManager
 	public function getOnlyParams(array $params, array $requested)
 	{
 		return (array_intersect_key($params, array_flip($requested)));
+	}
+
+
+	/**
+	 * Execute queue
+	 *
+	 * @return null
+	 */
+	public function executeQueue()
+	{
+		foreach ($this->getQueue() as $queue) {
+			$queue();
+		}
+
+		$this->setQueue([]);
+	}
+	
+	/**
+	 * Add an operation to queue
+	 *
+	 * @param Closure $closure
+	 *
+	 * @return this
+	 */
+	public function addQueue(\Closure $closure)
+	{
+		$this->queue[] = $closure;
+	}
+
+	/**
+	 * Retrieve all queue
+	 *
+	 * @return array
+	 */
+	public function getQueue()
+	{
+		return $this->queue;
+	}
+	
+	/**
+	 * Add an operation to queue
+	 *
+	 * @param array $queue
+	 *
+	 * @return array
+	 */
+	public function setQueue($queue)
+	{
+		$this->queue = $queue;
 	}
 }

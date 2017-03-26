@@ -27,6 +27,16 @@ abstract class ModelRepository
 	}
 
 	/**
+	 * Return entity
+	 *
+	 * @return string
+	 */
+	public function getEntity()
+	{
+		return $this->entity;
+	}
+
+	/**
 	 * Find by primary
 	 *
 	 * @param integer $id
