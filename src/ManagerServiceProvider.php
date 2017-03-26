@@ -6,7 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Railken\Laravel\Manager\Commands as Commands;
 use File;
 
-class AppServiceProvider extends ServiceProvider
+class ManagerServiceProvider extends ServiceProvider
 {
 
     /**
