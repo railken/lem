@@ -22,10 +22,6 @@ class Generator
 	public function __construct($base_path = '')
 	{
 		$this->base_path = $base_path;
-
-		if (glob($base_path."*")) {
-			throw new \Exception("Folder must be empty");
-		}
 	}
 
 	/**
