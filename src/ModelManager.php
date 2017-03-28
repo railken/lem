@@ -117,17 +117,21 @@ abstract class ModelManager
 
 		if (isset($params[$attribute_id])) {
 
-			$value = $manager->getRepository()->findById($params[$attribute]);
+			$value = $manager->getRepository()->findById($params[$attribute_id]);
 
 			if (!$value)
 				throw new ModelByIdNotFoundException($attribute_id, $params[$attribute_id]);
 
 			$params[$attribute] = $value;
+
 		}
 
 		if (isset($params[$attribute])) {
-			$entity->container()->save($value);
+			$value = $params[$attribute];
+			$entity->$attribute_id = $params[$attribute]->id;
 		}
+
+		return $value;
 	}
 
 	/**
