@@ -6,10 +6,19 @@ use Railken\Laravel\Manager\ModelContract;
 use Railken\Laravel\Manager\Exceptions\InvalidParamValueException;
 use Railken\Laravel\Manager\Exceptions\MissingParamException;
 use Railken\Laravel\Manager\Exceptions\ModelByIdNotFoundException;
+use DB;
 
 abstract class ModelManager
 {
 
+	/**
+	 * @var array
+	 */
+	protected $vars = [];
+
+	/**
+	 * @var queue
+	 */
 	public $queue = [];
 
 	/**
@@ -18,7 +27,7 @@ abstract class ModelManager
 	 */
 	public function __construct()
 	{
-
+		$this->vars = collect();
 	}
 
 	/**
@@ -65,9 +74,20 @@ abstract class ModelManager
 	public function create(array $params)
 	{
 
-		$entity = $this->getRepository()->newEntity();
-		$this->update($entity, $params);
-		$this->save($entity);
+		DB::beginTransaction();
+
+		try {
+
+			$entity = $this->getRepository()->newEntity();
+			$this->update($entity, $params);
+			$this->save($entity);
+			DB::commit();
+
+		} catch (Exception $e) {
+
+			DB::rollBack();
+			throw $e;
+		}
 
 		return $entity;
 	}
@@ -82,11 +102,49 @@ abstract class ModelManager
 	public function update(ModelContract $entity, array $params)
 	{
 
-		$this->fill($entity, $params);
-		$this->save($entity);
+		DB::beginTransaction();
+
+		try {
+
+			$this->fill($entity, $params);
+			$this->save($entity);
+			DB::commit();
+
+		} catch (Exception $e) {
+
+			DB::rollBack();
+			throw $e;
+		}
 
 		return $entity;
 	}
+
+
+
+	/**
+	 * Remove a ModelContract
+	 *
+	 * @param Railken\Laravel\Manager\ModelContract $entity
+	 *
+	 * @return void
+	 */
+	public function delete(ModelContract $entity)
+	{
+		return $entity->delete();
+	}
+
+	/**
+	 * Save the entity
+	 *
+	 * @param  Railken\Laravel\Manager\ModelContract $entity
+	 *
+	 * @return ModelContract
+	 */
+	public function save(ModelContract $entity)
+	{
+		return $entity->save();
+	}
+
 
 	/**
 	 * Fill entity ModelContract with array
@@ -96,7 +154,11 @@ abstract class ModelManager
 	 *
 	 * @return void
 	 */
-	abstract public function fill(ModelContract $entity, array $params);
+	public function fill(ModelContract $entity, array $params)
+	{
+		$entity->fill($params);
+		return $entity;
+	}
 
 	/**
 	 * Fill an attribute of relation Many to One given id or entity
@@ -109,7 +171,7 @@ abstract class ModelManager
 	 *
 	 * @return $entity
 	 */
-	public function fillManyToOneById(ModelContract $entity, ModelManager $manager, array $params, $attribute, $attribute_id = null)
+	public function fillManyToOneById(ModelContract $entity, ModelManager $manager, $params, $attribute, $attribute_id = null)
 	{
 
 		if ($attribute_id == null)
@@ -129,6 +191,7 @@ abstract class ModelManager
 		if (isset($params[$attribute])) {
 			$value = $params[$attribute];
 			$entity->$attribute_id = $params[$attribute]->id;
+			$this->vars[$attribute] = $value;
 		}
 
 		return $value;
@@ -156,31 +219,6 @@ abstract class ModelManager
 		foreach ($entities as $entity) {
 			$this->delete($entity);
 		}
-	}
-
-
-	/**
-	 * Remove a ModelContract
-	 *
-	 * @param Railken\Laravel\Manager\ModelContract $entity
-	 *
-	 * @return void
-	 */
-	public function delete(ModelContract $entity)
-	{
-		$entity->delete();
-	}
-
-	/**
-	 * Save the entity
-	 *
-	 * @param  Railken\Laravel\Manager\ModelContract $entity
-	 *
-	 * @return ModelContract
-	 */
-	public function save(ModelContract $entity)
-	{
-		$entity->save();
 	}
 
 	/**
