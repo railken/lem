@@ -43,6 +43,20 @@ abstract class ModelManager
 	}
 
 	/**
+	 * First or create
+	 *
+	 * @param array $params
+	 *
+	 * @return ModelContract
+	 */
+	public function findOrCreate(array $params)
+	{
+		$entity = $this->getRepository()->getQuery()->where($params)->first();
+
+		return $entity ? $entity : $this->create($params);
+	}
+
+	/**
 	 * Find
 	 *
 	 * @param array $params
