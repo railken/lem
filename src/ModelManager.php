@@ -56,6 +56,21 @@ abstract class ModelManager
 		return $entity ? $entity : $this->create($params);
 	}
 
+    /**
+	 * Update or create
+	 *
+	 * @param array $criteria
+	 * @param array $params
+	 *
+	 * @return ModelContract
+	 */
+	public function updateOrCreate(array $criteria, array $params)
+	{
+		$entity = $this->getRepository()->getQuery()->where($criteria)->first();
+
+		return $entity ? $this->update($entity, $params) : $this->create($params);
+	}
+
 	/**
 	 * Find
 	 *
