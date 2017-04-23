@@ -12,6 +12,6 @@ class $NAME$Repository extends ModelRepository
 	 *
 	 * @var string
 	 */
-    public $entity = $NAME$::class;
+	public $entity = $NAME$::class;
 
 }

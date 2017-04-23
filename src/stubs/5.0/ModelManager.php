@@ -10,13 +10,13 @@ use $NAMESPACE$\$NAME$;
 class $NAME$Manager extends ModelManager
 {
 
-    /**
-     * Construct
-     */
-    public function __construct()
-    {
-        $this->repository = new $NAME$Repository();
-    }
+	/**
+	 * Construct
+	 */
+	public function __construct()
+	{
+		$this->repository = new $NAME$Repository();
+	}
 
 	/**
 	 * Fill the entity
