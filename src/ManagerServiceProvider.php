@@ -30,14 +30,13 @@ class ManagerServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
         $this->commands([Commands\Generate::class]);
 
-        $v = explode(".",$this->app->version());
+        $v = explode(".", $this->app->version());
 
-        if (!in_array($v[0], $this->versions))
+        if (!in_array($v[0], $this->versions)) {
             throw new \Exception("Version {$this->app->version()} not supported");
-
+        }
     }
 
     /**
@@ -47,8 +46,6 @@ class ManagerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
-
     }
 
     /**

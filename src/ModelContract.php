@@ -7,6 +7,4 @@ namespace Railken\Laravel\Manager;
  */
 interface ModelContract
 {
-
-
 }

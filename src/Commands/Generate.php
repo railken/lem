@@ -6,7 +6,8 @@ use Illuminate\Console\Command;
 
 use Railken\Laravel\Manager\Generator;
 
-class Generate extends Command{
+class Generate extends Command
+{
 
     /**
      * The name and signature of the console command.
@@ -39,7 +40,6 @@ class Generate extends Command{
      */
     public function handle()
     {
-
         $name = ucfirst($this->argument('name'));
         
         $path = $this->argument('path');
@@ -51,11 +51,8 @@ class Generate extends Command{
 
 
         try {
-
             $gn = new Generator($path);
-
-        } catch(\Exception $e) {
-
+        } catch (\Exception $e) {
             $this->error($e->getMessage());
             return;
         }
