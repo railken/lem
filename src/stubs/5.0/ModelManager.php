@@ -16,6 +16,8 @@ class $NAME$Manager extends ModelManager
 	public function __construct()
 	{
 		$this->repository = new $NAME$Repository();
+
+		parent::__construct();
 	}
 
 	/**
