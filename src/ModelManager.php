@@ -219,16 +219,6 @@ abstract class ModelManager
     }
 
     /**
-     * Convert entity to array
-     *
-     * @param  Railken\Laravel\Manager\ModelContract $entity
-     *
-     * @return array
-     */
-    abstract public function toArray(ModelContract $entity);
-
-
-    /**
      * Remove multiple ModelContract
      *
      * @param array $entities
