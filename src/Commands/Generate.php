@@ -68,6 +68,7 @@ class Generate extends Command
         $gn->put("$v/Model.php", "{$name}/{$name}.php", $vars);
         $gn->put("$v/ModelManager.php", "{$name}/{$name}Manager.php", $vars);
         $gn->put("$v/ModelRepository.php", "{$name}/{$name}Repository.php", $vars);
+        $gn->put("$v/ModelSerializer.php", "{$name}/{$name}Serializer.php", $vars);
 
 
         $this->info("\n".$name." generated");

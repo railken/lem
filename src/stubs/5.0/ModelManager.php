@@ -15,7 +15,8 @@ class $NAME$Manager extends ModelManager
 	 */
 	public function __construct()
 	{
-		$this->repository = new $NAME$Repository();
+		$this->repository = new $NAME$Repository($this);
+		$this->serializer = new $NAME$Serializer($this);
 
 		parent::__construct();
 	}

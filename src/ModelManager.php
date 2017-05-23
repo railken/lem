@@ -6,6 +6,9 @@ use Railken\Laravel\Manager\ModelContract;
 use Railken\Laravel\Manager\Exceptions\InvalidParamValueException;
 use Railken\Laravel\Manager\Exceptions\MissingParamException;
 use Railken\Laravel\Manager\Exceptions\ModelByIdNotFoundException;
+
+use Railken\Laravel\Manager\Permission\AgentContract;
+
 use DB;
 use Exception;
 
@@ -26,9 +29,34 @@ abstract class ModelManager
      * Construct
      *
      */
-    public function __construct()
+    public function __construct(AgentContract $agent = null)
     {
+
+        $this->agent = $agent;
         $this->vars = collect();
+    }
+
+    /**
+     * Retrieve agent
+     *
+     * @return Agent
+     */
+    public function getAgent()
+    {
+        return $this->agent;
+    }
+
+    /**
+     * Has permission to do?
+     *
+     * @param string $permission
+     * @param ModelContract $entity
+     *
+     * @return bool
+     */
+    public function pex($permission, $entity)
+    {
+        return $this->getAgent()->can($permission, $entity);
     }
 
     /**
