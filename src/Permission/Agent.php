@@ -2,9 +2,6 @@
 
 namespace Railken\Laravel\Manager\Permission;
 
-use Railken\Laravel\Manager\ModelContract;
-
-
 class Agent implements AgentContract
 {
 
@@ -101,7 +98,7 @@ class Agent implements AgentContract
 	 *
 	 * @return boolean
 	 */
-	protected function can($permission, ModelContract $resource) {
+	protected function can($permission, ResourceContract $resource) {
 
 		$permission = $this->is($permission, $this->p);
 
@@ -118,7 +115,7 @@ class Agent implements AgentContract
 		if (strpos($group, 'o') !== false) {
 
 			
-			if ($this->getUser() && $this->getUser()->getId() == $resource->getUser()->getId()) {
+			if ($this->getUser() && $this->getUser()->getIdentifier() == $resource->getUser()->getIdentifier()) {
 				return true;
 			}
 
