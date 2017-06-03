@@ -47,6 +47,20 @@ abstract class ModelManager
     }
 
     /**
+     * Set the agent
+     *
+     * @param AgentContract $agent
+     *
+     * @return $this
+     */
+    public function setAgent(AgentContract $agent)
+    {
+        $this->agent = $agent;
+
+        return $this;
+    }
+
+    /**
      * Has permission to do?
      *
      * @param string $permission
@@ -54,7 +68,7 @@ abstract class ModelManager
      *
      * @return bool
      */
-    public function pex($permission, $entity)
+    public function can($permission, $entity)
     {
         return $this->getAgent()->can($permission, $entity);
     }
@@ -291,6 +305,20 @@ abstract class ModelManager
             if ($value == null) {
                 throw new MissingParamException("Missing parameter: {$name}");
             }
+        }
+    }
+
+    /**
+     * Throw an exception if wrong permission
+     *
+     * @param array $params
+     *
+     * @return void
+     */
+    public function throwExceptionAccessDenied($permission, $entity)
+    {
+        if (!$this->can($permission, $entity)) {
+            abort(401);
         }
     }
 

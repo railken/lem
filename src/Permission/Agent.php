@@ -103,11 +103,8 @@ class Agent implements AgentContract
 	 */
 	protected function can($permission, ModelContract $resource) {
 
-
-
 		$permission = $this->is($permission, $this->p);
 
-		print_r($permission);
 
 		if (!$permission)
 			return false;
@@ -120,6 +117,7 @@ class Agent implements AgentContract
 
 		if (strpos($group, 'o') !== false) {
 
+			
 			if ($this->getUser() && $this->getUser()->getId() == $resource->getUser()->getId()) {
 				return true;
 			}
@@ -127,10 +125,6 @@ class Agent implements AgentContract
 		}
 
 		return false;
-
-		return true;
-
-
 
 	}
 	
