@@ -4,6 +4,7 @@ namespace $NAMESPACE$;
 
 use Railken\Laravel\Manager\ModelContract;
 use Railken\Laravel\Manager\ModelManager;
+use Railken\Laravel\Manager\Permission\AgentContract;
 
 use $NAMESPACE$\$NAME$;
 
@@ -13,12 +14,12 @@ class $NAME$Manager extends ModelManager
 	/**
 	 * Construct
 	 */
-	public function __construct()
+	public function __construct(AgentContract $agent = null)
 	{
 		$this->repository = new $NAME$Repository($this);
 		$this->serializer = new $NAME$Serializer($this);
 
-		parent::__construct();
+		parent::__construct($agent);
 	}
 
 	/**
