@@ -18,7 +18,7 @@ class $NAME$Serializer extends ModelSerializer
 	public function serialize(ModelContract $entity)
 	{
 		return [
-			'id' => $entity
+			'id' => $entity->id
 		];
 	}
 
