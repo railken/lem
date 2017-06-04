@@ -12,6 +12,9 @@ use Railken\Laravel\Manager\Permission\AgentContract;
 use DB;
 use Exception;
 
+use Illuminate\Http\UploadedFile;
+use File;
+
 abstract class ModelManager
 {
 
@@ -145,19 +148,8 @@ abstract class ModelManager
      */
     public function create(array $params)
     {
-        DB::beginTransaction();
-
-        try {
-            $entity = $this->getRepository()->newEntity();
-            $this->update($entity, $params);
-            $this->save($entity);
-            DB::commit();
-        } catch (Exception $e) {
-            DB::rollBack();
-            throw $e;
-        }
-
-        return $entity;
+        $entity = $this->getRepository()->newEntity();
+        return $this->update($entity, $params);
     }
 
     /**
@@ -382,5 +374,27 @@ abstract class ModelManager
     public function setQueue($queue)
     {
         $this->queue = $queue;
+    }
+
+    /**
+     * Convert field base64 encoded into FileUploaded
+     *
+     * @param string $base64
+     *
+     * @return UploadedFile
+     */
+    public function base64ToUploadedFile($base64)
+    {
+
+        $path = tempnam(sys_get_temp_dir(), '_');
+
+        $fp = fopen($path, "w");
+        fwrite($fp, base64_decode($base64));
+        fclose($fp);
+
+        $name = File::name($path);
+        $extension = File::extension($path);
+
+        return new UploadedFile($path, $name.'.'.$extension, File::mimeType($path), File::size($path), null, false);
     }
 }
