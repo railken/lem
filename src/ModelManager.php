@@ -388,6 +388,8 @@ abstract class ModelManager
 
         $path = tempnam(sys_get_temp_dir(), '_');
 
+        $base64 = explode(",", $base64)[1];
+
         $fp = fopen($path, "w");
         fwrite($fp, base64_decode($base64));
         fclose($fp);
