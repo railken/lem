@@ -4,7 +4,7 @@ Organize your models with a specific criteria: Model + Repository + Manager
 
 ## Requirements
 
-PHP 7.0.0 or later.
+PHP 5.6.4 or later.
 
 ## Composer
 
