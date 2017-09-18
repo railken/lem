@@ -1,11 +1,11 @@
 {
     "name": "railken/laravel-manager",
     "version": "master",
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
         "php": ">=5.6.4",
-         "illuminate/console": "~5.1"
+        "illuminate/console": "~5.1"
     },
     "autoload": {
         "psr-4" : {
