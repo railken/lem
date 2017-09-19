@@ -11,9 +11,10 @@ use Railken\Laravel\Manager\Permission\AgentContract;
 
 use DB;
 use Exception;
-
 use Illuminate\Http\UploadedFile;
 use File;
+
+use Railken\Bag;
 
 abstract class ModelManager
 {
@@ -89,11 +90,11 @@ abstract class ModelManager
     /**
      * First or create
      *
-     * @param array $params
+     * @param Bag $params
      *
      * @return ModelContract
      */
-    public function findOrCreate(array $params)
+    public function findOrCreate(Bag $params)
     {
         $entity = $this->getRepository()->getQuery()->where($params)->first();
 
@@ -104,11 +105,11 @@ abstract class ModelManager
      * Update or create
      *
      * @param array $criteria
-     * @param array $params
+     * @param Bag $params
      *
      * @return ModelContract
      */
-    public function updateOrCreate(array $criteria, array $params)
+    public function updateOrCreate(array $criteria, Bag $params)
     {
         $entity = $this->getRepository()->getQuery()->where($criteria)->first();
 
@@ -122,7 +123,7 @@ abstract class ModelManager
      *
      * @return mixed
      */
-    public function find($params)
+    public function find(array $params)
     {
         return $this->getRepository()->find($params);
     }
@@ -142,11 +143,11 @@ abstract class ModelManager
     /**
      * Create a new ModelContract given array
      *
-     * @param array $params
+     * @param Bag $params
      *
      * @return Railken\Laravel\Manager\ModelContract
      */
-    public function create(array $params)
+    public function create(Bag $params)
     {
         $entity = $this->getRepository()->newEntity();
         return $this->update($entity, $params);
@@ -155,11 +156,11 @@ abstract class ModelManager
     /**
      * Update a ModelContract given array
      *
-     * @param array $params
+     * @param Bag $params
      *
      * @return Railken\Laravel\Manager\ModelContract
      */
-    public function update(ModelContract $entity, array $params)
+    public function update(ModelContract $entity, Bag $params)
     {
         DB::beginTransaction();
 
@@ -206,11 +207,11 @@ abstract class ModelManager
      * Fill entity ModelContract with array
      *
      * @param Railken\Laravel\Manager\ModelContract $entity
-     * @param array $params
+     * @param Bag $params
      *
      * @return void
      */
-    public function fill(ModelContract $entity, array $params)
+    public function fill(ModelContract $entity, Bag $params)
     {
         $entity->fill($params);
         return $entity;
@@ -221,7 +222,7 @@ abstract class ModelManager
      *
      * @param ModelContract $entity
      * @param ModelManager $manager
-     * @param array $params
+     * @param Bag $params
      * @param string $attribute
      * @param string $attribute_id
      *
@@ -287,7 +288,7 @@ abstract class ModelManager
     /**
      * Throw an exception if a parameter is null
      *
-     * @param array $params
+     * @param Bag $params
      *
      * @return void
      */
@@ -303,7 +304,7 @@ abstract class ModelManager
     /**
      * Throw an exception if wrong permission
      *
-     * @param array $params
+     * @param Bag $params
      *
      * @return void
      */
@@ -317,12 +318,12 @@ abstract class ModelManager
     /**
      * Get only specific params
      *
-     * @param array $params
+     * @param Bag $params
      * @param array $requested
      *
      * @return array
     */
-    public function getOnlyParams(array $params, array $requested)
+    public function getOnlyParams(Bag $params, array $requested)
     {
         return (array_intersect_key($params, array_flip($requested)));
     }
