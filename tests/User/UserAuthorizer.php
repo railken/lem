@@ -34,9 +34,6 @@ class UserAuthorizer
 	public function filter(ModelContract $entity, Bag $params)
 	{	
 
-		if (!$this->manager->agent)
-			return $params;
-
 		if ($this->manager->agent->isRoleAdmin())
 			return $params;
 
@@ -56,9 +53,6 @@ class UserAuthorizer
 	public function authorize(ModelContract $entity, Bag $params)
 	{
 		$errors = new Collection();
-
-		if (!$this->manager->agent)
-			return $errors;
 
 		!$this->manager->agent->can('update', $entity) && $errors->push(new \Railken\Laravel\Manager\Exceptions\NotAuthorizedException($entity));
 

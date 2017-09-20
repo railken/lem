@@ -150,8 +150,11 @@ abstract class ModelManager
         $result = new ResultExecute();
         try {
 
-            $parameters = $this->authorizer->filter($entity, $parameters);
-            $result->addErrors($this->authorizer->authorize($entity, $parameters));
+            if ($this->agent) {
+                $parameters = $this->authorizer->filter($entity, $parameters);
+                $result->addErrors($this->authorizer->authorize($entity, $parameters));
+            }
+
             $result->addErrors($this->validator->validate($entity, $parameters));
 
 
