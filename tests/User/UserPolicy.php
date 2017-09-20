@@ -6,18 +6,6 @@ use Railken\Laravel\Manager\Permission\AgentContract;
 
 class UserPolicy
 {
-   /**
-     * Determine if the given user can create users.
-     *
-     * @param AgentContract $agent
-     *
-     * @return bool
-     */
-    public function create(AgentContract $agent)
-    {
-        //
-    }
-
     /**
      * Determine if the given post can be updated by the user.
      *

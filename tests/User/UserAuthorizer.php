@@ -24,11 +24,32 @@ class UserAuthorizer
 	}
 
 	/**
-	 * Validate 
+	 * Authorize
 	 *
 	 * @param ModelContract $entity
 	 * @param Bag $params
-	 * @param bool $required
+	 *
+	 * @return Collection
+	 */
+	public function filter(ModelContract $entity, Bag $params)
+	{	
+
+		if (!$this->manager->agent)
+			return $params;
+
+		if ($this->manager->agent->isRoleAdmin())
+			return $params;
+
+		if ($this->manager->agent->isRoleUser())
+			return $params->only(['username', 'email', 'password']);
+
+	}
+
+	/**
+	 * Authorize
+	 *
+	 * @param ModelContract $entity
+	 * @param Bag $params
 	 *
 	 * @return Collection
 	 */

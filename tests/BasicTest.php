@@ -103,6 +103,8 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         $this->assertEquals(true, $user_admin_manager->update($user_admin, new Bag(['email' => 'new2@test.net']))->ok());
         $this->assertEquals(true, $user_admin_manager->update($user, new Bag(['email' => 'new3@test.net']))->ok());
 
+        $this->assertEquals(true, $user_manager->update($user, new Bag(['role' => User::ROLE_ADMIN]))->getResource()->isRoleUser());
+
     }
 
 
