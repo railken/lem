@@ -69,13 +69,14 @@ abstract class ModelManager
     /**
      * Validate params
      *
-     * @param array $params
+     * @param ModelContract $entity
+     * @param Bag $params
      *
      * @return Collection
      */
-    public function validate(Bag $params, $required = false)
+    public function validate(ModelContract $entity, Bag $params, $required = false)
     {
-        return $this->toValidate() ? $this->validator->validate($params, $required) : new Collection();
+        return $this->toValidate() ? $this->validator->validate($entity, $params, $required) : new Collection();
     }
 
     /**
@@ -202,7 +203,7 @@ abstract class ModelManager
     {
         DB::beginTransaction();
         $result = new ResultExecute();
-        $result->setErrors($this->validate($params));
+        $result->setErrors($this->validate($entity, $params));
         
         if (!$result->ok())
             return $result;

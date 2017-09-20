@@ -19,7 +19,7 @@ class UserManager extends ModelManager
 	{
 		$this->repository = new UserRepository($this);
 		$this->serializer = new UserSerializer($this);
-		$this->validator = new UserValidator();
+		$this->validator = new UserValidator($this);
 
 		parent::__construct($agent);
 	}

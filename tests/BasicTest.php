@@ -52,7 +52,7 @@ class BasicTest extends \Orchestra\Testbench\TestCase
      */
     public function getUserBag()
     {
-        return new Bag(['username' => 'admin', 'password' => microtime(), 'email' => 'admin@admin.it']);
+        return new Bag(['email' => 'admin@admin.it', 'username' => 'admin', 'password' => microtime()]);
     }
 
     public function testBasics()
@@ -68,6 +68,10 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         $resource = $um->create($this->getUserBag())->getResource();
         $this->assertEquals($this->getUserBag()->get('username'), $resource->username);
         $this->assertEquals($this->getUserBag()->get('email'), $resource->email);
+
+        # Testing uniqueness
+        $result = $um->create($this->getUserBag());
+        $this->assertEquals("USER_EMAIL_NOT_UNIQUE", $result->getErrors()->first()->getCode());
     }
 
 }

@@ -14,4 +14,16 @@ class UserRepository extends ModelRepository
 	 */
 	public $entity = User::class;
 
+	/**
+	 * return whatever or not the email is unique
+	 *
+	 * @param string $email
+	 * @param User $user
+	 *
+	 * @return boolean
+	 */
+	public function isUniqueEmail($email, User $user)
+	{
+		return $this->getQuery()->where('email', $email)->where('id', '!=', $user->id)->count() == 0;
+	}
 }

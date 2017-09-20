@@ -11,11 +11,16 @@ class UserValidator
 {
 
 	/**
+	 * @var ModelManager
+	 */
+	protected $manager;
+
+	/**
 	 * Construct
 	 */
-	public function __construct()
+	public function __construct(UserManager $manager)
 	{
-
+		$this->manager = $manager;
 	}
 
 	/**
@@ -26,7 +31,7 @@ class UserValidator
 	 *
 	 * @return Collection
 	 */
-	public function validate(Bag $params, $required = false)
+	public function validate(ModelContract $entity, Bag $params, $required = false)
 	{
 		
 		$errors = new Collection();
@@ -35,6 +40,10 @@ class UserValidator
 			$errors = $errors->merge($this->required($params));
 		
 		$errors = $errors->merge($this->notValid($params));
+
+		if ($params->exists('email')) {
+			!$this->manager->getRepository()->isUniqueEmail($params->get('email'), $entity) && $errors->push(new Exceptions\UserEmailNotUniqueException($params->get('email')));
+		}
 
 		return $errors;
 	}
