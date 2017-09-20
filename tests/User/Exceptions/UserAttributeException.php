@@ -22,7 +22,7 @@ class UserAttributeException extends Exception
 	 *
 	 * @var string
 	 */
-	protected $code = 'USER_ATTRIBUTE_INVALID';
+	protected $code = 'USER_ATTRIBUTE_NOT_VALID';
 
 	/**
 	 * The message

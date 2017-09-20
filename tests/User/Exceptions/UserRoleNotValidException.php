@@ -17,7 +17,7 @@ class UserRoleNotValidException extends UserAttributeException
 	 *
 	 * @var string
 	 */
-	protected $code = 'USER_ROLE_INVALID';
+	protected $code = 'USER_ROLE_NOT_VALID';
 
 	/**
 	 * The message

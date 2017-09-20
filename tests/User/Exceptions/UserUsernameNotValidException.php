@@ -17,7 +17,7 @@ class UserUsernameNotValidException extends UserAttributeException
 	 *
 	 * @var string
 	 */
-	protected $code = 'USER_USERNAME_INVALID';
+	protected $code = 'USER_USERNAME_NOT_VALID';
 
 	/**
 	 * The message

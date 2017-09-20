@@ -45,20 +45,29 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         });
     }
 
-    public function testInstance()
+    /**
+     * Return a new instance of user bag
+     *
+     * @return Bag
+     */
+    public function getUserBag()
+    {
+        return new Bag(['username' => 'admin', 'password' => microtime(), 'email' => 'admin@admin.it']);
+    }
+
+    public function testBasics()
     {
 
         $um = new UserManager();
-        $bag = new Bag(['username' => 'admin', 'password' => 'admin', 'email' => 'admin@admin.it']);
-        $result = $um->create($bag);
-        $this->assertEquals(false, $result->ok());
 
+        # Testing validation
+        $result = $um->create($this->getUserBag()->set('password', 'wrong'));
+        $this->assertEquals("USER_PASSWORD_NOT_VALID", $result->getErrors()->first()->getCode());
 
-        $bag->password = 'adminadmin';
-        $resource = $um->create($bag)->getResource();
-
-        $this->assertEquals('admin', $resource->username);
-        $this->assertEquals('admin@admin.it', $resource->email);
+        # Testing correct
+        $resource = $um->create($this->getUserBag())->getResource();
+        $this->assertEquals($this->getUserBag()->get('username'), $resource->username);
+        $this->assertEquals($this->getUserBag()->get('email'), $resource->email);
     }
 
 }

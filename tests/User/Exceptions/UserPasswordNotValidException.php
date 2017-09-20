@@ -17,7 +17,7 @@ class UserPasswordNotValidException extends UserAttributeException
 	 *
 	 * @var string
 	 */
-	protected $code = 'USER_PASSWORD_INVALID';
+	protected $code = 'USER_PASSWORD_NOT_VALID';
 
 	/**
 	 * The message

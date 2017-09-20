@@ -17,7 +17,7 @@ class UserEmailNotValidException extends UserAttributeException
 	 *
 	 * @var string
 	 */
-	protected $code = 'USER_EMAIL_INVALID';
+	protected $code = 'USER_EMAIL_NOT_VALID';
 
 	/**
 	 * The message
