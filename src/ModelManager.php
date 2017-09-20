@@ -161,8 +161,7 @@ abstract class ModelManager
      */
     public function create(Bag $params)
     {
-        $entity = $this->getRepository()->newEntity();
-        return $this->update($entity, $params);
+        return $this->update($this->getRepository()->newEntity(), $params);
     }
 
     /**
