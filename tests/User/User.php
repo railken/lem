@@ -2,7 +2,6 @@
 
 namespace Railken\Laravel\Manager\Tests\User;
 
-use Laravel\Passport\HasApiTokens;
 use Railken\Laravel\Manager\ModelContract;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -10,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable implements ModelContract
 {
-    use HasApiTokens, Notifiable, SoftDeletes;
+    use Notifiable, SoftDeletes;
 
     const ROLE_USER = 'user';
     const ROLE_ADMIN = 'admin';

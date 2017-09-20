@@ -12,6 +12,7 @@ use Railken\Laravel\Manager\Permission\AgentContract;
 use DB;
 use Exception;
 use Railken\Bag;
+use Illuminate\Support\Collection;
 
 abstract class ModelManager
 {
@@ -160,17 +161,24 @@ abstract class ModelManager
     public function update(ModelContract $entity, Bag $params)
     {
         DB::beginTransaction();
+        $result = new ResultExecute();
 
         try {
+
             $this->fill($entity, $params);
             $this->save($entity);
+
+            //$result->setErrors($errors);
+            $result->getResources()->push($entity);
+
             DB::commit();
+
         } catch (Exception $e) {
             DB::rollBack();
-            throw $e;
+            $this->getErrors()->push($e);
         }
 
-        return $entity;
+        return $result;
     }
 
 

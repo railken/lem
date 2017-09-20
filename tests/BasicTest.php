@@ -7,6 +7,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 
 use Railken\Laravel\Manager\Tests\User\UserManager;
+use Railken\Bag;
 
 class BasicTest extends \Orchestra\Testbench\TestCase
 {
@@ -48,7 +49,15 @@ class BasicTest extends \Orchestra\Testbench\TestCase
     {
 
         $um = new UserManager();
+        //$um->validateOnExecute(true);
+        $bag = new Bag(['username' => 'admin', 'password' => 'admin', 'email' => 'admin@admin.it']);
 
+        $result = $um->create($bag);
+        $errors = $result->getErrors();
+        $resource = $result->getResource();
+
+        $this->assertEquals('admin', $resource->username);
+        $this->assertEquals('admin@admin.it', $resource->email);
     }
 
 }
