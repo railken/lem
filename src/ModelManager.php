@@ -205,8 +205,10 @@ abstract class ModelManager
         $result = new ResultExecute();
         $result->setErrors($this->validate($entity, $params));
         
-        if (!$result->ok())
+        if (!$result->ok()) {
+            DB::rollBack();
             return $result;
+        }
 
         try {
 
