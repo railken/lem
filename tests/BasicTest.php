@@ -7,6 +7,8 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 
 use Railken\Laravel\Manager\Tests\User\UserManager;
+use Railken\Laravel\Manager\Tests\User\User;
+use Railken\Laravel\Manager\Tests\User\UserObserver;
 use Railken\Bag;
 
 class BasicTest extends \Orchestra\Testbench\TestCase
@@ -36,13 +38,15 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('username');
-            $table->string('email')->unique();
+            $table->string('username')->nullable();
+            $table->string('email')->unique()->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
         });
+
+        User::observe(UserObserver::class);
     }
 
     /**
