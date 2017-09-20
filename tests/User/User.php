@@ -28,7 +28,7 @@ class User extends Authenticatable implements ModelContract, AgentContract
      * @var array
      */
     protected $fillable = [
-        'username', 'email', 'password',
+        'username', 'email', 'password', 'role'
     ];
 
     /**
@@ -47,10 +47,34 @@ class User extends Authenticatable implements ModelContract, AgentContract
      */
     protected $dates = ['deleted_at'];
 
-    public function setPasswordAttribute($pass)
+    /**
+     * Set value for attribute password
+     *
+     * @param string $password
+     */
+    public function setPasswordAttribute($password)
     {
+        $this->attributes['password'] = bcrypt($password);
 
-        $this->attributes['password'] = bcrypt($pass);
+    }
 
+    /**
+     * Return if has role user
+     *
+     * @return boolean
+     */
+    public function isRoleUser()
+    {
+        return $this->role == static::ROLE_USER;
+    }
+
+    /**
+     * Return if has role admin
+     *
+     * @return boolean
+     */
+    public function isRoleAdmin()
+    {
+        return $this->role == static::ROLE_ADMIN;
     }
 }
