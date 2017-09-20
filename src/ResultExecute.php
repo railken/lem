@@ -92,6 +92,21 @@ class ResultExecute
     }
 
     /**
+     * Add errors
+     *
+     * @param Collection $errors
+     *
+     * @return this
+     */
+    public function addErrors(Collection $errors = null)
+    {
+        $this->errors = $this->getErrors()->merge($errors);
+
+        return $this;
+    }
+
+
+    /**
      * Return if result has been executed without errors
      *
      * @return boolean
