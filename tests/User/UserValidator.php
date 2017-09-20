@@ -46,7 +46,7 @@ class UserValidator
 	 *
 	 * @return Collection
 	 */
-	public function required()
+	public function required(Bag $params)
 	{
 		$errors = new Collection();
 
@@ -54,7 +54,7 @@ class UserValidator
 		!$params->exists('username') && $errors->push(new Exceptions\UserEmailNotValidException($params->get('password')));
 		!$params->exists('email') && $errors->push(new Exceptions\UserEmailNotValidException($params->get('email')));
 
-		return $params;
+		return $errors;
 	}
 
 	/**
@@ -64,7 +64,7 @@ class UserValidator
 	 *
 	 * @return Collection
 	 */
-	public function notValid()
+	public function notValid(Bag $params)
 	{
 		$errors = new Collection();
 
@@ -83,7 +83,7 @@ class UserValidator
 		if ($params->exists('password') && !$this->validPassword($params->get('password')))
 			$errors->push(new Exceptions\UserPasswordNotValidException($params->get('password')));
 
-		return $params;
+		return $errors;
 	}
 
 	/**

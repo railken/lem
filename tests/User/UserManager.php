@@ -24,18 +24,6 @@ class UserManager extends ModelManager
 		parent::__construct($agent);
 	}
 	
-	
-	/**
-	 * Validate params
-	 *
-	 * @param array $params
-	 *
-	 * @return Collection
-	 */
-	public function validate(Bag $params, $required = false)
-	{
-		return $this->validator->validate($params, $required);
-	}
 
 	/**
 	 * Fill the entity

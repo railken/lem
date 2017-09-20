@@ -28,6 +28,12 @@ abstract class ModelManager
     public $queue = [];
 
     /**
+     * @var boolean
+     */
+    protected $validate_on_execute = true;
+
+
+    /**
      * Construct
      *
      */
@@ -36,6 +42,40 @@ abstract class ModelManager
 
         $this->agent = $agent;
         $this->vars = collect();
+    }
+
+    /**
+     * set validate_on_execute
+     *
+     * @param boolean $validate_on_execute
+     *
+     * @return $this
+     */
+    public function validateOnExecute($validate_on_execute)
+    {
+        $this->validate_on_execute = $validate_on_execute;
+    }
+
+    /**
+     * get validate on execute
+     *
+     * @return boolean
+     */
+    public function toValidate()
+    {
+        return $this->validate_on_execute;
+    }
+    
+    /**
+     * Validate params
+     *
+     * @param array $params
+     *
+     * @return Collection
+     */
+    public function validate(Bag $params, $required = false)
+    {
+        return $this->toValidate() ? $this->validator->validate($params, $required) : new Collection();
     }
 
     /**
@@ -162,8 +202,13 @@ abstract class ModelManager
     {
         DB::beginTransaction();
         $result = new ResultExecute();
+        $result->setErrors($this->validate($params));
+        
+        if (!$result->ok())
+            return $result;
 
         try {
+
 
             $this->fill($entity, $params);
             $this->save($entity);
@@ -175,7 +220,7 @@ abstract class ModelManager
 
         } catch (Exception $e) {
             DB::rollBack();
-            $this->getErrors()->push($e);
+            throw $e;
         }
 
         return $result;

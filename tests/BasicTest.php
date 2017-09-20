@@ -49,12 +49,13 @@ class BasicTest extends \Orchestra\Testbench\TestCase
     {
 
         $um = new UserManager();
-        //$um->validateOnExecute(true);
         $bag = new Bag(['username' => 'admin', 'password' => 'admin', 'email' => 'admin@admin.it']);
-
         $result = $um->create($bag);
-        $errors = $result->getErrors();
-        $resource = $result->getResource();
+        $this->assertEquals(false, $result->ok());
+
+
+        $bag->password = 'adminadmin';
+        $resource = $um->create($bag)->getResource();
 
         $this->assertEquals('admin', $resource->username);
         $this->assertEquals('admin@admin.it', $resource->email);

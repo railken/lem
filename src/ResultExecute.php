@@ -81,5 +81,36 @@ class ResultExecute
         return $this->errors;
     } 
 
+    /**
+     * Return if result has been executed without errors
+     *
+     * @return boolean
+     */
+    public function success()
+    {
+        return $this->getErrors()->count() == 0;
+    }
+
+    /**
+     * Return if result has been executed without errors
+     *
+     * @return boolean
+     */
+    public function ok()
+    {
+        return $this->success();
+    }   
+
+    /**
+     * Retrieve a "short" version of errors
+     *
+     * @return Collection
+     */
+    public function getSimpleErrors()
+    {
+        return $this->getErrors()->map(function ($error) {
+            return $error->toArray();
+        });
+    }
 
 }
