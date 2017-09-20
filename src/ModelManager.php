@@ -6,7 +6,6 @@ use Railken\Laravel\Manager\ModelContract;
 use Railken\Laravel\Manager\Exceptions\InvalidParamValueException;
 use Railken\Laravel\Manager\Exceptions\MissingParamException;
 use Railken\Laravel\Manager\Exceptions\ModelByIdNotFoundException;
-
 use Railken\Laravel\Manager\Permission\AgentContract;
 
 use DB;
@@ -16,23 +15,6 @@ use Illuminate\Support\Collection;
 
 abstract class ModelManager
 {
-
-    /**
-     * @var array
-     */
-    protected $vars = [];
-
-    /**
-     * @var queue
-     */
-    public $queue = [];
-
-    /**
-     * @var boolean
-     */
-    protected $validate_on_execute = true;
-
-
     /**
      * Construct
      *
@@ -41,42 +23,6 @@ abstract class ModelManager
     {
 
         $this->agent = $agent;
-        $this->vars = collect();
-    }
-
-    /**
-     * set validate_on_execute
-     *
-     * @param boolean $validate_on_execute
-     *
-     * @return $this
-     */
-    public function validateOnExecute($validate_on_execute)
-    {
-        $this->validate_on_execute = $validate_on_execute;
-    }
-
-    /**
-     * get validate on execute
-     *
-     * @return boolean
-     */
-    public function toValidate()
-    {
-        return $this->validate_on_execute;
-    }
-    
-    /**
-     * Validate params
-     *
-     * @param ModelContract $entity
-     * @param Bag $params
-     *
-     * @return Collection
-     */
-    public function validate(ModelContract $entity, Bag $params)
-    {
-        return $this->toValidate() ? $this->validator->validate($entity, $params) : new Collection();
     }
 
     /**
@@ -102,6 +48,33 @@ abstract class ModelManager
 
         return $this;
     }
+
+    /**
+     * Validate params
+     *
+     * @param ModelContract $entity
+     * @param Bag $params
+     *
+     * @return Collection
+     */
+    public function validate(ModelContract $entity, Bag $params)
+    {
+        return $this->validator->validate($entity, $params);
+    }
+
+    /**
+     * Validate params
+     *
+     * @param ModelContract $entity
+     * @param Bag $params
+     *
+     * @return Collection
+     */
+    public function authorize(ModelContract $entity, Bag $params)
+    {
+        return $this->getAgent() ? $this->authorizer->authorize($entity, $params) : new Collection();
+    }
+
 
     /**
      * Has permission to do?
@@ -203,20 +176,20 @@ abstract class ModelManager
     {
         DB::beginTransaction();
         $result = new ResultExecute();
-        $result->setErrors($this->validate($entity, $params));
-        
-        if (!$result->ok()) {
-            DB::rollBack();
-            return $result;
-        }
-
         try {
 
+            $result->addErrors($this->validate($entity, $params));
+            $result->addErrors($this->authorize($entity, $params));
 
+
+            if (!$result->ok()) {
+                DB::rollBack();
+                return $result;
+            }
+            
             $this->fill($entity, $params);
             $this->save($entity);
 
-            //$result->setErrors($errors);
             $result->getResources()->push($entity);
 
             DB::commit();
@@ -304,116 +277,6 @@ abstract class ModelManager
         }
 
         return $value;
-    }
-
-    /**
-     * Remove multiple ModelContract
-     *
-     * @param array $entities
-     *
-     * @return void
-     */
-    public function deleteMultiple($entities)
-    {
-        foreach ($entities as $entity) {
-            $this->delete($entity);
-        }
-    }
-
-    /**
-     * Throw an exception if a value is invalid
-     *
-     * @param string $name
-     * @param string $value
-     * @param mixed $accepted
-     *
-     * @return void
-     */
-    public function throwExceptionInvalidParamValue($name, $value, $accepted)
-    {
-        if (is_array($accepted)) {
-            if (!in_array($value, $accepted)) {
-                throw new InvalidParamValueException("Invalid value {$value} for param {$name}. Accepted: ".implode($accepted, ","));
-            }
-        }
-    }
-
-    /**
-     * Throw an exception if a parameter is null
-     *
-     * @param Bag $params
-     *
-     * @return void
-     */
-    public function throwExceptionParamsNull($params)
-    {
-        foreach ($params as $name => $value) {
-            if ($value == null) {
-                throw new MissingParamException("Missing parameter: {$name}");
-            }
-        }
-    }
-
-    /**
-     * Throw an exception if wrong permission
-     *
-     * @param Bag $params
-     *
-     * @return void
-     */
-    public function throwExceptionAccessDenied($permission, $entity)
-    {
-        if (!$this->can($permission, $entity)) {
-            abort(401);
-        }
-    }
-
-    /**
-     * Execute queue
-     *
-     * @return null
-     */
-    public function executeQueue()
-    {
-        foreach ($this->getQueue() as $queue) {
-            $queue();
-        }
-
-        $this->setQueue([]);
-    }
-    
-    /**
-     * Add an operation to queue
-     *
-     * @param Closure $closure
-     *
-     * @return this
-     */
-    public function addQueue(\Closure $closure)
-    {
-        $this->queue[] = $closure;
-    }
-
-    /**
-     * Retrieve all queue
-     *
-     * @return array
-     */
-    public function getQueue()
-    {
-        return $this->queue;
-    }
-    
-    /**
-     * Add an operation to queue
-     *
-     * @param array $queue
-     *
-     * @return array
-     */
-    public function setQueue($queue)
-    {
-        $this->queue = $queue;
     }
 
 }

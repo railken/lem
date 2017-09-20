@@ -20,6 +20,7 @@ class UserManager extends ModelManager
 		$this->repository = new UserRepository($this);
 		$this->serializer = new UserSerializer($this);
 		$this->validator = new UserValidator($this);
+		$this->authorizer = new UserAuthorizer($this);
 
 		parent::__construct($agent);
 	}
@@ -54,12 +55,6 @@ class UserManager extends ModelManager
 	 */
 	public function save(ModelContract $entity)
 	{
-		
-		$this->throwExceptionParamsNull([
-			'email' => $entity->email,
-			'username' => $entity->username,
-		]);
-
 		return parent::save($entity);
 	}
 

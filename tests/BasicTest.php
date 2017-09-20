@@ -3,12 +3,14 @@
 namespace Railken\Laravel\Manager\Tests;
 
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Database\Schema\Blueprint;
 
-use Railken\Laravel\Manager\Tests\User\UserManager;
 use Railken\Laravel\Manager\Tests\User\User;
+use Railken\Laravel\Manager\Tests\User\UserManager;
 use Railken\Laravel\Manager\Tests\User\UserObserver;
+use Railken\Laravel\Manager\Tests\User\UserPolicy;
 use Railken\Bag;
 
 class BasicTest extends \Orchestra\Testbench\TestCase
@@ -48,6 +50,7 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         });
 
         User::observe(UserObserver::class);
+        Gate::policy(User::class, UserPolicy::class);
     }
 
     /**
@@ -57,7 +60,7 @@ class BasicTest extends \Orchestra\Testbench\TestCase
      */
     public function getUserBag()
     {
-        return new Bag(['email' => 'admin@admin.it', 'username' => 'admin', 'password' => microtime()]);
+        return new Bag(['email' => 'test@test.net', 'username' => 'test123', 'password' => microtime()]);
     }
 
     public function testBasics()
@@ -76,7 +79,6 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         # Testing correct
         $resource = $um->create($this->getUserBag())->getResource();
         $this->assertEquals($this->getUserBag()->get('username'), $resource->username);
-        $this->assertEquals($this->getUserBag()->get('email'), $resource->email);
 
         # Testing uniqueness
         $this->assertEquals("USER_EMAIL_NOT_UNIQUE", $um->create($this->getUserBag())->getErrors()->first()->getCode());
@@ -88,9 +90,15 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         # An admin can change username/email/password of all users
         # An user can change only his own information
 
-        $user_admin = $um->create($this->getUserBag()->set('role', 'admin'));
-        $user_admin_manager = new UserManager();
-        $user_admin_manager->setAgent($user_admin->getResource());
+        $user_admin = $um->create($this->getUserBag()->set('role', 'admin')->set('email', 'admin@test.net'))->getResource();
+        $user_admin_manager = new UserManager($user_admin);
+
+        $user = $um->create($this->getUserBag()->set('role', 'user')->set('email', 'user@test.net'))->getResource();
+        $user_manager = new UserManager($user);
+
+
+        $this->assertEquals(false, $user_manager->update($user_admin, new Bag(['email' => 'new@test.net']))->ok());
+        $this->assertEquals(true, $user_manager->update($user, new Bag(['email' => 'new@test.net']))->ok());
 
     }
 

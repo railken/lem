@@ -75,6 +75,8 @@ class UserValidator
 	{
 		$errors = new Collection();
 
+		$this->manager->agent && $this->manager->agent->isRoleUser() && $params = $params->only(['email', 'username', 'password']);
+
 		$params->exists('email') && !$this->validEmail($params->get('email')) && 
 			$errors->push(new Exceptions\UserEmailNotValidException($params->get('email')));
 
