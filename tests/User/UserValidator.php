@@ -32,12 +32,12 @@ class UserValidator
 	 *
 	 * @return Collection
 	 */
-	public function validate(ModelContract $entity, Bag $params, $required = false)
+	public function validate(ModelContract $entity, Bag $params)
 	{
 		
 		$errors = new Collection();
 
-		if ($required) 
+		if (!$entity->exists) 
 			$errors = $errors->merge($this->validateRequired($params));
 		
 		$errors = $errors->merge($this->validateValue($entity, $params));

@@ -74,9 +74,9 @@ abstract class ModelManager
      *
      * @return Collection
      */
-    public function validate(ModelContract $entity, Bag $params, $required = false)
+    public function validate(ModelContract $entity, Bag $params)
     {
-        return $this->toValidate() ? $this->validator->validate($entity, $params, $required) : new Collection();
+        return $this->toValidate() ? $this->validator->validate($entity, $params) : new Collection();
     }
 
     /**
@@ -189,7 +189,7 @@ abstract class ModelManager
     public function create(Bag $params)
     {
         $entity = $this->getRepository()->newEntity();
-        return $this->update($entity, $params, true);
+        return $this->update($entity, $params);
     }
 
     /**
@@ -199,11 +199,11 @@ abstract class ModelManager
      *
      * @return Railken\Laravel\Manager\ModelContract
      */
-    public function update(ModelContract $entity, Bag $params, $required = false)
+    public function update(ModelContract $entity, Bag $params)
     {
         DB::beginTransaction();
         $result = new ResultExecute();
-        $result->setErrors($this->validate($entity, $params, $required));
+        $result->setErrors($this->validate($entity, $params));
         
         if (!$result->ok())
             return $result;
