@@ -236,7 +236,7 @@ abstract class ModelManager
      *
      * @return void
      */
-    public function delete(ModelContract $entity)
+    public function remove(ModelContract $entity)
     {
         return $entity->delete();
     }

@@ -75,6 +75,10 @@ class BasicTest extends \Orchestra\Testbench\TestCase
 
         # Testing uniqueness
         $this->assertEquals("USER_EMAIL_NOT_UNIQUE", $um->create($this->getUserBag())->getErrors()->first()->getCode());
+
+
+        $um->update($resource, $this->getUserBag());
+        $um->remove($resource);
     }
 
 }
