@@ -90,15 +90,18 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         # An admin can change username/email/password of all users
         # An user can change only his own information
 
-        $user_admin = $um->create($this->getUserBag()->set('role', 'admin')->set('email', 'admin@test.net'))->getResource();
+        $user_admin = $um->create($this->getUserBag()->set('role', User::ROLE_ADMIN)->set('email', 'admin@test.net'))->getResource();
         $user_admin_manager = new UserManager($user_admin);
 
-        $user = $um->create($this->getUserBag()->set('role', 'user')->set('email', 'user@test.net'))->getResource();
+        $user = $um->create($this->getUserBag()->set('role', User::ROLE_USER)->set('email', 'user@test.net'))->getResource();
         $user_manager = new UserManager($user);
 
 
         $this->assertEquals(false, $user_manager->update($user_admin, new Bag(['email' => 'new@test.net']))->ok());
         $this->assertEquals(true, $user_manager->update($user, new Bag(['email' => 'new@test.net']))->ok());
+
+        $this->assertEquals(true, $user_admin_manager->update($user_admin, new Bag(['email' => 'new2@test.net']))->ok());
+        $this->assertEquals(true, $user_admin_manager->update($user, new Bag(['email' => 'new3@test.net']))->ok());
 
     }
 

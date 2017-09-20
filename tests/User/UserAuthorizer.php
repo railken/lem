@@ -38,7 +38,6 @@ class UserAuthorizer
 
 		!$this->manager->agent->can('update', $entity) && $errors->push(new \Railken\Laravel\Manager\Exceptions\NotAuthorizedException($entity));
 
-		
 		return $errors;
 	}
 
