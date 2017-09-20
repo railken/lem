@@ -50,33 +50,6 @@ abstract class ModelManager
     }
 
     /**
-     * Validate params
-     *
-     * @param ModelContract $entity
-     * @param Bag $parameters
-     *
-     * @return Collection
-     */
-    public function validate(ModelContract $entity, Bag $parameters)
-    {
-        return $this->validator->validate($entity, $parameters);
-    }
-
-    /**
-     * Validate params
-     *
-     * @param ModelContract $entity
-     * @param Bag $parameters
-     *
-     * @return Collection
-     */
-    public function authorize(ModelContract $entity, Bag $parameters)
-    {
-        return $this->getAgent() ? $this->authorizer->authorize($entity, $parameters) : new Collection();
-    }
-
-
-    /**
      * Has permission to do?
      *
      * @param string $permission
@@ -178,8 +151,8 @@ abstract class ModelManager
         try {
 
             $parameters = $this->authorizer->filter($entity, $parameters);
-            $result->addErrors($this->authorize($entity, $parameters));
-            $result->addErrors($this->validate($entity, $parameters));
+            $result->addErrors($this->authorizer->authorize($entity, $parameters));
+            $result->addErrors($this->validator->validate($entity, $parameters));
 
 
             if (!$result->ok()) {
