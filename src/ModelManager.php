@@ -242,41 +242,4 @@ abstract class ModelManager
         $entity->fill($params);
         return $entity;
     }
-
-    /**
-     * Fill an attribute of relation Many to One given id or entity
-     *
-     * @param ModelContract $entity
-     * @param ModelManager $manager
-     * @param Bag $params
-     * @param string $attribute
-     * @param string $attribute_id
-     *
-     * @return $entity
-     */
-    public function fillManyToOneById(ModelContract $entity, ModelManager $manager, $params, $attribute, $attribute_id = null)
-    {
-        if ($attribute_id == null) {
-            $attribute_id = $attribute."_id";
-        }
-
-        if (isset($params[$attribute_id])) {
-            $value = $manager->getRepository()->findById($params[$attribute_id]);
-
-            if (!$value) {
-                throw new ModelByIdNotFoundException($attribute_id, $params[$attribute_id]);
-            }
-
-            $params[$attribute] = $value;
-        }
-
-        if (isset($params[$attribute])) {
-            $value = $params[$attribute];
-            $entity->$attribute_id = $params[$attribute]->id;
-            $this->vars[$attribute] = $value;
-        }
-
-        return $value;
-    }
-
 }
