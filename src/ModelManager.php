@@ -189,7 +189,7 @@ abstract class ModelManager
     public function create(Bag $params)
     {
         $entity = $this->getRepository()->newEntity();
-        return $this->update($entity, $params);
+        return $this->update($entity, $params, true);
     }
 
     /**
@@ -199,11 +199,11 @@ abstract class ModelManager
      *
      * @return Railken\Laravel\Manager\ModelContract
      */
-    public function update(ModelContract $entity, Bag $params)
+    public function update(ModelContract $entity, Bag $params, $required = false)
     {
         DB::beginTransaction();
         $result = new ResultExecute();
-        $result->setErrors($this->validate($entity, $params));
+        $result->setErrors($this->validate($entity, $params, $required));
         
         if (!$result->ok())
             return $result;

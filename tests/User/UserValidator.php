@@ -26,6 +26,7 @@ class UserValidator
 	/**
 	 * Validate 
 	 *
+	 * @param ModelContract $entity
 	 * @param Bag $params
 	 * @param bool $required
 	 *
@@ -37,13 +38,9 @@ class UserValidator
 		$errors = new Collection();
 
 		if ($required) 
-			$errors = $errors->merge($this->required($params));
+			$errors = $errors->merge($this->validateRequired($params));
 		
-		$errors = $errors->merge($this->notValid($params));
-
-		if ($params->exists('email')) {
-			!$this->manager->getRepository()->isUniqueEmail($params->get('email'), $entity) && $errors->push(new Exceptions\UserEmailNotUniqueException($params->get('email')));
-		}
+		$errors = $errors->merge($this->validateValue($entity, $params));
 
 		return $errors;
 	}
@@ -51,17 +48,18 @@ class UserValidator
 	/**
 	 * Validate "required" values
 	 *
+	 * @param ModelContract $entity
 	 * @param Bag $params
 	 *
 	 * @return Collection
 	 */
-	public function required(Bag $params)
+	public function validateRequired(Bag $params)
 	{
 		$errors = new Collection();
 
-		!$params->exists('email') && $errors->push(new Exceptions\UserEmailNotValidException($params->get('email')));
-		!$params->exists('username') && $errors->push(new Exceptions\UserEmailNotValidException($params->get('password')));
-		!$params->exists('email') && $errors->push(new Exceptions\UserEmailNotValidException($params->get('email')));
+		!$params->exists('email') && $errors->push(new Exceptions\UserEmailNotDefinedException($params->get('email')));
+		!$params->exists('username') && $errors->push(new Exceptions\UserUsernameNotDefinedException($params->get('username')));
+		!$params->exists('password') && $errors->push(new Exceptions\UserPasswordNotDefinedException($params->get('password')));
 
 		return $errors;
 	}
@@ -73,24 +71,25 @@ class UserValidator
 	 *
 	 * @return Collection
 	 */
-	public function notValid(Bag $params)
+	public function validateValue(ModelContract $entity, Bag $params)
 	{
 		$errors = new Collection();
 
-		if ($params->exists('email') && !$this->validEmail($params->get('email'))) 
+		$params->exists('email') && !$this->validEmail($params->get('email')) && 
 			$errors->push(new Exceptions\UserEmailNotValidException($params->get('email')));
-		
 
-		if ($params->exists('role') && !$this->validRole($params->get('role')))
-			$errors->push(new Exceptions\UserRoleNotValidException($params->get('role')));
+		$params->exists('email') && !$this->manager->getRepository()->isUniqueEmail($params->get('email'), $entity) && 
+			$errors->push(new Exceptions\UserEmailNotUniqueException($params->get('email')));
 
-
-		if ($params->exists('username') && !$this->validUsername($params->get('username')))
+		$params->exists('username') && !$this->validUsername($params->get('username')) && 
 			$errors->push(new Exceptions\UserUsernameNotValidException($params->get('username')));
 
-
-		if ($params->exists('password') && !$this->validPassword($params->get('password')))
+		$params->exists('password') && !$this->validPassword($params->get('password')) && 
 			$errors->push(new Exceptions\UserPasswordNotValidException($params->get('password')));
+
+		$params->exists('role') && !$this->validRole($params->get('role')) &&
+			$errors->push(new Exceptions\UserRoleNotValidException($params->get('role')));
+
 
 		return $errors;
 	}
@@ -104,7 +103,7 @@ class UserValidator
 	 */
 	public function validEmail($email)
 	{
-		return filter_var($email, FILTER_VALIDATE_EMAIL) && preg_match('/@.+\./', $email);
+		return filter_var($email, FILTER_VALIDATE_EMAIL);
 	}
 
 
