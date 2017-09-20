@@ -5,6 +5,8 @@ namespace Railken\Laravel\Manager\Tests\User;
 use Railken\Laravel\Manager\ModelSerializer;
 use Railken\Laravel\Manager\ModelContract;
 
+use Railken\Bag;
+
 class UserSerializer extends ModelSerializer
 {
 
@@ -17,11 +19,13 @@ class UserSerializer extends ModelSerializer
 	 */
 	public function serialize(ModelContract $entity)
 	{
-		return [
-			'id' => $entity->id,
-			'email' => $entity->email,
-			'username' => $entity->username
-		];
+		$bag = new Bag();
+
+		$bag->set('id', $entity->id);
+		$bag->set('email', $entity->email);
+		$bag->set('username', $entity->username);
+
+		return $bag->all();
 	}
 
 }
