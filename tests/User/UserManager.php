@@ -38,6 +38,7 @@ class UserManager extends ModelManager
 
 		$params = $params->only(['username', 'role', 'password', 'email']);
 
+
 		$entity->fill($params->all());
 
 		return $entity;
@@ -62,5 +63,16 @@ class UserManager extends ModelManager
 		return parent::save($entity);
 	}
 
+    /**
+     * Remove a ModelContract
+     *
+     * @param Railken\Laravel\Manager\ModelContract $entity
+     *
+     * @return void
+     */
+    public function remove(ModelContract $entity)
+    {
+        return $entity->delete();
+    }
 
 }
