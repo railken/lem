@@ -26,16 +26,16 @@ class $NAME$Manager extends ModelManager
 	 * Fill the entity
 	 *
 	 * @param ModelContract $entity
-	 * @param array $params
+	 * @param array $parameters
 	 *
 	 * @return ModelContract
 	 */
-	public function fill(ModelContract $entity, array $params)
+	public function fill(ModelContract $entity, array $parameters)
 	{
 
-		$params = $this->getOnlyParams($params, ['name']);
+		$parameters = $this->getOnlyParams($parameters, ['name']);
 
-		$entity->fill($params);
+		$entity->fill($parameters);
 
 		return $entity;
 

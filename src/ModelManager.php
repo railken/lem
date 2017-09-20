@@ -53,26 +53,26 @@ abstract class ModelManager
      * Validate params
      *
      * @param ModelContract $entity
-     * @param Bag $params
+     * @param Bag $parameters
      *
      * @return Collection
      */
-    public function validate(ModelContract $entity, Bag $params)
+    public function validate(ModelContract $entity, Bag $parameters)
     {
-        return $this->validator->validate($entity, $params);
+        return $this->validator->validate($entity, $parameters);
     }
 
     /**
      * Validate params
      *
      * @param ModelContract $entity
-     * @param Bag $params
+     * @param Bag $parameters
      *
      * @return Collection
      */
-    public function authorize(ModelContract $entity, Bag $params)
+    public function authorize(ModelContract $entity, Bag $parameters)
     {
-        return $this->getAgent() ? $this->authorizer->authorize($entity, $params) : new Collection();
+        return $this->getAgent() ? $this->authorizer->authorize($entity, $parameters) : new Collection();
     }
 
 
@@ -102,84 +102,84 @@ abstract class ModelManager
     /**
      * First or create
      *
-     * @param Bag $params
+     * @param Bag $parameters
      *
      * @return ModelContract
      */
-    public function findOrCreate(Bag $params)
+    public function findOrCreate(Bag $parameters)
     {
-        $entity = $this->getRepository()->getQuery()->where($params)->first();
+        $entity = $this->getRepository()->getQuery()->where($parameters)->first();
 
-        return $entity ? $entity : $this->create($params);
+        return $entity ? $entity : $this->create($parameters);
     }
 
     /**
      * Update or create
      *
      * @param array $criteria
-     * @param Bag $params
+     * @param Bag $parameters
      *
      * @return ModelContract
      */
-    public function updateOrCreate(array $criteria, Bag $params)
+    public function updateOrCreate(array $criteria, Bag $parameters)
     {
         $entity = $this->getRepository()->getQuery()->where($criteria)->first();
 
-        return $entity ? $this->update($entity, $params) : $this->create($params);
+        return $entity ? $this->update($entity, $parameters) : $this->create($parameters);
     }
 
     /**
      * Find
      *
-     * @param array $params
+     * @param array $parameters
      *
      * @return mixed
      */
-    public function find(array $params)
+    public function find(array $parameters)
     {
-        return $this->getRepository()->find($params);
+        return $this->getRepository()->find($parameters);
     }
 
     /**
      * Find where in
      *
-     * @param array $params
+     * @param array $parameters
      *
      * @return Collection ?
      */
-    public function findWhereIn(array $params)
+    public function findWhereIn(array $parameters)
     {
-        return $this->getRepository()->findWhereIn($params);
+        return $this->getRepository()->findWhereIn($parameters);
     }
 
     /**
      * Create a new ModelContract given array
      *
-     * @param Bag $params
+     * @param Bag $parameters
      *
      * @return Railken\Laravel\Manager\ModelContract
      */
-    public function create(Bag $params)
+    public function create(Bag $parameters)
     {
-        return $this->update($this->getRepository()->newEntity(), $params);
+        return $this->update($this->getRepository()->newEntity(), $parameters);
     }
 
     /**
      * Update a ModelContract given array
      *
-     * @param Bag $params
+     * @param Bag $parameters
      *
      * @return Railken\Laravel\Manager\ModelContract
      */
-    public function update(ModelContract $entity, Bag $params)
+    public function update(ModelContract $entity, Bag $parameters)
     {
         DB::beginTransaction();
         $result = new ResultExecute();
         try {
 
-            $params = $this->authorizer->filter($entity, $params);
-            $result->addErrors($this->authorize($entity, $params));
-            $result->addErrors($this->validate($entity, $params));
+            $parameters = $this->authorizer->filter($entity, $parameters);
+            $result->addErrors($this->authorize($entity, $parameters));
+            $result->addErrors($this->validate($entity, $parameters));
 
 
             if (!$result->ok()) {
@@ -187,7 +187,7 @@ abstract class ModelManager
                 return $result;
             }
             
-            $this->fill($entity, $params);
+            $this->fill($entity, $parameters);
             $this->save($entity);
 
             $result->getResources()->push($entity);
@@ -233,13 +233,13 @@ abstract class ModelManager
      * Fill entity ModelContract with array
      *
      * @param Railken\Laravel\Manager\ModelContract $entity
-     * @param Bag $params
+     * @param Bag $parameters
      *
      * @return void
      */
-    public function fill(ModelContract $entity, Bag $params)
+    public function fill(ModelContract $entity, Bag $parameters)
     {
-        $entity->fill($params);
+        $entity->fill($parameters);
         return $entity;
     }
 }

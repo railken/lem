@@ -15,15 +15,15 @@ abstract class ModelRepository
     /**
      * Retrieve new instance of entity
      *
-     * @param array $params
+     * @param array $parameters
      *
      * @return entity
      */
-    public function newEntity(array $params = [])
+    public function newEntity(array $parameters = [])
     {
         $entity = $this->entity;
 
-        return new $entity($params);
+        return new $entity($parameters);
     }
 
     /**
@@ -67,11 +67,11 @@ abstract class ModelRepository
      *
      * @return Collection
      */
-    public function findWhereIn($params)
+    public function findWhereIn($parameters)
     {
         $q = $this->getQuery();
 
-        foreach ($params as $name => $value) {
+        foreach ($parameters as $name => $value) {
             $q->whereIn($name, $value);
         }
 
