@@ -79,7 +79,17 @@ class ResultExecute
     public function getErrors()
     {
         return $this->errors;
-    } 
+    }
+
+    /**
+     * Get error
+     *
+     * @return Exception
+     */
+    public function getError()
+    {
+        return $this->getErrors()->first();
+    }
 
     /**
      * Return if result has been executed without errors
