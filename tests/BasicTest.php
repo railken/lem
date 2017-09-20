@@ -80,9 +80,18 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         # Testing uniqueness
         $this->assertEquals("USER_EMAIL_NOT_UNIQUE", $um->create($this->getUserBag())->getErrors()->first()->getCode());
 
-
         $um->update($resource, $this->getUserBag());
         $um->remove($resource);
+
+
+        # An admin can change username/email/password of all users
+        # An user can change only his own information
+
+        $user_admin = $um->create($this->getUserBag()->set('role', 'admin'));
+        $user_admin_manager = new UserManager();
+        $user_admin_manager->setAgent($user_admin->getResource());
+
     }
+
 
 }

@@ -3,11 +3,12 @@
 namespace Railken\Laravel\Manager\Tests\User;
 
 use Railken\Laravel\Manager\ModelContract;
+use Railken\Laravel\Manager\Permission\AgentContract;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class User extends Authenticatable implements ModelContract
+class User extends Authenticatable implements ModelContract, AgentContract
 {
     use Notifiable, SoftDeletes;
 
