@@ -68,18 +68,6 @@ class $NAME$Observer
     }
 
     /**
-     * Listen to the entity updated event.
-     *
-     * @param EntityContract $entity
-     *
-     * @return void
-     */
-    public function updated(EntityContract $entity)
-    {   
-        // ..
-    }
-
-    /**
      * Listen to the entity saving event.
      *
      * @param EntityContract $entity
