@@ -19,7 +19,6 @@ class $NAME$ParameterBag extends ParameterBag
     {  
     	return $this;
     }
-
 		
 	/**
 	 * Filter current bag using agent for a search
