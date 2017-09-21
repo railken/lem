@@ -60,20 +60,7 @@ abstract class ModelManager
     {
         return new ParameterBag($parameters);
     }
-
-    /**
-     * Has permission to do?
-     *
-     * @param string $permission
-     * @param ModelContract $entity
-     *
-     * @return bool
-     */
-    public function can($permission, $entity)
-    {
-        return $this->getAgent()->can($permission, $entity);
-    }
-
+    
     /**
      * Retrieve repository
      *
