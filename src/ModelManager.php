@@ -2,7 +2,7 @@
 
 namespace Railken\Laravel\Manager;
 
-use Railken\Laravel\Manager\EntityContract;
+use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\Exceptions\InvalidParamValueException;
 use Railken\Laravel\Manager\Exceptions\MissingParamException;
 use Railken\Laravel\Manager\Exceptions\ModelByIdNotFoundException;

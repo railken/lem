@@ -4,6 +4,7 @@ namespace Railken\Laravel\Manager;
 
 use Railken\Bag;
 use Railken\Laravel\Manager\Permission\AgentContract;
+use Railken\Laravel\Manager\Contracts\ParameterBagContract;
 
 abstract class ParameterBag extends Bag implements ParameterBagContract
 {

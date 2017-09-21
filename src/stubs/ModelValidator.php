@@ -2,7 +2,7 @@
 
 namespace $NAMESPACE$;
 
-use Railken\Laravel\Manager\EntityContract;
+use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\ParameterBag;
 use Illuminate\Support\Collection;
 use $NAMESPACE$\Exceptions as Exceptions;

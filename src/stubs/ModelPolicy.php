@@ -3,7 +3,7 @@
 namespace $NAMESPACE$
 
 use Railken\Laravel\Manager\Permission\AgentContract;
-use Railken\Laravel\Manager\ModelPolicyContract;
+use Railken\Laravel\Manager\Contracts\ModelPolicyContract;
 
 class $NAME$Policy implements ModelPolicyContract
 {

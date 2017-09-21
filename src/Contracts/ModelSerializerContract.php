@@ -1,6 +1,6 @@
 <?php
 
-namespace Railken\Laravel\Manager;
+namespace Railken\Laravel\Manager\Contracts;
 
 interface ModelSerializerContract
 {

@@ -2,7 +2,7 @@
 
 namespace $NAMESPACE$;
 
-use Railken\Laravel\Manager\EntityContract;
+use Railken\Laravel\Manager\Contracts\EntityContract;
 
 class $NAME$Observer
 {

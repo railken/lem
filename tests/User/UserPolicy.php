@@ -3,8 +3,8 @@
 namespace Railken\Laravel\Manager\Tests\User;
 
 use Railken\Laravel\Manager\Permission\AgentContract;
-use Railken\Laravel\Manager\ModelPolicyContract;
-use Railken\Laravel\Manager\EntityContract;
+use Railken\Laravel\Manager\Contracts\ModelPolicyContract;
+use Railken\Laravel\Manager\Contracts\EntityContract;
 
 class UserPolicy implements ModelPolicyContract
 {

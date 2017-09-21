@@ -2,10 +2,10 @@
 
 namespace Railken\Laravel\Manager\Tests\User;
 
-use Railken\Laravel\Manager\EntityContract;
+use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\ParameterBag;
 use Railken\Laravel\Manager\Tests\User\Exceptions as Exceptions;
-use Railken\Laravel\Manager\ModelAuthorizerContract;
+use Railken\Laravel\Manager\Contracts\ModelAuthorizerContract;
 use Illuminate\Support\Collection;
 
 class UserAuthorizer implements ModelAuthorizerContract

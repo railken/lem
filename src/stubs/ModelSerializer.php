@@ -2,8 +2,8 @@
 
 namespace $NAMESPACE$;
 
-use Railken\Laravel\Manager\ModelSerializerContract;
-use Railken\Laravel\Manager\EntityContract;
+use Railken\Laravel\Manager\Contracts\ModelSerializerContract;
+use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Bag;
 
 class $NAME$Serializer implements ModelSerializerContract

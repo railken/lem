@@ -1,9 +1,8 @@
 <?php
 
-namespace Railken\Laravel\Manager;
+namespace Railken\Laravel\Manager\Contracts;
 
 use Railken\Laravel\Manager\Permission\AgentContract;
-use Railken\Laravel\Manager\EntityContract;
 
 interface ModelPolicyContract
 {

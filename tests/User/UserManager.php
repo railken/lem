@@ -2,7 +2,7 @@
 
 namespace Railken\Laravel\Manager\Tests\User;
 
-use Railken\Laravel\Manager\EntityContract;
+use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\ModelManager;
 use Railken\Laravel\Manager\Permission\AgentContract;
 use Railken\Laravel\Manager\ParameterBag;
@@ -49,34 +49,9 @@ class UserManager extends ModelManager
     public function fill(EntityContract $entity, ParameterBag $parameters)
     {
         $parameters = $parameters->only(['username', 'role', 'password', 'email']);
-
-
+        
         $entity->fill($parameters->all());
 
         return $entity;
-    }
-
-    /**
-     * This will prevent from saving entity with null value
-     *
-     * @param EntityContract $entity
-     *
-     * @return EntityContract
-     */
-    public function save(EntityContract $entity)
-    {
-        return parent::save($entity);
-    }
-
-    /**
-     * Remove a EntityContract
-     *
-     * @param Railken\Laravel\Manager\EntityContract $entity
-     *
-     * @return void
-     */
-    public function remove(EntityContract $entity)
-    {
-        return $entity->delete();
     }
 }
