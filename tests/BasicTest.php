@@ -76,8 +76,11 @@ class BasicTest extends \Orchestra\Testbench\TestCase
     {
 
         $generator = new Generator();
-        $generator->generate(__DIR__."", "Generated\Foo");
-        $this->assertEquals(true, File::exists(base_path("/src/Core/Maybe/Foo")));
+        $generator->generate(__DIR__."/Generated", "Railken\Laravel\Manager\Tests\Generated\Foo");
+        $this->assertEquals(true, File::exists(__DIR__."/Generated/Foo"));
+
+
+        $m = new \Railken\Laravel\Manager\Tests\Generated\Foo\FooManager();
 
     }
 
