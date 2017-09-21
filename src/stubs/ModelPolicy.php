@@ -1,15 +1,14 @@
 <?php
 
-namespace Railken\Laravel\Manager\Tests\User;
+namespace $NAMESPACE$
 
 use Railken\Laravel\Manager\Permission\AgentContract;
 use Railken\Laravel\Manager\ModelPolicyContract;
-use Railken\Laravel\Manager\EntityContract;
 
-class UserPolicy implements ModelPolicyContract
+class $NAME$Policy implements ModelPolicyContract
 {
     /**
-     * Determine if the given post can be updated by the user.
+     * Determine if the given entity can be updated by the agent.
      *
      * @param AgentContract $agent
      * @param EntityContract $entity
@@ -18,6 +17,6 @@ class UserPolicy implements ModelPolicyContract
      */
     public function update(AgentContract $agent, EntityContract $entity)
     {   
-        return $agent->isRoleAdmin() || ($agent->isRoleUser() && $agent->id == $entity->id);
+    	// ...
     }
 }

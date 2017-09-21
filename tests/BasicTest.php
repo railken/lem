@@ -60,8 +60,6 @@ class BasicTest extends \Orchestra\Testbench\TestCase
             $table->timestamps();
         });
 
-        User::observe(UserObserver::class);
-        Gate::policy(User::class, UserPolicy::class);
     }
 
     /**
