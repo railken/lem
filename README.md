@@ -36,7 +36,7 @@ if ($result->ok()) {
 
 ```
 
-How can you get an Error during an operation? An error occurs when a validation or authorization fails. The cool thing about it is that you have the total control during each process: using with [ModelValidator](###ModelValidator) and [ModalAuthorizer](###ModelAuthorizer). When you're retrieving errors you're receiving a Collection, it goes pretty well when you're developing an api. Here's an example
+How can you get an Error during an operation? An error occurs when a validation or authorization fails. The cool thing about it is that you have the total control during each process: using with [ModelValidator](###ModelValidator) and [ModelAuthorizer](###ModelAuthorizer). When you're retrieving errors you're receiving a Collection, it goes pretty well when you're developing an api. Here's an example
 ```php
 $manager = new FooManager();
 $result = $manager->create($manager->parameters(['name' => 'f']));
@@ -227,7 +227,7 @@ class FooParameterBag extends ParameterBag
 
 ```
 
-###ModelAuthorizer
+### ModelAuthorizer
 Has you can see this class has only this method and what it does is a simple bridge between the ModelManager and the ModelPolicy. So all the "rules" for authorization are defined in the ModelPolicy.
 
 You can leave this as is it, or change and used another method for authorization.
@@ -267,7 +267,7 @@ class FooAuthorizer implements ModelAuthorizerContract
 
 ```
 
-###ModelValidator
+### ModelValidator
 Here comes the validator, and again it's very simple. validate() is called whenever an create/update are called.
 Remember: always return the collection of errors.
 
