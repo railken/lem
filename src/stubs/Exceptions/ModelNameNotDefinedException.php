@@ -2,7 +2,7 @@
 
 namespace $NAMESPACE$\Exceptions;
 
-class UserEmailNotDefinedException extends $NAME$AttributeException
+class UserNameNotDefinedException extends $NAME$AttributeException
 {
 
 	/**
@@ -10,7 +10,7 @@ class UserEmailNotDefinedException extends $NAME$AttributeException
 	 *
 	 * @var string
 	 */
-	protected $attribute = 'NAME';
+	protected $attribute = '$NAME$';
 
 	/**
 	 * The code to identify the error
