@@ -17,6 +17,8 @@ class $NAME$Manager extends ModelManager
 	public function __construct(AgentContract $agent = null)
 	{
 		$this->repository = new $NAME$Repository($this);
+		$this->authorizer = new $NAME$Authorizer($this);
+		$this->validator = new $NAME$Validator($this);
 		$this->serializer = new $NAME$Serializer($this);
 
 		parent::__construct($agent);
@@ -26,36 +28,16 @@ class $NAME$Manager extends ModelManager
 	 * Fill the entity
 	 *
 	 * @param EntityContract $entity
-	 * @param array $parameters
+	 * @param $NAME$ParameterBag $parameters
 	 *
 	 * @return EntityContract
 	 */
-	public function fill(EntityContract $entity, array $parameters)
+	public function fill(EntityContract $entity, $NAME$ParameterBag $parameters)
 	{
-
-		$parameters = $this->getOnlyParams($parameters, ['name']);
+		$parameters = $parameters->only(['name']);
 
 		$entity->fill($parameters);
 
 		return $entity;
-
 	}
-
-	/**
-	 * This will prevent from saving entity with null value
-	 *
-	 * @param EntityContract $entity
-	 *
-	 * @return EntityContract
-	 */
-	public function save(EntityContract $entity)
-	{
-		$this->throwExceptionParamsNull([
-			'name' => $entity->name,
-		]);
-
-		return parent::save($entity);
-	}
-
-
 }
