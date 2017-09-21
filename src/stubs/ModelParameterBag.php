@@ -1,6 +1,6 @@
 <?php
 
-namespace $NAMESPACE$
+namespace $NAMESPACE$;
 
 use Railken\Laravel\Manager\Permission\AgentContract;
 use Railken\Laravel\Manager\ParameterBag;
