@@ -29,7 +29,7 @@ class Generator
     public function generate($path, $namespace)
     {
        
-        $path = base_path("/".$path."/").str_replace("\\", "/", $namespace);
+        $path = $path."/".str_replace("\\", "/", $namespace);
         $name = collect(explode("\\", $namespace))->last();
         
         $vars = [

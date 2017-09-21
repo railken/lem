@@ -42,7 +42,7 @@ class Generate extends Command
     { 
 
         $generator = new Generator();
-        $generator->generate($this->argument('path'), $this->argument('name'));
+        $generator->generate(base_path($this->argument('path')), $this->argument('name'));
         $this->info("{$this->argument('name')} generated.");
 
     }
