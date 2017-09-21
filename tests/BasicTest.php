@@ -12,6 +12,7 @@ use Railken\Laravel\Manager\Tests\User\User;
 use Railken\Laravel\Manager\Tests\User\UserManager;
 use Railken\Laravel\Manager\Tests\User\UserObserver;
 use Railken\Laravel\Manager\Tests\User\UserPolicy;
+use Railken\Laravel\Manager\Tests\User\UserServiceProvider;
 use Railken\Bag;
 use File;
 
@@ -31,6 +32,7 @@ class BasicTest extends \Orchestra\Testbench\TestCase
     {
         return [
             \Railken\Laravel\Manager\ManagerServiceProvider::class,
+            UserServiceProvider::class,
         ];
     }
 
