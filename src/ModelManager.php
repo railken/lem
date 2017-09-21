@@ -84,9 +84,8 @@ abstract class ModelManager
      */
     public function findOneBy(ParameterBag $parameters)
     {
-
         if ($this->agent) {
-            $parameters = $parameters->filterByAgent($this->agent);
+            $parameters = $parameters->filterSearchableByAgent($this->agent);
         }
 
         $result = $this->getRepository()->findOneBy($parameters->all());
@@ -103,9 +102,8 @@ abstract class ModelManager
      */
     public function findBy(ParameterBag $parameters)
     {
-
         if ($this->agent) {
-            $parameters = $parameters->filterByAgent($this->agent);
+            $parameters = $parameters->filterSearchableByAgent($this->agent);
         }
 
         $results = $this->getRepository()->findBy($parameters->all());

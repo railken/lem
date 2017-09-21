@@ -20,4 +20,16 @@ abstract class ParameterBag extends Bag implements ParameterBagContract
     {
         return $this;
     }
+    
+    /**
+     * Filter current bag using agent for a search
+     *
+     * @param AgentContract $agent
+     *
+     * @return this
+     */
+    public function filterSearchableByAgent(AgentContract $agent)
+    {  
+        return $this;
+    }
 }

@@ -19,4 +19,17 @@ class $NAME$ParameterBag extends ParameterBag
     {  
     	return $this;
     }
+
+		
+	/**
+	 * Filter current bag using agent for a search
+	 *
+	 * @param AgentContract $agent
+	 *
+	 * @return this
+	 */
+	public function filterSearchableByAgent(AgentContract $agent)
+    {  
+    	return $this;
+    }
 }

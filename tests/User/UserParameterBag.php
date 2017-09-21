@@ -18,11 +18,29 @@ class UserParameterBag extends ParameterBag
     public function filterByAgent(AgentContract $agent)
     {
         if ($agent->isRoleUser()) {
-            return $this->only(['title']);
+            return $this->only(['username', 'email', 'password']);
         }
  
         if ($agent->isRoleAdmin()) {
             return $this;
+        }
+    }
+
+    /**
+     * Filter current bag using agent for a search
+     *
+     * @param AgentContract $agent
+     *
+     * @return this
+     */
+    public function filterSearchableByAgent(AgentContract $agent)
+    {
+        if ($agent->isRoleUser()) {
+            return $this->only(['username', 'email']);
+        }
+ 
+        if ($agent->isRoleAdmin()) {
+            return $this->only(['username', 'email']);
         }
     }
 }
