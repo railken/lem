@@ -76,7 +76,7 @@ class $NAME$Validator implements ModelValidatorContract
 	{
 		$errors = new Collection();
 
-		$parameters->exists('name') && !$this->validUsername($parameters->get('name')) && 
+		$parameters->exists('name') && !$this->validName($parameters->get('name')) && 
 			$errors->push(new Exceptions\$NAME$NameNotValidException($parameters->get('name')));
 
 
@@ -90,9 +90,9 @@ class $NAME$Validator implements ModelValidatorContract
 	 *
 	 * @return boolean
 	 */
-	public function validUsername($name)
+	public function validName($name)
 	{
-		return strlen($name) >= 3 && strlen($name) < 255;
+		return $name === null || (strlen($name) >= 3 && strlen($name) < 255);
 	}
 
 }
