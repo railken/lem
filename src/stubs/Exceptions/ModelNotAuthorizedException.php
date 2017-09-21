@@ -13,7 +13,7 @@ class $NAME$NotAuthorizedException extends Exception implements ModelNotAuthoriz
 	 *
 	 * @var string
 	 */
-	protected $code = '$NAME$_NOT_AUTHORIZED';
+	protected $code = '$UP:NAME$_NOT_AUTHORIZED';
 
 	/**
 	 * The message

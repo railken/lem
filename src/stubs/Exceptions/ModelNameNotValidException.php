@@ -10,14 +10,14 @@ class $NAME$NameNotValidException extends $NAME$AttributeException
 	 *
 	 * @var string
 	 */
-	protected $attribute = '$NAME$';
+	protected $attribute = 'name';
 
 	/**
 	 * The code to identify the error
 	 *
 	 * @var string
 	 */
-	protected $code = '$NAME$_NAME_NOT_VALID';
+	protected $code = '$UP:NAME$_NAME_NOT_VALID';
 
 	/**
 	 * The message
