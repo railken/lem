@@ -20,15 +20,24 @@ interface ModelRepositoryContract
      * @return string
      */
     public function getEntity();
-
+    
     /**
      * Find by primary
      *
-     * @param integer $id
+     * @param array $parameters
      *
-     * @return User
+     * @return Collection
      */
-    public function find($id);
+    public function findBy($parameters);
+
+    /**
+     * Find one by
+     *
+     * @param array $parameters
+     *
+     * @return Entity
+     */
+    public function findOneBy($parameters);
 
     /**
      * Find where in

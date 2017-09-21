@@ -123,7 +123,7 @@ class BasicTest extends \Orchestra\Testbench\TestCase
 
         $this->assertEquals(true, $user_manager->update($user, $um->parameters(['role' => User::ROLE_ADMIN]))->getResource()->isRoleUser());
 
-        $um->find($um->parameters(['username' => 'test123']));
+        $um->findOneBy($um->parameters(['username' => 'test123']));
 
 
 

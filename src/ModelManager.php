@@ -82,50 +82,42 @@ abstract class ModelManager
      *
      * @return mixed
      */
-    public function find(ParameterBag $parameters)
+    public function findOneBy(ParameterBag $parameters)
     {
-        return $this->getRepository()->find($parameters->all());
+
+        if ($this->agent) {
+            $parameters = $parameters->filterByAgent($this->agent);
+        }
+
+        $result = $this->getRepository()->findOneBy($parameters->all());
+
+        return $this->agent && $this->authorizer && $this->authorizer->retrieve($result, $parameters)->count() !== 0 ? null : $result;
     }
 
+
     /**
-     * Find where in
+     * Find
      *
      * @param ParameterBag $parameters
      *
-     * @return Collection ?
+     * @return mixed
      */
-    public function findWhereIn(ParameterBag $parameters)
+    public function findBy(ParameterBag $parameters)
     {
-        return $this->getRepository()->findWhereIn($parameters->all());
-    }
 
-    /**
-     * First or create
-     *
-     * @param ParameterBag $parameters
-     *
-     * @return EntityContract
-     */
-    public function findOrCreate(ParameterBag $parameters)
-    {
-        $entity = $this->find($parameters);
+        if ($this->agent) {
+            $parameters = $parameters->filterByAgent($this->agent);
+        }
 
-        return $entity ? $entity : $this->create($this->parameters($parameters));
-    }
+        $results = $this->getRepository()->findBy($parameters->all());
 
-    /**
-     * Update or create
-     *
-     * @param Railken\Bag $criteria
-     * @param Railken\Laravel\Manager\ParameterBag $parameters
-     *
-     * @return Railken\Laravel\Manager\ResultAction
-     */
-    public function updateOrCreate(Bag $criteria, ParameterBag $parameters)
-    {
-        $entity = $this->find($parameters);
+        if ($this->authorizer && $this->agent) {
+            $results = $results->filter(function ($entity, $key) use ($parameters){
+                $this->authorizer->retrieve($entity, $parameters)->count() == 0;
+            });
+        }
 
-        return $entity ? $this->update($entity, $parameters) : $this->create($parameters);
+        return $results;
     }
 
     /**
@@ -142,7 +134,7 @@ abstract class ModelManager
 
         if ($this->agent) {
             $parameters = $parameters->filterByAgent($this->agent);
-            $result->addErrors($this->authorizer->create($entity, $parameters));
+            $this->authorizer && $result->addErrors($this->authorizer->create($entity, $parameters));
         }
 
         $this->validator && $result->addErrors($this->validator->validate($entity, $parameters));
@@ -164,7 +156,7 @@ abstract class ModelManager
         
         if ($this->agent) {
             $parameters = $parameters->filterByAgent($this->agent);
-            $result->addErrors($this->authorizer->update($entity, $parameters));
+            $this->authorizer && $result->addErrors($this->authorizer->update($entity, $parameters));
         }
 
         $this->validator && $result->addErrors($this->validator->validate($entity, $parameters));
@@ -274,4 +266,34 @@ abstract class ModelManager
 
         return $entity;
     }
+
+    /**
+     * First or create
+     *
+     * @param ParameterBag $parameters
+     *
+     * @return EntityContract
+     */
+    public function findOrCreate(ParameterBag $parameters)
+    {
+        $entity = $this->find($parameters);
+
+        return $entity ? $entity : $this->create($this->parameters($parameters));
+    }
+
+    /**
+     * Update or create
+     *
+     * @param Railken\Bag $criteria
+     * @param Railken\Laravel\Manager\ParameterBag $parameters
+     *
+     * @return Railken\Laravel\Manager\ResultAction
+     */
+    public function updateOrCreate(Bag $criteria, ParameterBag $parameters)
+    {
+        $entity = $this->find($parameters);
+
+        return $entity ? $this->update($entity, $parameters) : $this->create($parameters);
+    }
+
 }

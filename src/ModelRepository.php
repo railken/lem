@@ -41,25 +41,25 @@ abstract class ModelRepository implements ModelRepositoryContract
     /**
      * Find by primary
      *
-     * @param integer $id
+     * @param array $parameters
      *
-     * @return User
+     * @return Collection
      */
-    public function find($id)
+    public function findBy($parameters)
     {
-        return $this->findById($id);
+        return $this->getQuery()->where($parameters)->get();
     }
 
     /**
-     * Find by primary
+     * Find one by
      *
-     * @param integer $id
+     * @param array $parameters
      *
-     * @return User
+     * @return Entity
      */
-    public function findById($id)
+    public function findOneBy($parameters)
     {
-        return $this->getQuery()->whereId($id)->first();
+        return $this->getQuery()->where($parameters)->first();
     }
 
     /**
