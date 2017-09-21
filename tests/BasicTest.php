@@ -124,56 +124,5 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         $this->assertEquals(true, $user_manager->update($user, $um->parameters(['role' => User::ROLE_ADMIN]))->getResource()->isRoleUser());
 
         $um->findOneBy($um->parameters(['username' => 'test123']));
-
-
-
-/**
-
-$manager = new PostManager();
-$manager->setAgent($user); // $user role = 'user'
-
-# Case 1
-# The filtering of parameters is handled by PostParameterBag
-class PostParameterBag extends Bag
-{
-    public function filterByAgent(AgentContract $agent)
-    {
-        if ($agent->isRoleUser())
-            return $this->only(['title']);
-
-
-        if ($agent->isRoleAdmin())
-            return $this;
-    }
-}
-$parameters = new PostParameterBag(['title' => 'edited', 'pinned' => '1']);
-$result = $manager->update($post, $parameters->filterByAgent($user->getAgent()));
-# -----
-
-
-# Case 2
-# The filtering of parameters is handled by PostAuthorizer:filter()
-# Note: PostAuthorizer already have :authorize() which push error in case of unauthorized operation
-
-class PostAuthorizer
-{
-    public function filter(EntityContract $entity, ParameterBag $parameters)
-    {
-        if ($this->manager->agent->isRoleUser())
-            return $parameters->only(['title']);
-
-
-        if ($this->manager->agent->isRoleAdmin())
-            return $parameters;
-    }
-}
-
-$parameters = new Bag(['title' => 'edited', 'pinned' => '1']);
-$result = $manager->update($post, $parameters);
-# ------
-
-$result->getParameters(); // ['title' => 'edited']. pinned for admin only
-
-**/
     }
 }
