@@ -81,7 +81,7 @@ abstract class ModelManager
      */
     public function findOrCreate(Bag $parameters)
     {
-        $entity = $this->getRepository()->getQuery()->where($parameters)->first();
+        $entity = $this->getRepository()->getQuery()->where($parameters->all())->first();
 
         return $entity ? $entity : $this->create($parameters);
     }
@@ -89,14 +89,14 @@ abstract class ModelManager
     /**
      * Update or create
      *
-     * @param array $criteria
+     * @param Bag $criteria
      * @param Bag $parameters
      *
      * @return ModelContract
      */
-    public function updateOrCreate(array $criteria, Bag $parameters)
+    public function updateOrCreate(Bag $criteria, Bag $parameters)
     {
-        $entity = $this->getRepository()->getQuery()->where($criteria)->first();
+        $entity = $this->getRepository()->getQuery()->where($criteria->all())->first();
 
         return $entity ? $this->update($entity, $parameters) : $this->create($parameters);
     }
@@ -104,23 +104,23 @@ abstract class ModelManager
     /**
      * Find
      *
-     * @param array $parameters
+     * @param Bag $parameters
      *
      * @return mixed
      */
-    public function find(array $parameters)
+    public function find(Bag $parameters)
     {
-        return $this->getRepository()->find($parameters);
+        return $this->getRepository()->find($parameters->all());
     }
 
     /**
      * Find where in
      *
-     * @param array $parameters
+     * @param Bag $parameters
      *
      * @return Collection ?
      */
-    public function findWhereIn(array $parameters)
+    public function findWhereIn(Bag $parameters)
     {
         return $this->getRepository()->findWhereIn($parameters);
     }

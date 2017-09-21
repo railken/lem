@@ -97,6 +97,8 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         $user_manager = new UserManager($user);
 
 
+
+
         $this->assertEquals(false, $user_manager->update($user_admin, new Bag(['email' => 'new@test.net']))->isAuthorized());
         $this->assertEquals(true, $user_manager->update($user, new Bag(['email' => 'new@test.net']))->isAuthorized());
 
@@ -104,6 +106,9 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         $this->assertEquals(true, $user_admin_manager->update($user, new Bag(['email' => 'new3@test.net']))->ok());
 
         $this->assertEquals(true, $user_manager->update($user, new Bag(['role' => User::ROLE_ADMIN]))->getResource()->isRoleUser());
+
+        $um->find(new Bag(['username' => 'test123']));
+
 
     }
 
