@@ -1,24 +1,25 @@
 <?php
 
-namespace Railken\Laravel\Manager\Tests\User;
+namespace $NAMESPACE$;
 
 use Railken\Laravel\Manager\EntityContract;
 use Railken\Laravel\Manager\ParameterBag;
-use Illuminate\Support\Collection;
 use Railken\Laravel\Manager\Tests\User\Exceptions as Exceptions;
+use Railken\Laravel\Manager\Exceptions\NotAuthorizedException;
+use Illuminate\Support\Collection;
 
-class UserAuthorizer
+class $NAME$Authorizer
 {
 
 	/**
-	 * @var ModelManager
+	 * @var $NAME$Manager
 	 */
 	protected $manager;
 
 	/**
 	 * Construct
 	 */
-	public function __construct(UserManager $manager)
+	public function __construct($NAME$Manager $manager)
 	{
 		$this->manager = $manager;
 	}
@@ -35,7 +36,7 @@ class UserAuthorizer
 	{
 		$errors = new Collection();
 
-		!$this->manager->agent->can('update', $entity) && $errors->push(new Exceptions\UserNotAuthorizedException($entity));
+		!$this->manager->agent->can('update', $entity) && $errors->push(new NotAuthorizedException($entity));
 
 		return $errors;
 	}

@@ -7,11 +7,13 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Database\Schema\Blueprint;
 
+use Railken\Laravel\Manager\Generator;
 use Railken\Laravel\Manager\Tests\User\User;
 use Railken\Laravel\Manager\Tests\User\UserManager;
 use Railken\Laravel\Manager\Tests\User\UserObserver;
 use Railken\Laravel\Manager\Tests\User\UserPolicy;
 use Railken\Bag;
+use File;
 
 class BasicTest extends \Orchestra\Testbench\TestCase
 {
@@ -23,6 +25,13 @@ class BasicTest extends \Orchestra\Testbench\TestCase
      */
     protected function getEnvironmentSetUp($app)
     {
+    }
+
+    protected function getPackageProviders($app)
+    {
+        return [
+            \Railken\Laravel\Manager\ManagerServiceProvider::class,
+        ];
     }
 
     /**
@@ -61,6 +70,15 @@ class BasicTest extends \Orchestra\Testbench\TestCase
     public function getUserBag()
     {
         return ['email' => 'test@test.net', 'username' => 'test123', 'password' => microtime()];
+    }
+
+    public function testGenerate()
+    {
+
+        $generator = new Generator();
+        $generator->generate("src", "Core/Maybe/Foo");
+        $this->assertEquals(true, File::exists(base_path("/src/Core/Maybe/Foo")));
+
     }
 
     public function testBasics()

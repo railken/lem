@@ -147,7 +147,7 @@ class ResultExecute
     public function isAuthorized()
     {
         return $this->getErrors()->search(function ($error, $key) {
-            return $error instanceof Exceptions\NotAuthorizedException;
+            return $error instanceof Exceptions\ModelNotAuthorizedException;
         }) === false;
     }
 }

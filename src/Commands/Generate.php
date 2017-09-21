@@ -14,7 +14,7 @@ class Generate extends Command
      *
      * @var string
      */
-    protected $signature = 'railken:make:manager {base_path} {path} {name}';
+    protected $signature = 'railken:make:manager {path} {name}'; // e.g. "php artisan railken:make:manager src Core\User"
 
     /**
      * The console command description.
@@ -39,38 +39,11 @@ class Generate extends Command
      * @return mixed
      */
     public function handle()
-    {
-        $name = ucfirst($this->argument('name'));
-        
-        $path = $this->argument('path');
-        $namespace = str_replace("/", "\\", $path);
+    { 
 
-        $namespace .= "\\".$name;
+        $generator = new Generator();
+        $generator->generate($this->argument('path'), $this->argument('name'));
+        $this->info("{$this->argument('name')} generated.");
 
-        $path = base_path($this->argument('base_path')."/".$path."/");
-
-
-        try {
-            $gn = new Generator($path);
-        } catch (\Exception $e) {
-            $this->error($e->getMessage());
-            return;
-        }
-
-        $v = "5.0"."/";
-
-        $vars = [
-            'NAMESPACE' => $namespace,
-            'NAME' => $name,
-            'LOW:NAME' => strtolower($name),
-        ];
-
-        $gn->put("$v/Model.php", "{$name}/{$name}.php", $vars);
-        $gn->put("$v/ModelManager.php", "{$name}/{$name}Manager.php", $vars);
-        $gn->put("$v/ModelRepository.php", "{$name}/{$name}Repository.php", $vars);
-        $gn->put("$v/ModelSerializer.php", "{$name}/{$name}Serializer.php", $vars);
-
-
-        $this->info("\n".$name." generated");
     }
 }

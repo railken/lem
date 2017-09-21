@@ -1,10 +1,10 @@
 <?php
 
-namespace Railken\Laravel\Manager\Exceptions;
+namespace $NAMESPACE$\Exceptions;
 
 use Exception;
 
-class NotAuthorizedException extends Exception
+class $NAME$NotAuthorizedException extends Exception
 {
 
 	/**
@@ -12,7 +12,7 @@ class NotAuthorizedException extends Exception
 	 *
 	 * @var string
 	 */
-	protected $code = 'NOT_AUTHORIZED';
+	protected $code = '$NAME$_NOT_AUTHORIZED';
 
 	/**
 	 * The message
