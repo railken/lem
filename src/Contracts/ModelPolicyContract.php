@@ -2,7 +2,7 @@
 
 namespace Railken\Laravel\Manager\Contracts;
 
-use Railken\Laravel\Manager\Permission\AgentContract;
+use Railken\Laravel\Manager\Contracts\AgentContract;
 
 interface ModelPolicyContract
 {

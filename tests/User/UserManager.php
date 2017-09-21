@@ -4,7 +4,7 @@ namespace Railken\Laravel\Manager\Tests\User;
 
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\ModelManager;
-use Railken\Laravel\Manager\Permission\AgentContract;
+use Railken\Laravel\Manager\Contracts\AgentContract;
 use Railken\Laravel\Manager\ParameterBag;
 use Railken\Laravel\Manager\Tests\User\User;
 use Illuminate\Support\Collection;

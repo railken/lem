@@ -1,6 +1,6 @@
 <?php
 
-namespace Railken\Laravel\Manager\Permission;
+namespace Railken\Laravel\Manager\Contracts;
 
 interface AgentContract
 {

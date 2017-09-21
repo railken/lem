@@ -3,7 +3,7 @@
 namespace Railken\Laravel\Manager\Tests\User;
 
 use Railken\Laravel\Manager\Contracts\EntityContract;
-use Railken\Laravel\Manager\Permission\AgentContract;
+use Railken\Laravel\Manager\Contracts\AgentContract;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;

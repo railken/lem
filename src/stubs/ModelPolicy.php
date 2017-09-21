@@ -2,7 +2,7 @@
 
 namespace $NAMESPACE$
 
-use Railken\Laravel\Manager\Permission\AgentContract;
+use Railken\Laravel\Manager\Contracts\AgentContract;
 use Railken\Laravel\Manager\Contracts\ModelPolicyContract;
 
 class $NAME$Policy implements ModelPolicyContract

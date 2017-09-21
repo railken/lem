@@ -2,7 +2,7 @@
 
 namespace Railken\Laravel\Manager\Tests\User;
 
-use Railken\Laravel\Manager\Permission\AgentContract;
+use Railken\Laravel\Manager\Contracts\AgentContract;
 use Railken\Laravel\Manager\ParameterBag;
 
 class UserParameterBag extends ParameterBag

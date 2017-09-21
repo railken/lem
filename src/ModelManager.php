@@ -6,7 +6,7 @@ use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\Exceptions\InvalidParamValueException;
 use Railken\Laravel\Manager\Exceptions\MissingParamException;
 use Railken\Laravel\Manager\Exceptions\ModelByIdNotFoundException;
-use Railken\Laravel\Manager\Permission\AgentContract;
+use Railken\Laravel\Manager\Contracts\AgentContract;
 
 use DB;
 use Exception;
