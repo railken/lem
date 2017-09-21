@@ -42,7 +42,7 @@ abstract class ModelManager
     /**
      * Set the agent
      *
-     * @param AgentContract $agent
+     * @param Railken\Laravel\Manager\Contracts\AgentContract $agent
      *
      * @return $this
      */
@@ -78,9 +78,9 @@ abstract class ModelManager
     /**
      * Find
      *
-     * @param ParameterBag $parameters
+     * @param Railken\Laravel\Manager\ParameterBag $parameters
      *
-     * @return mixed
+     * @return Railken\Laravel\Manager\Contracts\EntityContract
      */
     public function findOneBy(ParameterBag $parameters)
     {
@@ -94,13 +94,12 @@ abstract class ModelManager
         return $this->agent && $this->authorizer && $this->authorizer->retrieve($result, $parameters)->count() !== 0 ? null : $result;
     }
 
-
     /**
-     * Find
+     * Find by parameters
      *
-     * @param ParameterBag $parameters
+     * @param Railken\Laravel\Manager\ParameterBag $parameters
      *
-     * @return mixed
+     * @return Collection
      */
     public function findBy(ParameterBag $parameters)
     {
@@ -123,7 +122,7 @@ abstract class ModelManager
     /**
      * Create a new EntityContract given parameters
      *
-     * @param ParameterBag $parameters
+     * @param Railken\Laravel\Manager\ParameterBag $parameters
      *
      * @return Railken\Laravel\Manager\ResultAction
      */
@@ -197,9 +196,9 @@ abstract class ModelManager
     /**
      * Save the entity
      *
-     * @param  Railken\Laravel\Manager\EntityContract $entity
+     * @param  Railken\Laravel\Manager\Contracts\EntityContract $entity
      *
-     * @return Railken\Laravel\Manager\EntityContract
+     * @return Railken\Laravel\Manager\Contracts\EntityContract
      */
     public function save(EntityContract $entity)
     {
@@ -209,7 +208,7 @@ abstract class ModelManager
     /**
      * Remove a EntityContract
      *
-     * @param Railken\Laravel\Manager\EntityContract $entity
+     * @param Railken\Laravel\Manager\Contracts\EntityContract $entity
      *
      * @return void
      */
@@ -228,9 +227,9 @@ abstract class ModelManager
     /**
      * Delete a EntityContract
      *
-     * @param Railken\Laravel\Manager\EntityContract $entity
+     * @param Railken\Laravel\Manager\Contracts\EntityContract $entity
      *
-     * @return void
+     * @return Railken\Laravel\Manager\ResultAction
      */
     protected function delete(EntityContract $entity)
     {
@@ -255,7 +254,7 @@ abstract class ModelManager
     /**
      * Fill entity EntityContract with array
      *
-     * @param Railken\Laravel\Manager\EntityContract $entity
+     * @param Railken\Laravel\Manager\Contracts\EntityContract $entity
      * @param Railken\Laravel\Manager\ParameterBag $parameters
      *
      * @return void
@@ -270,7 +269,7 @@ abstract class ModelManager
     /**
      * First or create
      *
-     * @param ParameterBag $parameters
+     * @param Railken\Laravel\Manager\ParameterBag $parameters
      *
      * @return EntityContract
      */
@@ -284,7 +283,7 @@ abstract class ModelManager
     /**
      * Update or create
      *
-     * @param Railken\Bag $criteria
+     * @param Railken\Laravel\Manager\ParameterBag $criteria
      * @param Railken\Laravel\Manager\ParameterBag $parameters
      *
      * @return Railken\Laravel\Manager\ResultAction
