@@ -1,9 +1,10 @@
 <?php
 
-namespace $NAMESPACE$
+namespace $NAMESPACE$;
 
 use Railken\Laravel\Manager\Contracts\AgentContract;
 use Railken\Laravel\Manager\Contracts\ModelPolicyContract;
+use Railken\Laravel\Manager\Contracts\EntityContract;
 
 class $NAME$Policy implements ModelPolicyContract
 {
