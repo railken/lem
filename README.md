@@ -1,6 +1,6 @@
 # Laravel Manager
 
-Organize your models with a specific criteria: Model + Repository + Manager
+Organize your project with a defined structure to handle Models in laravel: manipulate, validate, authorize, serialize, etc...
 
 ## Requirements
 
