@@ -2,10 +2,11 @@
 
 namespace $NAMESPACE$;
 
-use Railken\Laravel\Manager\ModelSerializer;
+use Railken\Laravel\Manager\ModelSerializerContract;
 use Railken\Laravel\Manager\EntityContract;
+use Railken\Bag;
 
-class $NAME$Serializer extends ModelSerializer
+class $NAME$Serializer implements ModelSerializerContract
 {
 
 	/**
@@ -17,9 +18,24 @@ class $NAME$Serializer extends ModelSerializer
 	 */
 	public function serialize(EntityContract $entity)
 	{
-		return [
-			'id' => $entity->id
-		];
+		$bag = $this->serializeBrief($entity);
+
+		return $bag;
 	}
 
+	/**
+	 * Serialize entity
+	 *
+	 * @param EntityContract $entity
+	 *
+	 * @return array
+	 */
+	public function serializeBrief(EntityContract $entity)
+	{
+		$bag = new Bag();
+
+		$bag->set('id', $entity->id);
+
+		return $bag;
+	}
 }

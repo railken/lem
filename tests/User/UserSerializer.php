@@ -2,12 +2,12 @@
 
 namespace Railken\Laravel\Manager\Tests\User;
 
-use Railken\Laravel\Manager\ModelSerializer;
+use Railken\Laravel\Manager\ModelSerializerContract;
 use Railken\Laravel\Manager\EntityContract;
 
 use Railken\Bag;
 
-class UserSerializer extends ModelSerializer
+class UserSerializer implements ModelSerializerContract
 {
 
 	/**
@@ -18,6 +18,19 @@ class UserSerializer extends ModelSerializer
 	 * @return array
 	 */
 	public function serialize(EntityContract $entity)
+	{
+		$bag = $this->serializeBrief($entity);
+
+		return $bag;
+	}
+	/**
+	 * Serialize entity
+	 *
+	 * @param EntityContract $entity
+	 *
+	 * @return array
+	 */
+	public function serializeBrief(EntityContract $entity)
 	{
 		$bag = new Bag();
 
