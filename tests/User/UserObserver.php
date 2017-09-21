@@ -2,7 +2,6 @@
 
 namespace Railken\Laravel\Manager\Tests\User;
 
-
 class UserObserver
 {
     /**
@@ -27,6 +26,5 @@ class UserObserver
         $user->email = null;
         $user->username = '@deleted';
         $user->save();
-
     }
 }

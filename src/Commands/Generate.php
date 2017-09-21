@@ -39,11 +39,9 @@ class Generate extends Command
      * @return mixed
      */
     public function handle()
-    { 
-
+    {
         $generator = new Generator();
         $generator->generate(base_path($this->argument('path')), $this->argument('name'));
         $this->info("{$this->argument('name')} generated.");
-
     }
 }

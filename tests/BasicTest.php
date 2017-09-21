@@ -41,7 +41,6 @@ class BasicTest extends \Orchestra\Testbench\TestCase
      */
     public function setUp()
     {
-
         $dotenv = new \Dotenv\Dotenv(__DIR__."/..", '.env');
         $dotenv->load();
 
@@ -59,7 +58,6 @@ class BasicTest extends \Orchestra\Testbench\TestCase
             $table->softDeletes();
             $table->timestamps();
         });
-
     }
 
     /**
@@ -74,19 +72,16 @@ class BasicTest extends \Orchestra\Testbench\TestCase
 
     public function testGenerate()
     {
-
         $generator = new Generator();
         $generator->generate(__DIR__."/Generated", "Railken\Laravel\Manager\Tests\Generated\Foo");
         $this->assertEquals(true, File::exists(__DIR__."/Generated/Foo"));
 
 
         $m = new \Railken\Laravel\Manager\Tests\Generated\Foo\FooManager();
-
     }
 
     public function testBasics()
     {
-
         $um = new UserManager();
 
         # Testing validation
@@ -181,6 +176,4 @@ $result->getParameters(); // ['title' => 'edited']. pinned for admin only
 
 **/
     }
-
-
 }

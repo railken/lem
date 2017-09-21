@@ -14,7 +14,6 @@ class Generator
      */
     public function __construct()
     {
-
     }
 
 
@@ -28,7 +27,6 @@ class Generator
      */
     public function generate($path, $namespace)
     {
-        
         $namespaces = collect(explode("\\", $namespace));
         $name = $namespaces->last();
         $path = $path."/".$name;

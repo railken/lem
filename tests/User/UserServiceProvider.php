@@ -13,7 +13,7 @@ class UserServiceProvider extends ServiceProvider
      * @return void
      */
     public function register()
-    {   
+    {
         User::observe(UserObserver::class);
         Gate::policy(User::class, UserPolicy::class);
     }

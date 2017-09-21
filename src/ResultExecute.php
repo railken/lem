@@ -125,7 +125,7 @@ class ResultExecute
     public function ok()
     {
         return $this->success();
-    }   
+    }
 
     /**
      * Retrieve a "short" version of errors

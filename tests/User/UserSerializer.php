@@ -10,35 +10,34 @@ use Railken\Bag;
 class UserSerializer implements ModelSerializerContract
 {
 
-	/**
-	 * Serialize entity
-	 *
-	 * @param EntityContract $entity
-	 *
-	 * @return array
-	 */
-	public function serialize(EntityContract $entity)
-	{
-		$bag = $this->serializeBrief($entity);
+    /**
+     * Serialize entity
+     *
+     * @param EntityContract $entity
+     *
+     * @return array
+     */
+    public function serialize(EntityContract $entity)
+    {
+        $bag = $this->serializeBrief($entity);
 
-		return $bag;
-	}
-	/**
-	 * Serialize entity
-	 *
-	 * @param EntityContract $entity
-	 *
-	 * @return array
-	 */
-	public function serializeBrief(EntityContract $entity)
-	{
-		$bag = new Bag();
+        return $bag;
+    }
+    /**
+     * Serialize entity
+     *
+     * @param EntityContract $entity
+     *
+     * @return array
+     */
+    public function serializeBrief(EntityContract $entity)
+    {
+        $bag = new Bag();
 
-		$bag->set('id', $entity->id);
-		$bag->set('email', $entity->email);
-		$bag->set('username', $entity->username);
+        $bag->set('id', $entity->id);
+        $bag->set('email', $entity->email);
+        $bag->set('username', $entity->username);
 
-		return $bag->all();
-	}
-
+        return $bag->all();
+    }
 }

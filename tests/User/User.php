@@ -15,12 +15,12 @@ class User extends Authenticatable implements EntityContract, AgentContract
     const ROLE_USER = 'user';
     const ROLE_ADMIN = 'admin';
     
-	/**
-	 * The table associated with the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'users';
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'users';
 
     /**
      * The attributes that are mass assignable.
@@ -40,7 +40,7 @@ class User extends Authenticatable implements EntityContract, AgentContract
         'password', 'remember_token',
     ];
 
-	/**
+    /**
      * The attributes that should be mutated to dates.
      *
      * @var array
@@ -55,7 +55,6 @@ class User extends Authenticatable implements EntityContract, AgentContract
     public function setPasswordAttribute($password)
     {
         $this->attributes['password'] = bcrypt($password);
-
     }
 
     /**

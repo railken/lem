@@ -12,18 +12,18 @@ use Illuminate\Support\Collection;
 class UserManager extends ModelManager
 {
 
-	/**
-	 * Construct
-	 */
-	public function __construct(AgentContract $agent = null)
-	{
-		$this->repository = new UserRepository($this);
-		$this->serializer = new UserSerializer($this);
-		$this->validator = new UserValidator($this);
-		$this->authorizer = new UserAuthorizer($this);
+    /**
+     * Construct
+     */
+    public function __construct(AgentContract $agent = null)
+    {
+        $this->repository = new UserRepository($this);
+        $this->serializer = new UserSerializer($this);
+        $this->validator = new UserValidator($this);
+        $this->authorizer = new UserAuthorizer($this);
 
-		parent::__construct($agent);
-	}
+        parent::__construct($agent);
+    }
 
     /**
      * Filter parameters
@@ -36,39 +36,37 @@ class UserManager extends ModelManager
     {
         return new UserParameterBag($parameters);
     }
-	
+    
 
-	/**
-	 * Fill the entity
-	 *
-	 * @param EntityContract $entity
-	 * @param ParameterBag $parameters
-	 *
-	 * @return EntityContract
-	 */
-	public function fill(EntityContract $entity, ParameterBag $parameters)
-	{
+    /**
+     * Fill the entity
+     *
+     * @param EntityContract $entity
+     * @param ParameterBag $parameters
+     *
+     * @return EntityContract
+     */
+    public function fill(EntityContract $entity, ParameterBag $parameters)
+    {
+        $parameters = $parameters->only(['username', 'role', 'password', 'email']);
 
-		$parameters = $parameters->only(['username', 'role', 'password', 'email']);
 
+        $entity->fill($parameters->all());
 
-		$entity->fill($parameters->all());
+        return $entity;
+    }
 
-		return $entity;
-
-	}
-
-	/**
-	 * This will prevent from saving entity with null value
-	 *
-	 * @param EntityContract $entity
-	 *
-	 * @return EntityContract
-	 */
-	public function save(EntityContract $entity)
-	{
-		return parent::save($entity);
-	}
+    /**
+     * This will prevent from saving entity with null value
+     *
+     * @param EntityContract $entity
+     *
+     * @return EntityContract
+     */
+    public function save(EntityContract $entity)
+    {
+        return parent::save($entity);
+    }
 
     /**
      * Remove a EntityContract
@@ -81,5 +79,4 @@ class UserManager extends ModelManager
     {
         return $entity->delete();
     }
-
 }

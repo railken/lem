@@ -17,7 +17,7 @@ class UserPolicy implements ModelPolicyContract
      * @return bool
      */
     public function update(AgentContract $agent, EntityContract $entity)
-    {   
+    {
         return $agent->isRoleAdmin() || ($agent->isRoleUser() && $agent->id == $entity->id);
     }
 }

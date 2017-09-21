@@ -154,7 +154,6 @@ abstract class ModelManager
         $result = new ResultExecute();
 
         try {
-
             if ($this->agent) {
                 $parameters = $parameters->filterByAgent($this->agent);
                 $result->addErrors($this->authorizer->update($entity, $parameters));
@@ -174,7 +173,6 @@ abstract class ModelManager
             $result->getResources()->push($entity);
 
             DB::commit();
-
         } catch (Exception $e) {
             DB::rollBack();
             throw $e;
