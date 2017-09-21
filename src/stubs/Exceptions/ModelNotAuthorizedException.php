@@ -2,9 +2,10 @@
 
 namespace $NAMESPACE$\Exceptions;
 
+use Railken\Manager\Exceptions\ModelNotAuthorizedExceptionContract;
 use Exception;
 
-class $NAME$NotAuthorizedException extends Exception
+class $NAME$NotAuthorizedException extends Exception implements ModelNotAuthorizedExceptionContract
 {
 
 	/**
