@@ -46,6 +46,8 @@ class Generator
         $this->put("/ModelValidator.php", "/{$name}Validator.php", $vars);
         $this->put("/ModelObserver.php", "/{$name}Observer.php", $vars);
         $this->put("/ModelAuthorizer.php", "/{$name}Authorizer.php", $vars);
+        $this->put("/ModelSerializer.php", "/{$name}Serializer.php", $vars);
+        $this->put("/ModelParameterBag.php", "/{$name}ParameterBag.php", $vars);
         $this->put("/Exceptions/ModelNotFoundException.php", "/Exceptions/{$name}NotFoundException.php", $vars);
         $this->put("/Exceptions/ModelNotAuthorizedException.php", "/Exceptions/{$name}NotAuthorizedException.php", $vars);
         $this->put("/Exceptions/ModelAttributeException.php", "/Exceptions/{$name}AttributeException.php", $vars);
