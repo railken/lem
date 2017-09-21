@@ -76,7 +76,7 @@ class BasicTest extends \Orchestra\Testbench\TestCase
     {
 
         $generator = new Generator();
-        $generator->generate("src", "Core/Maybe/Foo");
+        $generator->generate("src", "Core\Maybe\Foo");
         $this->assertEquals(true, File::exists(base_path("/src/Core/Maybe/Foo")));
 
     }
