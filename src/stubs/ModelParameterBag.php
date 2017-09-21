@@ -17,6 +17,6 @@ class $NAME$ParameterBag extends ParameterBag
 	 */
 	public function filterByAgent(AgentContract $agent)
     {  
-    	
+    	return $this;
     }
 }
