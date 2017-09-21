@@ -23,6 +23,6 @@ Railken\Laravel\Manager\ManagerServiceProvider::class,
 
 ## Usage
 
-- Generate a new set of files `php artisan railken:make:manager [base_path] [path] [name]`. An example would be `php artisan railken:make:manager src Core/User User`. 
+- Generate a new set of files `php artisan railken:make:manager [path] [namespace]`. An example would be `php artisan railken:make:manager src/Core Core/User`. 
 
 The command generates a folder with a bunch of files that will help to structure the management of a model
