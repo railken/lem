@@ -27,20 +27,20 @@ class UserValidator
 	 * Validate 
 	 *
 	 * @param ModelContract $entity
-	 * @param Bag $params
+	 * @param Bag $parameters
 	 * @param bool $required
 	 *
 	 * @return Collection
 	 */
-	public function validate(ModelContract $entity, Bag $params)
+	public function validate(ModelContract $entity, Bag $parameters)
 	{
 		
 		$errors = new Collection();
 
 		if (!$entity->exists) 
-			$errors = $errors->merge($this->validateRequired($params));
+			$errors = $errors->merge($this->validateRequired($parameters));
 		
-		$errors = $errors->merge($this->validateValue($entity, $params));
+		$errors = $errors->merge($this->validateValue($entity, $parameters));
 
 		return $errors;
 	}
@@ -49,17 +49,17 @@ class UserValidator
 	 * Validate "required" values
 	 *
 	 * @param ModelContract $entity
-	 * @param Bag $params
+	 * @param Bag $parameters
 	 *
 	 * @return Collection
 	 */
-	public function validateRequired(Bag $params)
+	public function validateRequired(Bag $parameters)
 	{
 		$errors = new Collection();
 
-		!$params->exists('email') && $errors->push(new Exceptions\UserEmailNotDefinedException($params->get('email')));
-		!$params->exists('username') && $errors->push(new Exceptions\UserUsernameNotDefinedException($params->get('username')));
-		!$params->exists('password') && $errors->push(new Exceptions\UserPasswordNotDefinedException($params->get('password')));
+		!$parameters->exists('email') && $errors->push(new Exceptions\UserEmailNotDefinedException($parameters->get('email')));
+		!$parameters->exists('username') && $errors->push(new Exceptions\UserUsernameNotDefinedException($parameters->get('username')));
+		!$parameters->exists('password') && $errors->push(new Exceptions\UserPasswordNotDefinedException($parameters->get('password')));
 
 		return $errors;
 	}
@@ -67,28 +67,28 @@ class UserValidator
 	/**
 	 * Validate "not valid" values
 	 *
-	 * @param Bag $params
+	 * @param Bag $parameters
 	 *
 	 * @return Collection
 	 */
-	public function validateValue(ModelContract $entity, Bag $params)
+	public function validateValue(ModelContract $entity, Bag $parameters)
 	{
 		$errors = new Collection();
 
-		$params->exists('email') && !$this->validEmail($params->get('email')) && 
-			$errors->push(new Exceptions\UserEmailNotValidException($params->get('email')));
+		$parameters->exists('email') && !$this->validEmail($parameters->get('email')) && 
+			$errors->push(new Exceptions\UserEmailNotValidException($parameters->get('email')));
 
-		$params->exists('email') && !$this->manager->getRepository()->isUniqueEmail($params->get('email'), $entity) && 
-			$errors->push(new Exceptions\UserEmailNotUniqueException($params->get('email')));
+		$parameters->exists('email') && !$this->manager->getRepository()->isUniqueEmail($parameters->get('email'), $entity) && 
+			$errors->push(new Exceptions\UserEmailNotUniqueException($parameters->get('email')));
 
-		$params->exists('username') && !$this->validUsername($params->get('username')) && 
-			$errors->push(new Exceptions\UserUsernameNotValidException($params->get('username')));
+		$parameters->exists('username') && !$this->validUsername($parameters->get('username')) && 
+			$errors->push(new Exceptions\UserUsernameNotValidException($parameters->get('username')));
 
-		$params->exists('password') && !$this->validPassword($params->get('password')) && 
-			$errors->push(new Exceptions\UserPasswordNotValidException($params->get('password')));
+		$parameters->exists('password') && !$this->validPassword($parameters->get('password')) && 
+			$errors->push(new Exceptions\UserPasswordNotValidException($parameters->get('password')));
 
-		$params->exists('role') && !$this->validRole($params->get('role')) &&
-			$errors->push(new Exceptions\UserRoleNotValidException($params->get('role')));
+		$parameters->exists('role') && !$this->validRole($parameters->get('role')) &&
+			$errors->push(new Exceptions\UserRoleNotValidException($parameters->get('role')));
 
 
 		return $errors;

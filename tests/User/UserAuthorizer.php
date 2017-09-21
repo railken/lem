@@ -27,11 +27,11 @@ class UserAuthorizer
 	 * Authorize
 	 *
 	 * @param ModelContract $entity
-	 * @param Bag $params
+	 * @param Bag $parameters
 	 *
 	 * @return Collection
 	 */
-	public function authorize(ModelContract $entity, Bag $params)
+	public function authorize(ModelContract $entity, Bag $parameters)
 	{
 		$errors = new Collection();
 

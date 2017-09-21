@@ -42,17 +42,17 @@ class UserManager extends ModelManager
 	 * Fill the entity
 	 *
 	 * @param ModelContract $entity
-	 * @param Bag $params
+	 * @param Bag $parameters
 	 *
 	 * @return ModelContract
 	 */
-	public function fill(ModelContract $entity, Bag $params)
+	public function fill(ModelContract $entity, Bag $parameters)
 	{
 
-		$params = $params->only(['username', 'role', 'password', 'email']);
+		$parameters = $parameters->only(['username', 'role', 'password', 'email']);
 
 
-		$entity->fill($params->all());
+		$entity->fill($parameters->all());
 
 		return $entity;
 
