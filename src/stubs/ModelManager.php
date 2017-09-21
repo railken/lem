@@ -37,8 +37,6 @@ class $NAME$Manager extends ModelManager
 	{
 		$parameters = $parameters->only(['name']);
 
-		$entity->fill($parameters);
-
-		return $entity;
+		return parent::fill($entity, $parameters);
 	}
 }
