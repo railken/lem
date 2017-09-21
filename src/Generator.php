@@ -35,6 +35,7 @@ class Generator
             'NAMESPACE' => $namespace,
             'NAME' => $name,
             'LOW:NAME' => strtolower($name),
+            'UP:NAME' => strtoupper($name),
         ];
 
         $this->base_path = $path;
