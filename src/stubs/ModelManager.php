@@ -5,6 +5,7 @@ namespace $NAMESPACE$;
 use Railken\Laravel\Manager\EntityContract;
 use Railken\Laravel\Manager\ModelManager;
 use Railken\Laravel\Manager\Permission\AgentContract;
+use Railken\Laravel\Manager\ParameterBag;
 
 use $NAMESPACE$\$NAME$;
 
@@ -32,7 +33,7 @@ class $NAME$Manager extends ModelManager
 	 *
 	 * @return EntityContract
 	 */
-	public function fill(EntityContract $entity, $NAME$ParameterBag $parameters)
+	public function fill(EntityContract $entity, ParameterBag $parameters)
 	{
 		$parameters = $parameters->only(['name']);
 
