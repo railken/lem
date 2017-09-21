@@ -60,7 +60,7 @@ class BasicTest extends \Orchestra\Testbench\TestCase
      */
     public function getUserBag()
     {
-        return new Bag(['email' => 'test@test.net', 'username' => 'test123', 'password' => microtime()]);
+        return ['email' => 'test@test.net', 'username' => 'test123', 'password' => microtime()];
     }
 
     public function testBasics()
@@ -69,47 +69,96 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         $um = new UserManager();
 
         # Testing validation
-        $this->assertEquals("USER_USERNAME_NOT_DEFINED", $um->create($this->getUserBag()->remove('username'))->getError()->getCode());
-        $this->assertEquals("USER_USERNAME_NOT_VALID", $um->create($this->getUserBag()->set('username', 'wr'))->getError()->getCode());
-        $this->assertEquals("USER_PASSWORD_NOT_DEFINED", $um->create($this->getUserBag()->remove('password'))->getError()->getCode());
-        $this->assertEquals("USER_PASSWORD_NOT_VALID", $um->create($this->getUserBag()->set('password', 'wrong'))->getError()->getCode());
-        $this->assertEquals("USER_EMAIL_NOT_DEFINED", $um->create($this->getUserBag()->remove('email'))->getError()->getCode());
-        $this->assertEquals("USER_EMAIL_NOT_VALID", $um->create($this->getUserBag()->set('email', 'wrong'))->getError()->getCode());
+        $this->assertEquals("USER_USERNAME_NOT_DEFINED", $um->create($um->parameters($this->getUserBag())->remove('username'))->getError()->getCode());
+        $this->assertEquals("USER_USERNAME_NOT_VALID", $um->create($um->parameters($this->getUserBag())->set('username', 'wr'))->getError()->getCode());
+        $this->assertEquals("USER_PASSWORD_NOT_DEFINED", $um->create($um->parameters($this->getUserBag())->remove('password'))->getError()->getCode());
+        $this->assertEquals("USER_PASSWORD_NOT_VALID", $um->create($um->parameters($this->getUserBag())->set('password', 'wrong'))->getError()->getCode());
+        $this->assertEquals("USER_EMAIL_NOT_DEFINED", $um->create($um->parameters($this->getUserBag())->remove('email'))->getError()->getCode());
+        $this->assertEquals("USER_EMAIL_NOT_VALID", $um->create($um->parameters($this->getUserBag())->set('email', 'wrong'))->getError()->getCode());
 
         # Testing correct
-        $resource = $um->create($this->getUserBag())->getResource();
-        $this->assertEquals($this->getUserBag()->get('username'), $resource->username);
+        $resource = $um->create($um->parameters($this->getUserBag()))->getResource();
+        $this->assertEquals($um->parameters($this->getUserBag())->get('username'), $resource->username);
 
         # Testing uniqueness
-        $this->assertEquals("USER_EMAIL_NOT_UNIQUE", $um->create($this->getUserBag())->getErrors()->first()->getCode());
+        $this->assertEquals("USER_EMAIL_NOT_UNIQUE", $um->create($um->parameters($this->getUserBag()))->getErrors()->first()->getCode());
 
-        $um->update($resource, $this->getUserBag());
+        $um->update($resource, $um->parameters($this->getUserBag()));
         $um->remove($resource);
 
 
         # An admin can change username/email/password of all users
         # An user can change only his own information
 
-        $user_admin = $um->create($this->getUserBag()->set('role', User::ROLE_ADMIN)->set('email', 'admin@test.net'))->getResource();
+        $user_admin = $um->create($um->parameters($this->getUserBag())->set('role', User::ROLE_ADMIN)->set('email', 'admin@test.net'))->getResource();
         $user_admin_manager = new UserManager($user_admin);
 
-        $user = $um->create($this->getUserBag()->set('role', User::ROLE_USER)->set('email', 'user@test.net'))->getResource();
+        $user = $um->create($um->parameters($this->getUserBag())->set('role', User::ROLE_USER)->set('email', 'user@test.net'))->getResource();
         $user_manager = new UserManager($user);
 
 
 
 
-        $this->assertEquals(false, $user_manager->update($user_admin, new Bag(['email' => 'new@test.net']))->isAuthorized());
-        $this->assertEquals(true, $user_manager->update($user, new Bag(['email' => 'new@test.net']))->isAuthorized());
+        $this->assertEquals(false, $user_manager->update($user_admin, $um->parameters(['email' => 'new@test.net']))->isAuthorized());
+        $this->assertEquals(true, $user_manager->update($user, $um->parameters(['email' => 'new@test.net']))->isAuthorized());
 
-        $this->assertEquals(true, $user_admin_manager->update($user_admin, new Bag(['email' => 'new2@test.net']))->ok());
-        $this->assertEquals(true, $user_admin_manager->update($user, new Bag(['email' => 'new3@test.net']))->ok());
+        $this->assertEquals(true, $user_admin_manager->update($user_admin, $um->parameters(['email' => 'new2@test.net']))->ok());
+        $this->assertEquals(true, $user_admin_manager->update($user, $um->parameters(['email' => 'new3@test.net']))->ok());
 
-        $this->assertEquals(true, $user_manager->update($user, new Bag(['role' => User::ROLE_ADMIN]))->getResource()->isRoleUser());
+        $this->assertEquals(true, $user_manager->update($user, $um->parameters(['role' => User::ROLE_ADMIN]))->getResource()->isRoleUser());
 
         $um->find(new Bag(['username' => 'test123']));
 
 
+
+/**
+
+$manager = new PostManager();
+$manager->setAgent($user); // $user role = 'user'
+
+# Case 1
+# The filtering of parameters is handled by PostParameterBag
+class PostParameterBag extends Bag
+{
+    public function filterByAgent(AgentContract $agent)
+    {   
+        if ($agent->isRoleUser())
+            return $this->only(['title']);
+
+
+        if ($agent->isRoleAdmin())
+            return $this;
+    }
+}
+$parameters = new PostParameterBag(['title' => 'edited', 'pinned' => '1']);
+$result = $manager->update($post, $parameters->filterByAgent($user->getAgent()));
+# -----
+
+
+# Case 2
+# The filtering of parameters is handled by PostAuthorizer:filter()
+# Note: PostAuthorizer already have :authorize() which push error in case of unauthorized operation
+
+class PostAuthorizer
+{
+    public function filter(ModelContract $entity, Bag $params)
+    {   
+        if ($this->manager->agent->isRoleUser())
+            return $params->only(['title']);
+
+
+        if ($this->manager->agent->isRoleAdmin())
+            return $params;
+    }
+}
+
+$parameters = new Bag(['title' => 'edited', 'pinned' => '1']);
+$result = $manager->update($post, $parameters);
+# ------
+
+$result->getParameters(); // ['title' => 'edited']. pinned for admin only
+
+**/
     }
 
 

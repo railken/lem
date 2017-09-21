@@ -24,6 +24,18 @@ class UserManager extends ModelManager
 
 		parent::__construct($agent);
 	}
+
+    /**
+     * Filter parameters
+     *
+     * @param array|Bag $parameters
+     *
+     * @return ParameterBag
+     */
+    public function parameters($parameters)
+    {
+        return new UserParameterBag($parameters);
+    }
 	
 
 	/**

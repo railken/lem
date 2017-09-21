@@ -50,6 +50,18 @@ abstract class ModelManager
     }
 
     /**
+     * Filter parameters
+     *
+     * @param array|Bag $parameters
+     *
+     * @return ParameterBag
+     */
+    public function parameters($parameters)
+    {
+        return new ParameterBag($parameters);
+    }
+
+    /**
      * Has permission to do?
      *
      * @param string $permission
@@ -151,7 +163,7 @@ abstract class ModelManager
         try {
 
             if ($this->agent) {
-                $parameters = $this->authorizer->filter($entity, $parameters);
+                $parameters = $parameters->filterByAgent($this->agent);
                 $result->addErrors($this->authorizer->authorize($entity, $parameters));
             }
 
