@@ -255,7 +255,7 @@ abstract class ModelManager
      */
     public function fill(EntityContract $entity, ParameterBag $parameters)
     {
-        $entity->fill($parameters);
+        $entity->fill($parameters->all());
 
         return $entity;
     }
