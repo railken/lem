@@ -2,7 +2,7 @@
 
 namespace $NAMESPACE$;
 
-use Railken\Laravel\Manager\ModelContract;
+use Railken\Laravel\Manager\EntityContract;
 use Railken\Laravel\Manager\ModelManager;
 use Railken\Laravel\Manager\Permission\AgentContract;
 
@@ -25,12 +25,12 @@ class $NAME$Manager extends ModelManager
 	/**
 	 * Fill the entity
 	 *
-	 * @param ModelContract $entity
+	 * @param EntityContract $entity
 	 * @param array $parameters
 	 *
-	 * @return ModelContract
+	 * @return EntityContract
 	 */
-	public function fill(ModelContract $entity, array $parameters)
+	public function fill(EntityContract $entity, array $parameters)
 	{
 
 		$parameters = $this->getOnlyParams($parameters, ['name']);
@@ -44,11 +44,11 @@ class $NAME$Manager extends ModelManager
 	/**
 	 * This will prevent from saving entity with null value
 	 *
-	 * @param ModelContract $entity
+	 * @param EntityContract $entity
 	 *
-	 * @return ModelContract
+	 * @return EntityContract
 	 */
-	public function save(ModelContract $entity)
+	public function save(EntityContract $entity)
 	{
 		$this->throwExceptionParamsNull([
 			'name' => $entity->name,

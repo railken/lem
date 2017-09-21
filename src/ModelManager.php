@@ -2,7 +2,7 @@
 
 namespace Railken\Laravel\Manager;
 
-use Railken\Laravel\Manager\ModelContract;
+use Railken\Laravel\Manager\EntityContract;
 use Railken\Laravel\Manager\Exceptions\InvalidParamValueException;
 use Railken\Laravel\Manager\Exceptions\MissingParamException;
 use Railken\Laravel\Manager\Exceptions\ModelByIdNotFoundException;
@@ -14,13 +14,18 @@ use Illuminate\Support\Collection;
 
 abstract class ModelManager
 {
+
+    /**
+     * @var ModelRepository
+     */
+    public $repository;
+
     /**
      * Construct
      *
      */
     public function __construct(AgentContract $agent = null)
     {
-
         $this->agent = $agent;
     }
 
@@ -70,7 +75,6 @@ abstract class ModelManager
         return $this->repository;
     }
 
-
     /**
      * Find
      *
@@ -100,7 +104,7 @@ abstract class ModelManager
      *
      * @param ParameterBag $parameters
      *
-     * @return ModelContract
+     * @return EntityContract
      */
     public function findOrCreate(ParameterBag $parameters)
     {
@@ -115,7 +119,7 @@ abstract class ModelManager
      * @param Bag $criteria
      * @param ParameterBag $parameters
      *
-     * @return ModelContract
+     * @return EntityContract
      */
     public function updateOrCreate(Bag $criteria, ParameterBag $parameters)
     {
@@ -125,11 +129,11 @@ abstract class ModelManager
     }
 
     /**
-     * Create a new ModelContract given array
+     * Create a new EntityContract given array
      *
      * @param ParameterBag $parameters
      *
-     * @return Railken\Laravel\Manager\ModelContract
+     * @return Railken\Laravel\Manager\EntityContract
      */
     public function create(ParameterBag $parameters)
     {
@@ -137,21 +141,23 @@ abstract class ModelManager
     }
 
     /**
-     * Update a ModelContract given array
+     * Update a EntityContract given array
      *
      * @param ParameterBag $parameters
      *
-     * @return Railken\Laravel\Manager\ModelContract
+     * @return Railken\Laravel\Manager\EntityContract
      */
-    public function update(ModelContract $entity, ParameterBag $parameters)
+    public function update(EntityContract $entity, ParameterBag $parameters)
     {
         DB::beginTransaction();
+        
         $result = new ResultExecute();
+
         try {
 
             if ($this->agent) {
                 $parameters = $parameters->filterByAgent($this->agent);
-                $result->addErrors($this->authorizer->authorize($entity, $parameters));
+                $result->addErrors($this->authorizer->update($entity, $parameters));
             }
 
             $result->addErrors($this->validator->validate($entity, $parameters));
@@ -177,16 +183,14 @@ abstract class ModelManager
         return $result;
     }
 
-
-
     /**
-     * Remove a ModelContract
+     * Remove a EntityContract
      *
-     * @param Railken\Laravel\Manager\ModelContract $entity
+     * @param Railken\Laravel\Manager\EntityContract $entity
      *
      * @return void
      */
-    public function remove(ModelContract $entity)
+    public function remove(EntityContract $entity)
     {
         return $entity->delete();
     }
@@ -194,27 +198,27 @@ abstract class ModelManager
     /**
      * Save the entity
      *
-     * @param  Railken\Laravel\Manager\ModelContract $entity
+     * @param  Railken\Laravel\Manager\EntityContract $entity
      *
-     * @return ModelContract
+     * @return EntityContract
      */
-    public function save(ModelContract $entity)
+    public function save(EntityContract $entity)
     {
         return $entity->save();
     }
 
-
     /**
-     * Fill entity ModelContract with array
+     * Fill entity EntityContract with array
      *
-     * @param Railken\Laravel\Manager\ModelContract $entity
+     * @param Railken\Laravel\Manager\EntityContract $entity
      * @param ParameterBag $parameters
      *
      * @return void
      */
-    public function fill(ModelContract $entity, ParameterBag $parameters)
+    public function fill(EntityContract $entity, ParameterBag $parameters)
     {
         $entity->fill($parameters);
+
         return $entity;
     }
 }

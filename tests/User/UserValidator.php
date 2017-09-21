@@ -2,7 +2,7 @@
 
 namespace Railken\Laravel\Manager\Tests\User;
 
-use Railken\Laravel\Manager\ModelContract;
+use Railken\Laravel\Manager\EntityContract;
 use Railken\Laravel\Manager\ParameterBag;
 use Illuminate\Support\Collection;
 use Railken\Laravel\Manager\Tests\User\Exceptions as Exceptions;
@@ -26,13 +26,13 @@ class UserValidator
 	/**
 	 * Validate 
 	 *
-	 * @param ModelContract $entity
+	 * @param EntityContract $entity
 	 * @param ParameterBag $parameters
 	 * @param bool $required
 	 *
 	 * @return Collection
 	 */
-	public function validate(ModelContract $entity, ParameterBag $parameters)
+	public function validate(EntityContract $entity, ParameterBag $parameters)
 	{
 		
 		$errors = new Collection();
@@ -48,7 +48,7 @@ class UserValidator
 	/**
 	 * Validate "required" values
 	 *
-	 * @param ModelContract $entity
+	 * @param EntityContract $entity
 	 * @param ParameterBag $parameters
 	 *
 	 * @return Collection
@@ -71,7 +71,7 @@ class UserValidator
 	 *
 	 * @return Collection
 	 */
-	public function validateValue(ModelContract $entity, ParameterBag $parameters)
+	public function validateValue(EntityContract $entity, ParameterBag $parameters)
 	{
 		$errors = new Collection();
 

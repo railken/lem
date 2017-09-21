@@ -4,9 +4,9 @@ namespace $NAMESPACE$;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Railken\Laravel\Manager\ModelContract;
+use Railken\Laravel\Manager\EntityContract;
 
-class $NAME$ extends Model implements ModelContract
+class $NAME$ extends Model implements EntityContract
 {
 	
 	use SoftDeletes;

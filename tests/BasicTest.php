@@ -141,7 +141,7 @@ $result = $manager->update($post, $parameters->filterByAgent($user->getAgent()))
 
 class PostAuthorizer
 {
-    public function filter(ModelContract $entity, ParameterBag $parameters)
+    public function filter(EntityContract $entity, ParameterBag $parameters)
     {   
         if ($this->manager->agent->isRoleUser())
             return $parameters->only(['title']);

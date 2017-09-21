@@ -2,7 +2,7 @@
 
 namespace Railken\Laravel\Manager\Tests\User;
 
-use Railken\Laravel\Manager\ModelContract;
+use Railken\Laravel\Manager\EntityContract;
 use Railken\Laravel\Manager\ParameterBag;
 use Illuminate\Support\Collection;
 use Railken\Laravel\Manager\Tests\User\Exceptions as Exceptions;
@@ -26,12 +26,12 @@ class UserAuthorizer
 	/**
 	 * Authorize
 	 *
-	 * @param ModelContract $entity
+	 * @param EntityContract $entity
 	 * @param ParameterBag $parameters
 	 *
 	 * @return Collection
 	 */
-	public function authorize(ModelContract $entity, ParameterBag $parameters)
+	public function update(EntityContract $entity, ParameterBag $parameters)
 	{
 		$errors = new Collection();
 
