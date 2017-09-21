@@ -79,9 +79,15 @@ class BasicTest extends \Orchestra\Testbench\TestCase
 
     public function testGenerate()
     {
+
         $generator = new Generator();
         $generator->generate(__DIR__."/Generated", "Railken\Laravel\Manager\Tests\Generated\Foo");
         $this->assertEquals(true, File::exists(__DIR__."/Generated/Foo"));
+
+        
+        \Railken\Laravel\Manager\Tests\Generated\Foo\Foo::observe(\Railken\Laravel\Manager\Tests\Generated\Foo\FooObserver::class);
+        Gate::policy(\Railken\Laravel\Manager\Tests\Generated\Foo\Foo::class, \Railken\Laravel\Manager\Tests\Generated\Foo\FooPolicy::class);
+
 
         $m = new \Railken\Laravel\Manager\Tests\Generated\Foo\FooManager();
 
