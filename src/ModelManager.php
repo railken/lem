@@ -16,7 +16,7 @@ abstract class ModelManager
 {
 
     /**
-     * @var ModelRepository
+     * @var Railken\Laravel\Manager\ModelRepository
      */
     public $repository;
 
@@ -116,10 +116,10 @@ abstract class ModelManager
     /**
      * Update or create
      *
-     * @param Bag $criteria
-     * @param ParameterBag $parameters
+     * @param Railken\Bag $criteria
+     * @param Railken\Laravel\Manager\ParameterBag $parameters
      *
-     * @return EntityContract
+     * @return Railken\Laravel\Manager\ResultAction
      */
     public function updateOrCreate(Bag $criteria, ParameterBag $parameters)
     {
@@ -129,44 +129,65 @@ abstract class ModelManager
     }
 
     /**
-     * Create a new EntityContract given array
+     * Create a new EntityContract given parameters
      *
      * @param ParameterBag $parameters
      *
-     * @return Railken\Laravel\Manager\EntityContract
+     * @return Railken\Laravel\Manager\ResultAction
      */
     public function create(ParameterBag $parameters)
     {
-        return $this->update($this->getRepository()->newEntity(), $parameters);
+        $result = new ResultAction();
+        $entity = $this->getRepository()->newEntity();
+
+        if ($this->agent) {
+            $parameters = $parameters->filterByAgent($this->agent);
+            $result->addErrors($this->authorizer->create($entity, $parameters));
+        }
+
+        $this->validator && $result->addErrors($this->validator->validate($entity, $parameters));
+
+        return $result->ok() ? $this->edit($entity, $parameters) : $result;
     }
 
     /**
-     * Update a EntityContract given array
+     * Update a EntityContract given parameters
      *
-     * @param ParameterBag $parameters
+     * @param Railken\Laravel\Manager\Contracts EntityContract
+     * @param Railken\Laravel\Manager\ParameterBag $parameters
      *
-     * @return Railken\Laravel\Manager\EntityContract
+     * @return Railken\Laravel\Manager\ResultAction
      */
     public function update(EntityContract $entity, ParameterBag $parameters)
     {
-        DB::beginTransaction();
+        $result = new ResultAction();
         
+        if ($this->agent) {
+            $parameters = $parameters->filterByAgent($this->agent);
+            $result->addErrors($this->authorizer->update($entity, $parameters));
+        }
+
+        $this->validator && $result->addErrors($this->validator->validate($entity, $parameters));
+
+        return $result->ok() ? $this->edit($entity, $parameters) : $result;
+    }
+
+    /**
+     * Update a EntityContract given parameters
+     *
+     * @param Railken\Laravel\Manager\Contracts EntityContract
+     * @param Railken\Laravel\Manager\ParameterBag $parameters
+     *
+     * @return Railken\Laravel\Manager\ResultAction
+     */
+    public function edit(EntityContract $entity, ParameterBag $parameters)
+    {
         $result = new ResultAction();
 
         try {
-            if ($this->agent) {
-                $parameters = $parameters->filterByAgent($this->agent);
-                $result->addErrors($this->authorizer->update($entity, $parameters));
-            }
 
-            $result->addErrors($this->validator->validate($entity, $parameters));
+            DB::beginTransaction();
 
-
-            if (!$result->ok()) {
-                DB::rollBack();
-                return $result;
-            }
-            
             $this->fill($entity, $parameters);
             $this->save($entity);
 
@@ -182,6 +203,18 @@ abstract class ModelManager
     }
 
     /**
+     * Save the entity
+     *
+     * @param  Railken\Laravel\Manager\EntityContract $entity
+     *
+     * @return Railken\Laravel\Manager\EntityContract
+     */
+    public function save(EntityContract $entity)
+    {
+        return $entity->save();
+    }
+
+    /**
      * Remove a EntityContract
      *
      * @param Railken\Laravel\Manager\EntityContract $entity
@@ -190,26 +223,48 @@ abstract class ModelManager
      */
     public function remove(EntityContract $entity)
     {
-        return $entity->delete();
+        $result = new ResultAction();
+
+        if ($this->agent) {
+            $parameters = $parameters->filterByAgent($this->agent);
+            $result->addErrors($this->authorizer->remove($entity, $parameters));
+        }
+
+        return $result->ok() ? $this->delete($entity) : $result;
     }
 
     /**
-     * Save the entity
+     * Delete a EntityContract
      *
-     * @param  Railken\Laravel\Manager\EntityContract $entity
+     * @param Railken\Laravel\Manager\EntityContract $entity
      *
-     * @return EntityContract
+     * @return void
      */
-    public function save(EntityContract $entity)
+    protected function delete(EntityContract $entity)
     {
-        return $entity->save();
+        $result = new ResultAction();
+
+        try {
+
+            DB::beginTransaction();
+            $entity->delete();
+            DB::commit();
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+
+        return $result;
+
     }
+
 
     /**
      * Fill entity EntityContract with array
      *
      * @param Railken\Laravel\Manager\EntityContract $entity
-     * @param ParameterBag $parameters
+     * @param Railken\Laravel\Manager\ParameterBag $parameters
      *
      * @return void
      */
