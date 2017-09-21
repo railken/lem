@@ -2,6 +2,7 @@
 
 namespace Railken\Laravel\Manager;
 
+use Railken\Laravel\Manager\Exceptions as Exceptions;
 use Illuminate\Support\Collection;
 
 class ResultExecute
@@ -138,4 +139,15 @@ class ResultExecute
         });
     }
 
+    /**
+     * Is authorized
+     *
+     * @return boolean
+     */
+    public function isAuthorized()
+    {
+        return $this->getErrors()->search(function ($error, $key) {
+            return $error instanceof Exceptions\NotAuthorizedException;
+        }) === false;
+    }
 }
