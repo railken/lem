@@ -58,6 +58,13 @@ class BasicTest extends \Orchestra\Testbench\TestCase
             $table->softDeletes();
             $table->timestamps();
         });
+
+        Schema::dropIfExists('foo');
+        
+        Schema::create('foo', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+        });
     }
 
     /**
@@ -76,8 +83,16 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         $generator->generate(__DIR__."/Generated", "Railken\Laravel\Manager\Tests\Generated\Foo");
         $this->assertEquals(true, File::exists(__DIR__."/Generated/Foo"));
 
-
         $m = new \Railken\Laravel\Manager\Tests\Generated\Foo\FooManager();
+
+        $um = new UserManager();
+        $user = $um->create($um->parameters($this->getUserBag()))->getResource();
+
+        $bag = new \Railken\Laravel\Manager\Tests\Generated\Foo\FooParameterBag(['name' => 'a']);
+        $m->setAgent($user);
+        $this->assertEquals("FOO_NAME_NOT_DEFINED", $m->create($bag->remove('name'))->getError()->getCode());
+
+        $um->remove($user);
     }
 
     public function testBasics()
