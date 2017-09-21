@@ -73,8 +73,9 @@ abstract class ModelRepository implements ModelRepositoryContract
     {
         $q = $this->getQuery();
 
-        foreach ($parameters as $name => $value)
+        foreach ($parameters as $name => $value) {
             $q->whereIn($name, $value);
+        }
        
 
         return $q->get();

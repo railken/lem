@@ -16,7 +16,7 @@ class UserPolicy implements ModelPolicyContract
      * @return bool
      */
     public function interact(AgentContract $agent, EntityContract $entity = null)
-    {   
+    {
         return $agent->isRoleAdmin() || ($agent->isRoleUser() && $agent->id == $entity->id);
     }
 
@@ -28,7 +28,7 @@ class UserPolicy implements ModelPolicyContract
      * @return bool
      */
     public function create(AgentContract $agent)
-    {   
+    {
         return true;
     }
 
@@ -41,7 +41,7 @@ class UserPolicy implements ModelPolicyContract
      * @return bool
      */
     public function update(AgentContract $agent, EntityContract $entity)
-    {   
+    {
         return $this->interact($agent, $entity);
     }
 
@@ -54,7 +54,7 @@ class UserPolicy implements ModelPolicyContract
      * @return bool
      */
     public function retrieve(AgentContract $agent, EntityContract $entity)
-    {   
+    {
         return $this->interact($agent, $entity);
     }
 
@@ -67,7 +67,7 @@ class UserPolicy implements ModelPolicyContract
      * @return bool
      */
     public function remove(AgentContract $agent, EntityContract $entity)
-    {   
+    {
         return $this->interact($agent, $entity);
     }
 }

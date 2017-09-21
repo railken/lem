@@ -19,7 +19,7 @@ class Generator
 
     /**
      * Generate a new ModelStructure folder
-     * 
+     *
      * @param string $path
      * @param string $name
      *

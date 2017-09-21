@@ -137,7 +137,7 @@ $manager->setAgent($user); // $user role = 'user'
 class PostParameterBag extends Bag
 {
     public function filterByAgent(AgentContract $agent)
-    {   
+    {
         if ($agent->isRoleUser())
             return $this->only(['title']);
 
@@ -158,7 +158,7 @@ $result = $manager->update($post, $parameters->filterByAgent($user->getAgent()))
 class PostAuthorizer
 {
     public function filter(EntityContract $entity, ParameterBag $parameters)
-    {   
+    {
         if ($this->manager->agent->isRoleUser())
             return $parameters->only(['title']);
 

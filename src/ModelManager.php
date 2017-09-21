@@ -109,7 +109,7 @@ abstract class ModelManager
         $results = $this->getRepository()->findBy($parameters->all());
 
         if ($this->authorizer && $this->agent) {
-            $results = $results->filter(function ($entity, $key) use ($parameters){
+            $results = $results->filter(function ($entity, $key) use ($parameters) {
                 $this->authorizer->retrieve($entity, $parameters)->count() == 0;
             });
         }
@@ -174,7 +174,6 @@ abstract class ModelManager
         $result = new ResultAction();
 
         try {
-
             DB::beginTransaction();
 
             $this->fill($entity, $parameters);
@@ -234,18 +233,15 @@ abstract class ModelManager
         $result = new ResultAction();
 
         try {
-
             DB::beginTransaction();
             $entity->delete();
             DB::commit();
-
         } catch (Exception $e) {
             DB::rollBack();
             throw $e;
         }
 
         return $result;
-
     }
 
 
@@ -292,5 +288,4 @@ abstract class ModelManager
 
         return $entity ? $this->update($entity, $parameters) : $this->create($parameters);
     }
-
 }
