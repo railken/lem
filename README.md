@@ -25,4 +25,42 @@ Railken\Laravel\Manager\ManagerServiceProvider::class,
 
 - Generate a new set of files `php artisan railken:make:manager [path] [namespace]`. An example would be `php artisan railken:make:manager src/Core Core/User`. 
 
-The command generates a folder with a bunch of files that will help to structure the management of a model
+### Model
+This is the Eloquent Model, nothing changes, excepts for an interface
+
+```php
+<?php
+
+namespace Core\Foo;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Railken\Laravel\Manager\Contracts\EntityContract;
+
+class Foo extends Model implements EntityContract
+{
+	
+	use SoftDeletes;
+
+	/**
+	 * The table associated with the model.
+	 *
+	 * @var string
+	 */
+	protected $table = 'foo';
+
+	/**
+	 * The attributes that are mass assignable.
+	 *
+	 * @var array
+	 */
+	protected $fillable = ['name'];
+
+	/**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
+}
+```
