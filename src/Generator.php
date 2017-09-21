@@ -30,7 +30,7 @@ class Generator
     {
        
         $path = base_path("/".$path."/").str_replace("\\", "/", $namespace);
-        $name = basename($namespace);
+        $name = collect(explode("\\", $namespace))->last();
         
         $vars = [
             'NAMESPACE' => $namespace,
