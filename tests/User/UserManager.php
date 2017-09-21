@@ -5,7 +5,7 @@ namespace Railken\Laravel\Manager\Tests\User;
 use Railken\Laravel\Manager\ModelContract;
 use Railken\Laravel\Manager\ModelManager;
 use Railken\Laravel\Manager\Permission\AgentContract;
-use Railken\Bag;
+use Railken\Laravel\Manager\ParameterBag;
 use Railken\Laravel\Manager\Tests\User\User;
 use Illuminate\Support\Collection;
 
@@ -28,7 +28,7 @@ class UserManager extends ModelManager
     /**
      * Filter parameters
      *
-     * @param array|Bag $parameters
+     * @param array|ParameterBag $parameters
      *
      * @return ParameterBag
      */
@@ -42,11 +42,11 @@ class UserManager extends ModelManager
 	 * Fill the entity
 	 *
 	 * @param ModelContract $entity
-	 * @param Bag $parameters
+	 * @param ParameterBag $parameters
 	 *
 	 * @return ModelContract
 	 */
-	public function fill(ModelContract $entity, Bag $parameters)
+	public function fill(ModelContract $entity, ParameterBag $parameters)
 	{
 
 		$parameters = $parameters->only(['username', 'role', 'password', 'email']);

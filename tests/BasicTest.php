@@ -107,7 +107,7 @@ class BasicTest extends \Orchestra\Testbench\TestCase
 
         $this->assertEquals(true, $user_manager->update($user, $um->parameters(['role' => User::ROLE_ADMIN]))->getResource()->isRoleUser());
 
-        $um->find(new Bag(['username' => 'test123']));
+        $um->find($um->parameters(['username' => 'test123']));
 
 
 
@@ -141,7 +141,7 @@ $result = $manager->update($post, $parameters->filterByAgent($user->getAgent()))
 
 class PostAuthorizer
 {
-    public function filter(ModelContract $entity, Bag $parameters)
+    public function filter(ModelContract $entity, ParameterBag $parameters)
     {   
         if ($this->manager->agent->isRoleUser())
             return $parameters->only(['title']);

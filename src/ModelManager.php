@@ -10,7 +10,6 @@ use Railken\Laravel\Manager\Permission\AgentContract;
 
 use DB;
 use Exception;
-use Railken\Bag;
 use Illuminate\Support\Collection;
 
 abstract class ModelManager
@@ -52,7 +51,7 @@ abstract class ModelManager
     /**
      * Filter parameters
      *
-     * @param array|Bag $parameters
+     * @param array|ParameterBag $parameters
      *
      * @return ParameterBag
      */
@@ -60,7 +59,7 @@ abstract class ModelManager
     {
         return new ParameterBag($parameters);
     }
-    
+
     /**
      * Retrieve repository
      *
@@ -71,43 +70,15 @@ abstract class ModelManager
         return $this->repository;
     }
 
-    /**
-     * First or create
-     *
-     * @param Bag $parameters
-     *
-     * @return ModelContract
-     */
-    public function findOrCreate(Bag $parameters)
-    {
-        $entity = $this->getRepository()->getQuery()->where($parameters->all())->first();
-
-        return $entity ? $entity : $this->create($parameters);
-    }
-
-    /**
-     * Update or create
-     *
-     * @param Bag $criteria
-     * @param Bag $parameters
-     *
-     * @return ModelContract
-     */
-    public function updateOrCreate(Bag $criteria, Bag $parameters)
-    {
-        $entity = $this->getRepository()->getQuery()->where($criteria->all())->first();
-
-        return $entity ? $this->update($entity, $parameters) : $this->create($parameters);
-    }
 
     /**
      * Find
      *
-     * @param Bag $parameters
+     * @param ParameterBag $parameters
      *
      * @return mixed
      */
-    public function find(Bag $parameters)
+    public function find(ParameterBag $parameters)
     {
         return $this->getRepository()->find($parameters->all());
     }
@@ -115,23 +86,52 @@ abstract class ModelManager
     /**
      * Find where in
      *
-     * @param Bag $parameters
+     * @param ParameterBag $parameters
      *
      * @return Collection ?
      */
-    public function findWhereIn(Bag $parameters)
+    public function findWhereIn(ParameterBag $parameters)
     {
-        return $this->getRepository()->findWhereIn($parameters);
+        return $this->getRepository()->findWhereIn($parameters->all());
+    }
+
+    /**
+     * First or create
+     *
+     * @param ParameterBag $parameters
+     *
+     * @return ModelContract
+     */
+    public function findOrCreate(ParameterBag $parameters)
+    {
+        $entity = $this->find($parameters);
+
+        return $entity ? $entity : $this->create($this->parameters($parameters));
+    }
+
+    /**
+     * Update or create
+     *
+     * @param Bag $criteria
+     * @param ParameterBag $parameters
+     *
+     * @return ModelContract
+     */
+    public function updateOrCreate(Bag $criteria, ParameterBag $parameters)
+    {
+        $entity = $this->find($parameters);
+
+        return $entity ? $this->update($entity, $parameters) : $this->create($parameters);
     }
 
     /**
      * Create a new ModelContract given array
      *
-     * @param Bag $parameters
+     * @param ParameterBag $parameters
      *
      * @return Railken\Laravel\Manager\ModelContract
      */
-    public function create(Bag $parameters)
+    public function create(ParameterBag $parameters)
     {
         return $this->update($this->getRepository()->newEntity(), $parameters);
     }
@@ -139,11 +139,11 @@ abstract class ModelManager
     /**
      * Update a ModelContract given array
      *
-     * @param Bag $parameters
+     * @param ParameterBag $parameters
      *
      * @return Railken\Laravel\Manager\ModelContract
      */
-    public function update(ModelContract $entity, Bag $parameters)
+    public function update(ModelContract $entity, ParameterBag $parameters)
     {
         DB::beginTransaction();
         $result = new ResultExecute();
@@ -208,11 +208,11 @@ abstract class ModelManager
      * Fill entity ModelContract with array
      *
      * @param Railken\Laravel\Manager\ModelContract $entity
-     * @param Bag $parameters
+     * @param ParameterBag $parameters
      *
      * @return void
      */
-    public function fill(ModelContract $entity, Bag $parameters)
+    public function fill(ModelContract $entity, ParameterBag $parameters)
     {
         $entity->fill($parameters);
         return $entity;
