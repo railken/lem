@@ -4,8 +4,7 @@ namespace $NAMESPACE$;
 
 use Railken\Laravel\Manager\EntityContract;
 use Railken\Laravel\Manager\ParameterBag;
-use Railken\Laravel\Manager\Tests\User\Exceptions as Exceptions;
-use Railken\Laravel\Manager\Exceptions\NotAuthorizedException;
+use $NAMESPACE$\Exceptions as Exceptions;
 use Illuminate\Support\Collection;
 
 class $NAME$Authorizer
@@ -36,7 +35,7 @@ class $NAME$Authorizer
 	{
 		$errors = new Collection();
 
-		!$this->manager->agent->can('update', $entity) && $errors->push(new NotAuthorizedException($entity));
+		!$this->manager->agent->can('update', $entity) && $errors->push(new Exceptions\$NAME$NotAuthorizedException($entity));
 
 		return $errors;
 	}
