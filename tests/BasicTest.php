@@ -63,7 +63,8 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         
         Schema::create('foo', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('name')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -84,7 +85,7 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         $generator->generate(__DIR__."/Generated", "Railken\Laravel\Manager\Tests\Generated\Foo");
         $this->assertEquals(true, File::exists(__DIR__."/Generated/Foo"));
 
-        
+
         \Railken\Laravel\Manager\Tests\Generated\Foo\Foo::observe(\Railken\Laravel\Manager\Tests\Generated\Foo\FooObserver::class);
         Gate::policy(\Railken\Laravel\Manager\Tests\Generated\Foo\Foo::class, \Railken\Laravel\Manager\Tests\Generated\Foo\FooPolicy::class);
 
@@ -96,7 +97,8 @@ class BasicTest extends \Orchestra\Testbench\TestCase
 
         $bag = new \Railken\Laravel\Manager\Tests\Generated\Foo\FooParameterBag(['name' => 'a']);
         $m->setAgent($user);
-        $this->assertEquals("FOO_NAME_NOT_DEFINED", $m->create($bag->remove('name'))->getError()->getCode());
+        $this->assertEquals("FOO_NAME_NOT_VALID", $m->create($bag->set('name', '2'))->getError()->getCode());
+        $this->assertEquals(true, $m->create($bag->set('name', null))->ok());
 
         $um->remove($user);
     }
