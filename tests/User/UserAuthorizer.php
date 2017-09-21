@@ -4,10 +4,11 @@ namespace Railken\Laravel\Manager\Tests\User;
 
 use Railken\Laravel\Manager\EntityContract;
 use Railken\Laravel\Manager\ParameterBag;
-use Illuminate\Support\Collection;
 use Railken\Laravel\Manager\Tests\User\Exceptions as Exceptions;
+use Railken\Laravel\Manager\ModelAuthorizerContract;
+use Illuminate\Support\Collection;
 
-class UserAuthorizer
+class UserAuthorizer implements ModelAuthorizerContract
 {
 
 	/**

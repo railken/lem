@@ -4,10 +4,11 @@ namespace $NAMESPACE$;
 
 use Railken\Laravel\Manager\EntityContract;
 use Railken\Laravel\Manager\ParameterBag;
-use $NAMESPACE$\Exceptions as Exceptions;
+use Railken\Laravel\Manager\ModelAuthorizerContract;
 use Illuminate\Support\Collection;
+use $NAMESPACE$\Exceptions as Exceptions;
 
-class $NAME$Authorizer
+class $NAME$Authorizer implements ModelAuthorizerContract
 {
 
 	/**
