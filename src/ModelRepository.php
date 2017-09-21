@@ -2,7 +2,9 @@
 
 namespace Railken\Laravel\Manager;
 
-abstract class ModelRepository
+use Railken\Laravel\Manager\Contracts\ModelRepositoryContract;
+
+abstract class ModelRepository implements ModelRepositoryContract
 {
 
     /**
@@ -63,17 +65,17 @@ abstract class ModelRepository
     /**
      * Find where in
      *
-     * @param array
+     * @param array $parameters
      *
      * @return Collection
      */
-    public function findWhereIn($parameters)
+    public function findWhereIn(array $parameters)
     {
         $q = $this->getQuery();
 
-        foreach ($parameters as $name => $value) {
+        foreach ($parameters as $name => $value)
             $q->whereIn($name, $value);
-        }
+       
 
         return $q->get();
     }
