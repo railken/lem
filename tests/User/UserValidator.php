@@ -3,11 +3,12 @@
 namespace Railken\Laravel\Manager\Tests\User;
 
 use Railken\Laravel\Manager\Contracts\EntityContract;
+use Railken\Laravel\Manager\Contracts\ModelValidatorContract;
 use Railken\Laravel\Manager\ParameterBag;
 use Illuminate\Support\Collection;
 use Railken\Laravel\Manager\Tests\User\Exceptions as Exceptions;
 
-class UserValidator
+class UserValidator implements ModelValidatorContract
 {
 
     /**
@@ -28,7 +29,6 @@ class UserValidator
      *
      * @param EntityContract $entity
      * @param ParameterBag $parameters
-     * @param bool $required
      *
      * @return Collection
      */

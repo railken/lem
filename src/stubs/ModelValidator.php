@@ -3,12 +3,13 @@
 namespace $NAMESPACE$;
 
 use Railken\Laravel\Manager\Contracts\EntityContract;
+use Railken\Laravel\Manager\Contracts\ModelValidatorContract;
 use Railken\Laravel\Manager\ParameterBag;
 use Illuminate\Support\Collection;
 use $NAMESPACE$\Exceptions as Exceptions;
 
 
-class $NAME$Validator
+class $NAME$Validator implements ModelValidatorContract
 {
 
 	
