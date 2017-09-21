@@ -2,7 +2,7 @@
 
 namespace $NAMESPACE$\Exceptions;
 
-use Railken\Manager\Exceptions\ModelNotAuthorizedExceptionContract;
+use Railken\Laravel\Manager\Exceptions\ModelNotAuthorizedExceptionContract;
 use Exception;
 
 class $NAME$NotAuthorizedException extends Exception implements ModelNotAuthorizedExceptionContract

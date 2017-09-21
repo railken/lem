@@ -2,7 +2,7 @@
 
 namespace $NAMESPACE$\Exceptions;
 
-class UserNameNotDefinedException extends $NAME$AttributeException
+class $NAME$NameNotDefinedException extends $NAME$AttributeException
 {
 
 	/**

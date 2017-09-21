@@ -2,7 +2,7 @@
 
 namespace $NAMESPACE$\Exceptions;
 
-class UserNameNotValidException extends $NAME$AttributeException
+class $NAME$NameNotValidException extends $NAME$AttributeException
 {
 
 	/**
