@@ -39,24 +39,24 @@ use Railken\Laravel\Manager\Contracts\EntityContract;
 
 class Foo extends Model implements EntityContract
 {
-	
-	use SoftDeletes;
 
-	/**
-	 * The table associated with the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'foo';
+    use SoftDeletes;
 
-	/**
-	 * The attributes that are mass assignable.
-	 *
-	 * @var array
-	 */
-	protected $fillable = ['name'];
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'foo';
 
-	/**
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['name'];
+
+    /**
      * The attributes that should be mutated to dates.
      *
      * @var array
@@ -64,3 +64,40 @@ class Foo extends Model implements EntityContract
     protected $dates = ['deleted_at'];
 }
 ```
+
+### ModelRepository
+This is a Repository, the concept is very similar to the Repository of Symfony, code all your queries here. See [ModelRepository](https://github.com/railken/laravel-manager/blob/master/src/ModelRepository.php)
+
+```php
+<?php
+
+namespace Core\Foo;
+
+use Railken\Laravel\Manager\ModelRepository;
+
+class FooRepository extends ModelRepository
+{
+
+    /**
+     * Class name entity
+     *
+     * @var string
+     */
+    public $entity = Foo::class;
+
+    /**
+     * Custom method
+     *
+     * @param string $name
+     *
+     * @return Foo
+     */
+    public function findOneByName($name)
+    {
+        return $this->findOneBy(['name' => $name])
+    }
+
+}
+
+```
+
