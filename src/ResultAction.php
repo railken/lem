@@ -5,7 +5,7 @@ namespace Railken\Laravel\Manager;
 use Railken\Laravel\Manager\Exceptions as Exceptions;
 use Illuminate\Support\Collection;
 
-class ResultExecute
+class ResultAction
 {
 
     

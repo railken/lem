@@ -151,7 +151,7 @@ abstract class ModelManager
     {
         DB::beginTransaction();
         
-        $result = new ResultExecute();
+        $result = new ResultAction();
 
         try {
             if ($this->agent) {
