@@ -2,14 +2,10 @@
 
 namespace Railken\Laravel\Manager\Tests\User\Exceptions;
 
-use Exception;
+use Railken\Laravel\Manager\Contracts\ExceptionContract;
 
-use Railken\Laravel\Manager\Tests\User\User;
-
-class UserAttributeException extends Exception
+class UserAttributeException extends UserException implements ExceptionContract
 {
-
-
     /**
      * The reason (attribute) for which this exception is thrown
      *
@@ -30,62 +26,17 @@ class UserAttributeException extends Exception
      * @var string
      */
     protected $message = "The %s is invalid";
-
-    /**
-     * Value of attribute
-     *
-     * @var mixed
-     */
-    protected $value;
-
+    
     /**
      * Construct
      *
      * @param mixed $value
      */
-    public function __construct($value)
+    public function __construct($value = null)
     {
-        $this->value = $value;
+        $this->label = $this->attribute;
 
-        if (!$this->attribute) {
-            $this->attribute = get_class($this);
-        }
-        
-        $this->message = sprintf($this->message, $this->attribute, $value);
+        return parent::__construct($value);
     }
 
-    /**
-     * Rapresents the exception in the array format
-     *
-     * @return array
-     */
-    public function toArray()
-    {
-        return [
-            'code' => $this->getCode(),
-            'attribute' => $this->getAttribute(),
-            'message' => $this->getMessage(),
-            'value' => $this->getValue(),
-        ];
-    }
-
-    /**
-     * Get value of attribute
-     *
-     * @return mixed
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
-
-    /**
-     * Get attribute
-     *
-     * @return string
-     */
-    public function getAttribute()
-    {
-        return $this->attribute;
-    }
 }

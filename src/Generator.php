@@ -48,6 +48,7 @@ class Generator
         $this->put("/ModelParameterBag.php", "/{$name}ParameterBag.php", $vars);
         $this->put("/ModelPolicy.php", "/{$name}Policy.php", $vars);
         $this->put("/ModelServiceProvider.php", "/{$name}ServiceProvider.php", $vars);
+        $this->put("/Exceptions/ModelException.php", "/Exceptions/{$name}Exception.php", $vars);
         $this->put("/Exceptions/ModelNotFoundException.php", "/Exceptions/{$name}NotFoundException.php", $vars);
         $this->put("/Exceptions/ModelNotAuthorizedException.php", "/Exceptions/{$name}NotAuthorizedException.php", $vars);
         $this->put("/Exceptions/ModelAttributeException.php", "/Exceptions/{$name}AttributeException.php", $vars);

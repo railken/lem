@@ -6,8 +6,6 @@ use Railken\Laravel\Manager\Contracts\AgentContract;
 
 interface ParameterBagContract
 {
-
-
     /**
      * Filter current bag using agent
      *
