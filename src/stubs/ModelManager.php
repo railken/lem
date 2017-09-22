@@ -35,7 +35,7 @@ class $NAME$Manager extends ModelManager
 	 */
 	public function fill(EntityContract $entity, ParameterBag $parameters)
 	{
-		$parameters = $parameters->only(['name']);
+		$parameters = $parameters->filterFill();
 
 		return parent::fill($entity, $parameters);
 	}

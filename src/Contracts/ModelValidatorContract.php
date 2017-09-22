@@ -8,7 +8,7 @@ interface ModelValidatorContract
 {
     
     /**
-     * Validate 
+     * Validate
      *
      * @param EntityContract $entity
      * @param ParameterBag $parameters
@@ -16,5 +16,4 @@ interface ModelValidatorContract
      * @return Collection
      */
     public function validate(EntityContract $entity, ParameterBag $parameters);
-    
 }

@@ -7,7 +7,7 @@ use Railken\Laravel\Manager\ParameterBag;
 
 class UserParameterBag extends ParameterBag
 {
-        
+
     /**
      * Filter current bag using agent
      *
@@ -20,7 +20,7 @@ class UserParameterBag extends ParameterBag
         if ($agent->isRoleUser()) {
             return $this->only(['username', 'email', 'password']);
         }
- 
+
         if ($agent->isRoleAdmin()) {
             return $this;
         }
@@ -38,9 +38,20 @@ class UserParameterBag extends ParameterBag
         if ($agent->isRoleUser()) {
             return $this->only(['username', 'email']);
         }
- 
+
         if ($agent->isRoleAdmin()) {
             return $this->only(['username', 'email']);
         }
     }
+
+	/**
+	 * Filter current bag to fill model
+	 *
+	 * @return $this
+	 */
+	public function filterFill()
+	{
+		return $this->only(['username', 'role', 'password', 'email']);
+	}
+
 }

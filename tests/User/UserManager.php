@@ -36,22 +36,5 @@ class UserManager extends ModelManager
     {
         return new UserParameterBag($parameters);
     }
-    
 
-    /**
-     * Fill the entity
-     *
-     * @param EntityContract $entity
-     * @param ParameterBag $parameters
-     *
-     * @return EntityContract
-     */
-    public function fill(EntityContract $entity, ParameterBag $parameters)
-    {
-        $parameters = $parameters->only(['username', 'role', 'password', 'email']);
-        
-        $entity->fill($parameters->all());
-
-        return $entity;
-    }
 }

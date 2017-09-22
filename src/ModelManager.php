@@ -150,7 +150,7 @@ abstract class ModelManager
     public function update(EntityContract $entity, ParameterBag $parameters)
     {
         $result = new ResultAction();
-        
+
         if ($this->agent) {
             $parameters = $parameters->filterByAgent($this->agent);
             $this->authorizer && $result->addErrors($this->authorizer->update($entity, $parameters));
@@ -255,7 +255,7 @@ abstract class ModelManager
      */
     public function fill(EntityContract $entity, ParameterBag $parameters)
     {
-        $entity->fill($parameters->all());
+        $entity->fill($parameters->filterFill()->all());
 
         return $entity;
     }

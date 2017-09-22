@@ -6,8 +6,8 @@ use Railken\Laravel\Manager\Contracts\AgentContract;
 
 interface ParameterBagContract
 {
-        
-        
+
+
     /**
      * Filter current bag using agent
      *
@@ -25,4 +25,11 @@ interface ParameterBagContract
      * @return this
      */
     public function filterSearchableByAgent(AgentContract $agent);
+
+	/**
+	 * Filter current bag to fill model
+	 *
+	 * @return $this
+	 */
+	public function filterFill();
 }
