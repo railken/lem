@@ -4,10 +4,10 @@ namespace Railken\Laravel\Manager;
 
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\Contracts\AgentContract;
-
+use Railken\Laravel\Manager\Agents\SystemAgent;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Exception;
-use Illuminate\Support\Collection;
 
 abstract class ModelManager
 {
@@ -24,7 +24,7 @@ abstract class ModelManager
      */
     public function __construct(AgentContract $agent = null)
     {
-        $this->agent = $agent;
+        $this->agent = $agent ? $agent : new SystemAgent();
     }
 
     /**
@@ -66,7 +66,7 @@ abstract class ModelManager
     /**
      * Retrieve repository
      *
-     * @return RepositoryModel
+     * @return ModelRepository
      */
     public function getRepository()
     {
@@ -212,8 +212,7 @@ abstract class ModelManager
         $result = new ResultAction();
 
         if ($this->agent) {
-            $parameters = $parameters->filterByAgent($this->agent);
-            $result->addErrors($this->authorizer->remove($entity, $parameters));
+            $result->addErrors($this->authorizer->remove($entity, $this->parameters([])));
         }
 
         return $result->ok() ? $this->delete($entity) : $result;

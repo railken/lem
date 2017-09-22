@@ -3,6 +3,9 @@
 namespace Railken\Laravel\Manager\Tests\User;
 
 use Railken\Laravel\Manager\Contracts\AgentContract;
+use Railken\Laravel\Manager\Contracts\SystemAgentContract;
+use Railken\Laravel\Manager\Contracts\GuestAgentContract;
+use Railken\Laravel\Manager\Contracts\UserAgentContract;
 use Railken\Laravel\Manager\ParameterBag;
 
 class UserParameterBag extends ParameterBag
@@ -17,11 +20,22 @@ class UserParameterBag extends ParameterBag
      */
     public function filterByAgent(AgentContract $agent)
     {
-        if ($agent->isRoleUser()) {
-            return $this->only(['username', 'email', 'password']);
+        if ($agent instanceof UserAgentContract) {
+
+            if ($agent->isRoleUser()) {
+                return $this->only(['username', 'email', 'password']);
+            }
+
+            if ($agent->isRoleAdmin()) {
+                return $this;
+            }
         }
 
-        if ($agent->isRoleAdmin()) {
+        if ($agent instanceof GuestAgentContract) {
+            return $this;
+        }
+
+        if ($agent instanceof SystemAgentContract) {
             return $this;
         }
     }
@@ -35,12 +49,24 @@ class UserParameterBag extends ParameterBag
      */
     public function filterSearchableByAgent(AgentContract $agent)
     {
-        if ($agent->isRoleUser()) {
-            return $this->only(['username', 'email']);
+
+        if ($agent instanceof UserAgentContract) {
+
+            if ($agent->isRoleUser()) {
+                return $this->only(['username', 'email']);
+            }
+
+            if ($agent->isRoleAdmin()) {
+                return $this->only(['username', 'email']);
+            }
         }
 
-        if ($agent->isRoleAdmin()) {
-            return $this->only(['username', 'email']);
+        if ($agent instanceof GuestAgentContract) {
+            return $this;
+        }
+
+        if ($agent instanceof SystemAgentContract) {
+            return $this;
         }
     }
 

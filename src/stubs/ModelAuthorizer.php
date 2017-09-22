@@ -5,6 +5,9 @@ namespace $NAMESPACE$;
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\ParameterBag;
 use Railken\Laravel\Manager\Contracts\ModelAuthorizerContract;
+use Railken\Laravel\Manager\Contracts\SystemAgentContract;
+use Railken\Laravel\Manager\Contracts\GuestAgentContract;
+use Railken\Laravel\Manager\Contracts\UserAgentContract;
 use Illuminate\Support\Collection;
 use $NAMESPACE$\Exceptions as Exceptions;
 
@@ -37,9 +40,24 @@ class $NAME$Authorizer implements ModelAuthorizerContract
     {
         $errors = new Collection();
 
-        !$this->manager->agent->can($operation, $entity) && $errors->push(new Exceptions\$NAME$NotAuthorizedException($entity));
+		# SystemAgent can always do anything.
+		if ($this->manager->agent instanceof SystemAgentContract) {
+			// ...
+		}
 
-        return $errors;
+		# GuestAgent can always do anything.
+		if ($this->manager->agent instanceof GuestAgentContract) {
+			// ...
+		}
+
+		# GuestAgent can always do anything.
+		if ($this->manager->agent instanceof UserAgentContract) {
+			// ...
+			!$this->manager->agent->can($operation, $entity) && $errors->push(new Exceptions\$NAME$NotAuthorizedException($entity));
+		}
+		
+		return $errors;
+
     }
 
     /**
