@@ -241,11 +241,12 @@ class FooParameterBag extends ParameterBag
         return $this;
     }
 }
+```
 
 ### ModelValidator
 Here comes the validator, and again it's very simple. validate() is called whenever an create/update are called.
 Remember: always return the collection of errors.
-```
+
 
 ```php
 namespace Core\Foo;
