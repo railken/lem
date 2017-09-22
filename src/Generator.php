@@ -2,15 +2,13 @@
 
 namespace Railken\Laravel\Manager;
 
-use File;
+use Illuminate\Support\Facades\File;
 
 class Generator
 {
 
     /**
      * Construct
-     *
-     * @param string $base_path
      */
     public function __construct()
     {
@@ -21,7 +19,7 @@ class Generator
      * Generate a new ModelStructure folder
      *
      * @param string $path
-     * @param string $name
+     * @param string $namespace
      *
      * @return void
      */
@@ -30,7 +28,7 @@ class Generator
         $namespaces = collect(explode("\\", $namespace));
         $name = $namespaces->last();
         $path = $path."/".$name;
-        
+
         $vars = [
             'NAMESPACE' => $namespace,
             'NAME' => $name,
@@ -80,7 +78,7 @@ class Generator
         foreach ($data as $n => $k) {
             $content = str_replace("$".$n."$", $k, $content);
         }
-        
+
 
         File::put($to, $content);
     }

@@ -3,12 +3,9 @@
 namespace Railken\Laravel\Manager;
 
 use Railken\Laravel\Manager\Contracts\EntityContract;
-use Railken\Laravel\Manager\Exceptions\InvalidParamValueException;
-use Railken\Laravel\Manager\Exceptions\MissingParamException;
-use Railken\Laravel\Manager\Exceptions\ModelByIdNotFoundException;
 use Railken\Laravel\Manager\Contracts\AgentContract;
 
-use DB;
+use Illuminate\Support\Facades\DB;
 use Exception;
 use Illuminate\Support\Collection;
 
@@ -16,13 +13,14 @@ abstract class ModelManager
 {
 
     /**
-     * @var Railken\Laravel\Manager\ModelRepository
+     * @var \Railken\Laravel\Manager\ModelRepository
      */
     public $repository;
 
     /**
      * Construct
      *
+     * @param AgentContract|null $agent
      */
     public function __construct(AgentContract $agent = null)
     {
@@ -32,7 +30,7 @@ abstract class ModelManager
     /**
      * Retrieve agent
      *
-     * @return Agent
+     * @return AgentContract
      */
     public function getAgent()
     {
@@ -42,7 +40,7 @@ abstract class ModelManager
     /**
      * Set the agent
      *
-     * @param Railken\Laravel\Manager\Contracts\AgentContract $agent
+     * @param AgentContract $agent
      *
      * @return $this
      */
@@ -68,7 +66,7 @@ abstract class ModelManager
     /**
      * Retrieve repository
      *
-     * @return Railken\Laravel\Manager\RepositoryModel
+     * @return RepositoryModel
      */
     public function getRepository()
     {
@@ -78,9 +76,9 @@ abstract class ModelManager
     /**
      * Find
      *
-     * @param Railken\Laravel\Manager\ParameterBag $parameters
+     * @param ParameterBag $parameters
      *
-     * @return Railken\Laravel\Manager\Contracts\EntityContract
+     * @return EntityContract
      */
     public function findOneBy(ParameterBag $parameters)
     {
@@ -96,7 +94,7 @@ abstract class ModelManager
     /**
      * Find by parameters
      *
-     * @param Railken\Laravel\Manager\ParameterBag $parameters
+     * @param ParameterBag $parameters
      *
      * @return Collection
      */
@@ -120,9 +118,9 @@ abstract class ModelManager
     /**
      * Create a new EntityContract given parameters
      *
-     * @param Railken\Laravel\Manager\ParameterBag $parameters
+     * @param ParameterBag $parameters
      *
-     * @return Railken\Laravel\Manager\ResultAction
+     * @return ResultAction
      */
     public function create(ParameterBag $parameters)
     {
@@ -142,10 +140,10 @@ abstract class ModelManager
     /**
      * Update a EntityContract given parameters
      *
-     * @param Railken\Laravel\Manager\Contracts EntityContract
-     * @param Railken\Laravel\Manager\ParameterBag $parameters
+     * @param EntityContract $entity
+     * @param ParameterBag $parameters
      *
-     * @return Railken\Laravel\Manager\ResultAction
+     * @return ResultAction
      */
     public function update(EntityContract $entity, ParameterBag $parameters)
     {
@@ -164,10 +162,10 @@ abstract class ModelManager
     /**
      * Update a EntityContract given parameters
      *
-     * @param Railken\Laravel\Manager\Contracts EntityContract
-     * @param Railken\Laravel\Manager\ParameterBag $parameters
+     * @param EntityContract $entity
+     * @param ParameterBag $parameters
      *
-     * @return Railken\Laravel\Manager\ResultAction
+     * @return ResultAction
      */
     public function edit(EntityContract $entity, ParameterBag $parameters)
     {
@@ -193,9 +191,9 @@ abstract class ModelManager
     /**
      * Save the entity
      *
-     * @param  Railken\Laravel\Manager\Contracts\EntityContract $entity
+     * @param EntityContract $entity
      *
-     * @return Railken\Laravel\Manager\Contracts\EntityContract
+     * @return EntityContract
      */
     public function save(EntityContract $entity)
     {
@@ -205,7 +203,7 @@ abstract class ModelManager
     /**
      * Remove a EntityContract
      *
-     * @param Railken\Laravel\Manager\Contracts\EntityContract $entity
+     * @param EntityContract $entity
      *
      * @return void
      */
@@ -224,9 +222,9 @@ abstract class ModelManager
     /**
      * Delete a EntityContract
      *
-     * @param Railken\Laravel\Manager\Contracts\EntityContract $entity
+     * @param EntityContract $entity
      *
-     * @return Railken\Laravel\Manager\ResultAction
+     * @return ResultAction
      */
     protected function delete(EntityContract $entity)
     {
@@ -248,8 +246,8 @@ abstract class ModelManager
     /**
      * Fill entity EntityContract with array
      *
-     * @param Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param Railken\Laravel\Manager\ParameterBag $parameters
+     * @param EntityContract $entity
+     * @param ParameterBag $parameters
      *
      * @return void
      */
@@ -263,7 +261,7 @@ abstract class ModelManager
     /**
      * First or create
      *
-     * @param Railken\Laravel\Manager\ParameterBag $parameters
+     * @param ParameterBag $parameters
      *
      * @return EntityContract
      */
@@ -277,12 +275,12 @@ abstract class ModelManager
     /**
      * Update or create
      *
-     * @param Railken\Laravel\Manager\ParameterBag $criteria
-     * @param Railken\Laravel\Manager\ParameterBag $parameters
+     * @param ParameterBag $criteria
+     * @param ParameterBag $parameters
      *
-     * @return Railken\Laravel\Manager\ResultAction
+     * @return ResultAction
      */
-    public function updateOrCreate(Bag $criteria, ParameterBag $parameters)
+    public function updateOrCreate(ParameterBag $criteria, ParameterBag $parameters)
     {
         $entity = $this->find($parameters);
 

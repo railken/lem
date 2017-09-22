@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 class ResultAction
 {
 
-    
+
     /**
      * A collection of resources altered during operation
      *
@@ -65,11 +65,15 @@ class ResultAction
     /**
      * Set errors
      *
-     * @param Collection
+     * @param Collection $errors
+     *
+     * @return $this
      */
     public function setErrors($errors)
     {
         $this->errors = $errors;
+
+        return $this;
     }
 
     /**
@@ -85,7 +89,7 @@ class ResultAction
     /**
      * Get error
      *
-     * @return Exception
+     * @return mixed
      */
     public function getError()
     {
@@ -97,9 +101,9 @@ class ResultAction
      *
      * @param Collection $errors
      *
-     * @return this
+     * @return $this
      */
-    public function addErrors(Collection $errors = null)
+    public function addErrors(Collection $errors)
     {
         $this->errors = $this->getErrors()->merge($errors);
 
@@ -110,7 +114,7 @@ class ResultAction
     /**
      * Return if result has been executed without errors
      *
-     * @return boolean
+     * @return bool
      */
     public function success()
     {
@@ -120,7 +124,7 @@ class ResultAction
     /**
      * Return if result has been executed without errors
      *
-     * @return boolean
+     * @return bool
      */
     public function ok()
     {
@@ -142,7 +146,7 @@ class ResultAction
     /**
      * Is authorized
      *
-     * @return boolean
+     * @return bool
      */
     public function isAuthorized()
     {
