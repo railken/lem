@@ -38,7 +38,7 @@ if ($result->ok()) {
 
 ```
 
-How can you get an Error during an operation? An error occurs when a validation or authorization fails. The cool thing about it is that you have the total control during each process: using with [ModelValidator](###ModelValidator) and [ModelAuthorizer](###ModelAuthorizer). When you're retrieving errors you're receiving a Collection, it goes pretty well when you're developing an api. Here's an example
+How can you get an Error during an operation? An error occurs when a validation or authorization fails. The cool thing about it is that you have the total control during each process: using with [ModelValidator](#modelvalidator) and [ModelAuthorizer](#modelauthorizer). When you're retrieving errors you're receiving a Collection, it goes pretty well when you're developing an api. Here's an example
 ```php
 $manager = new FooManager();
 $result = $manager->create($manager->parameters(['name' => 'f']));
@@ -68,7 +68,7 @@ Array
 So, what about the authorization part? You need first setup the agent.
 
 
-See [ModelAuthorizer](###ModelAuthorizer) and [ModelPolicy](###ModelPolicy) for more explanations.
+See [ModelAuthorizer](#modelauthorizer) and [ModelPolicy](#modelpolicy) for more explanations.
 ```php
 $manager = new FooManager();
 $manager->setAgent($agent);
@@ -332,7 +332,7 @@ class FooValidator implements ModelValidatorContract
 
 ```
 ### ModelAuthorizer
-Has you can see this class has only one method and what it does is a simple bridge between the [ModelManager](###ModelManager) and the [ModelPolicy](###ModelPolicy). So all the "rules" for authorization are defined in the [ModelPolicy](###ModelPolicy).
+Has you can see this class has only one method and what it does is a simple bridge between the [ModelManager](#modelmanager) and the [ModelPolicy](#modelpolicy). So all the "rules" for authorization are defined in the [ModelPolicy](#modelpolicy).
 
 You can leave this as is it, or change and used another method for authorization.
 
