@@ -447,3 +447,47 @@ class FooPolicy implements ModelPolicyContract
     }
 }
 ```
+
+### ModelSerializer
+
+```php
+namespace Core\Foo;
+
+use Railken\Laravel\Manager\Contracts\ModelSerializerContract;
+use Railken\Laravel\Manager\Contracts\EntityContract;
+use Railken\Bag;
+
+class FooSerializer implements ModelSerializerContract
+{
+
+	/**
+	 * Serialize entity
+	 *
+	 * @param EntityContract $entity
+	 *
+	 * @return Bag
+	 */
+	public function serialize(EntityContract $entity)
+	{
+		$bag = $this->serializeBrief($entity);
+
+		return $bag;
+	}
+
+	/**
+	 * Serialize entity
+	 *
+	 * @param EntityContract $entity
+	 *
+	 * @return Bag
+	 */
+	public function serializeBrief(EntityContract $entity)
+	{
+		$bag = new Bag();
+
+		$bag->set('id', $entity->id);
+
+		return $bag;
+	}
+}
+```
