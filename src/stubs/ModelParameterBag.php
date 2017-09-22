@@ -3,6 +3,9 @@
 namespace $NAMESPACE$;
 
 use Railken\Laravel\Manager\Contracts\AgentContract;
+use Railken\Laravel\Manager\Contracts\SystemAgentContract;
+use Railken\Laravel\Manager\Contracts\GuestAgentContract;
+use Railken\Laravel\Manager\Contracts\UserAgentContract;
 use Railken\Laravel\Manager\ParameterBag;
 
 class $NAME$ParameterBag extends ParameterBag
@@ -17,7 +20,17 @@ class $NAME$ParameterBag extends ParameterBag
 	 */
 	public function filterByAgent(AgentContract $agent)
 	{
-		return $this;
+		if ($agent instanceof UserAgentContract) {
+			return $this;
+        }
+
+        if ($agent instanceof GuestAgentContract) {
+            return $this;
+        }
+
+        if ($agent instanceof SystemAgentContract) {
+            return $this;
+        }
 	}
 
 	/**
@@ -29,7 +42,17 @@ class $NAME$ParameterBag extends ParameterBag
 	 */
 	public function filterSearchableByAgent(AgentContract $agent)
 	{
-	  	return $this;
+		if ($agent instanceof UserAgentContract) {
+			return $this;
+        }
+
+        if ($agent instanceof GuestAgentContract) {
+            return $this;
+        }
+
+        if ($agent instanceof SystemAgentContract) {
+            return $this;
+        }
 	}
 
 	/**
