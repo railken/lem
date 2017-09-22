@@ -1,6 +1,7 @@
 # Laravel Manager
 
-Organize your project with a defined structure to handle Models in laravel: manipulate, validate, authorize, serialize, etc...
+Organize your project with a defined structure to handle Models in laravel:
+manipulate, validate, authorize, serialize, etc...
 
 ## Requirements
 
@@ -8,7 +9,8 @@ PHP 7.0.0 or later.
 
 ## Composer
 
-You can install it via [Composer](https://getcomposer.org/) by typing the following command:
+You can install it via [Composer](https://getcomposer.org/) by typing the
+following command:
 
 ```bash
 composer require railken/laravel-manager
@@ -29,10 +31,10 @@ $manager = new FooManager();
 $result = $manager->create($manager->parameters(['name' => 'foo']));
 
 if ($result->ok()) {
-    $foo = $result->getResource(); 
+    $foo = $result->getResource();
 } else {
     $result->getErrors(); // All errors goes here.
-} 
+}
 
 ```
 
@@ -50,12 +52,12 @@ Array
                 [code] => FOO_TITLE_NOT_DEFINED
                 [attribute] => title
                 [message] => The title is required
-                [value] => 
+                [value] =>
             )
 
         [1] => Array
             (
-                [code] => USER_NAME_NOT_DEFINED
+                [code] => FOO_NAME_NOT_DEFINED
                 [attribute] => name
                 [message] => The name isn't valid
                 [value] => f
@@ -63,14 +65,28 @@ Array
     )
 */
 ```
+So, what about the authorization part? You need first setup the agent.
+
+
+See [ModelAuthorizer](###ModelAuthorizer) and [ModelPolicy](###ModelPolicy) for more explanations.
+```php
+$manager = new FooManager();
+$manager->setAgent($agent);
+$result = $manager->create($manager->parameters(['name' => 'f']));
+if ($result->isAuthorized()) {
+  ...
+} else {
+  ...
+}
+```
 ### Commands
 
-- Generate a new set of files `php artisan railken:make:manager [path] [namespace]`. An example would be `php artisan railken:make:manager src/Core Core/User`. 
+- Generate a new set of files `php artisan railken:make:manager [path] [namespace]`.
 
 ### ModelManager
 This is the main class, all the operations are performed using this: create, update, retrieve, remove
 
-See [ModelRepository](https://github.com/railken/laravel-manager/blob/master/src/ModelManager.php) for more information.
+See [ModelManager](https://github.com/railken/laravel-manager/blob/master/src/ModelManager.php).
 ```php
 namespace Core\Foo;
 
@@ -153,7 +169,7 @@ class Foo extends Model implements EntityContract
 ```
 
 ### ModelRepository
-This is a Repository, the concept is very similar to the Repository of Symfony, code all your queries here. 
+This is a Repository, the concept is very similar to the Repository of Symfony, code all your queries here.
 
 See [ModelRepository](https://github.com/railken/laravel-manager/blob/master/src/ModelRepository.php) for more information.
 
@@ -189,7 +205,8 @@ class FooRepository extends ModelRepository
 ```
 
 ### ModelParameterBag
-This is a [Bag](https://github.com/railken/bag).
+This is a [Bag](https://github.com/railken/bag). This will contain all methods
+to filter attributes of a Model
 
 ```php
 namespace Core\Foo;
@@ -199,7 +216,7 @@ use Railken\Laravel\Manager\ParameterBag;
 
 class FooParameterBag extends ParameterBag
 {
-        
+
     /**
      * Filter current bag using agent
      *
@@ -211,7 +228,7 @@ class FooParameterBag extends ParameterBag
     {  
         return $this;
     }
-        
+
     /**
      * Filter current bag using agent for a search
      *
@@ -225,10 +242,96 @@ class FooParameterBag extends ParameterBag
     }
 }
 
-```
+### ModelValidator
+Here comes the validator, and again it's very simple. validate() is called whenever an create/update are called.
+Remember: always return the collection of errors.
 
+```php
+namespace Core\Foo;
+
+use Railken\Laravel\Manager\Contracts\EntityContract;
+use Railken\Laravel\Manager\Contracts\ModelValidatorContract;
+use Railken\Laravel\Manager\ParameterBag;
+use Illuminate\Support\Collection;
+use Core\Foo\Exceptions as Exceptions;
+
+
+class FooValidator implements ModelValidatorContract
+{
+
+    /**
+     * Validate
+     *
+     * @param EntityContract $entity
+     * @param ParameterBag $parameters
+     *
+     * @return Collection
+     */
+    public function validate(EntityContract $entity, ParameterBag $parameters)
+    {
+
+        $errors = new Collection();
+
+        if (!$entity->exists)
+            $errors = $errors->merge($this->validateRequired($parameters));
+
+        $errors = $errors->merge($this->validateValue($entity, $parameters));
+
+        return $errors;
+    }
+
+    /**
+     * Validate "required" values
+     *
+     * @param EntityContract $entity
+     * @param ParameterBag $parameters
+     *
+     * @return Collection
+     */
+    public function validateRequired(ParameterBag $parameters)
+    {
+        $errors = new Collection();
+
+        !$parameters->exists('name') && $errors->push(new Exceptions\FooNameNotDefinedException($parameters->get('name')));
+
+        return $errors;
+    }
+
+    /**
+     * Validate "not valid" values
+     *
+     * @param ParameterBag $parameters
+     *
+     * @return Collection
+     */
+    public function validateValue(EntityContract $entity, ParameterBag $parameters)
+    {
+        $errors = new Collection();
+
+        $parameters->exists('name') && !$this->validName($parameters->get('name')) &&
+            $errors->push(new Exceptions\FooNameNotValidException($parameters->get('name')));
+
+
+        return $errors;
+    }
+
+    /**
+     * Validate name
+     *
+     * @param string $name
+     *
+     * @return boolean
+     */
+    public function validName($name)
+    {
+        return $name === null || (strlen($name) >= 3 && strlen($name) < 255);
+    }
+
+}
+
+```
 ### ModelAuthorizer
-Has you can see this class has only this method and what it does is a simple bridge between the ModelManager and the ModelPolicy. So all the "rules" for authorization are defined in the ModelPolicy.
+Has you can see this class has only one method and what it does is a simple bridge between the [ModelManager](###ModelManager) and the [ModelPolicy](###ModelPolicy). So all the "rules" for authorization are defined in the [ModelPolicy](###ModelPolicy).
 
 You can leave this as is it, or change and used another method for authorization.
 
@@ -263,95 +366,83 @@ class FooAuthorizer implements ModelAuthorizerContract
     }
 
 }
-
-
 ```
 
-### ModelValidator
-Here comes the validator, and again it's very simple. validate() is called whenever an create/update are called.
-Remember: always return the collection of errors.
+### ModelPolicy
+This is the the same as in [laravel](https://laravel.com/docs/5.5/authorization#writing-policies).
+Remember to add the interface AgentContract to your User Model.
 
 ```php
 namespace Core\Foo;
 
+use Railken\Laravel\Manager\Contracts\AgentContract;
+use Railken\Laravel\Manager\Contracts\ModelPolicyContract;
 use Railken\Laravel\Manager\Contracts\EntityContract;
-use Railken\Laravel\Manager\Contracts\ModelValidatorContract;
-use Railken\Laravel\Manager\ParameterBag;
-use Illuminate\Support\Collection;
-use Core\Foo\Exceptions as Exceptions;
 
-
-class FooValidator implements ModelValidatorContract
+class FooPolicy implements ModelPolicyContract
 {
 
     /**
-     * Validate 
+     * Determine if the given entity can be manipulated by the agent.
      *
+     * @param AgentContract $agent
+     *
+     * @return bool
+     */
+    public function interact(AgentContract $agent, EntityContract $entity = null)
+    {   
+        return true;
+    }
+
+    /**
+     * Determine if the agent can create an entity
+     *
+     * @param AgentContract $agent
+     *
+     * @return bool
+     */
+    public function create(AgentContract $agent)
+    {   
+        return true;
+    }
+
+    /**
+     * Determine if the given entity can be updated by the agent.
+     *
+     * @param AgentContract $agent
      * @param EntityContract $entity
-     * @param ParameterBag $parameters
      *
-     * @return Collection
+     * @return bool
      */
-    public function validate(EntityContract $entity, ParameterBag $parameters)
-    {
-        
-        $errors = new Collection();
-
-        if (!$entity->exists) 
-            $errors = $errors->merge($this->validateRequired($parameters));
-        
-        $errors = $errors->merge($this->validateValue($entity, $parameters));
-
-        return $errors;
+    public function update(AgentContract $agent, EntityContract $entity)
+    {   
+    	return $this->interact($agent, $entity);
     }
 
     /**
-     * Validate "required" values
+     * Determine if the given entity can be retrieved by the agent.
      *
+     * @param AgentContract $agent
      * @param EntityContract $entity
-     * @param ParameterBag $parameters
      *
-     * @return Collection
+     * @return bool
      */
-    public function validateRequired(ParameterBag $parameters)
-    {
-        $errors = new Collection();
-
-        !$parameters->exists('name') && $errors->push(new Exceptions\FooNameNotDefinedException($parameters->get('name')));
-
-        return $errors;
+    public function retrieve(AgentContract $agent, EntityContract $entity)
+    {   
+        return $this->interact($agent, $entity);
     }
 
     /**
-     * Validate "not valid" values
+     * Determine if the given entity can be removed by the agent.
      *
-     * @param ParameterBag $parameters
+     * @param AgentContract $agent
+     * @param EntityContract $entity
      *
-     * @return Collection
+     * @return bool
      */
-    public function validateValue(EntityContract $entity, ParameterBag $parameters)
-    {
-        $errors = new Collection();
-
-        $parameters->exists('name') && !$this->validName($parameters->get('name')) && 
-            $errors->push(new Exceptions\FooNameNotValidException($parameters->get('name')));
-
-
-        return $errors;
+    public function remove(AgentContract $agent, EntityContract $entity)
+    {   
+        return $this->interact($agent, $entity);
     }
-
-    /**
-     * Validate name
-     *
-     * @param string $name
-     *
-     * @return boolean
-     */
-    public function validName($name)
-    {
-        return $name === null || (strlen($name) >= 3 && strlen($name) < 255);
-    }
-
 }
-
 ```
