@@ -5,7 +5,7 @@ namespace $NAMESPACE$;
 use Railken\Laravel\Manager\Contracts\EntityContract;
 
 class $NAME$Observer
-{   
+{
 
     /**
      * Listen to the entity retrieved event.
@@ -51,7 +51,7 @@ class $NAME$Observer
      * @return void
      */
     public function updating(EntityContract $entity)
-    {   
+    {
         // ..
     }
 
@@ -63,7 +63,7 @@ class $NAME$Observer
      * @return void
      */
     public function updated(EntityContract $entity)
-    {   
+    {
         // ..
     }
 
@@ -75,7 +75,7 @@ class $NAME$Observer
      * @return void
      */
     public function saving(EntityContract $entity)
-    {   
+    {
         // ..
     }
 
@@ -87,7 +87,7 @@ class $NAME$Observer
      * @return void
      */
     public function saved(EntityContract $entity)
-    {	
+    {
     	// ..
     }
 
@@ -99,7 +99,7 @@ class $NAME$Observer
      * @return void
      */
     public function deleting(EntityContract $entity)
-    {   
+    {
         // ..
     }
 
@@ -111,7 +111,7 @@ class $NAME$Observer
      * @return void
      */
     public function deleted(EntityContract $entity)
-    {   
+    {
         // ..
     }
 
@@ -123,7 +123,7 @@ class $NAME$Observer
      * @return void
      */
     public function restoring(EntityContract $entity)
-    {   
+    {
         // ..
     }
 
@@ -135,7 +135,7 @@ class $NAME$Observer
      * @return void
      */
     public function restored(EntityContract $entity)
-    {   
+    {
         // ..
     }
 }

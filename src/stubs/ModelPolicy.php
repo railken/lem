@@ -17,7 +17,7 @@ class $NAME$Policy implements ModelPolicyContract
      * @return bool
      */
     public function interact(AgentContract $agent, EntityContract $entity = null)
-    {   
+    {
         return true;
     }
 
@@ -29,7 +29,7 @@ class $NAME$Policy implements ModelPolicyContract
      * @return bool
      */
     public function create(AgentContract $agent)
-    {   
+    {
         return true;
     }
 
@@ -42,7 +42,7 @@ class $NAME$Policy implements ModelPolicyContract
      * @return bool
      */
     public function update(AgentContract $agent, EntityContract $entity)
-    {   
+    {
     	return $this->interact($agent, $entity);
     }
 
@@ -55,7 +55,7 @@ class $NAME$Policy implements ModelPolicyContract
      * @return bool
      */
     public function retrieve(AgentContract $agent, EntityContract $entity)
-    {   
+    {
         return $this->interact($agent, $entity);
     }
 
@@ -68,7 +68,7 @@ class $NAME$Policy implements ModelPolicyContract
      * @return bool
      */
     public function remove(AgentContract $agent, EntityContract $entity)
-    {   
+    {
         return $this->interact($agent, $entity);
     }
 }

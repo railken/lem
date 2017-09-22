@@ -4,7 +4,7 @@ namespace Railken\Laravel\Manager\Contracts;
 
 interface ModelSerializerContract
 {
-    
+
     /**
      * Serialize
      *

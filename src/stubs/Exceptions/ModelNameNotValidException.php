@@ -25,5 +25,5 @@ class $NAME$NameNotValidException extends $NAME$AttributeException
 	 * @var string
 	 */
 	protected $message = "The %s is not valid";
-	
+
 }

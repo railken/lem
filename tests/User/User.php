@@ -14,7 +14,7 @@ class User extends Authenticatable implements EntityContract, AgentContract
 
     const ROLE_USER = 'user';
     const ROLE_ADMIN = 'admin';
-    
+
     /**
      * The table associated with the model.
      *
@@ -60,7 +60,7 @@ class User extends Authenticatable implements EntityContract, AgentContract
     /**
      * Return if has role user
      *
-     * @return boolean
+     * @return bool
      */
     public function isRoleUser()
     {
@@ -70,7 +70,7 @@ class User extends Authenticatable implements EntityContract, AgentContract
     /**
      * Return if has role admin
      *
-     * @return boolean
+     * @return bool
      */
     public function isRoleAdmin()
     {

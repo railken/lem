@@ -6,7 +6,7 @@ use Railken\Laravel\Manager\Contracts\AgentContract;
 
 interface ModelPolicyContract
 {
-    
+
     /**
      * Determine if the given entity can be updated by the agent.
      *

@@ -6,7 +6,7 @@ use Railken\Laravel\Manager\ParameterBag;
 
 interface ModelValidatorContract
 {
-    
+
     /**
      * Validate
      *

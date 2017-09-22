@@ -8,7 +8,7 @@ use Railken\Laravel\Manager\Contracts\EntityContract;
 
 class $NAME$ extends Model implements EntityContract
 {
-	
+
 	use SoftDeletes;
 
 	/**

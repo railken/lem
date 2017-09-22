@@ -333,7 +333,7 @@ class FooValidator implements ModelValidatorContract
 
 ```
 ### ModelAuthorizer
-Has you can see this class has only one method and what it does is a simple bridge between the [ModelManager](#modelmanager) and the [ModelPolicy](#modelpolicy). So all the "rules" for authorization are defined in the [ModelPolicy](#modelpolicy).
+As you can see this class has only one method and what it does is a simple bridge between the [ModelManager](#modelmanager) and the [ModelPolicy](#modelpolicy). So all the "rules" for authorization are defined in the [ModelPolicy](#modelpolicy).
 
 You can leave this as is it, or change and used another method for authorization.
 
@@ -450,7 +450,7 @@ class FooPolicy implements ModelPolicyContract
 ```
 
 ### ModelSerializer
-
+This class will serialize your model
 ```php
 namespace Core\Foo;
 

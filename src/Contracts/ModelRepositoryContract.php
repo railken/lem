@@ -20,7 +20,7 @@ interface ModelRepositoryContract
      * @return string
      */
     public function getEntity();
-    
+
     /**
      * Find by primary
      *

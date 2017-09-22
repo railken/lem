@@ -25,5 +25,5 @@ class $NAME$NameNotDefinedException extends $NAME$AttributeException
 	 * @var string
 	 */
 	protected $message = "The %s is required";
-	
+
 }

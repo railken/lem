@@ -12,7 +12,6 @@ use $NAMESPACE$\Exceptions as Exceptions;
 class $NAME$Validator implements ModelValidatorContract
 {
 
-	
 	/**
 	 * @var ModelManager
 	 */
@@ -27,7 +26,7 @@ class $NAME$Validator implements ModelValidatorContract
 	}
 
 	/**
-	 * Validate 
+	 * Validate
 	 *
 	 * @param EntityContract $entity
 	 * @param ParameterBag $parameters
@@ -37,12 +36,12 @@ class $NAME$Validator implements ModelValidatorContract
 	 */
 	public function validate(EntityContract $entity, ParameterBag $parameters)
 	{
-		
+
 		$errors = new Collection();
 
-		if (!$entity->exists) 
+		if (!$entity->exists)
 			$errors = $errors->merge($this->validateRequired($parameters));
-		
+
 		$errors = $errors->merge($this->validateValue($entity, $parameters));
 
 		return $errors;
@@ -76,7 +75,7 @@ class $NAME$Validator implements ModelValidatorContract
 	{
 		$errors = new Collection();
 
-		$parameters->exists('name') && !$this->validName($parameters->get('name')) && 
+		$parameters->exists('name') && !$this->validName($parameters->get('name')) &&
 			$errors->push(new Exceptions\$NAME$NameNotValidException($parameters->get('name')));
 
 
@@ -88,7 +87,7 @@ class $NAME$Validator implements ModelValidatorContract
 	 *
 	 * @param string $name
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function validName($name)
 	{

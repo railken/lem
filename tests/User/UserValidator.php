@@ -12,12 +12,14 @@ class UserValidator implements ModelValidatorContract
 {
 
     /**
-     * @var ModelManager
+     * @var UserManager
      */
     protected $manager;
 
     /**
      * Construct
+     *
+     * @param UserManager $manager
      */
     public function __construct(UserManager $manager)
     {
@@ -39,7 +41,7 @@ class UserValidator implements ModelValidatorContract
         if (!$entity->exists) {
             $errors = $errors->merge($this->validateRequired($parameters));
         }
-        
+
         $errors = $errors->merge($this->validateValue($entity, $parameters));
 
         return $errors;
@@ -48,7 +50,6 @@ class UserValidator implements ModelValidatorContract
     /**
      * Validate "required" values
      *
-     * @param EntityContract $entity
      * @param ParameterBag $parameters
      *
      * @return Collection
@@ -67,6 +68,7 @@ class UserValidator implements ModelValidatorContract
     /**
      * Validate "not valid" values
      *
+     * @param EntityContract $entity
      * @param ParameterBag $parameters
      *
      * @return Collection
@@ -99,7 +101,7 @@ class UserValidator implements ModelValidatorContract
      *
      * @param string $email
      *
-     * @return boolean
+     * @return bool
      */
     public function validEmail($email)
     {
@@ -112,7 +114,7 @@ class UserValidator implements ModelValidatorContract
      *
      * @param string $password
      *
-     * @return boolean
+     * @return bool
      */
     public function validPassword($password)
     {
@@ -124,7 +126,7 @@ class UserValidator implements ModelValidatorContract
      *
      * @param string $role
      *
-     * @return boolean
+     * @return bool
      */
     public function validRole($role)
     {
@@ -136,7 +138,7 @@ class UserValidator implements ModelValidatorContract
      *
      * @param string $username
      *
-     * @return boolean
+     * @return bool
      */
     public function validUsername($username)
     {

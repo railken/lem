@@ -20,7 +20,7 @@ class UserRepository extends ModelRepository
      * @param string $email
      * @param User $user
      *
-     * @return boolean
+     * @return bool
      */
     public function isUniqueEmail($email, User $user)
     {

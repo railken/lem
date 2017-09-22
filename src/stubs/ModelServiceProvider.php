@@ -13,7 +13,7 @@ class $NAME$ServiceProvider extends ServiceProvider
      * @return void
      */
     public function register()
-    {   
+    {
         $NAME$::observe($NAME$Observer::class);
         Gate::policy($NAME$::class, $NAME$Policy::class);
     }
