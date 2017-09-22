@@ -14,6 +14,8 @@ class $NAME$Manager extends ModelManager
 
 	/**
 	 * Construct
+	 *
+	 * @param Railken\Laravel\Manager\Contracts\AgentContract $agent
 	 */
 	public function __construct(AgentContract $agent = null)
 	{

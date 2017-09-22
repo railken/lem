@@ -13,7 +13,7 @@ class UserParameterBag extends ParameterBag
      *
      * @param AgentContract $agent
      *
-     * @return this
+     * @return $this
      */
     public function filterByAgent(AgentContract $agent)
     {
@@ -31,7 +31,7 @@ class UserParameterBag extends ParameterBag
      *
      * @param AgentContract $agent
      *
-     * @return this
+     * @return $this
      */
     public function filterSearchableByAgent(AgentContract $agent)
     {
