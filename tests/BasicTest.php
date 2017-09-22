@@ -3,18 +3,15 @@
 namespace Railken\Laravel\Manager\Tests;
 
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Database\Schema\Blueprint;
 
 use Railken\Laravel\Manager\Generator;
 use Railken\Laravel\Manager\Tests\User\User;
 use Railken\Laravel\Manager\Tests\User\UserManager;
-use Railken\Laravel\Manager\Tests\User\UserObserver;
-use Railken\Laravel\Manager\Tests\User\UserPolicy;
 use Railken\Laravel\Manager\Tests\User\UserServiceProvider;
 use Railken\Bag;
-use File;
+use Illuminate\Support\Facades\File;
 
 class BasicTest extends \Orchestra\Testbench\TestCase
 {
@@ -47,7 +44,7 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         parent::setUp();
 
         Schema::dropIfExists('users');
-        
+
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('username')->nullable();
@@ -60,7 +57,7 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         });
 
         Schema::dropIfExists('foo');
-        
+
         Schema::create('foo', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable();
@@ -78,6 +75,9 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         return ['email' => 'test@test.net', 'username' => 'test123', 'password' => microtime()];
     }
 
+    /**
+     * Test generate Command
+     */
     public function testGenerate()
     {
 
@@ -103,6 +103,9 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         $um->remove($user);
     }
 
+    /**
+     * Test basics
+     */
     public function testBasics()
     {
         $um = new UserManager();
