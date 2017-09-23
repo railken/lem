@@ -46,7 +46,10 @@ class BasicTest extends \Orchestra\Testbench\TestCase
 
         parent::setUp();
 
+        Schema::dropIfExists('comments');
+        Schema::dropIfExists('articles');
         Schema::dropIfExists('users');
+        Schema::dropIfExists('foo');
 
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
@@ -59,13 +62,39 @@ class BasicTest extends \Orchestra\Testbench\TestCase
             $table->timestamps();
         });
 
-        Schema::dropIfExists('foo');
 
         Schema::create('foo', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable();
             $table->timestamps();
             $table->softDeletes();
+        });
+
+
+
+        Schema::create('articles', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('title');
+            $table->string('description')->nullable();
+            $table->string('notes')->nullable();
+            $table->integer('author_id')->unsigned();
+            $table->timestamps();
+            $table->softDeletes();
+            $table->foreign('author_id')->references('id')->on('users');
+        });
+
+
+
+        Schema::create('comments', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('title');
+            $table->string('description')->nullable();
+            $table->integer('author_id')->unsigned();
+            $table->integer('article_id')->unsigned();
+            $table->timestamps();
+            $table->softDeletes();
+            $table->foreign('author_id')->references('id')->on('users');
+            $table->foreign('article_id')->references('id')->on('users');
         });
     }
 
