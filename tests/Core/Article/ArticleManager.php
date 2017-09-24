@@ -25,6 +25,18 @@ class ArticleManager extends ModelManager
 		parent::__construct($agent);
 	}
 
+    /**
+     * Filter parameters
+     *
+     * @param array|ParameterBag $parameters
+     *
+     * @return ParameterBag
+     */
+    public function parameters($parameters)
+    {
+        return new ArticleParameterBag($parameters);
+    }
+
 	/**
 	 * Fill the entity
 	 *
@@ -32,10 +44,13 @@ class ArticleManager extends ModelManager
 	 * @param ArticleParameterBag $parameters
 	 *
 	 * @return EntityContract
-	 */
+	*/
 	public function fill(EntityContract $entity, ParameterBag $parameters)
 	{
 		$parameters = $parameters->filterFill();
+
+
+		$parameters->exists('author') && $entity->author()->associate($parameters->get('author'));
 
 		return parent::fill($entity, $parameters);
 	}

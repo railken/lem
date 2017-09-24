@@ -4,7 +4,7 @@ namespace Railken\Laravel\Manager\Tests\Core\Article\Exceptions;
 
 use Railken\Laravel\Manager\Exceptions\ModelNotAuthorizedExceptionContract;
 
-class ArticleNotAuthorizedException extends ArticleException implements ModelNotAuthorizedException
+class ArticleNotAuthorizedException extends ArticleException implements ModelNotAuthorizedExceptionContract
 {
 
 	/**

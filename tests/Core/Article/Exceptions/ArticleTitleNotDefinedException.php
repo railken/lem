@@ -2,7 +2,7 @@
 
 namespace Railken\Laravel\Manager\Tests\Core\Article\Exceptions;
 
-class ArticleNameNotDefinedException extends ArticleAttributeException
+class ArticleTitleNotDefinedException extends ArticleAttributeException
 {
 
 	/**
@@ -10,14 +10,14 @@ class ArticleNameNotDefinedException extends ArticleAttributeException
 	 *
 	 * @var string
 	 */
-	protected $attribute = 'name';
+	protected $attribute = 'title';
 
 	/**
 	 * The code to identify the error
 	 *
 	 * @var string
 	 */
-	protected $code = 'ARTICLE_NAME_NOT_DEFINED';
+	protected $code = 'ARTICLE_TITLE_NOT_DEFINED';
 
 	/**
 	 * The message

@@ -39,10 +39,13 @@ class ArticleValidator implements ModelValidatorContract
 
 		$errors = new Collection();
 
+		## temp
+		$parameters->exists('author_id') && $parameters->set('author', $this->manager->author->findOneBy(['id' => $parameters->get('author_id')]));
+
 		if (!$entity->exists)
 			$errors = $errors->merge($this->validateRequired($parameters));
 
-		$errors = $errors->merge($this->validateValue($entity, $parameters));
+		$errors = $errors->merge($this->validateValue($parameters));
 
 		return $errors;
 	}
@@ -59,7 +62,8 @@ class ArticleValidator implements ModelValidatorContract
 	{
 		$errors = new Collection();
 
-		!$parameters->exists('name') && $errors->push(new Exceptions\ArticleNameNotDefinedException($parameters->get('name')));
+		!$parameters->exists('title') && $errors->push(new Exceptions\ArticleTitleNotDefinedException($parameters->get('title')));
+		!$parameters->exists('author') && $errors->push(new Exceptions\ArticleAuthorNotDefinedException($parameters->get('author')));
 
 		return $errors;
 	}
@@ -71,13 +75,16 @@ class ArticleValidator implements ModelValidatorContract
 	 *
 	 * @return Collection
 	 */
-	public function validateValue(EntityContract $entity, ParameterBag $parameters)
+	public function validateValue(ParameterBag $parameters)
 	{
 		$errors = new Collection();
 
-		$parameters->exists('name') && !$this->validName($parameters->get('name')) &&
-			$errors->push(new Exceptions\ArticleNameNotValidException($parameters->get('name')));
+		$parameters->exists('title') && !$this->validTitle($parameters->get('title')) &&
+			$errors->push(new Exceptions\ArticleTitleNotValidException($parameters->get('title')));
 
+
+		$parameters->exists('author') && !$parameters->get('author') &&
+			$errors->push(new Exceptions\ArticleAuthorNotValidException($parameters->get('author')));
 
 		return $errors;
 	}
@@ -89,9 +96,9 @@ class ArticleValidator implements ModelValidatorContract
 	 *
 	 * @return bool
 	 */
-	public function validName($name)
+	public function validTitle($value)
 	{
-		return $name === null || (strlen($name) >= 3 && strlen($name) < 255);
+		return strlen($value) >= 3 && strlen($value) < 255;
 	}
 
 }

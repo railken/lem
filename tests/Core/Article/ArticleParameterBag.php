@@ -21,15 +21,15 @@ class ArticleParameterBag extends ParameterBag
 	public function filterByAgent(AgentContract $agent)
 	{
 		if ($agent instanceof UserAgentContract) {
-			return $this;
+			return $this->only(['title', 'description'])->set('author', $agent);
         }
 
         if ($agent instanceof GuestAgentContract) {
-            return $this;
+            return $this->only(['title', 'description']);
         }
 
         if ($agent instanceof SystemAgentContract) {
-            return $this;
+            return $this->only(['title', 'description']);
         }
 	}
 
@@ -43,15 +43,15 @@ class ArticleParameterBag extends ParameterBag
 	public function filterSearchableByAgent(AgentContract $agent)
 	{
 		if ($agent instanceof UserAgentContract) {
-			return $this;
+			return $this->only(['title', 'description', 'created_at', 'updated_at']);
         }
 
         if ($agent instanceof GuestAgentContract) {
-            return $this;
+            return $this->only(['title', 'description', 'created_at', 'updated_at']);
         }
 
         if ($agent instanceof SystemAgentContract) {
-            return $this;
+            return $this->only(['title', 'description', 'created_at', 'updated_at']);
         }
 	}
 
@@ -62,7 +62,7 @@ class ArticleParameterBag extends ParameterBag
 	 */
 	public function filterFill()
 	{
-		return $this->only(['name']);
+		return $this->only(['title', 'description', 'author']);
 	}
 
 }
