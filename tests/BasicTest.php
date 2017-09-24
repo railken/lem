@@ -16,6 +16,11 @@ use Illuminate\Support\Facades\File;
 use Railken\Laravel\Manager\Tests\Generated\Foo\FooManager;
 use Railken\Laravel\Manager\Tests\Generated\Foo\FooParameterBag;
 
+use Railken\Laravel\Manager\Tests\Core\Article\ArticleManager;
+use Railken\Laravel\Manager\Tests\Core\Comment\CommentManager;
+use Railken\Laravel\Manager\Tests\Core\Article\ArticleServiceProvider;
+use Railken\Laravel\Manager\Tests\Core\Comment\CommentServiceProvider;
+
 class BasicTest extends \Orchestra\Testbench\TestCase
 {
     /**
@@ -33,6 +38,8 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         return [
             \Railken\Laravel\Manager\ManagerServiceProvider::class,
             UserServiceProvider::class,
+            ArticleServiceProvider::class,
+            CommentServiceProvider::class,
         ];
     }
 
@@ -141,6 +148,23 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         $this->assertEquals($foo->id, $foo_s->id);
 
         $um->remove($user);
+    }
+
+    /**
+     * Test generate Command
+     */
+    public function testPermission()
+    {
+        $um = new UserManager();
+        $user = $um->create($um->parameters($this->getUserBag()))->getResource();
+        // $generator = new Generator();
+        $am = new ArticleManager();
+        $cm = new CommentManager();
+
+        $ab = $am->parameters(['title' => 'foo', 'description' => 'bar']);
+
+        $this->assertEquals(1, $am->setAgent($user)->create($ab)->ok());
+
     }
 
     /**
