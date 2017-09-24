@@ -5,6 +5,7 @@ namespace Railken\Laravel\Manager\Tests\Core\Article;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Railken\Laravel\Manager\Contracts\EntityContract;
+use Railken\Laravel\Manager\Tests\User\User;
 
 class Article extends Model implements EntityContract
 {
@@ -16,14 +17,14 @@ class Article extends Model implements EntityContract
 	 *
 	 * @var string
 	 */
-	protected $table = 'article';
+	protected $table = 'articles';
 
 	/**
 	 * The attributes that are mass assignable.
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['name'];
+	protected $fillable = ['title', 'description'];
 
 	/**
      * The attributes that should be mutated to dates.
@@ -31,4 +32,12 @@ class Article extends Model implements EntityContract
      * @var array
      */
     protected $dates = ['deleted_at'];
+
+	/**
+	 * Get the author that wrote the article
+	 */
+	public function author()
+	{
+		return $this->belongsTo(User::class, 'author_id');
+	}
 }
