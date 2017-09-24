@@ -26,17 +26,14 @@ class $NAME$Manager extends ModelManager
 	}
 
 	/**
-	 * Fill the entity
+	 * Filter parameters
 	 *
-	 * @param EntityContract $entity
-	 * @param $NAME$ParameterBag $parameters
+	 * @param array|ParameterBag $parameters
 	 *
-	 * @return EntityContract
+	 * @return ParameterBag
 	 */
-	public function fill(EntityContract $entity, ParameterBag $parameters)
+	public function parameters($parameters)
 	{
-		$parameters = $parameters->filterFill();
-
-		return parent::fill($entity, $parameters);
+		return new $NAME$ParameterBag($parameters);
 	}
 }
