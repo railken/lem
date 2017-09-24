@@ -25,18 +25,16 @@ class CommentManager extends ModelManager
 		parent::__construct($agent);
 	}
 
-	/**
-	 * Fill the entity
-	 *
-	 * @param EntityContract $entity
-	 * @param CommentParameterBag $parameters
-	 *
-	 * @return EntityContract
-	 */
-	public function fill(EntityContract $entity, ParameterBag $parameters)
-	{
-		$parameters = $parameters->filterFill();
 
-		return parent::fill($entity, $parameters);
-	}
+    /**
+     * Filter parameters
+     *
+     * @param array|ParameterBag $parameters
+     *
+     * @return ParameterBag
+     */
+    public function parameters($parameters)
+    {
+        return new CommentParameterBag($parameters);
+    }
 }
