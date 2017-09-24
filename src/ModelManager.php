@@ -88,7 +88,7 @@ abstract class ModelManager
 
         $result = $this->getRepository()->findOneBy($parameters->all());
 
-        return $this->agent && $this->authorizer && $this->authorizer->retrieve($result, $parameters)->count() !== 0 ? null : $result;
+        return $result && $this->agent && $this->authorizer && $this->authorizer->retrieve($result, $parameters)->count() !== 0 ? null : $result;
     }
 
     /**
