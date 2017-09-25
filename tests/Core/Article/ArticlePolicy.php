@@ -5,6 +5,7 @@ namespace Railken\Laravel\Manager\Tests\Core\Article;
 use Railken\Laravel\Manager\Contracts\AgentContract;
 use Railken\Laravel\Manager\Contracts\ModelPolicyContract;
 use Railken\Laravel\Manager\Contracts\EntityContract;
+use Railken\Laravel\Manager\Contracts\UserAgentContract;
 
 class ArticlePolicy implements ModelPolicyContract
 {
@@ -18,6 +19,9 @@ class ArticlePolicy implements ModelPolicyContract
      */
     public function interact(AgentContract $agent, EntityContract $entity = null)
     {
+        if ($agent instanceof UserAgentContract)
+            return $agent->isRoleAdmin() || ($agent->isRoleUser() && $agent->id == $entity->author->id);
+
         return true;
     }
 
@@ -56,7 +60,7 @@ class ArticlePolicy implements ModelPolicyContract
      */
     public function retrieve(AgentContract $agent, EntityContract $entity)
     {
-        return $this->interact($agent, $entity);
+        return true;
     }
 
     /**

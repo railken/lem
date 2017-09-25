@@ -54,7 +54,7 @@ abstract class ModelManager
     /**
      * Filter parameters
      *
-     * @param array|ParameterBag $parameters
+     * @param ParameterBag|array $parameters
      *
      * @return ParameterBag
      */
@@ -76,12 +76,14 @@ abstract class ModelManager
     /**
      * Find
      *
-     * @param ParameterBag $parameters
+     * @param ParameterBag|mixed $parameters
      *
      * @return EntityContract
      */
-    public function findOneBy(ParameterBag $parameters)
+    public function findOneBy($parameters)
     {
+        $parameters = $this->parameters($parameters);
+
         if ($this->agent) {
             $parameters = $parameters->filterSearchableByAgent($this->agent);
         }
@@ -94,12 +96,14 @@ abstract class ModelManager
     /**
      * Find by parameters
      *
-     * @param ParameterBag $parameters
+     * @param ParameterBag|array $parameters
      *
      * @return Collection
      */
-    public function findBy(ParameterBag $parameters)
+    public function findBy($parameters)
     {
+        $parameters = $this->parameters($parameters);
+
         if ($this->agent) {
             $parameters = $parameters->filterSearchableByAgent($this->agent);
         }
@@ -118,12 +122,15 @@ abstract class ModelManager
     /**
      * Create a new EntityContract given parameters
      *
-     * @param ParameterBag $parameters
+     * @param ParameterBag|array $parameters
      *
      * @return ResultAction
      */
-    public function create(ParameterBag $parameters)
+    public function create($parameters)
     {
+        $parameters = $this->parameters($parameters);
+
+
         $result = new ResultAction();
         $entity = $this->getRepository()->newEntity();
 
@@ -141,12 +148,14 @@ abstract class ModelManager
      * Update a EntityContract given parameters
      *
      * @param EntityContract $entity
-     * @param ParameterBag $parameters
+     * @param ParameterBag|array $parameters
      *
      * @return ResultAction
      */
-    public function update(EntityContract $entity, ParameterBag $parameters)
+    public function update(EntityContract $entity, $parameters)
     {
+        $parameters = $this->parameters($parameters);
+
         $result = new ResultAction();
 
         if ($this->agent) {
@@ -163,12 +172,14 @@ abstract class ModelManager
      * Update a EntityContract given parameters
      *
      * @param EntityContract $entity
-     * @param ParameterBag $parameters
+     * @param ParameterBag|array $parameters
      *
      * @return ResultAction
      */
-    public function edit(EntityContract $entity, ParameterBag $parameters)
+    public function edit(EntityContract $entity, $parameters)
     {
+        $parameters = $this->parameters($parameters);
+
         $result = new ResultAction();
 
         try {
@@ -246,12 +257,13 @@ abstract class ModelManager
      * Fill entity EntityContract with array
      *
      * @param EntityContract $entity
-     * @param ParameterBag $parameters
+     * @param ParameterBag|array $parameters
      *
      * @return void
      */
-    public function fill(EntityContract $entity, ParameterBag $parameters)
+    public function fill(EntityContract $entity, $parameters)
     {
+        $parameters = $this->parameters($parameters);
         $entity->fill($parameters->filterFill()->all());
 
         return $entity;
@@ -260,12 +272,13 @@ abstract class ModelManager
     /**
      * First or create
      *
-     * @param ParameterBag $parameters
+     * @param ParameterBag|array $parameters
      *
      * @return EntityContract
      */
-    public function findOrCreate(ParameterBag $parameters)
+    public function findOrCreate($parameters)
     {
+        $parameters = $this->parameters($parameters);
         $entity = $this->find($parameters);
 
         return $entity ? $entity : $this->create($this->parameters($parameters));
@@ -274,13 +287,15 @@ abstract class ModelManager
     /**
      * Update or create
      *
-     * @param ParameterBag $criteria
-     * @param ParameterBag $parameters
+     * @param ParameterBag|array $criteria
+     * @param ParameterBag|array $parameters
      *
      * @return ResultAction
      */
-    public function updateOrCreate(ParameterBag $criteria, ParameterBag $parameters)
+    public function updateOrCreate($criteria, $parameters)
     {
+        $criteria = $this->parameters($criteria);
+        $parameters = $this->parameters($parameters);
         $entity = $this->find($parameters);
 
         return $entity ? $this->update($entity, $parameters) : $this->create($parameters);

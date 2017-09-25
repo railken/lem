@@ -76,7 +76,7 @@ abstract class ModelRepository implements ModelRepositoryContract
         foreach ($parameters as $name => $value) {
             $q->whereIn($name, $value);
         }
-       
+
 
         return $q->get();
     }

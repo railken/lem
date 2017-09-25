@@ -112,7 +112,7 @@ class BasicTest extends \Orchestra\Testbench\TestCase
      */
     public function getUserBag()
     {
-        return ['email' => 'test@test.net', 'username' => 'test123', 'password' => microtime()];
+        return new Bag(['email' => 'test@test.net', 'username' => 'test123', 'password' => microtime()]);
     }
 
     /**
@@ -133,7 +133,7 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         $m = new FooManager();
 
         $um = new UserManager();
-        $user = $um->create($um->parameters($this->getUserBag()))->getResource();
+        $user = $um->create($this->getUserBag())->getResource();
 
         $bag = new FooParameterBag(['name' => 'a']);
         $m->setAgent($user);
@@ -143,7 +143,7 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         $foo = $m->create($bag->set('name', null))->getResource();
         $m->update($foo, $bag->set('name', 'fee'))->getResource();
 
-        $foo_s = $m->findOneBy(new FooParameterBag(['name' => 'fee']));
+        $foo_s = $m->findOneBy(['name' => 'fee']);
 
         $this->assertEquals($foo->id, $foo_s->id);
 
@@ -156,14 +156,19 @@ class BasicTest extends \Orchestra\Testbench\TestCase
     public function testPermission()
     {
         $um = new UserManager();
-        $user = $um->create($um->parameters($this->getUserBag()))->getResource();
+        $user_1 = $um->create(['email' => 'test1@test.net', 'username' => 'test1', 'password' => microtime()])->getResource();
+        $user_2 = $um->create(['email' => 'test2@test.net', 'username' => 'test2', 'password' => microtime()])->getResource();
         // $generator = new Generator();
         $am = new ArticleManager();
         $cm = new CommentManager();
 
-        $ab = $am->parameters(['title' => 'foo', 'description' => 'bar']);
+        $ab = ['title' => 'foo', 'description' => 'bar'];
 
-        $this->assertEquals(1, $am->setAgent($user)->create($ab)->ok());
+        $this->assertEquals(1, $am->setAgent($user_1)->create($ab)->ok());
+        $this->assertEquals(1, $am->setAgent($user_2)->create($ab)->ok());
+
+        $this->assertEquals('ARTICLE_NOT_AUTHORIZED', $am->setAgent($user_2)->update($am->findOneBy(['author_id' => $user_1->id]), ['title' => 'ban'])->getError()->getCode());
+        $this->assertEquals('ARTICLE_NOT_AUTHORIZED', $am->setAgent($user_1)->update($am->findOneBy(['author_id' => $user_2->id]), ['title' => 'ban'])->getError()->getCode());
 
     }
 
@@ -175,44 +180,44 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         $um = new UserManager();
 
         # Testing validation
-        $this->assertEquals("USER_USERNAME_NOT_DEFINED", $um->create($um->parameters($this->getUserBag())->remove('username'))->getError()->getCode());
-        $this->assertEquals("USER_USERNAME_NOT_VALID", $um->create($um->parameters($this->getUserBag())->set('username', 'wr'))->getError()->getCode());
-        $this->assertEquals("USER_PASSWORD_NOT_DEFINED", $um->create($um->parameters($this->getUserBag())->remove('password'))->getError()->getCode());
-        $this->assertEquals("USER_PASSWORD_NOT_VALID", $um->create($um->parameters($this->getUserBag())->set('password', 'wrong'))->getError()->getCode());
-        $this->assertEquals("USER_EMAIL_NOT_DEFINED", $um->create($um->parameters($this->getUserBag())->remove('email'))->getError()->getCode());
-        $this->assertEquals("USER_EMAIL_NOT_VALID", $um->create($um->parameters($this->getUserBag())->set('email', 'wrong'))->getError()->getCode());
+        $this->assertEquals("USER_USERNAME_NOT_DEFINED", $um->create($this->getUserBag()->remove('username'))->getError()->getCode());
+        $this->assertEquals("USER_USERNAME_NOT_VALID", $um->create($this->getUserBag()->set('username', 'wr'))->getError()->getCode());
+        $this->assertEquals("USER_PASSWORD_NOT_DEFINED", $um->create($this->getUserBag()->remove('password'))->getError()->getCode());
+        $this->assertEquals("USER_PASSWORD_NOT_VALID", $um->create($this->getUserBag()->set('password', 'wrong'))->getError()->getCode());
+        $this->assertEquals("USER_EMAIL_NOT_DEFINED", $um->create($this->getUserBag()->remove('email'))->getError()->getCode());
+        $this->assertEquals("USER_EMAIL_NOT_VALID", $um->create($this->getUserBag()->set('email', 'wrong'))->getError()->getCode());
 
         # Testing correct
-        $resource = $um->create($um->parameters($this->getUserBag()))->getResource();
-        $this->assertEquals($um->parameters($this->getUserBag())->get('username'), $resource->username);
+        $resource = $um->create($this->getUserBag())->getResource();
+        $this->assertEquals($this->getUserBag()->get('username'), $resource->username);
 
         # Testing uniqueness
-        $this->assertEquals("USER_EMAIL_NOT_UNIQUE", $um->create($um->parameters($this->getUserBag()))->getErrors()->first()->getCode());
+        $this->assertEquals("USER_EMAIL_NOT_UNIQUE", $um->create($this->getUserBag())->getErrors()->first()->getCode());
 
-        $um->update($resource, $um->parameters($this->getUserBag()));
+        $um->update($resource, $this->getUserBag());
         $um->remove($resource);
 
 
         # An admin can change username/email/password of all users
         # An user can change only his own information
 
-        $user_admin = $um->create($um->parameters($this->getUserBag())->set('role', User::ROLE_ADMIN)->set('email', 'admin@test.net'))->getResource();
+        $user_admin = $um->create($this->getUserBag()->set('role', User::ROLE_ADMIN)->set('email', 'admin@test.net'))->getResource();
         $user_admin_manager = new UserManager($user_admin);
 
-        $user = $um->create($um->parameters($this->getUserBag())->set('role', User::ROLE_USER)->set('email', 'user@test.net'))->getResource();
+        $user = $um->create($this->getUserBag()->set('role', User::ROLE_USER)->set('email', 'user@test.net'))->getResource();
         $user_manager = new UserManager($user);
 
 
 
 
-        $this->assertEquals(false, $user_manager->update($user_admin, $um->parameters(['email' => 'new@test.net']))->isAuthorized());
-        $this->assertEquals(true, $user_manager->update($user, $um->parameters(['email' => 'new@test.net']))->isAuthorized());
+        $this->assertEquals(false, $user_manager->update($user_admin, ['email' => 'new@test.net'])->isAuthorized());
+        $this->assertEquals(true, $user_manager->update($user, ['email' => 'new@test.net'])->isAuthorized());
 
-        $this->assertEquals(true, $user_admin_manager->update($user_admin, $um->parameters(['email' => 'new2@test.net']))->ok());
-        $this->assertEquals(true, $user_admin_manager->update($user, $um->parameters(['email' => 'new3@test.net']))->ok());
+        $this->assertEquals(true, $user_admin_manager->update($user_admin, ['email' => 'new2@test.net'])->ok());
+        $this->assertEquals(true, $user_admin_manager->update($user, ['email' => 'new3@test.net'])->ok());
 
-        $this->assertEquals(true, $user_manager->update($user, $um->parameters(['role' => User::ROLE_ADMIN]))->getResource()->isRoleUser());
+        $this->assertEquals(true, $user_manager->update($user,['role' => User::ROLE_ADMIN])->getResource()->isRoleUser());
 
-        $um->findOneBy($um->parameters(['username' => 'test123']));
+        $um->findOneBy(['username' => 'test123']);
     }
 }

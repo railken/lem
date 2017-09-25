@@ -28,7 +28,7 @@ class ArticleManager extends ModelManager
     /**
      * Filter parameters
      *
-     * @param array|ParameterBag $parameters
+     * @param ParameterBag|array $parameters
      *
      * @return ParameterBag
      */
@@ -41,11 +41,11 @@ class ArticleManager extends ModelManager
 	 * Fill the entity
 	 *
 	 * @param EntityContract $entity
-	 * @param ArticleParameterBag $parameters
+	 * @param ArticleParameterBag|array $parameters
 	 *
 	 * @return EntityContract
 	*/
-	public function fill(EntityContract $entity, ParameterBag $parameters)
+	public function fill(EntityContract $entity, $parameters)
 	{
 		$parameters = $parameters->filterFill();
 

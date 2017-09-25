@@ -42,16 +42,19 @@ class ArticleParameterBag extends ParameterBag
 	 */
 	public function filterSearchableByAgent(AgentContract $agent)
 	{
+
+		$this->exists('author') && $this->set('author_id', $this->get('author')->id)->remove('author');
+
 		if ($agent instanceof UserAgentContract) {
-			return $this->only(['title', 'description', 'created_at', 'updated_at']);
+			return $this->only(['title', 'description', 'created_at', 'updated_at', 'author_id']);
         }
 
         if ($agent instanceof GuestAgentContract) {
-            return $this->only(['title', 'description', 'created_at', 'updated_at']);
+            return $this->only(['title', 'description', 'created_at', 'updated_at', 'author_id']);
         }
 
         if ($agent instanceof SystemAgentContract) {
-            return $this->only(['title', 'description', 'created_at', 'updated_at']);
+            return $this->only(['title', 'description', 'created_at', 'updated_at', 'author_id']);
         }
 	}
 

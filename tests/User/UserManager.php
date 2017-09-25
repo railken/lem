@@ -27,7 +27,7 @@ class UserManager extends ModelManager
     /**
      * Filter parameters
      *
-     * @param array|ParameterBag $parameters
+     * @param ParameterBag|array $parameters
      *
      * @return ParameterBag
      */
