@@ -35,5 +35,4 @@ class UserManager extends ModelManager
     {
         return new UserParameterBag($parameters);
     }
-
 }

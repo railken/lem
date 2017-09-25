@@ -122,7 +122,6 @@ class BasicTest extends \Orchestra\Testbench\TestCase
      */
     public function testGenerate()
     {
-
         $generator = new Generator();
         $generator->generate(__DIR__."/Generated", "Railken\Laravel\Manager\Tests\Generated\Foo");
         $this->assertEquals(true, File::exists(__DIR__."/Generated/Foo"));
@@ -174,7 +173,6 @@ class BasicTest extends \Orchestra\Testbench\TestCase
 
         $this->assertEquals(1, $am->setAgent(new SystemAgent())->create(['title' => 'bar', 'description' => 'bar', 'author_id' => '1'])->ok());
         $this->assertEquals('ARTICLE_AUTHOR_NOT_VALID', $am->setAgent(new SystemAgent())->create(['title' => 'bar', 'description' => 'bar', 'author_id' => '1111'])->getError()->getCode());
-
     }
 
     /**
@@ -221,7 +219,7 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         $this->assertEquals(true, $user_admin_manager->update($user_admin, ['email' => 'new2@test.net'])->ok());
         $this->assertEquals(true, $user_admin_manager->update($user, ['email' => 'new3@test.net'])->ok());
 
-        $this->assertEquals(true, $user_manager->update($user,['role' => User::ROLE_ADMIN])->getResource()->isRoleUser());
+        $this->assertEquals(true, $user_manager->update($user, ['role' => User::ROLE_ADMIN])->getResource()->isRoleUser());
 
         $um->findOneBy(['username' => 'test123']);
     }

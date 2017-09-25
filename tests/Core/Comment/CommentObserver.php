@@ -88,7 +88,7 @@ class CommentObserver
      */
     public function saved(EntityContract $entity)
     {
-    	// ..
+        // ..
     }
 
     /**

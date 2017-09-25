@@ -14,18 +14,18 @@ use Railken\Laravel\Manager\Tests\Core\Article\Exceptions as Exceptions;
 class ArticleAuthorizer implements ModelAuthorizerContract
 {
 
-	/**
-	 * @var ArticleManager
-	 */
-	protected $manager;
+    /**
+     * @var ArticleManager
+     */
+    protected $manager;
 
-	/**
-	 * Construct
-	 */
-	public function __construct(ArticleManager $manager)
-	{
-		$this->manager = $manager;
-	}
+    /**
+     * Construct
+     */
+    public function __construct(ArticleManager $manager)
+    {
+        $this->manager = $manager;
+    }
 
     /**
      * Authorize
@@ -40,24 +40,23 @@ class ArticleAuthorizer implements ModelAuthorizerContract
     {
         $errors = new Collection();
 
-		# SystemAgent can always do anything.
-		if ($this->manager->agent instanceof SystemAgentContract) {
-			// ...
-		}
+        # SystemAgent can always do anything.
+        if ($this->manager->agent instanceof SystemAgentContract) {
+            // ...
+        }
 
-		# GuestAgent can always do anything.
-		if ($this->manager->agent instanceof GuestAgentContract) {
-			// ...
-		}
+        # GuestAgent can always do anything.
+        if ($this->manager->agent instanceof GuestAgentContract) {
+            // ...
+        }
 
-		# GuestAgent can always do anything.
-		if ($this->manager->agent instanceof UserAgentContract) {
-			// ...
-			!$this->manager->agent->can($operation, $entity) && $errors->push(new Exceptions\ArticleNotAuthorizedException($entity));
-		}
-		
-		return $errors;
-
+        # GuestAgent can always do anything.
+        if ($this->manager->agent instanceof UserAgentContract) {
+            // ...
+            !$this->manager->agent->can($operation, $entity) && $errors->push(new Exceptions\ArticleNotAuthorizedException($entity));
+        }
+        
+        return $errors;
     }
 
     /**

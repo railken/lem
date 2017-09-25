@@ -9,33 +9,33 @@ use Railken\Bag;
 class CommentSerializer implements ModelSerializerContract
 {
 
-	/**
-	 * Serialize entity
-	 *
-	 * @param EntityContract $entity
-	 *
-	 * @return array
-	 */
-	public function serialize(EntityContract $entity)
-	{
-		$bag = $this->serializeBrief($entity);
+    /**
+     * Serialize entity
+     *
+     * @param EntityContract $entity
+     *
+     * @return array
+     */
+    public function serialize(EntityContract $entity)
+    {
+        $bag = $this->serializeBrief($entity);
 
-		return $bag;
-	}
+        return $bag;
+    }
 
-	/**
-	 * Serialize entity
-	 *
-	 * @param EntityContract $entity
-	 *
-	 * @return array
-	 */
-	public function serializeBrief(EntityContract $entity)
-	{
-		$bag = new Bag();
+    /**
+     * Serialize entity
+     *
+     * @param EntityContract $entity
+     *
+     * @return array
+     */
+    public function serializeBrief(EntityContract $entity)
+    {
+        $bag = new Bag();
 
-		$bag->set('id', $entity->id);
+        $bag->set('id', $entity->id);
 
-		return $bag;
-	}
+        return $bag;
+    }
 }

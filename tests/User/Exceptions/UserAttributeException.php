@@ -38,5 +38,4 @@ class UserAttributeException extends UserException implements ExceptionContract
 
         return parent::__construct($value);
     }
-
 }

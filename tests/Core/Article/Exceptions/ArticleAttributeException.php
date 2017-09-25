@@ -37,5 +37,4 @@ abstract class ArticleAttributeException extends ArticleException
 
         return parent::__construct($value);
     }
-
 }

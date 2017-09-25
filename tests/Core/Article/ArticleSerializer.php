@@ -9,36 +9,36 @@ use Railken\Bag;
 class ArticleSerializer implements ModelSerializerContract
 {
 
-	/**
-	 * Serialize entity
-	 *
-	 * @param EntityContract $entity
-	 *
-	 * @return array
-	 */
-	public function serialize(EntityContract $entity)
-	{
-		$bag = $this->serializeBrief($entity);
+    /**
+     * Serialize entity
+     *
+     * @param EntityContract $entity
+     *
+     * @return array
+     */
+    public function serialize(EntityContract $entity)
+    {
+        $bag = $this->serializeBrief($entity);
 
-		return $bag;
-	}
+        return $bag;
+    }
 
-	/**
-	 * Serialize entity
-	 *
-	 * @param EntityContract $entity
-	 *
-	 * @return array
-	 */
-	public function serializeBrief(EntityContract $entity)
-	{
-		$bag = new Bag();
+    /**
+     * Serialize entity
+     *
+     * @param EntityContract $entity
+     *
+     * @return array
+     */
+    public function serializeBrief(EntityContract $entity)
+    {
+        $bag = new Bag();
 
-		$bag->set('id', $entity->id);
-		$bag->set('title', $entity->title);
-		$bag->set('description', $entity->description);
-		$bag->set('author_id', $entity->author->id);
+        $bag->set('id', $entity->id);
+        $bag->set('title', $entity->title);
+        $bag->set('description', $entity->description);
+        $bag->set('author_id', $entity->author->id);
 
-		return $bag;
-	}
+        return $bag;
+    }
 }

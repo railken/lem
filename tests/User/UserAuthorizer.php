@@ -40,7 +40,6 @@ class UserAuthorizer implements ModelAuthorizerContract
      */
     public function can(string $operation, EntityContract $entity, ParameterBag $parameters)
     {
-
         $errors = new Collection();
 
         # SystemAgent can always do anything.

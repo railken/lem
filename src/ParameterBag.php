@@ -33,13 +33,13 @@ abstract class ParameterBag extends Bag implements ParameterBagContract
         return $this;
     }
 
-	/**
-	 * Filter current bag to fill model
-	 *
-	 * @return $this
-	 */
-	public function filterFill()
-	{
-		return $this;
-	}
+    /**
+     * Filter current bag to fill model
+     *
+     * @return $this
+     */
+    public function filterFill()
+    {
+        return $this;
+    }
 }

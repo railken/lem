@@ -9,35 +9,34 @@ use Railken\Laravel\Manager\Tests\User\User;
 
 class Article extends Model implements EntityContract
 {
+    use SoftDeletes;
 
-	use SoftDeletes;
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'articles';
 
-	/**
-	 * The table associated with the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'articles';
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['title', 'description'];
 
-	/**
-	 * The attributes that are mass assignable.
-	 *
-	 * @var array
-	 */
-	protected $fillable = ['title', 'description'];
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+    */
+    protected $dates = ['deleted_at'];
 
-	/**
-	 * The attributes that should be mutated to dates.
-	 *
-	 * @var array
-	*/
-	protected $dates = ['deleted_at'];
-
-	/**
-	 * Get the author that wrote the article
-	 */
-	public function author()
-	{
-		return $this->belongsTo(User::class, 'author_id');
-	}
+    /**
+     * Get the author that wrote the article
+     */
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'author_id');
+    }
 }

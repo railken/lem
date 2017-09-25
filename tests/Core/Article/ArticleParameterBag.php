@@ -11,17 +11,17 @@ use Railken\Laravel\Manager\ParameterBag;
 class ArticleParameterBag extends ParameterBag
 {
 
-	/**
-	 * Filter current bag using agent
-	 *
-	 * @param AgentContract $agent
-	 *
-	 * @return $this
-	 */
-	public function filterByAgent(AgentContract $agent)
-	{
-		if ($agent instanceof UserAgentContract) {
-			return $this->only(['title', 'description'])->set('author', $agent);
+    /**
+     * Filter current bag using agent
+     *
+     * @param AgentContract $agent
+     *
+     * @return $this
+     */
+    public function filterByAgent(AgentContract $agent)
+    {
+        if ($agent instanceof UserAgentContract) {
+            return $this->only(['title', 'description'])->set('author', $agent);
         }
 
         if ($agent instanceof GuestAgentContract) {
@@ -31,22 +31,21 @@ class ArticleParameterBag extends ParameterBag
         if ($agent instanceof SystemAgentContract) {
             return $this->only(['title', 'description', 'author_id']);
         }
-	}
+    }
 
-	/**
-	 * Filter current bag using agent for a search
-	 *
-	 * @param AgentContract $agent
-	 *
-	 * @return $this
-	 */
-	public function filterSearchableByAgent(AgentContract $agent)
-	{
+    /**
+     * Filter current bag using agent for a search
+     *
+     * @param AgentContract $agent
+     *
+     * @return $this
+     */
+    public function filterSearchableByAgent(AgentContract $agent)
+    {
+        $this->exists('author') && $this->set('author_id', $this->get('author')->id)->remove('author');
 
-		$this->exists('author') && $this->set('author_id', $this->get('author')->id)->remove('author');
-
-		if ($agent instanceof UserAgentContract) {
-			return $this->only(['title', 'description', 'created_at', 'updated_at', 'author_id']);
+        if ($agent instanceof UserAgentContract) {
+            return $this->only(['title', 'description', 'created_at', 'updated_at', 'author_id']);
         }
 
         if ($agent instanceof GuestAgentContract) {
@@ -56,16 +55,15 @@ class ArticleParameterBag extends ParameterBag
         if ($agent instanceof SystemAgentContract) {
             return $this->only(['title', 'description', 'created_at', 'updated_at', 'author_id']);
         }
-	}
+    }
 
-	/**
-	 * Filter current bag to fill model
-	 *
-	 * @return $this
-	 */
-	public function filterFill()
-	{
-		return $this->only(['title', 'description', 'author']);
-	}
-
+    /**
+     * Filter current bag to fill model
+     *
+     * @return $this
+     */
+    public function filterFill()
+    {
+        return $this->only(['title', 'description', 'author']);
+    }
 }

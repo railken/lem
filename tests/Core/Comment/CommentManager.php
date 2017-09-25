@@ -10,20 +10,20 @@ use Railken\Laravel\Manager\ParameterBag;
 class CommentManager extends ModelManager
 {
 
-	/**
-	 * Construct
-	 *
-	 * @param AgentContract|null $agent
-	 */
-	public function __construct(AgentContract $agent = null)
-	{
-		$this->repository = new CommentRepository($this);
-		$this->authorizer = new CommentAuthorizer($this);
-		$this->validator = new CommentValidator($this);
-		$this->serializer = new CommentSerializer($this);
+    /**
+     * Construct
+     *
+     * @param AgentContract|null $agent
+     */
+    public function __construct(AgentContract $agent = null)
+    {
+        $this->repository = new CommentRepository($this);
+        $this->authorizer = new CommentAuthorizer($this);
+        $this->validator = new CommentValidator($this);
+        $this->serializer = new CommentSerializer($this);
 
-		parent::__construct($agent);
-	}
+        parent::__construct($agent);
+    }
 
 
     /**

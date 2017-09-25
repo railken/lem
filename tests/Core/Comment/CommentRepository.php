@@ -7,11 +7,10 @@ use Railken\Laravel\Manager\ModelRepository;
 class CommentRepository extends ModelRepository
 {
 
-	/**
-	 * Class name entity
-	 *
-	 * @var string
-	 */
-	public $entity = Comment::class;
-
+    /**
+     * Class name entity
+     *
+     * @var string
+     */
+    public $entity = Comment::class;
 }

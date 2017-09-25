@@ -37,5 +37,4 @@ abstract class CommentAttributeException extends CommentException
 
         return parent::__construct($value);
     }
-
 }

@@ -11,17 +11,17 @@ use Railken\Laravel\Manager\ParameterBag;
 class CommentParameterBag extends ParameterBag
 {
 
-	/**
-	 * Filter current bag using agent
-	 *
-	 * @param AgentContract $agent
-	 *
-	 * @return $this
-	 */
-	public function filterByAgent(AgentContract $agent)
-	{
-		if ($agent instanceof UserAgentContract) {
-			return $this;
+    /**
+     * Filter current bag using agent
+     *
+     * @param AgentContract $agent
+     *
+     * @return $this
+     */
+    public function filterByAgent(AgentContract $agent)
+    {
+        if ($agent instanceof UserAgentContract) {
+            return $this;
         }
 
         if ($agent instanceof GuestAgentContract) {
@@ -31,19 +31,19 @@ class CommentParameterBag extends ParameterBag
         if ($agent instanceof SystemAgentContract) {
             return $this;
         }
-	}
+    }
 
-	/**
-	 * Filter current bag using agent for a search
-	 *
-	 * @param AgentContract $agent
-	 *
-	 * @return $this
-	 */
-	public function filterSearchableByAgent(AgentContract $agent)
-	{
-		if ($agent instanceof UserAgentContract) {
-			return $this;
+    /**
+     * Filter current bag using agent for a search
+     *
+     * @param AgentContract $agent
+     *
+     * @return $this
+     */
+    public function filterSearchableByAgent(AgentContract $agent)
+    {
+        if ($agent instanceof UserAgentContract) {
+            return $this;
         }
 
         if ($agent instanceof GuestAgentContract) {
@@ -53,16 +53,15 @@ class CommentParameterBag extends ParameterBag
         if ($agent instanceof SystemAgentContract) {
             return $this;
         }
-	}
+    }
 
-	/**
-	 * Filter current bag to fill model
-	 *
-	 * @return $this
-	 */
-	public function filterFill()
-	{
-		return $this->only(['name']);
-	}
-
+    /**
+     * Filter current bag to fill model
+     *
+     * @return $this
+     */
+    public function filterFill()
+    {
+        return $this->only(['name']);
+    }
 }

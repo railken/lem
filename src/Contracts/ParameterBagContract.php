@@ -24,10 +24,10 @@ interface ParameterBagContract
      */
     public function filterSearchableByAgent(AgentContract $agent);
 
-	/**
-	 * Filter current bag to fill model
-	 *
-	 * @return $this
-	 */
-	public function filterFill();
+    /**
+     * Filter current bag to fill model
+     *
+     * @return $this
+     */
+    public function filterFill();
 }

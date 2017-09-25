@@ -43,7 +43,7 @@ class CommentPolicy implements ModelPolicyContract
      */
     public function update(AgentContract $agent, EntityContract $entity)
     {
-    	return $this->interact($agent, $entity);
+        return $this->interact($agent, $entity);
     }
 
     /**

@@ -14,18 +14,18 @@ use Railken\Laravel\Manager\Tests\Core\Comment\Exceptions as Exceptions;
 class CommentAuthorizer implements ModelAuthorizerContract
 {
 
-	/**
-	 * @var CommentManager
-	 */
-	protected $manager;
+    /**
+     * @var CommentManager
+     */
+    protected $manager;
 
-	/**
-	 * Construct
-	 */
-	public function __construct(CommentManager $manager)
-	{
-		$this->manager = $manager;
-	}
+    /**
+     * Construct
+     */
+    public function __construct(CommentManager $manager)
+    {
+        $this->manager = $manager;
+    }
 
     /**
      * Authorize
@@ -40,24 +40,23 @@ class CommentAuthorizer implements ModelAuthorizerContract
     {
         $errors = new Collection();
 
-		# SystemAgent can always do anything.
-		if ($this->manager->agent instanceof SystemAgentContract) {
-			// ...
-		}
+        # SystemAgent can always do anything.
+        if ($this->manager->agent instanceof SystemAgentContract) {
+            // ...
+        }
 
-		# GuestAgent can always do anything.
-		if ($this->manager->agent instanceof GuestAgentContract) {
-			// ...
-		}
+        # GuestAgent can always do anything.
+        if ($this->manager->agent instanceof GuestAgentContract) {
+            // ...
+        }
 
-		# GuestAgent can always do anything.
-		if ($this->manager->agent instanceof UserAgentContract) {
-			// ...
-			!$this->manager->agent->can($operation, $entity) && $errors->push(new Exceptions\CommentNotAuthorizedException($entity));
-		}
-		
-		return $errors;
-
+        # GuestAgent can always do anything.
+        if ($this->manager->agent instanceof UserAgentContract) {
+            // ...
+            !$this->manager->agent->can($operation, $entity) && $errors->push(new Exceptions\CommentNotAuthorizedException($entity));
+        }
+        
+        return $errors;
     }
 
     /**

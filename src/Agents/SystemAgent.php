@@ -6,5 +6,4 @@ use Railken\Laravel\Manager\Contracts\SystemAgentContract;
 
 class SystemAgent implements SystemAgentContract
 {
-
 }

@@ -21,7 +21,6 @@ class UserParameterBag extends ParameterBag
     public function filterByAgent(AgentContract $agent)
     {
         if ($agent instanceof UserAgentContract) {
-
             if ($agent->isRoleUser()) {
                 return $this->only(['username', 'email', 'password']);
             }
@@ -49,9 +48,7 @@ class UserParameterBag extends ParameterBag
      */
     public function filterSearchableByAgent(AgentContract $agent)
     {
-
         if ($agent instanceof UserAgentContract) {
-
             if ($agent->isRoleUser()) {
                 return $this->only(['username', 'email']);
             }
@@ -70,14 +67,13 @@ class UserParameterBag extends ParameterBag
         }
     }
 
-	/**
-	 * Filter current bag to fill model
-	 *
-	 * @return $this
-	 */
-	public function filterFill()
-	{
-		return $this->only(['username', 'role', 'password', 'email']);
-	}
-
+    /**
+     * Filter current bag to fill model
+     *
+     * @return $this
+     */
+    public function filterFill()
+    {
+        return $this->only(['username', 'role', 'password', 'email']);
+    }
 }

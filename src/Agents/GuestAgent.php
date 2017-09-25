@@ -6,5 +6,4 @@ use Railken\Laravel\Manager\Contracts\GuestAgentContract;
 
 class GuestAgent implements GuestAgentContract
 {
-
 }
