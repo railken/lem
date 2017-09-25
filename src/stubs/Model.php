@@ -26,9 +26,9 @@ class $NAME$ extends Model implements EntityContract
 	protected $fillable = ['name'];
 
 	/**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = ['deleted_at'];
+	 * The attributes that should be mutated to dates.
+	 *
+	 * @var array
+	*/
+	protected $dates = ['deleted_at'];
 }
