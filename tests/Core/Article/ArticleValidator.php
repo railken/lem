@@ -41,6 +41,7 @@ class ArticleValidator implements ModelValidatorContract
 
 		## temp
 		$parameters->exists('author_id') && $parameters->set('author', $this->manager->author->findOneBy(['id' => $parameters->get('author_id')]));
+		
 
 		if (!$entity->exists)
 			$errors = $errors->merge($this->validateRequired($parameters));

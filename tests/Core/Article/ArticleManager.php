@@ -6,6 +6,7 @@ use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\ModelManager;
 use Railken\Laravel\Manager\Contracts\AgentContract;
 use Railken\Laravel\Manager\ParameterBag;
+use Railken\Laravel\Manager\Tests\User\UserManager;
 
 class ArticleManager extends ModelManager
 {
@@ -21,6 +22,8 @@ class ArticleManager extends ModelManager
 		$this->authorizer = new ArticleAuthorizer($this);
 		$this->validator = new ArticleValidator($this);
 		$this->serializer = new ArticleSerializer($this);
+
+		$this->author = new UserManager();
 
 		parent::__construct($agent);
 	}

@@ -29,7 +29,7 @@ class ArticleParameterBag extends ParameterBag
         }
 
         if ($agent instanceof SystemAgentContract) {
-            return $this->only(['title', 'description']);
+            return $this->only(['title', 'description', 'author_id']);
         }
 	}
 

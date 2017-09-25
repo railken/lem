@@ -21,6 +21,8 @@ use Railken\Laravel\Manager\Tests\Core\Comment\CommentManager;
 use Railken\Laravel\Manager\Tests\Core\Article\ArticleServiceProvider;
 use Railken\Laravel\Manager\Tests\Core\Comment\CommentServiceProvider;
 
+use Railken\Laravel\Manager\Agents\SystemAgent;
+
 class BasicTest extends \Orchestra\Testbench\TestCase
 {
     /**
@@ -169,6 +171,9 @@ class BasicTest extends \Orchestra\Testbench\TestCase
 
         $this->assertEquals('ARTICLE_NOT_AUTHORIZED', $am->setAgent($user_2)->update($am->findOneBy(['author_id' => $user_1->id]), ['title' => 'ban'])->getError()->getCode());
         $this->assertEquals('ARTICLE_NOT_AUTHORIZED', $am->setAgent($user_1)->update($am->findOneBy(['author_id' => $user_2->id]), ['title' => 'ban'])->getError()->getCode());
+
+        $this->assertEquals(1, $am->setAgent(new SystemAgent())->create(['title' => 'bar', 'description' => 'bar', 'author_id' => '1'])->ok());
+        $this->assertEquals('ARTICLE_AUTHOR_NOT_VALID', $am->setAgent(new SystemAgent())->create(['title' => 'bar', 'description' => 'bar', 'author_id' => '1111'])->getError()->getCode());
 
     }
 
