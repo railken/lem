@@ -129,7 +129,7 @@ abstract class ModelManager implements ManagerContract
 
         $result = $this->repository->findOneBy($parameters->all());
 
-        return $result && $this->agent && $this->authorizer && $this->authorizer->retrieve($result, $parameters)->count() !== 0 ? null : $result;
+        return $result && $this->authorizer->retrieve($result, $parameters)->count() !== 0 ? null : $result;
     }
 
     /**
@@ -146,11 +146,9 @@ abstract class ModelManager implements ManagerContract
 
         $results = $this->repository->findBy($parameters->all());
 
-        if ($this->authorizer && $this->agent) {
-            $results = $results->filter(function ($entity, $key) use ($parameters) {
-                $this->authorizer->retrieve($entity, $parameters)->count() == 0;
-            });
-        }
+        $results = $results->filter(function ($entity, $key) use ($parameters) {
+            $this->authorizer->retrieve($entity, $parameters)->count() == 0;
+        });
 
         return $results;
     }
@@ -171,8 +169,8 @@ abstract class ModelManager implements ManagerContract
 
         $parameters = $parameters->parse($this, $this->agent);
 
-        $this->authorizer && $result->addErrors($this->authorizer->create($entity, $parameters));
-        $this->validator && $result->addErrors($this->validator->validate($entity, $parameters));
+        $result->addErrors($this->authorizer->create($entity, $parameters));
+        $result->addErrors($this->validator->validate($entity, $parameters));
 
         $parameters = $parameters->filterWrite($this->agent);
 
@@ -195,8 +193,8 @@ abstract class ModelManager implements ManagerContract
 
         $parameters = $parameters->parse($this, $this->agent, $parameters);
 
-        $this->authorizer && $result->addErrors($this->authorizer->update($entity, $parameters));
-        $this->validator && $result->addErrors($this->validator->validate($entity, $parameters));
+        $result->addErrors($this->authorizer->update($entity, $parameters));
+        $result->addErrors($this->validator->validate($entity, $parameters));
 
         $parameters = $parameters->filterWrite($this->agent);
 
@@ -257,10 +255,8 @@ abstract class ModelManager implements ManagerContract
     {
         $result = new ResultAction();
 
-        if ($this->agent) {
-            $result->addErrors($this->authorizer->remove($entity, $this->castParameters([])));
-        }
-
+        $result->addErrors($this->authorizer->remove($entity, $this->castParameters([])));
+        
         return $result->ok() ? $this->delete($entity) : $result;
     }
 
