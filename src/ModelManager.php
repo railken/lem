@@ -14,12 +14,6 @@ use Railken\Laravel\Manager\Exceptions as Exceptions;
 
 abstract class ModelManager implements ManagerContract
 {
-
-    /**
-     * @var \Railken\Laravel\Manager\ModelRepository
-     */
-    public $repository;
-
     /**
      * @var array
      */
