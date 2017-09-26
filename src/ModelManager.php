@@ -62,11 +62,26 @@ abstract class ModelManager implements ManagerContract
         }
     }
 
+    /**
+     * Set components
+     *
+     * @param string $key
+     * @param array $args
+     *
+     * @return void
+     */
     public static function __callStatic($key, $args)
     {
         static::$__components[static::class][$key] = $args[0];
     }
 
+    /**
+     * Convert array to ParameterBag
+     *
+     * @param mixed $parameters
+     *
+     * @return ParameterBagContract
+     */
     public function castParameters($parameters)
     {
         return $this->parameters::factory($parameters);
