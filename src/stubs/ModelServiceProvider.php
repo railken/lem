@@ -16,5 +16,11 @@ class $NAME$ServiceProvider extends ServiceProvider
     {
         $NAME$::observe($NAME$Observer::class);
         Gate::policy($NAME$::class, $NAME$Policy::class);
+
+        $NAME$Manager::repository($NAME$Repository::class);
+        $NAME$Manager::serializer($NAME$Serializer::class);
+        $NAME$Manager::parameters($NAME$ParameterBag::class);
+        $NAME$Manager::validator($NAME$Validator::class);
+        $NAME$Manager::authorizer($NAME$Authorizer::class);
     }
 }

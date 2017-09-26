@@ -10,49 +10,37 @@ use Railken\Laravel\Manager\Tests\User\UserManager;
 
 class ArticleManager extends ModelManager
 {
-
-	/**
-	 * Construct
-	 *
-	 * @param AgentContract|null $agent
-	 */
-	public function __construct(AgentContract $agent = null)
-	{
-		$this->repository = new ArticleRepository($this);
-		$this->authorizer = new ArticleAuthorizer($this);
-		$this->validator = new ArticleValidator($this);
-		$this->serializer = new ArticleSerializer($this);
-
-		$this->author = new UserManager();
-
-		parent::__construct($agent);
-	}
+    /**
+     * @var array
+     */
+    protected static $__components = [];
 
     /**
-     * Filter parameters
+     * Construct
      *
-     * @param ParameterBag|array $parameters
-     *
-     * @return ParameterBag
+     * @param AgentContract|null $agent
      */
-    public function parameters($parameters)
+    public function __construct(AgentContract $agent = null)
     {
-        return new ArticleParameterBag($parameters);
+        $this->author = new UserManager();
+
+        parent::__construct($agent);
     }
 
-	/**
-	 * Fill the entity
-	 *
-	 * @param EntityContract $entity
-	 * @param ArticleParameterBag|array $parameters
-	 *
-	 * @return EntityContract
-	*/
-	public function fill(EntityContract $entity, $parameters)
-	{
-		$parameters = $this->parameters($parameters);
-		$parameters->exists('author') && $entity->author()->associate($parameters->get('author'));
 
-		return parent::fill($entity, $parameters);
-	}
+    /**
+     * Fill the entity
+     *
+     * @param EntityContract $entity
+     * @param ArticleParameterBag|array $parameters
+     *
+     * @return EntityContract
+    */
+    public function fill(EntityContract $entity, $parameters)
+    {
+        $parameters = $this->castParameters($parameters);
+        $parameters->exists('author') && $entity->author()->associate($parameters->get('author'));
+
+        return parent::fill($entity, $parameters);
+    }
 }

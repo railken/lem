@@ -14,6 +14,12 @@ class CommentServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        CommentManager::repository(CommentRepository::class);
+        CommentManager::parameters(CommentParameterBag::class);
+        CommentManager::validator(CommentValidator::class);
+        CommentManager::authorizer(CommentAuthorizer::class);
+        CommentManager::serializer(CommentSerializer::class);
+
         Comment::observe(CommentObserver::class);
         Gate::policy(Comment::class, CommentPolicy::class);
     }

@@ -17,23 +17,7 @@ class $NAME$Manager extends ModelManager
 	 */
 	public function __construct(AgentContract $agent = null)
 	{
-		$this->repository = new $NAME$Repository($this);
-		$this->authorizer = new $NAME$Authorizer($this);
-		$this->validator = new $NAME$Validator($this);
-		$this->serializer = new $NAME$Serializer($this);
-
 		parent::__construct($agent);
 	}
 
-	/**
-	 * Filter parameters
-	 *
-	 * @param array|ParameterBag $parameters
-	 *
-	 * @return ParameterBag
-	 */
-	public function parameters($parameters)
-	{
-		return new $NAME$ParameterBag($parameters);
-	}
 }

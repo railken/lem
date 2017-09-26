@@ -10,29 +10,17 @@ class UserManager extends ModelManager
 {
 
     /**
+     * @var array
+     */
+    protected static $__components = [];
+
+    /**
      * Construct
      *
      * @param AgentContract|null $agent
      */
     public function __construct(AgentContract $agent = null)
     {
-        $this->repository = new UserRepository($this);
-        $this->serializer = new UserSerializer($this);
-        $this->validator = new UserValidator($this);
-        $this->authorizer = new UserAuthorizer($this);
-
         parent::__construct($agent);
-    }
-
-    /**
-     * Filter parameters
-     *
-     * @param ParameterBag|array $parameters
-     *
-     * @return ParameterBag
-     */
-    public function parameters($parameters)
-    {
-        return new UserParameterBag($parameters);
     }
 }

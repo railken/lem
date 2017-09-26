@@ -13,17 +13,17 @@ class CommentManager extends ModelManager
 {
 
     /**
+     * @var array
+     */
+    protected static $__components = [];
+
+    /**
      * Construct
      *
      * @param AgentContract|null $agent
      */
     public function __construct(AgentContract $agent = null)
     {
-        $this->repository = new CommentRepository($this);
-        $this->authorizer = new CommentAuthorizer($this);
-        $this->validator = new CommentValidator($this);
-        $this->serializer = new CommentSerializer($this);
-
         $this->author = new UserManager();
         $this->article = new ArticleManager();
 
@@ -31,31 +31,19 @@ class CommentManager extends ModelManager
     }
 
     /**
-     * Filter parameters
+     * Fill the entity
      *
+     * @param EntityContract $entity
      * @param ParameterBag|array $parameters
      *
-     * @return ParameterBag
-     */
-    public function parameters($parameters)
+     * @return EntityContract
+    */
+    public function fill(EntityContract $entity, $parameters)
     {
-        return new CommentParameterBag($parameters);
+        $parameters = $this->castParameters($parameters);
+        $parameters->exists('author') && $entity->author()->associate($parameters->get('author'));
+        $parameters->exists('article') && $entity->article()->associate($parameters->get('article'));
+
+        return parent::fill($entity, $parameters);
     }
-
-	/**
-	 * Fill the entity
-	 *
-	 * @param EntityContract $entity
-	 * @param ParameterBag|array $parameters
-	 *
-	 * @return EntityContract
-	*/
-	public function fill(EntityContract $entity, $parameters)
-	{
-		$parameters = $this->parameters($parameters);
-		$parameters->exists('author') && $entity->author()->associate($parameters->get('author'));
-		$parameters->exists('article') && $entity->article()->associate($parameters->get('article'));
-
-		return parent::fill($entity, $parameters);
-	}
 }

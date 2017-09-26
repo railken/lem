@@ -9,6 +9,7 @@ use Railken\Laravel\Manager\Agents\SystemAgent;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Exception;
+use Railken\Laravel\Manager\Exceptions as Exceptions;
 
 abstract class ModelManager implements ManagerContract
 {
@@ -19,6 +20,11 @@ abstract class ModelManager implements ManagerContract
     public $repository;
 
     /**
+     * @var array
+     */
+    protected static $__components = [];
+
+    /**
      * Construct
      *
      * @param AgentContract|null $agent
@@ -26,6 +32,43 @@ abstract class ModelManager implements ManagerContract
     public function __construct(AgentContract $agent = null)
     {
         $this->agent = $agent ? $agent : new SystemAgent();
+
+        foreach (static::$__components[get_class($this)] as $key => $component) {
+            $this->$key = new $component($this);
+        }
+
+        if (!isset($this->authorizer)) {
+            throw new Exceptions\ModelMissingAuthorizerException($this);
+        }
+
+
+        if (!isset($this->validator)) {
+            throw new Exceptions\ModelMissingValidatorException($this);
+        }
+
+
+        if (!isset($this->serializer)) {
+            throw new Exceptions\ModelMissingSerializerException($this);
+        }
+
+
+        if (!isset($this->parameters)) {
+            throw new Exceptions\ModelMissingParametersException($this);
+        }
+
+        if (!isset($this->repository)) {
+            throw new Exceptions\ModelMissingRepositoryException($this);
+        }
+    }
+
+    public static function __callStatic($key, $args)
+    {
+        static::$__components[static::class][$key] = $args[0];
+    }
+
+    public function castParameters($parameters)
+    {
+        return $this->parameters::factory($parameters);
     }
 
     /**
@@ -53,18 +96,6 @@ abstract class ModelManager implements ManagerContract
     }
 
     /**
-     * Filter parameters
-     *
-     * @param ParameterBag|array $parameters
-     *
-     * @return ParameterBag
-     */
-    public function parameters($parameters)
-    {
-        return new ParameterBag($parameters);
-    }
-
-    /**
      * Retrieve repository
      *
      * @return ModelRepository
@@ -83,10 +114,10 @@ abstract class ModelManager implements ManagerContract
      */
     public function findOneBy($parameters)
     {
-        $parameters = $this->parameters($parameters);
+        $parameters = $this->castParameters($parameters);
         $parameters = $parameters->filterRead($this->agent);
 
-        $result = $this->getRepository()->findOneBy($parameters->all());
+        $result = $this->repository->findOneBy($parameters->all());
 
         return $result && $this->agent && $this->authorizer && $this->authorizer->retrieve($result, $parameters)->count() !== 0 ? null : $result;
     }
@@ -100,10 +131,10 @@ abstract class ModelManager implements ManagerContract
      */
     public function findBy($parameters)
     {
-        $parameters = $this->parameters($parameters);
+        $parameters = $this->castParameters($parameters);
         $parameters = $parameters->filterRead($this->agent);
 
-        $results = $this->getRepository()->findBy($parameters->all());
+        $results = $this->repository->findBy($parameters->all());
 
         if ($this->authorizer && $this->agent) {
             $results = $results->filter(function ($entity, $key) use ($parameters) {
@@ -123,12 +154,10 @@ abstract class ModelManager implements ManagerContract
      */
     public function create($parameters)
     {
-
-
         $result = new ResultAction();
-        $entity = $this->getRepository()->newEntity();
+        $entity = $this->repository->newEntity();
 
-        $parameters = $this->parameters($parameters);
+        $parameters = $this->castParameters($parameters);
 
         $parameters = $parameters->parse($this, $this->agent);
 
@@ -150,7 +179,7 @@ abstract class ModelManager implements ManagerContract
      */
     public function update(EntityContract $entity, $parameters)
     {
-        $parameters = $this->parameters($parameters);
+        $parameters = $this->castParameters($parameters);
 
         $result = new ResultAction();
 
@@ -174,7 +203,7 @@ abstract class ModelManager implements ManagerContract
      */
     public function edit(EntityContract $entity, $parameters)
     {
-        $parameters = $this->parameters($parameters);
+        $parameters = $this->castParameters($parameters);
 
         $result = new ResultAction();
 
@@ -219,7 +248,7 @@ abstract class ModelManager implements ManagerContract
         $result = new ResultAction();
 
         if ($this->agent) {
-            $result->addErrors($this->authorizer->remove($entity, $this->parameters([])));
+            $result->addErrors($this->authorizer->remove($entity, $this->castParameters([])));
         }
 
         return $result->ok() ? $this->delete($entity) : $result;
@@ -259,7 +288,7 @@ abstract class ModelManager implements ManagerContract
      */
     public function fill(EntityContract $entity, $parameters)
     {
-        $parameters = $this->parameters($parameters);
+        $parameters = $this->castParameters($parameters);
         $entity->fill($parameters->all());
 
         return $entity;
@@ -274,10 +303,10 @@ abstract class ModelManager implements ManagerContract
      */
     public function findOrCreate($parameters)
     {
-        $parameters = $this->parameters($parameters);
+        $parameters = $this->castParameters($parameters);
         $entity = $this->find($parameters);
 
-        return $entity ? $entity : $this->create($this->parameters($parameters));
+        return $entity ? $entity : $this->create($this->castParameters($parameters));
     }
 
     /**
@@ -290,8 +319,8 @@ abstract class ModelManager implements ManagerContract
      */
     public function updateOrCreate($criteria, $parameters)
     {
-        $criteria = $this->parameters($criteria);
-        $parameters = $this->parameters($parameters);
+        $criteria = $this->castParameters($criteria);
+        $parameters = $this->castParameters($parameters);
         $entity = $this->find($parameters);
 
         return $entity ? $this->update($entity, $parameters) : $this->create($parameters);
