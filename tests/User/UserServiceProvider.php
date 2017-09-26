@@ -2,8 +2,8 @@
 
 namespace Railken\Laravel\Manager\Tests\User;
 
-use Gate;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class UserServiceProvider extends ServiceProvider
 {

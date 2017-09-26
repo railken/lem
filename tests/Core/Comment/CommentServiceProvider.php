@@ -2,7 +2,7 @@
 
 namespace Railken\Laravel\Manager\Tests\Core\Comment;
 
-use Gate;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class CommentServiceProvider extends ServiceProvider
