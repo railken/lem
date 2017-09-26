@@ -11,22 +11,7 @@ use Railken\Laravel\Manager\ParameterBag;
 
 class UserParameterBag extends ParameterBag
 {
-    /**
-	 * Filter current bag using agent for a search
-	 *
-	 * @param ManagerContract $manager
-	 * @param AgentContract $agent
-	 *
-	 * @return $this
-	 */
-	public function parse(ManagerContract $manager, AgentContract $agent)
-	{
-		if ($agent instanceof UserAgentContract) {
 
-		}
-
-        return $this;
-	}
 
     /**
      * Filter current bag using agent

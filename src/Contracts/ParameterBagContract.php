@@ -10,16 +10,6 @@ interface ParameterBagContract
     /**
      * Filter current bag using agent
      *
-     * @param ManagerContract $manager
-     * @param AgentContract $agent
-     *
-     * @return this
-     */
-    public function parse(ManagerContract $manager, AgentContract $agent);
-
-    /**
-     * Filter current bag using agent
-     *
      * @param AgentContract $agent
      *
      * @return this

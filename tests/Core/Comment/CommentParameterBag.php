@@ -12,26 +12,6 @@ use Railken\Laravel\Manager\ParameterBag;
 
 class CommentParameterBag extends ParameterBag
 {
-    /**
-	 * Filter current bag using agent for a search
-	 *
-	 * @param ManagerContract $manager
-	 * @param AgentContract $agent
-	 *
-	 * @return $this
-	 */
-	public function parse(ManagerContract $manager, AgentContract $agent)
-	{
-		if ($agent instanceof UserAgentContract) {
-			$this->set('author', $agent);
-		}
-
-
-        $this->exists('author_id') && $this->set('author', $manager->author->findOneBy(['id' => $this->get('author_id')]));
-        $this->exists('article_id') && $this->set('article', $manager->article->findOneBy(['id' => $this->get('article_id')]));
-
-        return $this;
-	}
 
     /**
      * Filter current bag using agent for a search
@@ -55,8 +35,6 @@ class CommentParameterBag extends ParameterBag
         if ($agent instanceof SystemAgentContract) {
             return $this;
         }
-
-
     }
 
     /**
@@ -68,15 +46,30 @@ class CommentParameterBag extends ParameterBag
      */
     public function filterWrite(AgentContract $agent)
     {
+        $author_manager = new \Railken\Laravel\Manager\Tests\User\UserManager();
+        $article_manager = new \Railken\Laravel\Manager\Tests\Core\Article\ArticleManager();
+
+        if ($agent instanceof UserAgentContract) {
+            $this->set('author', $agent);
+        }
+
+        if ($agent instanceof SystemAgentContract) {
+            $this->exists('author_id') && $this->set('author', $author_manager->findOneBy(['id' => $this->get('author_id')]));
+        }
+
+        $this->exists('article_id') && $this->set('article', $article_manager->findOneBy(['id' => $this->get('article_id')]));
+
 
         $this->filter(['content', 'author', 'article']);
 
         if ($agent instanceof UserAgentContract) {
-            return $this->set('author', $agent);
+            return $this;
         }
 
         if ($agent instanceof SystemAgentContract) {
             return $this;
         }
+
+        # GuestAgentContract not allowed
     }
 }

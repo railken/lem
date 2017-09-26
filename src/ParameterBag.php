@@ -12,19 +12,6 @@ abstract class ParameterBag extends Bag implements ParameterBagContract
     /**
      * Filter current bag using agent
      *
-     * @param ManagerContract $manager
-     * @param AgentContract $agent
-     *
-     * @return $this
-     */
-    public function parse(ManagerContract $manager, AgentContract $agent)
-    {
-        return $this;
-    }
-
-    /**
-     * Filter current bag using agent
-     *
      * @param AgentContract $agent
      *
      * @return $this

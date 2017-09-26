@@ -36,16 +36,13 @@ abstract class ModelManager implements ManagerContract
             throw new Exceptions\ModelMissingAuthorizerException($this);
         }
 
-
         if (!isset($this->validator)) {
             throw new Exceptions\ModelMissingValidatorException($this);
         }
 
-
         if (!isset($this->serializer)) {
             throw new Exceptions\ModelMissingSerializerException($this);
         }
-
 
         if (!isset($this->parameters)) {
             throw new Exceptions\ModelMissingParametersException($this);
@@ -167,12 +164,10 @@ abstract class ModelManager implements ManagerContract
 
         $parameters = $this->castParameters($parameters);
 
-        $parameters = $parameters->parse($this, $this->agent);
+        $parameters = $parameters->filterWrite($this->agent);
 
         $result->addErrors($this->authorizer->create($entity, $parameters));
         $result->addErrors($this->validator->validate($entity, $parameters));
-
-        $parameters = $parameters->filterWrite($this->agent);
 
         return $result->ok() ? $this->edit($entity, $parameters) : $result;
     }
@@ -191,12 +186,10 @@ abstract class ModelManager implements ManagerContract
 
         $result = new ResultAction();
 
-        $parameters = $parameters->parse($this, $this->agent, $parameters);
+        $parameters = $parameters->filterWrite($this->agent);
 
         $result->addErrors($this->authorizer->update($entity, $parameters));
         $result->addErrors($this->validator->validate($entity, $parameters));
-
-        $parameters = $parameters->filterWrite($this->agent);
 
         return $result->ok() ? $this->edit($entity, $parameters) : $result;
     }
@@ -256,7 +249,7 @@ abstract class ModelManager implements ManagerContract
         $result = new ResultAction();
 
         $result->addErrors($this->authorizer->remove($entity, $this->castParameters([])));
-        
+
         return $result->ok() ? $this->delete($entity) : $result;
     }
 

@@ -11,68 +11,54 @@ use Railken\Laravel\Manager\ParameterBag;
 
 class ArticleParameterBag extends ParameterBag
 {
+    /**
+     * Filter current bag using agent for a search
+     *
+     * @param AgentContract $agent
+     *
+     * @return $this
+     */
+    public function filterRead(AgentContract $agent)
+    {
+        $this->filter(['id', 'title', 'description', 'created_at', 'updated_at', 'author_id']);
 
-	/**
-	 * Filter current bag using agent for a search
-	 *
-	 * @param ManagerContract $manager
-	 * @param AgentContract $agent
-	 *
-	 * @return $this
-	 */
-	public function parse(ManagerContract $manager, AgentContract $agent)
-	{
-		if ($agent instanceof UserAgentContract) {
-			$this->set('author', $agent);
-		}
-
-		return $this;
-	}
-
-	/**
-	 * Filter current bag using agent for a search
-	 *
-	 * @param AgentContract $agent
-	 *
-	 * @return $this
-	 */
-	public function filterRead(AgentContract $agent)
-	{
-		$this->filter(['id', 'title', 'description', 'created_at', 'updated_at', 'author_id']);
-
-		if ($agent instanceof UserAgentContract || $agent instanceof GuestAgentContract) {
+        if ($agent instanceof UserAgentContract || $agent instanceof GuestAgentContract) {
             return $this;
         }
 
         if ($agent instanceof SystemAgentContract) {
             return $this;
         }
-	}
+    }
 
-	/**
-	 * Filter current bag using agent
-	 *
-	 * @param AgentContract $agent
-	 *
-	 * @return $this
-	 */
-	public function filterWrite(AgentContract $agent)
-	{
+    /**
+     * Filter current bag using agent
+     *
+     * @param AgentContract $agent
+     *
+     * @return $this
+     */
+    public function filterWrite(AgentContract $agent)
+    {
+        if ($agent instanceof UserAgentContract) {
+            $this->set('author', $agent);
+        }
 
-		$this->filter(['title', 'description', 'author']);
+        if ($agent instanceof SystemAgentContract) {
+            $am = new \Railken\Laravel\Manager\Tests\User\UserManager();
+            $this->exists('author_id') && $this->set('author', $am->findOneBy(['id' => $this->get('author_id')]));
+        }
 
-		if ($agent instanceof UserAgentContract) {
-			return $this->set('author', $agent);
-		}
+        $this->filter(['title', 'description', 'author']);
 
-		if ($agent instanceof GuestAgentContract) {
-			return $this->only(['title', 'description']);
-		}
+        if ($agent instanceof UserAgentContract) {
+            return $this;
+        }
 
-		if ($agent instanceof SystemAgentContract) {
-			return $this;
-		}
-	}
+        if ($agent instanceof SystemAgentContract) {
+            return $this;
+        }
 
-
+        # GuestAgentContract not allowed.
+    }
 }
