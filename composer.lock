@@ -810,16 +810,16 @@
         },
         {
             "name": "railken/bag",
-            "version": "v1.2.3",
+            "version": "v1.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/railken/bag.git",
-                "reference": "c18d166554349e6526846a692a37f309fb67a319"
+                "reference": "db0caded04b19e1fb0aee0f57f31ffe768dc6fe6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railken/bag/zipball/c18d166554349e6526846a692a37f309fb67a319",
-                "reference": "c18d166554349e6526846a692a37f309fb67a319",
+                "url": "https://api.github.com/repos/railken/bag/zipball/db0caded04b19e1fb0aee0f57f31ffe768dc6fe6",
+                "reference": "db0caded04b19e1fb0aee0f57f31ffe768dc6fe6",
                 "shasum": ""
             },
             "require-dev": {
@@ -832,7 +832,7 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2017-09-25T20:44:11+00:00"
+            "time": "2017-09-26T20:53:42+00:00"
         },
         {
             "name": "ramsey/uuid",
