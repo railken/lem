@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\File;
 
 use Railken\Laravel\Manager\Tests\Generated\Foo\FooManager;
 use Railken\Laravel\Manager\Tests\Generated\Foo\FooParameterBag;
+use Railken\Laravel\Manager\Tests\Generated\Foo\FooServiceProvider;
 
 use Railken\Laravel\Manager\Tests\Core\Article\ArticleManager;
 use Railken\Laravel\Manager\Tests\Core\Comment\CommentManager;
@@ -121,15 +122,11 @@ class BasicTest extends \Orchestra\Testbench\TestCase
      */
     public function testGenerate()
     {
-
         $generator = new Generator();
         $generator->generate(__DIR__."/Generated", "Railken\Laravel\Manager\Tests\Generated\Foo");
         $this->assertEquals(true, File::exists(__DIR__."/Generated/Foo"));
 
-
-        \Railken\Laravel\Manager\Tests\Generated\Foo\Foo::observe(\Railken\Laravel\Manager\Tests\Generated\Foo\FooObserver::class);
-        Gate::policy(\Railken\Laravel\Manager\Tests\Generated\Foo\Foo::class, \Railken\Laravel\Manager\Tests\Generated\Foo\FooPolicy::class);
-
+        (new FooServiceProvider($this->app))->register();
 
         $m = new FooManager();
 
@@ -174,8 +171,15 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         $this->assertEquals(1, $am->setAgent(new SystemAgent())->create(['title' => 'bar', 'description' => 'bar', 'author_id' => '1'])->ok());
         $this->assertEquals('ARTICLE_AUTHOR_NOT_VALID', $am->setAgent(new SystemAgent())->create(['title' => 'bar', 'description' => 'bar', 'author_id' => '1111'])->getError()->getCode());
 
+        // Creating a new comment
         $cb = new Bag(['article_id' => 1, 'content' => 'foo']);
-        print_r($cm->setAgent(new SystemAgent())->create($cb->set('author_id', 1))->getSimpleErrors());
+        $this->assertEquals(1, $cm->setAgent(new SystemAgent())->create($cb->set('author_id', 1))->ok());
+        $this->assertEquals(1, $cm->setAgent($user_1)->create($cb)->ok());
+        $this->assertEquals(1, $cm->setAgent($user_2)->create($cb)->ok());
+
+
+        // Creating a new comment
+        $cb = new Bag(['article_id' => 1, 'content' => 'foo']);
         $this->assertEquals(1, $cm->setAgent(new SystemAgent())->create($cb->set('author_id', 1))->ok());
         $this->assertEquals(1, $cm->setAgent($user_1)->create($cb)->ok());
         $this->assertEquals(1, $cm->setAgent($user_2)->create($cb)->ok());
@@ -225,7 +229,7 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         $this->assertEquals(true, $user_admin_manager->update($user_admin, ['email' => 'new2@test.net'])->ok());
         $this->assertEquals(true, $user_admin_manager->update($user, ['email' => 'new3@test.net'])->ok());
 
-        $this->assertEquals(true, $user_manager->update($user,['role' => User::ROLE_ADMIN])->getResource()->isRoleUser());
+        $this->assertEquals(true, $user_manager->update($user, ['role' => User::ROLE_ADMIN])->getResource()->isRoleUser());
 
         $um->findOneBy(['username' => 'test123']);
     }
