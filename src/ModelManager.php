@@ -11,6 +11,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Exception;
 use Railken\Laravel\Manager\Exceptions as Exceptions;
+use Railken\Laravel\Manager\Contracts\ModelAuthorizerContract;
 
 abstract class ModelManager implements ManagerContract
 {
@@ -29,10 +30,10 @@ abstract class ModelManager implements ManagerContract
         $this->agent = $agent ? $agent : new SystemAgent();
 
         foreach (static::$__components[get_class($this)] as $key => $component) {
-            $this->$key = new $component($this);
+            class_exists($component) && $this->$key = new $component($this);
         }
 
-        if (!isset($this->authorizer)) {
+        if (!isset($this->authorizer) || !$this->authorizer instanceof ModelAuthorizerContract) {
             throw new Exceptions\ModelMissingAuthorizerException($this);
         }
 
