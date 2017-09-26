@@ -3,6 +3,7 @@
 namespace Railken\Laravel\Manager\Tests\User;
 
 use Railken\Laravel\Manager\Contracts\AgentContract;
+use Railken\Laravel\Manager\Contracts\ManagerContract;
 use Railken\Laravel\Manager\Contracts\SystemAgentContract;
 use Railken\Laravel\Manager\Contracts\GuestAgentContract;
 use Railken\Laravel\Manager\Contracts\UserAgentContract;
@@ -10,6 +11,22 @@ use Railken\Laravel\Manager\ParameterBag;
 
 class UserParameterBag extends ParameterBag
 {
+    /**
+	 * Filter current bag using agent for a search
+	 *
+	 * @param ManagerContract $manager
+	 * @param AgentContract $agent
+	 *
+	 * @return $this
+	 */
+	public function parse(ManagerContract $manager, AgentContract $agent)
+	{
+		if ($agent instanceof UserAgentContract) {
+
+		}
+
+        return $this;
+	}
 
     /**
      * Filter current bag using agent
@@ -18,8 +35,11 @@ class UserParameterBag extends ParameterBag
      *
      * @return $this
      */
-    public function filterByAgent(AgentContract $agent)
+    public function filterWrite(AgentContract $agent)
     {
+        $this->filter(['username', 'role', 'password', 'email']);
+
+        // A user can change his own data.
         if ($agent instanceof UserAgentContract) {
             if ($agent->isRoleUser()) {
                 return $this->only(['username', 'email', 'password']);
@@ -30,13 +50,13 @@ class UserParameterBag extends ParameterBag
             }
         }
 
+        // A guest can register.
         if ($agent instanceof GuestAgentContract) {
-            return $this;
+            return $this->only(['username', 'email', 'password']);
         }
 
-        if ($agent instanceof SystemAgentContract) {
-            return $this;
-        }
+
+        return $this;
     }
 
     /**
@@ -46,7 +66,7 @@ class UserParameterBag extends ParameterBag
      *
      * @return $this
      */
-    public function filterSearchableByAgent(AgentContract $agent)
+    public function filterRead(AgentContract $agent)
     {
         if ($agent instanceof UserAgentContract) {
             if ($agent->isRoleUser()) {
@@ -74,6 +94,5 @@ class UserParameterBag extends ParameterBag
      */
     public function filterFill()
     {
-        return $this->only(['username', 'role', 'password', 'email']);
     }
 }

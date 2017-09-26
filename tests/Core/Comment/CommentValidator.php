@@ -49,7 +49,6 @@ class CommentValidator implements ModelValidatorContract
     /**
      * Validate "required" values
      *
-     * @param EntityContract $entity
      * @param ParameterBag $parameters
      *
      * @return Collection
@@ -58,7 +57,10 @@ class CommentValidator implements ModelValidatorContract
     {
         $errors = new Collection();
 
-        !$parameters->exists('name') && $errors->push(new Exceptions\CommentNameNotDefinedException($parameters->get('name')));
+        !$parameters->exists('content') && $errors->push(new Exceptions\CommentContentNotDefinedException($parameters->get('content')));
+        !$parameters->exists('author') && $errors->push(new Exceptions\CommentAuthorNotDefinedException($parameters->get('author')));
+        !$parameters->exists('article') && $errors->push(new Exceptions\CommentArticleNotDefinedException($parameters->get('article')));
+
 
         return $errors;
     }
@@ -66,6 +68,7 @@ class CommentValidator implements ModelValidatorContract
     /**
      * Validate "not valid" values
      *
+     * @param EntityContract $entity
      * @param ParameterBag $parameters
      *
      * @return Collection
@@ -74,9 +77,14 @@ class CommentValidator implements ModelValidatorContract
     {
         $errors = new Collection();
 
-        $parameters->exists('name') && !$this->validName($parameters->get('name')) &&
-            $errors->push(new Exceptions\CommentNameNotValidException($parameters->get('name')));
+        $parameters->exists('content') && !$this->validName($parameters->get('content')) &&
+            $errors->push(new Exceptions\CommentContentNotValidException($parameters->get('content')));
 
+		$parameters->exists('author') && !$parameters->get('author') &&
+			$errors->push(new Exceptions\CommentAuthorNotValidException($parameters->get('author')));
+
+		$parameters->exists('article') && !$parameters->get('article') &&
+			$errors->push(new Exceptions\CommentArticleNotValidException($parameters->get('article')));
 
         return $errors;
     }

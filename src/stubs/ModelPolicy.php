@@ -34,19 +34,6 @@ class $NAME$Policy implements ModelPolicyContract
     }
 
     /**
-     * Determine if the given entity can be updated by the agent.
-     *
-     * @param AgentContract $agent
-     * @param EntityContract $entity
-     *
-     * @return bool
-     */
-    public function update(AgentContract $agent, EntityContract $entity)
-    {
-    	return $this->interact($agent, $entity);
-    }
-
-    /**
      * Determine if the given entity can be retrieved by the agent.
      *
      * @param AgentContract $agent
@@ -57,6 +44,19 @@ class $NAME$Policy implements ModelPolicyContract
     public function retrieve(AgentContract $agent, EntityContract $entity)
     {
         return $this->interact($agent, $entity);
+    }
+
+    /**
+     * Determine if the given entity can be updated by the agent.
+     *
+     * @param AgentContract $agent
+     * @param EntityContract $entity
+     *
+     * @return bool
+     */
+    public function update(AgentContract $agent, EntityContract $entity)
+    {
+    	return $this->interact($agent, $entity);
     }
 
     /**

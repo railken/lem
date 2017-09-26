@@ -2,7 +2,7 @@
 
 namespace Railken\Laravel\Manager\Tests\Core\Comment\Exceptions;
 
-class CommentNameNotValidException extends CommentAttributeException
+class CommentAuthorNotDefinedException extends CommentAttributeException
 {
 
     /**
@@ -10,19 +10,19 @@ class CommentNameNotValidException extends CommentAttributeException
      *
      * @var string
      */
-    protected $attribute = 'name';
+    protected $attribute = 'author';
 
     /**
      * The code to identify the error
      *
      * @var string
      */
-    protected $code = 'COMMENT_NAME_NOT_VALID';
+    protected $code = 'COMMENT_AUTHOR_NOT_DEFINED';
 
     /**
      * The message
      *
      * @var string
      */
-    protected $message = "The %s is not valid";
+    protected $message = "The %s is required";
 }

@@ -4,12 +4,13 @@ namespace Railken\Laravel\Manager;
 
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\Contracts\AgentContract;
+use Railken\Laravel\Manager\Contracts\ManagerContract;
 use Railken\Laravel\Manager\Agents\SystemAgent;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Exception;
 
-abstract class ModelManager
+abstract class ModelManager implements ManagerContract
 {
 
     /**
@@ -83,10 +84,7 @@ abstract class ModelManager
     public function findOneBy($parameters)
     {
         $parameters = $this->parameters($parameters);
-
-        if ($this->agent) {
-            $parameters = $parameters->filterSearchableByAgent($this->agent);
-        }
+        $parameters = $parameters->filterRead($this->agent);
 
         $result = $this->getRepository()->findOneBy($parameters->all());
 
@@ -103,10 +101,7 @@ abstract class ModelManager
     public function findBy($parameters)
     {
         $parameters = $this->parameters($parameters);
-
-        if ($this->agent) {
-            $parameters = $parameters->filterSearchableByAgent($this->agent);
-        }
+        $parameters = $parameters->filterRead($this->agent);
 
         $results = $this->getRepository()->findBy($parameters->all());
 
@@ -128,18 +123,19 @@ abstract class ModelManager
      */
     public function create($parameters)
     {
-        $parameters = $this->parameters($parameters);
 
 
         $result = new ResultAction();
         $entity = $this->getRepository()->newEntity();
 
-        if ($this->agent) {
-            $parameters = $parameters->filterByAgent($this->agent);
-            $this->authorizer && $result->addErrors($this->authorizer->create($entity, $parameters));
-        }
+        $parameters = $this->parameters($parameters);
 
+        $parameters = $parameters->parse($this, $this->agent);
+
+        $this->authorizer && $result->addErrors($this->authorizer->create($entity, $parameters));
         $this->validator && $result->addErrors($this->validator->validate($entity, $parameters));
+
+        $parameters = $parameters->filterWrite($this->agent);
 
         return $result->ok() ? $this->edit($entity, $parameters) : $result;
     }
@@ -158,12 +154,12 @@ abstract class ModelManager
 
         $result = new ResultAction();
 
-        if ($this->agent) {
-            $parameters = $parameters->filterByAgent($this->agent);
-            $this->authorizer && $result->addErrors($this->authorizer->update($entity, $parameters));
-        }
+        $parameters = $parameters->parse($this, $this->agent, $parameters);
 
+        $this->authorizer && $result->addErrors($this->authorizer->update($entity, $parameters));
         $this->validator && $result->addErrors($this->validator->validate($entity, $parameters));
+
+        $parameters = $parameters->filterWrite($this->agent);
 
         return $result->ok() ? $this->edit($entity, $parameters) : $result;
     }
@@ -264,7 +260,7 @@ abstract class ModelManager
     public function fill(EntityContract $entity, $parameters)
     {
         $parameters = $this->parameters($parameters);
-        $entity->fill($parameters->filterFill()->all());
+        $entity->fill($parameters->all());
 
         return $entity;
     }

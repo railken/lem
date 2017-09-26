@@ -55,7 +55,7 @@ class ArticleAuthorizer implements ModelAuthorizerContract
             // ...
             !$this->manager->agent->can($operation, $entity) && $errors->push(new Exceptions\ArticleNotAuthorizedException($entity));
         }
-        
+
         return $errors;
     }
 

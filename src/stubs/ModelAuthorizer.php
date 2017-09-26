@@ -42,7 +42,7 @@ class $NAME$Authorizer implements ModelAuthorizerContract
 
 		# SystemAgent can always do anything.
 		if ($this->manager->agent instanceof SystemAgentContract) {
-			// ...
+			return $errors;
 		}
 
 		# GuestAgent can always do anything.
@@ -54,10 +54,10 @@ class $NAME$Authorizer implements ModelAuthorizerContract
 		if ($this->manager->agent instanceof UserAgentContract) {
 			// ...
 			!$this->manager->agent->can($operation, $entity) && $errors->push(new Exceptions\$NAME$NotAuthorizedException($entity));
-		}
-		
-		return $errors;
 
+		}
+
+		return $errors;
     }
 
     /**

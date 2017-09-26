@@ -3,9 +3,20 @@
 namespace Railken\Laravel\Manager\Contracts;
 
 use Railken\Laravel\Manager\Contracts\AgentContract;
+use Railken\Laravel\Manager\Contracts\ManagerContract;
 
 interface ParameterBagContract
 {
+    /**
+     * Filter current bag using agent
+     *
+     * @param ManagerContract $manager
+     * @param AgentContract $agent
+     *
+     * @return this
+     */
+    public function parse(ManagerContract $manager, AgentContract $agent);
+
     /**
      * Filter current bag using agent
      *
@@ -13,7 +24,7 @@ interface ParameterBagContract
      *
      * @return this
      */
-    public function filterByAgent(AgentContract $agent);
+    public function filterWrite(AgentContract $agent);
 
     /**
      * Filter current bag using agent for a search
@@ -22,12 +33,6 @@ interface ParameterBagContract
      *
      * @return this
      */
-    public function filterSearchableByAgent(AgentContract $agent);
+    public function filterRead(AgentContract $agent);
 
-    /**
-     * Filter current bag to fill model
-     *
-     * @return $this
-     */
-    public function filterFill();
 }

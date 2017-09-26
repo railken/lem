@@ -3,6 +3,7 @@
 namespace $NAMESPACE$;
 
 use Railken\Laravel\Manager\Contracts\AgentContract;
+use Railken\Laravel\Manager\Contracts\ManagerContract;
 use Railken\Laravel\Manager\Contracts\SystemAgentContract;
 use Railken\Laravel\Manager\Contracts\GuestAgentContract;
 use Railken\Laravel\Manager\Contracts\UserAgentContract;
@@ -10,6 +11,30 @@ use Railken\Laravel\Manager\ParameterBag;
 
 class $NAME$ParameterBag extends ParameterBag
 {
+	/**
+     * Filter current bag using agent
+     *
+     * @param ManagerContract $manager
+     * @param AgentContract $agent
+     *
+     * @return $this
+     */
+    public function parse(ManagerContract $manager, AgentContract $agent)
+    {
+		if ($agent instanceof UserAgentContract) {
+			// ..
+        }
+
+        if ($agent instanceof GuestAgentContract) {
+            // ..
+        }
+
+        if ($agent instanceof SystemAgentContract) {
+            // ..
+        }
+
+		return $this;
+    }
 
 	/**
 	 * Filter current bag using agent
@@ -18,19 +43,24 @@ class $NAME$ParameterBag extends ParameterBag
 	 *
 	 * @return $this
 	 */
-	public function filterByAgent(AgentContract $agent)
+	public function filterWrite(AgentContract $agent)
 	{
+
+		$this->filter(['name']);
+
 		if ($agent instanceof UserAgentContract) {
-			return $this;
+			// ..
         }
 
         if ($agent instanceof GuestAgentContract) {
-            return $this;
+            // ..
         }
 
         if ($agent instanceof SystemAgentContract) {
-            return $this;
+            // ..
         }
+
+		return $this;
 	}
 
 	/**
@@ -40,29 +70,23 @@ class $NAME$ParameterBag extends ParameterBag
 	 *
 	 * @return $this
 	 */
-	public function filterSearchableByAgent(AgentContract $agent)
+	public function filterRead(AgentContract $agent)
 	{
+		$this->filter(['id', 'name', 'created_at', 'updated_at']);
+
 		if ($agent instanceof UserAgentContract) {
-			return $this;
+			// ..
         }
 
         if ($agent instanceof GuestAgentContract) {
-            return $this;
+            // ..
         }
 
         if ($agent instanceof SystemAgentContract) {
-            return $this;
+            // ..
         }
-	}
 
-	/**
-	 * Filter current bag to fill model
-	 *
-	 * @return $this
-	 */
-	public function filterFill()
-	{
-		return $this->only(['name']);
+		return $this;
 	}
 
 }
