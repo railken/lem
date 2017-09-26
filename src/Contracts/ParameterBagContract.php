@@ -34,5 +34,4 @@ interface ParameterBagContract
      * @return this
      */
     public function filterRead(AgentContract $agent);
-
 }
