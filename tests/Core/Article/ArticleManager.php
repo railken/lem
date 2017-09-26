@@ -5,7 +5,7 @@ namespace Railken\Laravel\Manager\Tests\Core\Article;
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\ModelManager;
 use Railken\Laravel\Manager\Contracts\AgentContract;
-use Railken\Laravel\Manager\ParameterBag;
+use Railken\Laravel\Manager\Contracts\ParameterBagContract;
 use Railken\Laravel\Manager\Tests\User\UserManager;
 
 class ArticleManager extends ModelManager
@@ -32,13 +32,12 @@ class ArticleManager extends ModelManager
      * Fill the entity
      *
      * @param EntityContract $entity
-     * @param ArticleParameterBag|array $parameters
+     * @param ParameterBagContract $parameters
      *
      * @return EntityContract
     */
-    public function fill(EntityContract $entity, $parameters)
+    public function fill(EntityContract $entity, ParameterBagContract $parameters)
     {
-        $parameters = $this->castParameters($parameters);
         $parameters->exists('author') && $entity->author()->associate($parameters->get('author'));
 
         return parent::fill($entity, $parameters);

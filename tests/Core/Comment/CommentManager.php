@@ -5,7 +5,7 @@ namespace Railken\Laravel\Manager\Tests\Core\Comment;
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\ModelManager;
 use Railken\Laravel\Manager\Contracts\AgentContract;
-use Railken\Laravel\Manager\ParameterBag;
+use Railken\Laravel\Manager\Contracts\ParameterBagContract;
 use Railken\Laravel\Manager\Tests\User\UserManager;
 use Railken\Laravel\Manager\Tests\Core\Article\ArticleManager;
 
@@ -34,13 +34,12 @@ class CommentManager extends ModelManager
      * Fill the entity
      *
      * @param EntityContract $entity
-     * @param ParameterBag|array $parameters
+     * @param ParameterBagContract $parameters
      *
      * @return EntityContract
     */
-    public function fill(EntityContract $entity, $parameters)
+    public function fill(EntityContract $entity, ParameterBagContract $parameters)
     {
-        $parameters = $this->castParameters($parameters);
         $parameters->exists('author') && $entity->author()->associate($parameters->get('author'));
         $parameters->exists('article') && $entity->article()->associate($parameters->get('article'));
 

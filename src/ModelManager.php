@@ -5,6 +5,7 @@ namespace Railken\Laravel\Manager;
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\Contracts\AgentContract;
 use Railken\Laravel\Manager\Contracts\ManagerContract;
+use Railken\Laravel\Manager\Contracts\ParameterBagContract;
 use Railken\Laravel\Manager\Agents\SystemAgent;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -286,7 +287,7 @@ abstract class ModelManager implements ManagerContract
      *
      * @return void
      */
-    public function fill(EntityContract $entity, $parameters)
+    public function fill(EntityContract $entity, ParameterBagContract $parameters)
     {
         $parameters = $this->castParameters($parameters);
         $entity->fill($parameters->all());
