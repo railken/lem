@@ -50,4 +50,23 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
         UserManager::repository(stdClass::class);
         new UserManager();
     }
+
+
+    /**
+     * @expectedException Railken\Laravel\Manager\Exceptions\ModelMissingValidatorException
+     */
+    public function testModelMissingValidatorExceptionNull()
+    {
+        UserManager::validator(null);
+        new UserManager();
+    }
+
+    /**
+     * @expectedException Railken\Laravel\Manager\Exceptions\ModelMissingValidatorException
+     */
+    public function testModelMissingValidatorExceptionNotValid()
+    {
+        UserManager::validator(stdClass::class);
+        new UserManager();
+    }
 }
