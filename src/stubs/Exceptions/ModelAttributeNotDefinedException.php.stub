@@ -2,7 +2,7 @@
 
 namespace $NAMESPACE$\Exceptions;
 
-class $NAME$NameNotValidException extends $NAME$AttributeException
+class $NAME$$ATTRIBUTE:FUP$NotDefinedException extends $NAME$AttributeException
 {
 
 	/**
@@ -10,20 +10,20 @@ class $NAME$NameNotValidException extends $NAME$AttributeException
 	 *
 	 * @var string
 	 */
-	protected $attribute = 'name';
+	protected $attribute = '$ATTRIBUTE:LOW$';
 
 	/**
 	 * The code to identify the error
 	 *
 	 * @var string
 	 */
-	protected $code = '$UP:NAME$_NAME_NOT_VALID';
+	protected $code = '$UP:NAME$_$ATTRIBUTE:UP$_NOT_DEFINED';
 
 	/**
 	 * The message
 	 *
 	 * @var string
 	 */
-	protected $message = "The %s is not valid";
+	protected $message = "The %s is required";
 
 }

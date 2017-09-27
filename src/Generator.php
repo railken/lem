@@ -27,7 +27,7 @@ class Generator
     {
         $namespaces = collect(explode("\\", $namespace));
         $name = $namespaces->last();
-        $path = $path."/".$name;
+        $base_path = $path."/".$name;
 
         $vars = [
             'NAMESPACE' => $namespace,
@@ -36,7 +36,7 @@ class Generator
             'UP:NAME' => strtoupper($name),
         ];
 
-        $this->base_path = $path;
+        $this->base_path = $base_path;
 
         $this->put("/Model.php.stub", "/{$name}.php", $vars);
         $this->put("/ModelManager.php.stub", "/{$name}Manager.php", $vars);
@@ -52,8 +52,39 @@ class Generator
         $this->put("/Exceptions/ModelNotFoundException.php.stub", "/Exceptions/{$name}NotFoundException.php", $vars);
         $this->put("/Exceptions/ModelNotAuthorizedException.php.stub", "/Exceptions/{$name}NotAuthorizedException.php", $vars);
         $this->put("/Exceptions/ModelAttributeException.php.stub", "/Exceptions/{$name}AttributeException.php", $vars);
-        $this->put("/Exceptions/ModelNameNotDefinedException.php.stub", "/Exceptions/{$name}NameNotDefinedException.php", $vars);
-        $this->put("/Exceptions/ModelNameNotValidException.php.stub", "/Exceptions/{$name}NameNotValidException.php", $vars);
+
+        $this->generateAttribute($path, $namespace, 'name');
+    }
+
+    /**
+     * Generate a new ModelStructure folder
+     *
+     * @param string $path
+     * @param string $namespace
+     * @param string $attribute
+     *
+     * @return void
+     */
+    public function generateAttribute($path, $namespace, $attribute)
+    {
+        $namespaces = collect(explode("\\", $namespace));
+        $name = $namespaces->last();
+        $base_path = $path."/".$name;
+
+        $vars = [
+            'NAMESPACE' => $namespace,
+            'NAME' => $name,
+            'LOW:NAME' => strtolower($name),
+            'UP:NAME' => strtoupper($name),
+            'ATTRIBUTE:LOW' => strtolower($attribute),
+            'ATTRIBUTE:FUP' => ucfirst($attribute),
+            'ATTRIBUTE:UP' => strtoupper($attribute)
+        ];
+
+        $this->base_path = $base_path;
+
+        $this->put("/Exceptions/ModelAttributeNotDefinedException.php.stub", "/Exceptions/{$name}".ucfirst($attribute)."NotDefinedException.php", $vars);
+        $this->put("/Exceptions/ModelAttributeNotValidException.php.stub", "/Exceptions/{$name}".ucfirst($attribute)."NotValidException.php", $vars);
     }
 
     /**
