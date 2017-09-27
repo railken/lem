@@ -3,7 +3,6 @@
 namespace Railken\Laravel\Manager\Contracts;
 
 use Railken\Laravel\Manager\Contracts\AgentContract;
-use Railken\Laravel\Manager\Contracts\ManagerContract;
 
 interface ParameterBagContract
 {
@@ -12,7 +11,7 @@ interface ParameterBagContract
      *
      * @param AgentContract $agent
      *
-     * @return this
+     * @return $this
      */
     public function filterWrite(AgentContract $agent);
 
@@ -21,7 +20,7 @@ interface ParameterBagContract
      *
      * @param AgentContract $agent
      *
-     * @return this
+     * @return $this
      */
     public function filterRead(AgentContract $agent);
 }
