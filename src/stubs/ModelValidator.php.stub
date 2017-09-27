@@ -12,28 +12,4 @@ use Railken\Laravel\Manager\ModelValidator;
 
 class $NAME$Validator extends ModelValidator
 {
-
-	/**
-	 * Validate "name"
-	 *
-	 * @param EntityContract $entity
-	 * @param ParameterBag $parameters
-	 *
-	 * @return Collection
-	 */
-	public function validateName(EntityContract $entity, ParameterBag $parameters)
-	{
-		$errors = new Collection();
-
-		!$entity->exists && !$parameters->exists('name') &&
-			$errors->push(new Exceptions\$NAME$NameNotDefinedException($parameters->get('name')));
-
-		$parameters->exists('name') &&
-			!v::length(2,255)->validate($parameters->get('name')) &&
-			$errors->push(new Exceptions\$NAME$NameNotValidException($parameters->get('name')));
-
-		return $errors;
-	}
-
-
 }

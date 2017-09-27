@@ -65,18 +65,18 @@ class GeneratedTest extends \Orchestra\Testbench\TestCase
      */
     public function testGenerate()
     {
-        $generator = new Generator();
-        $generator->generate(__DIR__."/Generated", "Railken\Laravel\Manager\Tests\Generated\Foo");
-        $generator->generateAttribute(__DIR__."/Generated", "Railken\Laravel\Manager\Tests\Generated\Foo", "content");
+        if (!File::exists(__DIR__."/Generated/Foo")) {
+            $generator = new Generator();
+            $generator->generate(__DIR__."/Generated", "Railken\Laravel\Manager\Tests\Generated\Foo");
+        }
 
         $this->assertEquals(true, File::exists(__DIR__."/Generated/Foo"));
-
         (new FooServiceProvider($this->app))->register();
 
         $m = new FooManager();
 
         $bag = new FooParameterBag(['name' => 'a']);
-        $this->assertEquals("FOO_NAME_NOT_VALID", $m->create($bag->set('name', '2'))->getError()->getCode());
+        $this->assertEquals("FOO_NAME_NOT_VALID", $m->create($bag->set('name', ''))->getError()->getCode());
         $this->assertEquals(false, $m->create($bag->set('name', null))->ok());
 
         $foo = $m->create($bag->set('name', 'baar'))->getResource();

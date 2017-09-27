@@ -38,6 +38,8 @@ class ModelValidator implements ModelValidatorContract
         $errors = new Collection();
 
         $methods = new Collection(get_class_methods($this));
+
+
         $methods->filter(function ($method) {
             return substr($method, 0, strlen('validate')) === 'validate' && $method !== 'validate';
         })->map(function ($method) use (&$errors, $entity, $parameters) {

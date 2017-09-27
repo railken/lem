@@ -3,6 +3,7 @@
 namespace Railken\Laravel\Manager;
 
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Collection;
 
 class Generator
 {
@@ -71,13 +72,15 @@ class Generator
         $name = $namespaces->last();
         $base_path = $path."/".$name;
 
+        $attribute_ucf = ucfirst($attribute);
+
         $vars = [
             'NAMESPACE' => $namespace,
             'NAME' => $name,
             'LOW:NAME' => strtolower($name),
             'UP:NAME' => strtoupper($name),
             'ATTRIBUTE:LOW' => strtolower($attribute),
-            'ATTRIBUTE:FUP' => ucfirst($attribute),
+            'ATTRIBUTE:FUP' => $attribute_ucf,
             'ATTRIBUTE:UP' => strtoupper($attribute)
         ];
 
@@ -85,6 +88,23 @@ class Generator
 
         $this->put("/Exceptions/ModelAttributeNotDefinedException.php.stub", "/Exceptions/{$name}".ucfirst($attribute)."NotDefinedException.php", $vars);
         $this->put("/Exceptions/ModelAttributeNotValidException.php.stub", "/Exceptions/{$name}".ucfirst($attribute)."NotValidException.php", $vars);
+        // Updating validator.
+
+        // Retrieve class validator
+        $c = "\\{$namespace}\\{$name}Validator";
+        if (!in_array("validate{$attribute_ucf}", get_class_methods($c))) {
+
+            // We are free to add code
+
+            $class_content = file_get_contents("$base_path/{$name}Validator.php");
+            $content = $this->parse($vars, File::get(__DIR__."/stubs/ModelValidator_Attribute.php.stub"));
+
+            $p = explode("}", $class_content);
+            array_pop($p);
+            $class_content = implode("}", $p);
+            $class_content .= "\n{$content}\n}";
+            file_put_contents("$base_path/{$name}Validator.php", $class_content);
+        }
     }
 
     /**
@@ -107,11 +127,18 @@ class Generator
 
         !File::exists($to_dir) && File::makeDirectory($to_dir, 0775, true);
 
-        foreach ($data as $n => $k) {
-            $content = str_replace("$".$n."$", $k, $content);
-        }
+        $content = $this->parse($data, $content);
 
 
         File::put($to, $content);
+    }
+
+    public function parse($vars, $content)
+    {
+        foreach ($vars as $n => $k) {
+            $content = str_replace("$".$n."$", $k, $content);
+        }
+
+        return $content;
     }
 }

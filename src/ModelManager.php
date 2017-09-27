@@ -70,6 +70,18 @@ abstract class ModelManager implements ManagerContract
     }
 
     /**
+     * Get components
+     *
+     * @param string $key
+     *
+     * @return string
+     */
+    public static function getComponent($key)
+    {
+        return static::$__components[static::class][$key];
+    }
+
+    /**
      * Convert array to ParameterBag
      *
      * @param mixed $parameters

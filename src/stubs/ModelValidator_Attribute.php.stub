@@ -1,0 +1,23 @@
+
+    /**
+     * Validate $ATTRIBUTE:LOW$
+     *
+     * @param EntityContract $entity
+     * @param ParameterBag $parameters
+     *
+     * @return Collection
+     */
+    public function validate$ATTRIBUTE:FUP$(EntityContract $entity, ParameterBag $parameters)
+    {
+        $errors = new Collection();
+
+        !$entity->exists && !$parameters->exists('$ATTRIBUTE:LOW$') &&
+            $errors->push(new Exceptions\$NAME$$ATTRIBUTE:FUP$NotDefinedException($parameters->get('$ATTRIBUTE:LOW$')));
+
+        $parameters->exists('$ATTRIBUTE:LOW$') &&
+            !(v::length(1,255)->validate($parameters->get('$ATTRIBUTE:LOW$'))) &&
+            $errors->push(new Exceptions\$NAME$$ATTRIBUTE:FUP$NotValidException($parameters->get('$ATTRIBUTE:LOW$')));
+
+
+        return $errors;
+    }
