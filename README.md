@@ -1,11 +1,10 @@
-# Laravel Manager
+# Laravel Model Manager
 
-Organize your project with a defined structure to handle Models in laravel:
-manipulate, validate, authorize, serialize, etc...
+A precise way to structure your model in sub parts and improve readability and maintainability of your code.
 
 ## Requirements
 
-PHP 7.0.0 or later.
+PHP 7.0.0 and later.
 
 ## Composer
 
@@ -25,10 +24,18 @@ Railken\Laravel\Manager\ManagerServiceProvider::class,
 
 ## Usage
 
-A simple usage looks like this:
+First you need to generate a new structure folder, use:
+
+`php artisan railken:make:manager app App\Foo`.
+
+Add `App\Foo\FooServiceProvider::class` in config/app.php.
+
+Now you can used it.
 ```php
+use App\Foo\FooManager;
+
 $manager = new FooManager();
-$result = $manager->create($manager->parameters(['name' => 'foo']));
+$result = $manager->create(['name' => 'foo']);
 
 if ($result->ok()) {
     $foo = $result->getResource();
@@ -41,7 +48,7 @@ if ($result->ok()) {
 How can you get an Error during an operation? An error occurs when a validation or authorization fails. The cool thing about it is that you have the total control during each process: using with [ModelValidator](#modelvalidator) and [ModelAuthorizer](#modelauthorizer). When you're retrieving errors you're receiving a Collection, it goes pretty well when you're developing an api. Here's an example
 ```php
 $manager = new FooManager();
-$result = $manager->create($manager->parameters(['name' => 'f']));
+$result = $manager->create(['name' => 'f'));
 
 print_r($result->getErrors()->toArray());
 /*
@@ -65,76 +72,77 @@ Array
     )
 */
 ```
-So, what about the authorization part? You need first setup the agent.
+So, what about the authorization part? You need first setup the agent. There are 3 types of agents:
+- SytemAgent: The system (e.g. console)
+- UserAgent: A user is authenticated
+- GuestAgent: No one is authenticated
 
+Note: if you don't set any agent, the SystemAgent will be used.
 
-See [ModelAuthorizer](#modelauthorizer) and [ModelPolicy](#modelpolicy) for more explanations.
 ```php
+use Railken\Laravel\Manager\Agents\SystemAgent;
+
+$agent = new SystemAgent();
 $manager = new FooManager();
 $manager->setAgent($agent);
-$result = $manager->create($manager->parameters(['name' => 'f']));
+
+$result = $manager->create(['name' => 'f']);
 if ($result->isAuthorized()) {
   ...
 } else {
   ...
 }
 ```
+
+
+If you want to use the User Model as an agent add a Contract
+
+```php
+use Railken\Laravel\Manager\Contracts\UserAgentContract;
+
+class User implements UserAgentContract
+{
+    ...
+}
+
+```
+
+See [ModelAuthorizer](#modelauthorizer) and [ModelPolicy](#modelpolicy) for more explanations.
 ### Commands
 
 - Generate a new set of files `php artisan railken:make:manager [path] [namespace]`.
 
 ### ModelManager
-This is the main class, all the operations are performed using this: create, update, retrieve, remove
+This is the main class, all the operations are performed using this: creating, updating, deleting, retrieving. This class is composed of components which are: validator, repository, authorizer, parameters, serializer
 
 See [ModelManager](https://github.com/railken/laravel-manager/blob/master/src/ModelManager.php).
 ```php
-namespace Core\Foo;
+namespace App\Foo;
 
-use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\ModelManager;
 use Railken\Laravel\Manager\Contracts\AgentContract;
-use Railken\Laravel\Manager\ParameterBag;
-
-use Railken\Laravel\Manager\Tests\Generated\Foo\Foo;
 
 class FooManager extends ModelManager
 {
 
     /**
      * Construct
+     *
+     * @param AgentContract|null $agent
      */
     public function __construct(AgentContract $agent = null)
     {
-        $this->repository = new FooRepository($this);
-        $this->authorizer = new FooAuthorizer($this);
-        $this->validator = new FooValidator($this);
-        $this->serializer = new FooSerializer($this);
-
         parent::__construct($agent);
     }
-
-    /**
-     * Fill the entity
-     *
-     * @param EntityContract $entity
-     * @param FooParameterBag $parameters
-     *
-     * @return EntityContract
-     */
-    public function fill(EntityContract $entity, ParameterBag $parameters)
-    {
-        $parameters = $parameters->only(['name']);
-
-        return parent::fill($entity, $parameters);
-    }
 }
+
 ```
 
 ### Model
 This is the Eloquent Model, nothing changes, excepts for an interface
 
 ```php
-namespace Core\Foo;
+namespace App\Foo;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -174,7 +182,7 @@ This is a Repository, the concept is very similar to the Repository of Symfony, 
 See [ModelRepository](https://github.com/railken/laravel-manager/blob/master/src/ModelRepository.php) for more information.
 
 ```php
-namespace Core\Foo;
+namespace App\Foo;
 
 use Railken\Laravel\Manager\ModelRepository;
 
@@ -205,57 +213,94 @@ class FooRepository extends ModelRepository
 ```
 
 ### ModelParameterBag
-This is a [Bag](https://github.com/railken/bag). This will contain all methods
-to filter attributes of a Model
+This is a [Bag](https://github.com/railken/bag). This will contain all methods to filter attributes of a Model.
+Use filterWrite to filter the bag before crearting/updating.
+Use filterRead to filter the bag before retrieving.
+See an [example](https://github.com/railken/laravel-manager/blob/master/tests/Core/Comment/CommentParameterBag.php)
 
 ```php
-namespace Core\Foo;
+namespace App\Foo;
 
 use Railken\Laravel\Manager\Contracts\AgentContract;
+use Railken\Laravel\Manager\Contracts\ManagerContract;
+use Railken\Laravel\Manager\Contracts\SystemAgentContract;
+use Railken\Laravel\Manager\Contracts\GuestAgentContract;
+use Railken\Laravel\Manager\Contracts\UserAgentContract;
 use Railken\Laravel\Manager\ParameterBag;
 
 class FooParameterBag extends ParameterBag
 {
 
-    /**
-     * Filter current bag using agent
-     *
-     * @param AgentContract $agent
-     *
-     * @return this
-     */
-    public function filterByAgent(AgentContract $agent)
-    {  
-        return $this;
-    }
+	/**
+	 * Filter current bag using agent
+	 *
+	 * @param AgentContract $agent
+	 *
+	 * @return $this
+	 */
+	public function filterWrite(AgentContract $agent)
+	{
 
-    /**
-     * Filter current bag using agent for a search
-     *
-     * @param AgentContract $agent
-     *
-     * @return this
-     */
-    public function filterSearchableByAgent(AgentContract $agent)
-    {  
-        return $this;
-    }
+		$this->filter(['name']);
+
+		if ($agent instanceof UserAgentContract) {
+			// ..
+        }
+
+        if ($agent instanceof GuestAgentContract) {
+            // ..
+        }
+
+        if ($agent instanceof SystemAgentContract) {
+            // ..
+        }
+
+		return $this;
+	}
+
+	/**
+	 * Filter current bag using agent for a search
+	 *
+	 * @param AgentContract $agent
+	 *
+	 * @return $this
+	 */
+	public function filterRead(AgentContract $agent)
+	{
+		$this->filter(['id', 'name', 'created_at', 'updated_at']);
+
+		if ($agent instanceof UserAgentContract) {
+			// ..
+        }
+
+        if ($agent instanceof GuestAgentContract) {
+            // ..
+        }
+
+        if ($agent instanceof SystemAgentContract) {
+            // ..
+        }
+
+		return $this;
+	}
+
 }
+
 ```
 
 ### ModelValidator
-Here comes the validator, and again it's very simple. validate() is called whenever an create/update are called.
-Remember: always return the collection of errors.
+Here comes the validator, and again it's very simple. validate() is called whenever a create/update operation is called.
+Remember: always return the collection of errors. You can of course add a specific library for validation and use it here.
 
 
 ```php
-namespace Core\Foo;
+namespace App\Foo;
 
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\Contracts\ModelValidatorContract;
 use Railken\Laravel\Manager\ParameterBag;
 use Illuminate\Support\Collection;
-use Core\Foo\Exceptions as Exceptions;
+use App\Foo\Exceptions as Exceptions;
 
 
 class FooValidator implements ModelValidatorContract
@@ -333,21 +378,25 @@ class FooValidator implements ModelValidatorContract
 
 ```
 ### ModelAuthorizer
-As you can see this class has only one method and what it does is a simple bridge between the [ModelManager](#modelmanager) and the [ModelPolicy](#modelpolicy). So all the "rules" for authorization are defined in the [ModelPolicy](#modelpolicy).
+As you can see this class has only one method, it does is a simple bridge between the [ModelManager](#modelmanager) and the [ModelPolicy](#modelpolicy). So all the "rules" for authorization are defined in the [ModelPolicy](#modelpolicy).
 
-You can leave this as is it, or change and used another method for authorization.
+You can leave this as is it, or change and used another system for authorization.
 
 ```php
-namespace Core\Foo;
+namespace App\Foo;
 
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\ParameterBag;
 use Railken\Laravel\Manager\Contracts\ModelAuthorizerContract;
+use Railken\Laravel\Manager\Contracts\SystemAgentContract;
+use Railken\Laravel\Manager\Contracts\GuestAgentContract;
+use Railken\Laravel\Manager\Contracts\UserAgentContract;
 use Illuminate\Support\Collection;
 use Railken\Laravel\Manager\Tests\Generated\Foo\Exceptions as Exceptions;
 
 class FooAuthorizer implements ModelAuthorizerContract
 {
+
 
     /**
      * Authorize
@@ -362,20 +411,37 @@ class FooAuthorizer implements ModelAuthorizerContract
     {
         $errors = new Collection();
 
-        !$this->manager->agent->can($operation, $entity) && $errors->push(new Exceptions\FooNotAuthorizedException($entity));
+		# SystemAgent can always do anything.
+		if ($this->manager->agent instanceof SystemAgentContract) {
+			return $errors;
+		}
 
-        return $errors;
+		# GuestAgent can always do anything.
+		if ($this->manager->agent instanceof GuestAgentContract) {
+			// ...
+		}
+
+		# GuestAgent can always do anything.
+		if ($this->manager->agent instanceof UserAgentContract) {
+			// ...
+			!$this->manager->agent->can($operation, $entity) && $errors->push(new Exceptions\FooNotAuthorizedException($entity));
+
+		}
+
+		return $errors;
     }
+
+
 
 }
 ```
 
 ### ModelPolicy
 This is the the same as in [laravel](https://laravel.com/docs/5.5/authorization#writing-policies).
-Remember to add the interface AgentContract to your User Model.
+Remember to add the interface AgentContract to your User Model
 
 ```php
-namespace Core\Foo;
+namespace App\Foo;
 
 use Railken\Laravel\Manager\Contracts\AgentContract;
 use Railken\Laravel\Manager\Contracts\ModelPolicyContract;
@@ -451,8 +517,9 @@ class FooPolicy implements ModelPolicyContract
 
 ### ModelSerializer
 This class will serialize your model
+
 ```php
-namespace Core\Foo;
+namespace App\Foo;
 
 use Railken\Laravel\Manager\Contracts\ModelSerializerContract;
 use Railken\Laravel\Manager\Contracts\EntityContract;
@@ -491,4 +558,37 @@ class FooSerializer implements ModelSerializerContract
 		return $bag;
 	}
 }
+```
+
+
+### ModelServiceProvider
+This class is very important, it will load all the components,
+Load this provider with all others in your config/app.php
+
+```php
+namespace App\Foo;
+
+use Gate;
+use Illuminate\Support\ServiceProvider;
+
+class FooServiceProvider extends ServiceProvider
+{
+    /**
+     * Register bindings in the container.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        Foo::observe(FooObserver::class);
+        Gate::policy(Foo::class, FooPolicy::class);
+
+        FooManager::repository(FooRepository::class);
+        FooManager::serializer(FooSerializer::class);
+        FooManager::parameters(FooParameterBag::class);
+        FooManager::validator(FooValidator::class);
+        FooManager::authorizer(FooAuthorizer::class);
+    }
+}
+
 ```
