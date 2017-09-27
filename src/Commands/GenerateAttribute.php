@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 
 use Railken\Laravel\Manager\Generator;
 
-class Generate extends Command
+class GenerateAttribute extends Command
 {
 
     /**
@@ -14,14 +14,14 @@ class Generate extends Command
      *
      * @var string
      */
-    protected $signature = 'railken:make:manager {path} {namespace}'; // e.g. "php artisan railken:make:manager src Core\User"
+    protected $signature = 'railken:generate:manager:attribute {path} {namespace} {attribute}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Generate all basics files';
+    protected $description = 'Generate attribute for model';
 
     /**
      * Create a new command instance.
@@ -41,7 +41,13 @@ class Generate extends Command
     public function handle()
     {
         $generator = new Generator();
-        $generator->generate(base_path($this->argument('path')), $this->argument('namespace'));
-        $this->info("{$this->argument('namespace')} generated.");
+        $generator->generate(base_path($this->argument('path')), $this->argument('namespace'), $this->argument('attribute'));
+        $this->info("{$this->argument('namespace')} generated. There are still changes to do:\n
+            - Update your schema\n
+            - Update fillable in Model\n
+            - Update filter() in ParameterBag\n
+            - Update Serializer\n
+            - Update Validator
+        ");
     }
 }

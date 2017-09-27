@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Railken\Laravel\Manager;
 
@@ -30,7 +30,7 @@ class ManagerServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->commands([Commands\Generate::class]);
+        $this->commands([Commands\Generate::class, Commands\GenerateAttribute::class]);
 
         $v = explode(".", $this->app->version());
 
