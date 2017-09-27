@@ -5,7 +5,6 @@ namespace Railken\Laravel\Manager;
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\Contracts\AgentContract;
 use Railken\Laravel\Manager\Contracts\ManagerContract;
-use Railken\Laravel\Manager\Contracts\ParameterBagContract;
 use Railken\Laravel\Manager\Agents\SystemAgent;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -14,6 +13,7 @@ use Railken\Laravel\Manager\Exceptions as Exceptions;
 use Railken\Laravel\Manager\Contracts\ModelRepositoryContract;
 use Railken\Laravel\Manager\Contracts\ModelAuthorizerContract;
 use Railken\Laravel\Manager\Contracts\ModelValidatorContract;
+use Railken\Laravel\Manager\Contracts\ParameterBagContract;
 
 abstract class ModelManager implements ManagerContract
 {
@@ -47,7 +47,7 @@ abstract class ModelManager implements ManagerContract
             throw new Exceptions\ModelMissingSerializerException($this);
         }
 
-        if (!isset($this->parameters)) {
+        if (!isset($this->parameters) || !$this->parameters instanceof ParameterBagContract) {
             throw new Exceptions\ModelMissingParametersException($this);
         }
 
