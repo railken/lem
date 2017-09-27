@@ -75,9 +75,9 @@ class GeneratedTest extends \Orchestra\Testbench\TestCase
 
         $bag = new FooParameterBag(['name' => 'a']);
         $this->assertEquals("FOO_NAME_NOT_VALID", $m->create($bag->set('name', '2'))->getError()->getCode());
-        $this->assertEquals(true, $m->create($bag->set('name', null))->ok());
+        $this->assertEquals(false, $m->create($bag->set('name', null))->ok());
 
-        $foo = $m->create($bag->set('name', null))->getResource();
+        $foo = $m->create($bag->set('name', 'baar'))->getResource();
         $m->update($foo, $bag->set('name', 'fee'))->getResource();
 
         $foo_s = $m->findOneBy(['name' => 'fee']);
