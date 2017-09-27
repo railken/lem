@@ -13,6 +13,7 @@ use Exception;
 use Railken\Laravel\Manager\Exceptions as Exceptions;
 use Railken\Laravel\Manager\Contracts\ModelRepositoryContract;
 use Railken\Laravel\Manager\Contracts\ModelAuthorizerContract;
+use Railken\Laravel\Manager\Contracts\ModelValidatorContract;
 
 abstract class ModelManager implements ManagerContract
 {
@@ -38,7 +39,7 @@ abstract class ModelManager implements ManagerContract
             throw new Exceptions\ModelMissingAuthorizerException($this);
         }
 
-        if (!isset($this->validator)) {
+        if (!isset($this->validator) || !$this->validator instanceof ModelValidatorContract) {
             throw new Exceptions\ModelMissingValidatorException($this);
         }
 
