@@ -51,7 +51,6 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
         new UserManager();
     }
 
-
     /**
      * @expectedException Railken\Laravel\Manager\Exceptions\ModelMissingValidatorException
      */
@@ -67,6 +66,24 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
     public function testModelMissingValidatorExceptionNotValid()
     {
         UserManager::validator(stdClass::class);
+        new UserManager();
+    }
+
+    /**
+     * @expectedException Railken\Laravel\Manager\Exceptions\ModelMissingParametersException
+     */
+    public function testModelMissingParametersExceptionNull()
+    {
+        UserManager::parameters(null);
+        new UserManager();
+    }
+
+    /**
+     * @expectedException Railken\Laravel\Manager\Exceptions\ModelMissingParametersException
+     */
+    public function testModelMissingParametersExceptionNotValid()
+    {
+        UserManager::parameters(stdClass::class);
         new UserManager();
     }
 }
