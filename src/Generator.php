@@ -39,7 +39,6 @@ class Generator
 
         $this->base_path = $base_path;
 
-
         $this->put("/Model.php.stub", "/{$name}.php", $vars);
         $this->put("/ModelManager.php.stub", "/{$name}Manager.php", $vars);
         $this->put("/ModelRepository.php.stub", "/{$name}Repository.php", $vars);
@@ -93,7 +92,7 @@ class Generator
 
         // Retrieve class validator
         $c = "\\{$namespace}\\{$name}Validator";
-        if (!empty($c) && is_array($c) && !in_array("validate{$attribute_ucf}", get_class_methods($c))) {
+        if (class_exists($c) && !in_array("validate{$attribute_ucf}", get_class_methods($c))) {
 
             // We are free to add code
 

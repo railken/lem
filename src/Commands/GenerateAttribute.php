@@ -41,7 +41,7 @@ class GenerateAttribute extends Command
     public function handle()
     {
         $generator = new Generator();
-        $generator->generate(base_path($this->argument('path')), $this->argument('namespace'), $this->argument('attribute'));
+        $generator->generateAttribute(base_path($this->argument('path')), $this->argument('namespace'), $this->argument('attribute'));
         $this->info("{$this->argument('namespace')} generated. There are still changes to do:\n
             - Update your schema\n
             - Update fillable in Model\n
