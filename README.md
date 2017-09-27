@@ -30,7 +30,7 @@ First you need to generate a new structure folder, use:
 
 Add `App\Foo\FooServiceProvider::class` in config/app.php.
 
-Now you can used it.
+Now you can use it.
 ```php
 use App\Foo\FooManager;
 
@@ -40,12 +40,12 @@ $result = $manager->create(['name' => 'foo']);
 if ($result->ok()) {
     $foo = $result->getResource();
 } else {
-    $result->getErrors(); // All errors goes here.
+    $result->getErrors(); // All errors go here.
 }
 
 ```
 
-How can you get an Error during an operation? An error occurs when a validation or authorization fails. The cool thing about it is that you have the total control during each process: using with [ModelValidator](#modelvalidator) and [ModelAuthorizer](#modelauthorizer). When you're retrieving errors you're receiving a Collection, it goes pretty well when you're developing an api. Here's an example
+How can you get an Error during an operation? An error occurs when a validation or authorization fails. The cool thing about it is that you have the total control during each process: using [ModelValidator](#modelvalidator) and [ModelAuthorizer](#modelauthorizer). When you're retrieving errors you're receiving a Collection, it goes pretty well when you're developing an api. Here's an example
 ```php
 $manager = new FooManager();
 $result = $manager->create(['name' => 'f'));
