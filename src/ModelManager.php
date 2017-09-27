@@ -11,6 +11,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Exception;
 use Railken\Laravel\Manager\Exceptions as Exceptions;
+use Railken\Laravel\Manager\Contracts\ModelRepositoryContract;
 use Railken\Laravel\Manager\Contracts\ModelAuthorizerContract;
 
 abstract class ModelManager implements ManagerContract
@@ -49,7 +50,7 @@ abstract class ModelManager implements ManagerContract
             throw new Exceptions\ModelMissingParametersException($this);
         }
 
-        if (!isset($this->repository)) {
+        if (!isset($this->repository) || !$this->repository instanceof ModelRepositoryContract) {
             throw new Exceptions\ModelMissingRepositoryException($this);
         }
     }
