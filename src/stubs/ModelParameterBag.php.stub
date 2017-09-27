@@ -26,15 +26,15 @@ class $NAME$ParameterBag extends ParameterBag
 
 		if ($agent instanceof UserAgentContract) {
 			// ..
-        }
+		}
 
-        if ($agent instanceof GuestAgentContract) {
-            // ..
-        }
+		if ($agent instanceof GuestAgentContract) {
+		    // ..
+		}
 
-        if ($agent instanceof SystemAgentContract) {
-            // ..
-        }
+		if ($agent instanceof SystemAgentContract) {
+		    // ..
+		}
 
 		return $this;
 	}
@@ -52,15 +52,15 @@ class $NAME$ParameterBag extends ParameterBag
 
 		if ($agent instanceof UserAgentContract) {
 			// ..
-        }
+		}
 
-        if ($agent instanceof GuestAgentContract) {
-            // ..
-        }
+		if ($agent instanceof GuestAgentContract) {
+			// ..
+		}
 
-        if ($agent instanceof SystemAgentContract) {
-            // ..
-        }
+		if ($agent instanceof SystemAgentContract) {
+			// ..
+		}
 
 		return $this;
 	}

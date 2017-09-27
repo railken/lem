@@ -38,22 +38,22 @@ class Generator
 
         $this->base_path = $path;
 
-        $this->put("/Model.php", "/{$name}.php", $vars);
-        $this->put("/ModelManager.php", "/{$name}Manager.php", $vars);
-        $this->put("/ModelRepository.php", "/{$name}Repository.php", $vars);
-        $this->put("/ModelValidator.php", "/{$name}Validator.php", $vars);
-        $this->put("/ModelObserver.php", "/{$name}Observer.php", $vars);
-        $this->put("/ModelAuthorizer.php", "/{$name}Authorizer.php", $vars);
-        $this->put("/ModelSerializer.php", "/{$name}Serializer.php", $vars);
-        $this->put("/ModelParameterBag.php", "/{$name}ParameterBag.php", $vars);
-        $this->put("/ModelPolicy.php", "/{$name}Policy.php", $vars);
-        $this->put("/ModelServiceProvider.php", "/{$name}ServiceProvider.php", $vars);
-        $this->put("/Exceptions/ModelException.php", "/Exceptions/{$name}Exception.php", $vars);
-        $this->put("/Exceptions/ModelNotFoundException.php", "/Exceptions/{$name}NotFoundException.php", $vars);
-        $this->put("/Exceptions/ModelNotAuthorizedException.php", "/Exceptions/{$name}NotAuthorizedException.php", $vars);
-        $this->put("/Exceptions/ModelAttributeException.php", "/Exceptions/{$name}AttributeException.php", $vars);
-        $this->put("/Exceptions/ModelNameNotDefinedException.php", "/Exceptions/{$name}NameNotDefinedException.php", $vars);
-        $this->put("/Exceptions/ModelNameNotValidException.php", "/Exceptions/{$name}NameNotValidException.php", $vars);
+        $this->put("/Model.php.stub", "/{$name}.php", $vars);
+        $this->put("/ModelManager.php.stub", "/{$name}Manager.php", $vars);
+        $this->put("/ModelRepository.php.stub", "/{$name}Repository.php", $vars);
+        $this->put("/ModelValidator.php.stub", "/{$name}Validator.php", $vars);
+        $this->put("/ModelObserver.php.stub", "/{$name}Observer.php", $vars);
+        $this->put("/ModelAuthorizer.php.stub", "/{$name}Authorizer.php", $vars);
+        $this->put("/ModelSerializer.php.stub", "/{$name}Serializer.php", $vars);
+        $this->put("/ModelParameterBag.php.stub", "/{$name}ParameterBag.php", $vars);
+        $this->put("/ModelPolicy.php.stub", "/{$name}Policy.php", $vars);
+        $this->put("/ModelServiceProvider.php.stub", "/{$name}ServiceProvider.php", $vars);
+        $this->put("/Exceptions/ModelException.php.stub", "/Exceptions/{$name}Exception.php", $vars);
+        $this->put("/Exceptions/ModelNotFoundException.php.stub", "/Exceptions/{$name}NotFoundException.php", $vars);
+        $this->put("/Exceptions/ModelNotAuthorizedException.php.stub", "/Exceptions/{$name}NotAuthorizedException.php", $vars);
+        $this->put("/Exceptions/ModelAttributeException.php.stub", "/Exceptions/{$name}AttributeException.php", $vars);
+        $this->put("/Exceptions/ModelNameNotDefinedException.php.stub", "/Exceptions/{$name}NameNotDefinedException.php", $vars);
+        $this->put("/Exceptions/ModelNameNotValidException.php.stub", "/Exceptions/{$name}NameNotValidException.php", $vars);
     }
 
     /**
