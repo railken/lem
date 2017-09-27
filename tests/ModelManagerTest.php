@@ -32,4 +32,22 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
         UserManager::authorizer(stdClass::class);
         new UserManager();
     }
+
+    /**
+     * @expectedException Railken\Laravel\Manager\Exceptions\ModelMissingRepositoryException
+     */
+    public function testModelMissingRepositoryExceptionNull()
+    {
+        UserManager::repository(null);
+        new UserManager();
+    }
+
+    /**
+     * @expectedException Railken\Laravel\Manager\Exceptions\ModelMissingRepositoryException
+     */
+    public function testModelMissingRepositoryExceptionNotValid()
+    {
+        UserManager::repository(stdClass::class);
+        new UserManager();
+    }
 }
