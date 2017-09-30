@@ -2,7 +2,7 @@
 
 namespace $NAMESPACE$\Exceptions;
 
-class $NAMENotFoundException extends $NAME$Exception
+class $NAME$NotFoundException extends $NAME$Exception
 {
 
 	/**
