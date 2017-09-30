@@ -1,21 +1,21 @@
     /**
-     * Validate $ATTRIBUTE:LOW$
+     * Validate $ATTRIBUTE:UNDERSCORE$
      *
      * @param EntityContract $entity
      * @param ParameterBag $parameters
      *
      * @return Collection
      */
-    public function validate$ATTRIBUTE:FUP$(EntityContract $entity, ParameterBag $parameters)
+    public function validate$ATTRIBUTE:CAMELIZED$(EntityContract $entity, ParameterBag $parameters)
     {
         $errors = new Collection();
 
-        !$entity->exists && !$parameters->exists('$ATTRIBUTE:LOW$') &&
-            $errors->push(new Exceptions\$NAME$$ATTRIBUTE:FUP$NotDefinedException($parameters->get('$ATTRIBUTE:LOW$')));
+        !$entity->exists && !$parameters->exists('$ATTRIBUTE:UNDERSCORE$') &&
+            $errors->push(new Exceptions\$NAME$$ATTRIBUTE:CAMELIZED$NotDefinedException($parameters->get('$ATTRIBUTE:UNDERSCORE$')));
 
-        $parameters->exists('$ATTRIBUTE:LOW$') &&
-            !(v::length(1,255)->validate($parameters->get('$ATTRIBUTE:LOW$'))) &&
-            $errors->push(new Exceptions\$NAME$$ATTRIBUTE:FUP$NotValidException($parameters->get('$ATTRIBUTE:LOW$')));
+        $parameters->exists('$ATTRIBUTE:UNDERSCORE$') &&
+            !(v::length(1,255)->validate($parameters->get('$ATTRIBUTE:UNDERSCORE$'))) &&
+            $errors->push(new Exceptions\$NAME$$ATTRIBUTE:CAMELIZED$NotValidException($parameters->get('$ATTRIBUTE:UNDERSCORE$')));
 
 
         return $errors;

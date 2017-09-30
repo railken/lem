@@ -12,7 +12,7 @@ class $NAME$NotAuthorizedException extends $NAME$Exception implements ModelNotAu
 	 *
 	 * @var string
 	 */
-	protected $code = '$UP:NAME$_NOT_AUTHORIZED';
+	protected $code = '$NAME:UPPERCASE$_NOT_AUTHORIZED';
 
 	/**
 	 * The message

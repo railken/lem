@@ -2,7 +2,7 @@
 
 namespace $NAMESPACE$\Exceptions;
 
-class $NAME$$ATTRIBUTE:FUP$NotValidException extends $NAME$AttributeException
+class $NAME$$ATTRIBUTE:CAMELIZED$NotValidException extends $NAME$AttributeException
 {
 
 	/**
@@ -10,14 +10,14 @@ class $NAME$$ATTRIBUTE:FUP$NotValidException extends $NAME$AttributeException
 	 *
 	 * @var string
 	 */
-	protected $attribute = '$ATTRIBUTE:LOW$';
+	protected $attribute = '$ATTRIBUTE:UNDERSCORE$';
 
 	/**
 	 * The code to identify the error
 	 *
 	 * @var string
 	 */
-	protected $code = '$UP:NAME$_$ATTRIBUTE:UP$_NOT_VALID';
+	protected $code = '$NAME:UPPERCASE$_$ATTRIBUTE:UPPERCASE$_NOT_VALID';
 
 	/**
 	 * The message

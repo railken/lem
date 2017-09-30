@@ -16,7 +16,7 @@ class $NAME$ extends Model implements EntityContract
 	 *
 	 * @var string
 	 */
-	protected $table = '$LOW:NAME$';
+	protected $table = '$NAME:UNDERSCORE$';
 
 	/**
 	 * The attributes that are mass assignable.

@@ -17,7 +17,7 @@ abstract class $NAME$AttributeException extends $NAME$Exception
      *
      * @var string
      */
-    protected $code = '$UP:NAME$_ATTRIBUTE_NOT_VALID';
+    protected $code = '$NAME:UPPERCASE$_ATTRIBUTE_NOT_VALID';
 
     /**
      * The message
