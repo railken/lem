@@ -59,7 +59,6 @@ class UserValidator implements ModelValidatorContract
         $errors = new Collection();
 
         !$parameters->exists('email') && $errors->push(new Exceptions\UserEmailNotDefinedException($parameters->get('email')));
-        !$parameters->exists('username') && $errors->push(new Exceptions\UserUsernameNotDefinedException($parameters->get('username')));
         !$parameters->exists('password') && $errors->push(new Exceptions\UserPasswordNotDefinedException($parameters->get('password')));
 
         return $errors;
@@ -83,8 +82,6 @@ class UserValidator implements ModelValidatorContract
         $parameters->exists('email') && !$this->manager->getRepository()->isUniqueEmail($parameters->get('email'), $entity) &&
             $errors->push(new Exceptions\UserEmailNotUniqueException($parameters->get('email')));
 
-        $parameters->exists('username') && !$this->validUsername($parameters->get('username')) &&
-            $errors->push(new Exceptions\UserUsernameNotValidException($parameters->get('username')));
 
         $parameters->exists('password') && !$this->validPassword($parameters->get('password')) &&
             $errors->push(new Exceptions\UserPasswordNotValidException($parameters->get('password')));
