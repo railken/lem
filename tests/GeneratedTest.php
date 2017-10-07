@@ -79,6 +79,7 @@ class GeneratedTest extends \Orchestra\Testbench\TestCase
         $this->assertEquals("FOO_NAME_NOT_VALID", $m->create($bag->set('name', ''))->getError()->getCode());
         $this->assertEquals(false, $m->create($bag->set('name', null))->ok());
 
+
         $foo = $m->create($bag->set('name', 'baar'))->getResource();
         $m->update($foo, $bag->set('name', 'fee'))->getResource();
 

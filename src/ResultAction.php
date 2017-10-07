@@ -142,16 +142,4 @@ class ResultAction
             return $error->toArray();
         });
     }
-
-    /**
-     * Is authorized
-     *
-     * @return bool
-     */
-    public function isAuthorized()
-    {
-        return $this->getErrors()->search(function ($error, $key) {
-            return $error instanceof Exceptions\ModelNotAuthorizedExceptionContract;
-        }) === false;
-    }
 }

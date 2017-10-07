@@ -3,12 +3,11 @@
 namespace Railken\Laravel\Manager\Tests\User;
 
 use Railken\Laravel\Manager\Contracts\EntityContract;
-use Railken\Laravel\Manager\Contracts\UserAgentContract;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class User extends Authenticatable implements EntityContract, UserAgentContract
+class User extends Authenticatable implements EntityContract
 {
     use Notifiable, SoftDeletes;
 
@@ -75,5 +74,16 @@ class User extends Authenticatable implements EntityContract, UserAgentContract
     public function isRoleAdmin()
     {
         return $this->role == static::ROLE_ADMIN;
+    }
+
+
+    public function factoryAgent()
+    {
+        if ($this->isRoleUser())
+            return new UserAgent($this);
+
+        if ($this->isRoleAdmin())
+            return new AdminAgent($this);
+
     }
 }

@@ -3,7 +3,6 @@
 namespace Railken\Laravel\Manager\Tests\User;
 
 use Railken\Laravel\Manager\ModelManager;
-use Railken\Laravel\Manager\Contracts\AgentContract;
 use Railken\Laravel\Manager\ParameterBag;
 
 class UserManager extends ModelManager
@@ -17,10 +16,9 @@ class UserManager extends ModelManager
     /**
      * Construct
      *
-     * @param AgentContract|null $agent
      */
-    public function __construct(AgentContract $agent = null)
+    public function __construct()
     {
-        parent::__construct($agent);
+        parent::__construct();
     }
 }

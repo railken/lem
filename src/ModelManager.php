@@ -2,10 +2,7 @@
 
 namespace Railken\Laravel\Manager;
 
-use Railken\Laravel\Manager\Contracts\EntityContract;
-use Railken\Laravel\Manager\Contracts\AgentContract;
 use Railken\Laravel\Manager\Contracts\ManagerContract;
-use Railken\Laravel\Manager\Agents\SystemAgent;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Exception;
@@ -14,6 +11,7 @@ use Railken\Laravel\Manager\Contracts\ModelRepositoryContract;
 use Railken\Laravel\Manager\Contracts\ModelAuthorizerContract;
 use Railken\Laravel\Manager\Contracts\ModelValidatorContract;
 use Railken\Laravel\Manager\Contracts\ParameterBagContract;
+use Railken\Laravel\Manager\Contracts\EntityContract;
 
 abstract class ModelManager implements ManagerContract
 {
@@ -24,19 +22,12 @@ abstract class ModelManager implements ManagerContract
 
     /**
      * Construct
-     *
-     * @param AgentContract|null $agent
      */
-    public function __construct(AgentContract $agent = null)
+    public function __construct()
     {
-        $this->agent = $agent ? $agent : new SystemAgent();
 
         foreach (static::$__components[get_class($this)] as $key => $component) {
             class_exists($component) && $this->$key = new $component($this);
-        }
-
-        if (!isset($this->authorizer) || !$this->authorizer instanceof ModelAuthorizerContract) {
-            throw new Exceptions\ModelMissingAuthorizerException($this);
         }
 
         if (!isset($this->validator) || !$this->validator instanceof ModelValidatorContract) {
@@ -94,30 +85,6 @@ abstract class ModelManager implements ManagerContract
     }
 
     /**
-     * Retrieve agent
-     *
-     * @return AgentContract
-     */
-    public function getAgent()
-    {
-        return $this->agent;
-    }
-
-    /**
-     * Set the agent
-     *
-     * @param AgentContract $agent
-     *
-     * @return $this
-     */
-    public function setAgent(AgentContract $agent)
-    {
-        $this->agent = $agent;
-
-        return $this;
-    }
-
-    /**
      * Retrieve repository
      *
      * @return ModelRepository
@@ -137,11 +104,10 @@ abstract class ModelManager implements ManagerContract
     public function findOneBy($parameters)
     {
         $parameters = $this->castParameters($parameters);
-        $parameters = $parameters->filterRead($this->agent);
 
         $result = $this->repository->findOneBy($parameters->all());
 
-        return $result && $this->authorizer->retrieve($result, $parameters)->count() !== 0 ? null : $result;
+        return $result;
     }
 
     /**
@@ -154,13 +120,8 @@ abstract class ModelManager implements ManagerContract
     public function findBy($parameters)
     {
         $parameters = $this->castParameters($parameters);
-        $parameters = $parameters->filterRead($this->agent);
 
         $results = $this->repository->findBy($parameters->all());
-
-        $results = $results->filter(function ($entity, $key) use ($parameters) {
-            $this->authorizer->retrieve($entity, $parameters)->count() == 0;
-        });
 
         return $results;
     }
@@ -179,9 +140,6 @@ abstract class ModelManager implements ManagerContract
 
         $parameters = $this->castParameters($parameters);
 
-        $parameters = $parameters->filterWrite($this->agent);
-
-        $result->addErrors($this->authorizer->create($entity, $parameters));
         $result->addErrors($this->validator->validate($entity, $parameters));
 
         return $result->ok() ? $this->edit($entity, $parameters) : $result;
@@ -201,9 +159,6 @@ abstract class ModelManager implements ManagerContract
 
         $result = new ResultAction();
 
-        $parameters = $parameters->filterWrite($this->agent);
-
-        $result->addErrors($this->authorizer->update($entity, $parameters));
         $result->addErrors($this->validator->validate($entity, $parameters));
 
         return $result->ok() ? $this->edit($entity, $parameters) : $result;
@@ -262,8 +217,6 @@ abstract class ModelManager implements ManagerContract
     public function remove(EntityContract $entity)
     {
         $result = new ResultAction();
-
-        $result->addErrors($this->authorizer->remove($entity, $this->castParameters([])));
 
         return $result->ok() ? $this->delete($entity) : $result;
     }

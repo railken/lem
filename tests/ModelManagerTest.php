@@ -16,24 +16,6 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
     }
 
     /**
-     * @expectedException Railken\Laravel\Manager\Exceptions\ModelMissingAuthorizerException
-     */
-    public function testModelMissingAuthorizerExceptionNull()
-    {
-        UserManager::authorizer(null);
-        new UserManager();
-    }
-
-    /**
-     * @expectedException Railken\Laravel\Manager\Exceptions\ModelMissingAuthorizerException
-     */
-    public function testModelMissingAuthorizerExceptionNotValid()
-    {
-        UserManager::authorizer(stdClass::class);
-        new UserManager();
-    }
-
-    /**
      * @expectedException Railken\Laravel\Manager\Exceptions\ModelMissingRepositoryException
      */
     public function testModelMissingRepositoryExceptionNull()

@@ -17,10 +17,8 @@ class UserServiceProvider extends ServiceProvider
         UserManager::repository(UserRepository::class);
         UserManager::parameters(UserParameterBag::class);
         UserManager::validator(UserValidator::class);
-        UserManager::authorizer(UserAuthorizer::class);
         UserManager::serializer(UserSerializer::class);
 
         User::observe(UserObserver::class);
-        Gate::policy(User::class, UserPolicy::class);
     }
 }
