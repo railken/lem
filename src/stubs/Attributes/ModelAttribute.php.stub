@@ -2,14 +2,17 @@
 
 namespace $NAMESPACE$\Attributes\$ATTRIBUTE:CAMELIZED$;
 
+
 use Railken\Laravel\Manager\Contracts\EntityContract;
-use Railken\Laravel\Manager\ParameterBag;
-use Illuminate\Support\Collection;
+use Railken\Laravel\Manager\Contracts\AttributeContract;
+use Railken\Laravel\Manager\Traits\AttributeValidateTrait;
 use $NAMESPACE$\Attributes\$ATTRIBUTE:CAMELIZED$\Exceptions as Exceptions;
 use Respect\Validation\Validator as v;
 
-class $ATTRIBUTE:CAMELIZED$Attribute
+class $ATTRIBUTE:CAMELIZED$Attribute implements AttributeContract
 {
+
+	use AttributeValidateTrait;
 
 	/**
 	 * Name attribute
@@ -26,6 +29,16 @@ class $ATTRIBUTE:CAMELIZED$Attribute
     protected $required = false;
 
     /**
+     * List of all exceptions used in validation
+     *
+     * @var array
+     */
+    protected $exceptions = [
+    	'not_defined' => Exceptions\$NAME$$ATTRIBUTE:CAMELIZED$NotDefinedException::class,
+    	'not_valid' => Exceptions\$NAME$$ATTRIBUTE:CAMELIZED$NotValidException::class
+    ];
+
+    /**
      * Is a value valid ?
      *
      * @param EntityContract $entity
@@ -33,32 +46,9 @@ class $ATTRIBUTE:CAMELIZED$Attribute
      *
      * @return boolean
      */
-	public function valid($entity, $value)
+	public function valid(EntityContract $entity, $value)
 	{
-		return v::length(1,255)->validate($value);
+		return v::length(1, 255)->validate($value);
 	}
-
-	/**
-     * Validate $ATTRIBUTE:UNDERSCORE$
-     *
-     * @param EntityContract $entity
-     * @param ParameterBag $parameters
-     *
-     * @return Collection
-     */
-    public function validate(EntityContract $entity, ParameterBag $parameters)
-    {
-        $errors = new Collection();
-
-        !$entity->exists && !$parameters->exists($this->name) &&
-            $errors->push(new Exceptions\$NAME$$ATTRIBUTE:CAMELIZED$NotDefinedException($parameters->get($this->name)));
-
-        $parameters->exists($this->name) &&
-            !$this->valid($entity, $parameters->get($this->name)) &&
-            $errors->push(new Exceptions\$NAME$$ATTRIBUTE:CAMELIZED$NotValidException($parameters->get($this->name)));
-
-
-        return $errors;
-    }
 
 }
