@@ -35,7 +35,9 @@ class ArticleManager extends ModelManager
     */
     public function fill(EntityContract $entity, ParameterBagContract $parameters)
     {
-        $parameters->exists('author') && $entity->author()->associate($parameters->get('author'));
+
+        foreach (['author' => 'author'] as $relation => $method)
+            $parameters->exists($relation) && $entity->$method()->associate($parameters->get($relation));
 
         return parent::fill($entity, $parameters);
     }

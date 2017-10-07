@@ -1,6 +1,7 @@
 <?php
 
-namespace $NAMESPACE$\Exceptions;
+namespace $NAMESPACE$\Attributes\$ATTRIBUTE:CAMELIZED$\Exceptions;
+use $NAMESPACE$\Exceptions\$NAME$AttributeException;
 
 class $NAME$$ATTRIBUTE:CAMELIZED$NotValidException extends $NAME$AttributeException
 {

@@ -111,25 +111,10 @@ class Generator
 
         $this->base_path = $base_path;
 
-        $this->put("/Exceptions/ModelAttributeNotDefinedException.php.stub", "/Exceptions/{$name}".($attribute_camelized)."NotDefinedException.php", $vars);
-        $this->put("/Exceptions/ModelAttributeNotValidException.php.stub", "/Exceptions/{$name}".($attribute_camelized)."NotValidException.php", $vars);
-        // Updating validator.
-
-        // Retrieve class validator
-        $c = "\\{$namespace}\\{$name}Validator";
-        if (class_exists($c) && !in_array("validate{$attribute_camelized}", get_class_methods($c))) {
-
-            // We are free to add code
-
-            $class_content = file_get_contents("$base_path/{$name}Validator.php");
-            $content = $this->parse($vars, File::get(__DIR__."/stubs/ModelValidator_Attribute.php.stub"));
-
-            $p = explode("}", $class_content);
-            array_pop($p);
-            $class_content = implode("}", $p);
-            $class_content .= "\n{$content}\n}";
-            file_put_contents("$base_path/{$name}Validator.php", $class_content);
-        }
+        $this->put("/Attributes/ModelAttribute.php.stub", "/Attributes/{$attribute_camelized}/{$attribute_camelized}Attribute.php", $vars);
+        $this->put("/Attributes/Exceptions/ModelAttributeNotDefinedException.php.stub", "/Attributes/{$attribute_camelized}/Exceptions/{$name}".($attribute_camelized)."NotDefinedException.php", $vars);
+        $this->put("/Attributes/Exceptions/ModelAttributeNotValidException.php.stub", "/Attributes/{$attribute_camelized}/Exceptions/{$name}".($attribute_camelized)."NotValidException.php", $vars);
+ 
     }
 
     /**

@@ -1,0 +1,64 @@
+<?php
+
+namespace $NAMESPACE$\Attributes\$ATTRIBUTE:CAMELIZED$;
+
+use Railken\Laravel\Manager\Contracts\EntityContract;
+use Railken\Laravel\Manager\ParameterBag;
+use Illuminate\Support\Collection;
+use $NAMESPACE$\Attributes\$ATTRIBUTE:CAMELIZED$\Exceptions as Exceptions;
+use Respect\Validation\Validator as v;
+
+class $ATTRIBUTE:CAMELIZED$Attribute
+{
+
+	/**
+	 * Name attribute
+	 *
+	 * @var string
+	 */
+	protected $name = '$ATTRIBUTE:UNDERSCORE$';
+
+    /**
+     * Is the attribute required 
+     *
+     * @var boolean
+     */
+    protected $required = false;
+
+    /**
+     * Is a value valid ?
+     *
+     * @param EntityContract $entity
+     * @param mixed $value
+     *
+     * @return boolean
+     */
+	public function valid($entity, $value)
+	{
+		return v::length(1,255)->validate($value);
+	}
+
+	/**
+     * Validate $ATTRIBUTE:UNDERSCORE$
+     *
+     * @param EntityContract $entity
+     * @param ParameterBag $parameters
+     *
+     * @return Collection
+     */
+    public function validate(EntityContract $entity, ParameterBag $parameters)
+    {
+        $errors = new Collection();
+
+        !$entity->exists && !$parameters->exists($this->name) &&
+            $errors->push(new Exceptions\$NAME$$ATTRIBUTE:CAMELIZED$NotDefinedException($parameters->get($this->name)));
+
+        $parameters->exists($this->name) &&
+            !$this->valid($entity, $parameters->get($this->name)) &&
+            $errors->push(new Exceptions\$NAME$$ATTRIBUTE:CAMELIZED$NotValidException($parameters->get($this->name)));
+
+
+        return $errors;
+    }
+
+}

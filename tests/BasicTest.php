@@ -90,7 +90,7 @@ class BasicTest extends \Orchestra\Testbench\TestCase
     public function testBasics()
     {
         $um = new UserManager();
-            
+
         # Testing validation
         $this->assertEquals("USER_USERNAME_NOT_DEFINED", $um->create($this->getUserBag()->remove('username'))->getError()->getCode());
         $this->assertEquals("USER_USERNAME_NOT_VALID", $um->create($this->getUserBag()->set('username', 'wr'))->getError()->getCode());
@@ -111,4 +111,20 @@ class BasicTest extends \Orchestra\Testbench\TestCase
 
         $um->findOneBy(['username' => 'test123']);
     }
+
+    /** 
+     * Test 
+     */ 
+    public function testArticles() 
+    { 
+        $um = new UserManager(); 
+        $user = $um->create(['email' => 'test1@test.net', 'username' => 'test1', 'password' => microtime()])->getResource(); 
+
+        // $generator = new Generator(); 
+        $am = new ArticleManager(); 
+ 
+        $ab = ['title' => 'foo', 'description' => 'bar', 'author_id' => $user->id]; 
+    
+        $this->assertEquals(1, $am->create($ab)->ok()); 
+    } 
 }

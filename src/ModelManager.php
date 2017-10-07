@@ -139,6 +139,7 @@ abstract class ModelManager implements ManagerContract
         $entity = $this->repository->newEntity();
 
         $parameters = $this->castParameters($parameters);
+        $parameters->filterWrite();
 
         $result->addErrors($this->validator->validate($entity, $parameters));
 
@@ -156,6 +157,7 @@ abstract class ModelManager implements ManagerContract
     public function update(EntityContract $entity, $parameters)
     {
         $parameters = $this->castParameters($parameters);
+        $parameters->filterWrite();
 
         $result = new ResultAction();
 
