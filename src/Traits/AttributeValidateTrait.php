@@ -21,7 +21,7 @@ trait AttributeValidateTrait
     {
         $errors = new Collection();
 
-        !$entity->exists && !$parameters->exists($this->name) &&
+        $this->required && !$entity->exists && !$parameters->exists($this->name) &&
             $errors->push(new $this->exceptions['not_defined']($parameters->get($this->name)));
 
         $parameters->exists($this->name) &&
