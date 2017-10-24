@@ -21,6 +21,11 @@ abstract class ModelManager implements ManagerContract
     protected static $__components = [];
 
     /**
+     * @var attributes
+     */
+    protected $attributes = [];
+
+    /**
      * Construct
      */
     public function __construct()
@@ -45,6 +50,16 @@ abstract class ModelManager implements ManagerContract
         if (!isset($this->repository) || !$this->repository instanceof ModelRepositoryContract) {
             throw new Exceptions\ModelMissingRepositoryException($this);
         }
+    }
+
+    /**
+     * Retrieve attributes
+     *
+     * @return array
+     */
+    public function getAttributes()
+    {
+        return $this->attributes;
     }
 
     /**

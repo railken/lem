@@ -46,19 +46,10 @@ class ModelValidator implements ModelValidatorContract
             $errors = $errors->merge($this->$method($entity, $parameters));
         });
 
-        foreach ($entity->getFillable() as $parameter) {
-            $value = $parameters->get($parameter);
-            $parameter = strtr(ucwords(strtr($parameter, array('_' => ' ', '.' => '_ ', '\\' => '_ '))), array(' ' => ''));
-            $attribute = str_replace("/", "\\", dirname(str_replace("\\", "/", get_class($this))))."\\Attributes\\{$parameter}\\{$parameter}Attribute";
-           
-            if (class_exists($attribute)) {
-                $attribute = new $attribute();
-                $errors = $errors->merge($attribute->validate($entity, $parameters));
-            }
+        foreach ($this->manager->getSchemaAttributes() as $attribute) {
+            $attribute = new $attribute();
+            $errors = $errors->merge($attribute->validate($entity, $parameters));
         }
-
-
-
 
         return $errors;
     }
