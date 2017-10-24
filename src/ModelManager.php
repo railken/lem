@@ -26,6 +26,16 @@ abstract class ModelManager implements ManagerContract
     protected $attributes = [];
 
     /**
+     * @var array
+     */
+    protected $unique = [];
+
+    /**
+     * @var array
+     */
+    protected $exceptions = [];
+
+    /**
      * Construct
      */
     public function __construct()
@@ -62,6 +72,28 @@ abstract class ModelManager implements ManagerContract
         return $this->attributes;
     }
 
+    /**
+     * Retrieve unique
+     *
+     * @return array
+     */
+    public function getUnique()
+    {
+        return $this->unique;
+    }
+
+    /**
+     * Retrieve an exception class given code
+     *
+     * @param string $code
+     *
+     * @return string
+     */
+    public function getException($code)
+    {
+        return $this->exceptions[$code];
+    }
+    
     /**
      * Set components
      *

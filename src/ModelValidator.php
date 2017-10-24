@@ -54,4 +54,44 @@ class ModelValidator implements ModelValidatorContract
 
         return $errors;
     }
+    
+    /**
+     * Validate uniqueness
+     *
+     * @param EntityContract $entity
+     * @param ParameterBag $parameters
+     *
+     * @return Collection
+     */
+    public function validateUniqueness($entity, $parameters)
+    {
+
+        $errors = new Collection();
+
+        foreach ($this->manager->getUnique() as $name => $attributes) {
+
+            // Check if attribute exists...
+
+            $q = $this->manager->getRepository()->getQuery();
+
+            $where = collect();
+            foreach ($attributes as $attribute) {
+                $value = $parameters->get($attribute, $entity->$attribute);
+
+                if ($value)
+                    $where[$attribute] = $value;
+            }
+
+            $entity->exists && $q->where('id', '!=', $entity->id);
+
+            if ($where->count() > 0 && $entity->where($where->toArray())->count() > 0) {
+                $class = $this->manager->getException('not_unique');
+
+                $errors->push(new $class($where));
+            }
+
+        }  
+
+        return $errors;
+    }
 }
