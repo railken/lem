@@ -29,6 +29,13 @@ class $ATTRIBUTE:CAMELIZED$Attribute implements AttributeContract
     protected $required = false;
 
     /**
+     * Is the attribute unique 
+     *
+     * @var boolean
+     */
+    protected $unique = false;
+
+    /**
      * List of all exceptions used in validation
      *
      * @var array
