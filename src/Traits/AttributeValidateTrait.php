@@ -3,6 +3,7 @@
 namespace Railken\Laravel\Manager\Traits;
 
 use Railken\Laravel\Manager\Contracts\EntityContract;
+use Railken\Laravel\Manager\Contracts\ManagerContract;
 use Railken\Laravel\Manager\ParameterBag;
 use Illuminate\Support\Collection;
 
