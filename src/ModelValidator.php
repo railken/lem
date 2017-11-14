@@ -76,10 +76,15 @@ class ModelValidator implements ModelValidatorContract
 
             $where = collect();
             foreach ($attributes as $attribute) {
+                $attribute = explode(":", $attribute);
+
+                $col = count($attribute) > 1 ? $attribute[1]: $attribute[0];
+                $attribute = $attribute[0];
+
                 $value = $parameters->get($attribute, $entity->$attribute);
 
                 if ($value)
-                    $where[$attribute] = $value;
+                    $where[$col] = is_object($value) ? $value->id : $value;
             }
 
             $entity->exists && $q->where('id', '!=', $entity->id);
