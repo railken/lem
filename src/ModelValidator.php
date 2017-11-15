@@ -89,7 +89,7 @@ class ModelValidator implements ModelValidatorContract
 
             $entity->exists && $q->where('id', '!=', $entity->id);
 
-            if ($where->count() > 0 && $entity->where($where->toArray())->count() > 0) {
+            if ($where->count() > 0 && $q->where($where->toArray())->count() > 0) {
                 $class = $this->manager->getException('not_unique');
 
                 $errors->push(new $class($where));
