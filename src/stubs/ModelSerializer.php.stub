@@ -4,15 +4,17 @@ namespace $NAMESPACE$;
 
 use Railken\Laravel\Manager\Contracts\ModelSerializerContract;
 use Railken\Laravel\Manager\Contracts\EntityContract;
+use Illuminate\Support\Collection;
 use Railken\Bag;
 
 class $NAME$Serializer implements ModelSerializerContract
 {
-	
+
 	/**
 	 * Serialize entity
 	 *
 	 * @param EntityContract $entity
+	 * @param Collection $select
 	 *
 	 * @return array
 	 */

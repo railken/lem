@@ -8,6 +8,7 @@ use Railken\Laravel\Manager\Contracts\AttributeContract;
 use Railken\Laravel\Manager\Traits\AttributeValidateTrait;
 use $NAMESPACE$\Attributes\$ATTRIBUTE:CAMELIZED$\Exceptions as Exceptions;
 use Respect\Validation\Validator as v;
+use Railken\Laravel\Manager\Tokens;
 
 class $ATTRIBUTE:CAMELIZED$Attribute implements AttributeContract
 {
@@ -22,7 +23,8 @@ class $ATTRIBUTE:CAMELIZED$Attribute implements AttributeContract
 	protected $name = '$ATTRIBUTE:UNDERSCORE$';
 
     /**
-     * Is the attribute required 
+     * Is the attribute required
+     * This will throw not_defined exception for non defined value and non existent model
      *
      * @var boolean
      */
@@ -41,8 +43,16 @@ class $ATTRIBUTE:CAMELIZED$Attribute implements AttributeContract
      * @var array
      */
     protected $exceptions = [
-    	'not_defined' => Exceptions\$NAME$$ATTRIBUTE:CAMELIZED$NotDefinedException::class,
-    	'not_valid' => Exceptions\$NAME$$ATTRIBUTE:CAMELIZED$NotValidException::class
+    	Tokens::NOT_DEFINED => Exceptions\$NAME$$ATTRIBUTE:CAMELIZED$NotDefinedException::class,
+    	Tokens::NOT_VALID => Exceptions\$NAME$$ATTRIBUTE:CAMELIZED$NotValidException::class
+    ];
+
+    /**
+     * List of all permissions
+     */
+    protected $permissions = [
+        'fill' => '$NAME:UNDERSCORE$.attributes.$ATTRIBUTE:UNDERSCORE$.fill',
+        'show' => '$NAME:UNDERSCORE$.attributes.$ATTRIBUTE:UNDERSCORE$.show'
     ];
 
     /**

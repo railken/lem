@@ -18,16 +18,4 @@ class $NAME$ParameterBag extends ParameterBag
 		return $this;
 	}
 
-	/**
-	 * Filter current bag for a search
-	 *
-	 * @return $this
-	 */
-	public function filterRead()
-	{
-		$this->filter(['id', 'name', 'created_at', 'updated_at']);
-
-		return $this;
-	}
-
 }

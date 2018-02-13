@@ -6,6 +6,7 @@ use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\Contracts\ManagerContract;
 use Railken\Laravel\Manager\ParameterBag;
 use Illuminate\Support\Collection;
+use Railken\Laravel\Manager\Tokens;
 
 trait AttributeValidateTrait
 {
@@ -28,14 +29,14 @@ trait AttributeValidateTrait
         $errors = new Collection();
 
         $this->required && !$entity->exists && !$parameters->exists($this->name) &&
-            $errors->push(new $this->exceptions['not_defined']($parameters->get($this->name)));
+            $errors->push(new $this->exceptions[Tokens::NOT_DEFINED]($parameters->get($this->name)));
 
         $this->unique && $parameters->exists($this->name) && $this->isUnique($entity, $parameters->get($this->name)) &&
-            $errors->push(new $this->exceptions['not_unique']($parameters->get($this->name)));
+            $errors->push(new $this->exceptions[Tokens::NOT_UNIQUE]($parameters->get($this->name)));
 
         $parameters->exists($this->name) &&
             !$this->valid($entity, $parameters->get($this->name)) &&
-            $errors->push(new $this->exceptions['not_valid']($parameters->get($this->name)));
+            $errors->push(new $this->exceptions[Tokens::NOT_VALID]($parameters->get($this->name)));
 
 
         return $errors;

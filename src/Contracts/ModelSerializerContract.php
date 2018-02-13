@@ -2,6 +2,8 @@
 
 namespace Railken\Laravel\Manager\Contracts;
 
+use Illuminate\Support\Collection;
+
 interface ModelSerializerContract
 {
 
@@ -12,14 +14,6 @@ interface ModelSerializerContract
      *
      * @return Collection
      */
-    public function serialize(EntityContract $entity);
+    public function serialize(EntityContract $entity, Collection $select);
 
-    /**
-     * Serialize
-     *
-     * @param EntityContract $entity
-     *
-     * @return Collection
-     */
-    public function serializeBrief(EntityContract $entity);
 }
