@@ -57,6 +57,7 @@ class Generator
         $vars = [
             'NAMESPACE' => $namespace,
             'NAME' => $name,
+            'NAME:CAMELIZED' => $name,
             'NAME:UNDERSCORE' => $this->underscore($name),
             'NAME:UPPERCASE' => strtoupper($name),
         ];
@@ -67,12 +68,14 @@ class Generator
         $this->put("/ModelManager.php.stub", "/{$name}Manager.php", $vars);
         $this->put("/ModelRepository.php.stub", "/{$name}Repository.php", $vars);
         $this->put("/ModelValidator.php.stub", "/{$name}Validator.php", $vars);
+        $this->put("/ModelAuthorizer.php.stub", "/{$name}Authorizer.php", $vars);
         $this->put("/ModelObserver.php.stub", "/{$name}Observer.php", $vars);
         $this->put("/ModelSerializer.php.stub", "/{$name}Serializer.php", $vars);
         $this->put("/ModelParameterBag.php.stub", "/{$name}ParameterBag.php", $vars);
         $this->put("/ModelServiceProvider.php.stub", "/{$name}ServiceProvider.php", $vars);
         $this->put("/Exceptions/ModelException.php.stub", "/Exceptions/{$name}Exception.php", $vars);
         $this->put("/Exceptions/ModelNotFoundException.php.stub", "/Exceptions/{$name}NotFoundException.php", $vars);
+        $this->put("/Exceptions/ModelNotAuthorizedException.php.stub", "/Exceptions/{$name}NotAuthorizedException.php", $vars);
         $this->put("/Exceptions/ModelAttributeException.php.stub", "/Exceptions/{$name}AttributeException.php", $vars);
 
         $this->generateAttribute($path, $namespace, 'name');

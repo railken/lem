@@ -1,0 +1,21 @@
+<?php
+
+namespace $NAMESPACE$;
+
+use Railken\Laravel\Manager\Contracts\EntityContract;
+use Railken\Laravel\Manager\ParameterBag;
+use $NAMESPACE$\Exceptions as Exceptions;
+use Railken\Laravel\Manager\ModelAuthorizer;
+use Railken\Laravel\Manager\Tokens;
+
+
+class $NAME$Authorizer extends ModelAuthorizer
+{
+
+	protected $permissions = [
+		Tokens::PERMISSION_CREATE => '$NAME:UNDERSCORE$.create',
+		Tokens::PERMISSION_UPDATE => '$NAME:UNDERSCORE$.update',
+		Tokens::PERMISSION_SHOW => '$NAME:UNDERSCORE$.show',
+		Tokens::PERMISSION_REMOVE => '$NAME:UNDERSCORE$.remove',
+	];
+}

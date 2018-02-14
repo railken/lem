@@ -2,12 +2,12 @@
 
 namespace $NAMESPACE$;
 
-use Railken\Laravel\Manager\Contracts\ModelSerializerContract;
+use Railken\Laravel\Manager\ModelSerializer;
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Illuminate\Support\Collection;
 use Railken\Bag;
 
-class $NAME$Serializer implements ModelSerializerContract
+class $NAME$Serializer extends ModelSerializer
 {
 
 	/**
@@ -22,6 +22,8 @@ class $NAME$Serializer implements ModelSerializerContract
 	{
 
         $bag = (new Bag($entity->toArray()))->only($select->toArray());
+
+        // ? $this->authorize('show', $entity, null)
 
 		return $bag;
 	}

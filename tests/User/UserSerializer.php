@@ -2,13 +2,13 @@
 
 namespace Railken\Laravel\Manager\Tests\User;
 
-use Railken\Laravel\Manager\Contracts\ModelSerializerContract;
+use Railken\Laravel\Manager\ModelSerializer;
 use Railken\Laravel\Manager\Contracts\EntityContract;
 
 use Illuminate\Support\Collection;
 use Railken\Bag;
 
-class UserSerializer implements ModelSerializerContract
+class UserSerializer extends ModelSerializer
 {
 
     /**

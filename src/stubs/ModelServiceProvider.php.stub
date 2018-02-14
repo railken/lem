@@ -19,5 +19,6 @@ class $NAME$ServiceProvider extends ServiceProvider
         $NAME$Manager::serializer($NAME$Serializer::class);
         $NAME$Manager::parameters($NAME$ParameterBag::class);
         $NAME$Manager::validator($NAME$Validator::class);
+        $NAME$Manager::authorizer($NAME$Authorizer::class);
     }
 }

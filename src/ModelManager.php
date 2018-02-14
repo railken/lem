@@ -9,9 +9,11 @@ use Exception;
 use Railken\Laravel\Manager\Exceptions as Exceptions;
 use Railken\Laravel\Manager\Contracts\ModelRepositoryContract;
 use Railken\Laravel\Manager\Contracts\ModelAuthorizerContract;
+use Railken\Laravel\Manager\Contracts\ModelSerializerContract;
 use Railken\Laravel\Manager\Contracts\ModelValidatorContract;
 use Railken\Laravel\Manager\Contracts\ParameterBagContract;
 use Railken\Laravel\Manager\Contracts\EntityContract;
+use Railken\Laravel\Manager\Contracts\AgentContract;
 
 abstract class ModelManager implements ManagerContract
 {
@@ -33,13 +35,27 @@ abstract class ModelManager implements ManagerContract
     /**
      * @var array
      */
-    protected $exceptions = [];
+    protected $exceptions = [
+    ];
+
+
+    /**
+     * @var AgentContract
+     */
+    protected $agent;
+
+    /**
+     * @var array
+     */
+    protected $permissions = [];
+
 
     /**
      * Construct
      */
-    public function __construct()
-    {
+    public function __construct(AgentContract $agent)
+    {   
+        $this->agent = $agent;
 
         foreach (static::$__components[get_class($this)] as $key => $component) {
             class_exists($component) && $this->$key = new $component($this);
@@ -49,7 +65,7 @@ abstract class ModelManager implements ManagerContract
             throw new Exceptions\ModelMissingValidatorException($this);
         }
 
-        if (!isset($this->serializer)) {
+        if (!isset($this->serializer) || !$this->serializer instanceof ModelSerializerContract) {
             throw new Exceptions\ModelMissingSerializerException($this);
         }
 
@@ -59,6 +75,10 @@ abstract class ModelManager implements ManagerContract
 
         if (!isset($this->repository) || !$this->repository instanceof ModelRepositoryContract) {
             throw new Exceptions\ModelMissingRepositoryException($this);
+        }
+
+        if (!isset($this->authorizer) || !$this->authorizer instanceof ModelAuthorizerContract) {
+            throw new Exceptions\ModelMissingAuthorizerException($this);
         }
     }
 
@@ -91,7 +111,21 @@ abstract class ModelManager implements ManagerContract
      */
     public function getException($code)
     {
+
+        if (!isset($this->exceptions[$code]))
+            throw new Exceptions\ModelExceptionNotDefinedException($this, $code);
+
         return $this->exceptions[$code];
+    }
+
+    /**
+     * Retrieve agent
+     *
+     * @return AgentContract
+     */
+    public function getAgent()
+    {
+        return $this->agent;
     }
     
     /**
@@ -154,6 +188,9 @@ abstract class ModelManager implements ManagerContract
 
         $result = $this->repository->findOneBy($parameters->all());
 
+        // Convert to ResultAction
+        // Check Permission
+
         return $result;
     }
 
@@ -170,6 +207,9 @@ abstract class ModelManager implements ManagerContract
 
         $results = $this->repository->findBy($parameters->all());
 
+        // Convert to ResultAction
+        // Check Permission
+
         return $results;
     }
 
@@ -182,12 +222,16 @@ abstract class ModelManager implements ManagerContract
      */
     public function create($parameters)
     {
+
+
         $result = new ResultAction();
         $entity = $this->repository->newEntity();
 
         $parameters = $this->castParameters($parameters);
         $parameters->filterWrite();
 
+
+        $result->addErrors($this->authorizer->authorize(Tokens::PERMISSION_CREATE, $entity, $parameters));
         $result->addErrors($this->validator->validate($entity, $parameters));
 
         return $result->ok() ? $this->edit($entity, $parameters) : $result;
@@ -208,6 +252,7 @@ abstract class ModelManager implements ManagerContract
 
         $result = new ResultAction();
 
+        $result->addErrors($this->authorizer->authorize(Tokens::PERMISSION_UPDATE, $entity, $parameters));
         $result->addErrors($this->validator->validate($entity, $parameters));
 
         return $result->ok() ? $this->edit($entity, $parameters) : $result;
@@ -281,6 +326,11 @@ abstract class ModelManager implements ManagerContract
     {
         $result = new ResultAction();
 
+        $result->addErrors($this->authorizer->authorize(Tokens::PERMISSION_REMOVE, $entity, $this->parameters::factory([])));
+
+        if (!$result->ok())
+            return $result;
+
         try {
             DB::beginTransaction();
             $entity->delete();
@@ -341,4 +391,5 @@ abstract class ModelManager implements ManagerContract
 
         return $entity ? $this->update($entity, $parameters) : $this->create($parameters);
     }
+
 }

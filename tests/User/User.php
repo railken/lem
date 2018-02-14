@@ -3,11 +3,12 @@
 namespace Railken\Laravel\Manager\Tests\User;
 
 use Railken\Laravel\Manager\Contracts\EntityContract;
+use Railken\Laravel\Manager\Contracts\AgentContract;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class User extends Authenticatable implements EntityContract
+class User extends Authenticatable implements EntityContract, AgentContract
 {
     use Notifiable, SoftDeletes;
 
@@ -56,34 +57,9 @@ class User extends Authenticatable implements EntityContract
         $this->attributes['password'] = bcrypt($password);
     }
 
-    /**
-     * Return if has role user
-     *
-     * @return bool
-     */
-    public function isRoleUser()
-    {
-        return $this->role == static::ROLE_USER;
-    }
-
-    /**
-     * Return if has role admin
-     *
-     * @return bool
-     */
-    public function isRoleAdmin()
-    {
-        return $this->role == static::ROLE_ADMIN;
-    }
-
-
-    public function factoryAgent()
-    {
-        if ($this->isRoleUser())
-            return new UserAgent($this);
-
-        if ($this->isRoleAdmin())
-            return new AdminAgent($this);
-
+    public $permission = true;
+    
+    public function can($permission, $arguments = []) {
+        return $this->permission == true;
     }
 }

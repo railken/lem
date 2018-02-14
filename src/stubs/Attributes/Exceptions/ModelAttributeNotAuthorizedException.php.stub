@@ -1,0 +1,30 @@
+<?php
+
+namespace $NAMESPACE$\Attributes\$ATTRIBUTE:CAMELIZED$\Exceptions;
+use $NAMESPACE$\Exceptions\$NAME$AttributeException;
+
+class $NAME$$ATTRIBUTE:CAMELIZED$NotAuthorizedException extends $NAME$AttributeException
+{
+
+	/**
+	 * The reason (attribute) for which this exception is thrown
+	 *
+	 * @var string
+	 */
+	protected $attribute = '$ATTRIBUTE:UNDERSCORE$';
+
+	/**
+	 * The code to identify the error
+	 *
+	 * @var string
+	 */
+	protected $code = '$NAME:UPPERCASE$_$ATTRIBUTE:UPPERCASE$_NOT_AUTHTORIZED';
+
+	/**
+	 * The message
+	 *
+	 * @var string
+	 */
+	protected $message = "The %s is not an attribute authorized";
+
+}

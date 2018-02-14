@@ -3,18 +3,31 @@
 namespace $NAMESPACE$;
 
 use Railken\Laravel\Manager\Contracts\EntityContract;
+use Railken\Laravel\Manager\Contracts\AgentContract;
 use Railken\Laravel\Manager\ModelManager;
 use Railken\Laravel\Manager\ParameterBag;
+use Railken\Laravel\Manager\Tokens;
 
 class $NAME$Manager extends ModelManager
-{
+{	
+
+
+    /**
+     * List of all exceptions
+     *
+     * @var array
+     */
+    protected $exceptions = [
+        Tokens::NOT_AUTHORIZED => Exceptions\$NAME:CAMELIZED$NotAuthorizedException::class
+    ];
+
 
 	/**
 	 * Construct
 	 */
-	public function __construct()
+	public function __construct(AgentContract $agent)
 	{
-		parent::__construct();
+		parent::__construct($agent);
 	}
 
 }

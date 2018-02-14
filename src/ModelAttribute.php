@@ -1,21 +1,32 @@
 <?php
 
-namespace Railken\Laravel\Manager\Traits;
+namespace Railken\Laravel\Manager;
 
-use Railken\Laravel\Manager\Contracts\EntityContract;
-use Railken\Laravel\Manager\Contracts\ManagerContract;
-use Railken\Laravel\Manager\ParameterBag;
+use Railken\Laravel\Manager\Contracts\AttributeContract;
 use Illuminate\Support\Collection;
-use Railken\Laravel\Manager\Tokens;
 
-trait AttributeValidateTrait
+abstract class ModelAttribute implements AttributeContract
 {
 
     /**
      * @var ManagerContract
      */
     protected $manager;
-    
+
+    /**
+     * Set manager
+     *
+     * @param ManagerContract $manager
+     *
+     * @return $this
+     */
+    public function setManager(ManagerContract $manager)
+    {
+        $this->manager = $manager;
+
+        return $this;
+    }
+        
     /**
      * Validate
      *
@@ -60,18 +71,25 @@ trait AttributeValidateTrait
         return $q->count() > 0;
     }
 
-    /**
-     * Set manager
-     *
-     * @param ManagerContract $manager
-     *
-     * @return $this
-     */
-    public function setManager(ManagerContract $manager)
-    {
-        $this->manager = $manager;
 
-        return $this;
+
+    /**
+     * Is a value valid ?
+     *
+     * @param string $action
+     * @param EntityContract $entity
+     * @param mixed $value
+     *
+     * @return boolean
+     */
+    public function authorize(string $action, EntityContract $entity, $value)
+    {
+        $errors = new Collection();
+
+        !$this->getManager()->getAgent()->can($this->permissions[$action]) && $errors->push(new $this->exceptions[Tokens::NOT_AUTHORIZED]);
+
+        return $errors;
     }
+
 
 }

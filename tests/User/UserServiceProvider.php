@@ -18,6 +18,7 @@ class UserServiceProvider extends ServiceProvider
         UserManager::parameters(UserParameterBag::class);
         UserManager::validator(UserValidator::class);
         UserManager::serializer(UserSerializer::class);
+        UserManager::authorizer(UserAuthorizer::class);
 
         User::observe(UserObserver::class);
     }

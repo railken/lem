@@ -6,6 +6,9 @@ use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\ModelManager;
 use Railken\Laravel\Manager\Contracts\ParameterBagContract;
 use Railken\Laravel\Manager\Tests\User\UserManager;
+use Railken\Laravel\Manager\Contracts\AgentContract;
+use Railken\Laravel\Manager\Tokens;
+
 
 class ArticleManager extends ModelManager
 {
@@ -15,15 +18,19 @@ class ArticleManager extends ModelManager
     protected static $__components = [];
 
     /**
+     * @var array
+     */
+    protected $exceptions = [
+        Tokens::NOT_AUTHORIZED => Exceptions\ArticleNotAuthorizedException::class
+    ];
+    
+    /**
      * Construct
      */
-    public function __construct()
+    public function __construct(AgentContract $agent)
     {
-        $this->author = new UserManager();
-
-        parent::__construct();
+        parent::__construct($agent);
     }
-
 
     /**
      * Fill the entity

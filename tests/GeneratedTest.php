@@ -10,6 +10,7 @@ use Railken\Laravel\Manager\Generator;
 use Railken\Laravel\Manager\Tests\Generated\Foo\FooManager;
 use Railken\Laravel\Manager\Tests\Generated\Foo\FooParameterBag;
 use Railken\Laravel\Manager\Tests\Generated\Foo\FooServiceProvider;
+use Railken\Laravel\Manager\Tests\User\User;
 
 class GeneratedTest extends \Orchestra\Testbench\TestCase
 {
@@ -73,10 +74,16 @@ class GeneratedTest extends \Orchestra\Testbench\TestCase
         $this->assertEquals(true, File::exists(__DIR__."/Generated/Foo"));
         (new FooServiceProvider($this->app))->register();
 
-        $m = new FooManager();
+        $user = new User();
+        $user->permission = false;
+        
+        $m = new FooManager($user);
 
-        $bag = new FooParameterBag(['name' => 'a']);
+        $bag = new FooParameterBag(['name' => 'ban']);
 
+        $this->assertEquals("FOO_NOT_AUTHORIZED", $m->create($bag)->getError()->getCode());
+
+        $user->permission = true;
 
         $foo = $m->create($bag->set('name', 'baar'))->getResource();
         $m->update($foo, $bag->set('name', 'fee'))->getResource();

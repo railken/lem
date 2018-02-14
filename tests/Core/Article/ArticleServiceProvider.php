@@ -18,6 +18,7 @@ class ArticleServiceProvider extends ServiceProvider
         ArticleManager::parameters(ArticleParameterBag::class);
         ArticleManager::validator(ArticleValidator::class);
         ArticleManager::serializer(ArticleSerializer::class);
+        ArticleManager::authorizer(ArticleAuthorizer::class);
 
         Article::observe(ArticleObserver::class);
     }

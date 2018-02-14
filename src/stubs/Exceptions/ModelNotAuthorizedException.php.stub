@@ -2,7 +2,7 @@
 
 namespace $NAMESPACE$\Exceptions;
 
-class $NAME$NotFoundException extends $NAME$Exception
+class $NAME$NotAuthorizedException extends $NAME$Exception
 {
 
 	/**
@@ -10,12 +10,12 @@ class $NAME$NotFoundException extends $NAME$Exception
 	 *
 	 * @var string
 	 */
-	protected $code = '$NAME:UPPERCASE$_NOT_FOUND';
+	protected $code = '$NAME:UPPERCASE$_NOT_AUTHORIZED';
 
 	/**
 	 * The message
 	 *
 	 * @var string
 	 */
-	protected $message = "Not found";
+	protected $message = "Not authorized";
 }
