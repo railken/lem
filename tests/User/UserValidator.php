@@ -124,18 +124,6 @@ class UserValidator implements ModelValidatorContract
     }
 
     /**
-     * Validate role
-     *
-     * @param string $role
-     *
-     * @return bool
-     */
-    public function validRole($role)
-    {
-        return in_array($role, [User::ROLE_USER, User::ROLE_ADMIN]);
-    }
-
-    /**
      * Validate username
      *
      * @param string $username

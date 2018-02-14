@@ -25,6 +25,8 @@ class $NAME$$ATTRIBUTE:CAMELIZED$NotAuthorizedException extends $NAME$AttributeE
 	 *
 	 * @var string
 	 */
-	protected $message = "The %s is not an attribute authorized";
+	protected $message = "You're not authorized to interact with %s during the process of %s";
+
+
 
 }

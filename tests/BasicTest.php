@@ -53,7 +53,6 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('username')->nullable();
-            $table->string('role')->default(User::ROLE_USER);
             $table->string('email')->unique()->nullable();
             $table->string('password');
             $table->rememberToken();

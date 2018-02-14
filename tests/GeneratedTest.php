@@ -27,7 +27,7 @@ class GeneratedTest extends \Orchestra\Testbench\TestCase
     protected function getPackageProviders($app)
     {
         return [
-            \Railken\Laravel\Manager\ManagerServiceProvider::class,
+            \Railken\Laravel\Manager\ManagerServiceProvider::class
         ];
     }
 
@@ -75,15 +75,15 @@ class GeneratedTest extends \Orchestra\Testbench\TestCase
         (new FooServiceProvider($this->app))->register();
 
         $user = new User();
-        $user->permission = false;
-        
         $m = new FooManager($user);
 
         $bag = new FooParameterBag(['name' => 'ban']);
 
         $this->assertEquals("FOO_NOT_AUTHORIZED", $m->create($bag)->getError()->getCode());
 
-        $user->permission = true;
+
+        $user->addPermission('foo.*');
+
 
         $foo = $m->create($bag->set('name', 'baar'))->getResource();
         $m->update($foo, $bag->set('name', 'fee'))->getResource();

@@ -17,5 +17,5 @@ class $NAME$NotAuthorizedException extends $NAME$Exception
 	 *
 	 * @var string
 	 */
-	protected $message = "Not authorized";
+	protected $message = "You're not authorized to perform %s";
 }

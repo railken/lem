@@ -86,7 +86,7 @@ abstract class ModelAttribute implements AttributeContract
     {
         $errors = new Collection();
 
-        !$this->getManager()->getAgent()->can($this->permissions[$action]) && $errors->push(new $this->exceptions[Tokens::NOT_AUTHORIZED]);
+        !$this->getManager()->getAgent()->can($this->permissions[$action]) && $errors->push(new $this->exceptions[Tokens::NOT_AUTHORIZED]($action));
 
         return $errors;
     }

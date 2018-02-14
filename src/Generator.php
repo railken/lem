@@ -117,6 +117,7 @@ class Generator
         $this->put("/Attributes/ModelAttribute.php.stub", "/Attributes/{$attribute_camelized}/{$attribute_camelized}Attribute.php", $vars);
         $this->put("/Attributes/Exceptions/ModelAttributeNotDefinedException.php.stub", "/Attributes/{$attribute_camelized}/Exceptions/{$name}".($attribute_camelized)."NotDefinedException.php", $vars);
         $this->put("/Attributes/Exceptions/ModelAttributeNotValidException.php.stub", "/Attributes/{$attribute_camelized}/Exceptions/{$name}".($attribute_camelized)."NotValidException.php", $vars);
+        $this->put("/Attributes/Exceptions/ModelAttributeNotAuthorizedException.php.stub", "/Attributes/{$attribute_camelized}/Exceptions/{$name}".($attribute_camelized)."NotAuthorizedException.php", $vars);
  
     }
 

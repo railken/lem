@@ -69,9 +69,8 @@ class ModelAuthorizer implements ModelAuthorizerContract
     {
         $errors = new Collection();
 
-        $exception = $this->manager->getException(Tokens::NOT_AUTHORIZED);
-
-        !$this->manager->getAgent()->can($this->permissions[$action]) && $errors->push(new $exception);
+        $exception = $this->manager->getException(Tokens::NOT_AUTHORIZED);        
+        !$this->manager->getAgent()->can($this->permissions[$action]) && $errors->push(new $exception($action));
 
         return $errors;
     }

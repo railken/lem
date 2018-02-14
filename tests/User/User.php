@@ -7,13 +7,13 @@ use Railken\Laravel\Manager\Contracts\AgentContract;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 class User extends Authenticatable implements EntityContract, AgentContract
 {
-    use Notifiable, SoftDeletes;
+    use Notifiable;
+    use SoftDeletes;
 
-    const ROLE_USER = 'user';
-    const ROLE_ADMIN = 'admin';
 
     /**
      * The table associated with the model.
@@ -28,7 +28,7 @@ class User extends Authenticatable implements EntityContract, AgentContract
      * @var array
      */
     protected $fillable = [
-        'username', 'email', 'password', 'role'
+        'username', 'email', 'password'
     ];
 
     /**
@@ -57,9 +57,40 @@ class User extends Authenticatable implements EntityContract, AgentContract
         $this->attributes['password'] = bcrypt($password);
     }
 
-    public $permission = true;
+    public $permissions = [
+        'user.*',
+        'article.*'
+    ];
+
+    public function can($permission, $arguments = []) 
+    {
+
+        $pp = explode(".", $permission);
+        foreach ($this->permissions as $p) {
+            if ($permission == $p) {
+                return true;
+            }
+            $p = explode(".", $p);
+            foreach ($p as $k => $in) {
+                if ($in == '*') {
+                    return true;
+                }
+                if (!isset($pp[$k])) {
+                    break;
+                }
+                if ($pp[$k] != $in) {
+                    break;
+                }
+            }
+        }
+        return false;
+
+    }
     
-    public function can($permission, $arguments = []) {
-        return $this->permission == true;
+    public function addPermission($permission)
+    {
+        $this->permissions[] = $permission;
+
+        return $this;
     }
 }
