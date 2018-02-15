@@ -22,4 +22,6 @@ abstract class ModelSerializer implements ModelSerializerContract
         $this->manager = $manager;
     }
 
+    
+
 }

@@ -48,8 +48,6 @@ class ModelAuthorizer implements ModelAuthorizerContract
         });
 
         foreach ($this->manager->getAttributes() as $attribute) {
-            $attribute = new $attribute();
-            $attribute->setManager($this->manager);
             $errors = $errors->merge($attribute->authorize(Tokens::PERMISSION_FILL, $entity, $parameters));
         }
 
@@ -95,5 +93,15 @@ class ModelAuthorizer implements ModelAuthorizerContract
         return $this->permissions[$code];
     }
 
-    
+    public function getAuthorizedAttributes(string $action, EntityContract $entity)
+    {
+
+        return $this->manager->getAttributes()->filter(function($attribute) use ($action, $entity) {
+            $errors = $attribute->authorize($action, $entity, []);
+
+            return $errors->count() === 0;
+
+        });
+
+    }
 }

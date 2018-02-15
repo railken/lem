@@ -11,6 +11,21 @@ abstract class ModelAttribute implements AttributeContract
 {
 
     /**
+     * Is the attribute required
+     * This will throw not_defined exception for non defined value and non existent model
+     *
+     * @var boolean
+     */
+    protected $required = false;
+
+    /**
+     * Is the attribute unique 
+     *
+     * @var boolean
+     */
+    protected $unique = false;
+
+    /**
      * @var ManagerContract
      */
     protected $manager;
@@ -141,5 +156,14 @@ abstract class ModelAttribute implements AttributeContract
         return $errors;
     }
 
+    /**
+     * Retrieve name attribute
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 
 }

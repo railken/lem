@@ -78,7 +78,11 @@ class Generator
         $this->put("/Exceptions/ModelNotAuthorizedException.php.stub", "/Exceptions/{$name}NotAuthorizedException.php", $vars);
         $this->put("/Exceptions/ModelAttributeException.php.stub", "/Exceptions/{$name}AttributeException.php", $vars);
 
+        $this->generateAttribute($path, $namespace, 'id');
         $this->generateAttribute($path, $namespace, 'name');
+        $this->generateAttribute($path, $namespace, 'created_at');
+        $this->generateAttribute($path, $namespace, 'updated_at');
+        $this->generateAttribute($path, $namespace, 'deleted_at');
     }
 
     /**

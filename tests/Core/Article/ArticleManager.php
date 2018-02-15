@@ -17,9 +17,13 @@ class ArticleManager extends ModelManager
      * @var array
      */
     protected $attributes = [
+        Attributes\Id\IdAttribute::class,
         Attributes\Title\TitleAttribute::class,
         Attributes\Description\DescriptionAttribute::class,
-        Attributes\AuthorId\AuthorIdAttribute::class
+        Attributes\AuthorId\AuthorIdAttribute::class,
+        Attributes\CreatedAt\CreatedAtAttribute::class,
+        Attributes\UpdatedAt\UpdatedAtAttribute::class,
+        Attributes\DeletedAt\DeletedAtAttribute::class
     ];
 
     /**

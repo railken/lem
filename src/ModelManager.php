@@ -63,6 +63,16 @@ abstract class ModelManager implements ManagerContract
 
         $this->agent = $agent;
 
+        $attributes = new Collection();
+
+        foreach ($this->attributes as $attribute) {
+            $attribute = new $attribute();
+            $attribute->setManager($this);
+            $attributes[$attribute->getName()] = $attribute; 
+        }
+
+        $this->attributes = $attributes;
+        
         foreach (static::$__components[get_class($this)] as $key => $component) {
             class_exists($component) && $this->$key = new $component($this);
         }
@@ -86,6 +96,7 @@ abstract class ModelManager implements ManagerContract
         if (!isset($this->authorizer) || !$this->authorizer instanceof ModelAuthorizerContract) {
             throw new Exceptions\ModelMissingAuthorizerException($this);
         }
+
     }
 
     /**
@@ -97,6 +108,7 @@ abstract class ModelManager implements ManagerContract
     {
         return $this->attributes;
     }
+
 
     /**
      * Retrieve unique

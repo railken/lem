@@ -127,18 +127,40 @@ class BasicTest extends \Orchestra\Testbench\TestCase
  
         $ab = ['title' => 'foo', 'description' => 'bar', 'author_id' => $user->id]; 
 
-
-        $this->assertEquals(4, $am->create($ab)->getErrors()->count());
+        $this->assertEquals(8, $am->create($ab)->getErrors()->count());
         $this->assertEquals("ARTICLE_NOT_AUTHORIZED", $am->create($ab)->getError(0)->getCode());
-        $this->assertEquals("ARTICLE_TITLE_NOT_AUTHTORIZED", $am->create($ab)->getError(1)->getCode());
-        $this->assertEquals("ARTICLE_DESCRIPTION_NOT_AUTHTORIZED", $am->create($ab)->getError(2)->getCode());
-        $this->assertEquals("ARTICLE_AUTHOR_ID_NOT_AUTHTORIZED", $am->create($ab)->getError(3)->getCode());
+        $this->assertEquals("ARTICLE_ID_NOT_AUTHTORIZED", $am->create($ab)->getError(1)->getCode());
+        $this->assertEquals("ARTICLE_TITLE_NOT_AUTHTORIZED", $am->create($ab)->getError(2)->getCode());
+        $this->assertEquals("ARTICLE_DESCRIPTION_NOT_AUTHTORIZED", $am->create($ab)->getError(3)->getCode());
+        $this->assertEquals("ARTICLE_AUTHOR_ID_NOT_AUTHTORIZED", $am->create($ab)->getError(4)->getCode());
+        $this->assertEquals("ARTICLE_CREATED_AT_NOT_AUTHTORIZED", $am->create($ab)->getError(5)->getCode());
+        $this->assertEquals("ARTICLE_UPDATED_AT_NOT_AUTHTORIZED", $am->create($ab)->getError(6)->getCode());
+        $this->assertEquals("ARTICLE_DELETED_AT_NOT_AUTHTORIZED", $am->create($ab)->getError(7)->getCode());
         
         $user->addPermission('article.create');
+        $user->addPermission('article.attributes.id.*');
         $user->addPermission('article.attributes.title.*');
         $user->addPermission('article.attributes.description.*');
         $user->addPermission('article.attributes.author_id.*');
+        $user->addPermission('article.attributes.created_at.*');
+        $user->addPermission('article.attributes.updated_at.*');
+        $user->addPermission('article.attributes.deleted_at.*');
 
-        $this->assertEquals(1, $am->create($ab)->ok()); 
+
+
+
+        $result = $am->create($ab);
+        $this->assertEquals(1, $result->ok()); 
+
+        $resource = $result->getResource();
+
+        $this->assertEquals([
+            'title' => $resource->title,
+            'description' => $resource->description,
+            'author_id' => $resource->author->id,
+            'id' => $resource->id,
+            'created_at' => $resource->created_at,
+            'updated_at' => $resource->updated_at
+        ], $am->serializer->serialize($resource)->toArray());
     } 
 }
