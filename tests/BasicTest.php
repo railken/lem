@@ -123,7 +123,6 @@ class BasicTest extends \Orchestra\Testbench\TestCase
 
         // $generator = new Generator();
 
-        $user = new User(); 
         $am = new ArticleManager($user); 
  
         $ab = ['title' => 'foo', 'description' => 'bar', 'author_id' => $user->id]; 

@@ -10,6 +10,7 @@ use Railken\Laravel\Manager\Tests\Core\Article\Attributes\AuthorId\Exceptions as
 use Respect\Validation\Validator as v;
 use Railken\Laravel\Manager\Tokens;
 use Railken\Laravel\Manager\Tests\User\User;
+use Railken\Laravel\Manager\Tests\User\UserManager;
 
 class AuthorIdAttribute extends ModelAttribute
 {
@@ -27,7 +28,7 @@ class AuthorIdAttribute extends ModelAttribute
      *
      * @var boolean
      */
-    protected $required = false;
+    protected $required = true;
 
     /**
      * Is the attribute unique 
@@ -65,7 +66,10 @@ class AuthorIdAttribute extends ModelAttribute
      */
 	public function valid(EntityContract $entity, $value)
 	{
-		return true;
+
+        $user = (new UserManager($this->getManager()->getAgent()))->getRepository()->findOneById($value);
+
+		return !empty($user);
 	}
 
 
