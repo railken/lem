@@ -26,9 +26,9 @@ Railken\Laravel\Manager\ManagerServiceProvider::class,
 
 First you need to generate a new structure folder, use:
 
-`php artisan railken:make:manager app App\Foo`.
+`php artisan railken:make:manager App App\Foo`.
 
-Add `App\Foo\FooServiceProvider::class` in config/app.php.
+Than, add `App\Foo\FooServiceProvider::class` in config/app.php.
 
 Now you can use it.
 ```php
@@ -72,45 +72,62 @@ Array
     )
 */
 ```
-So, what about the authorization part? You need first setup the agent. There are 3 types of agents:
-- SytemAgent: The system (e.g. console)
-- UserAgent: A user is authenticated
-- GuestAgent: No one is authenticated
 
-Note: if you don't set any agent, the SystemAgent will be used.
+
+
+So, what about the authorization part? First we have to edit the class User.
+
+```php
+use Railken\Laravel\Manager\Contracts\AgentContract;
+
+class User implements AgentContract
+{
+    public function can($permission, $arguments = [])
+    {
+        return true;
+    }
+}
+
+```
+
+
+You can set the method can as you wish, it's better if a permission library is used such as https://github.com/Zizaco/entrust or https://github.com/spatie/laravel-permission.
+
+If no system permission is needed simply leave return true.
 
 ```php
 use Railken\Laravel\Manager\Agents\SystemAgent;
 
-$agent = new SystemAgent();
-$manager = new FooManager();
-$manager->setAgent($agent);
+$manager = new FooManager(Auth::user());
+$result = $manager->create(['title' => 'f']);
 
-$result = $manager->create(['name' => 'f']);
-if ($result->isAuthorized()) {
-  ...
-} else {
-  ...
-}
+print_r($result->getErrors()->toArray());
+/*
+Array
+    (
+        [0] => Array
+            (
+                [code] => FOO_TITLE_NOT AUTHORIZED
+                [attribute] => title
+                [message] => You're not authorized to interact with title, missing foo.attributes.title.fill permission
+                [value] =>
+            )
+    )
+*
 ```
 
+"foo.attributes.title.fill" is passed to User::can() and if the return is false the result will contains errors.
 
-If you want to use the User Model as an agent add a Contract
+Note: if you don't set any agent, the SystemAgent will be used (all granted).
 
-```php
-use Railken\Laravel\Manager\Contracts\UserAgentContract;
 
-class User implements UserAgentContract
-{
-    ...
-}
 
-```
-
-See [ModelAuthorizer](#modelauthorizer) and [ModelPolicy](#modelpolicy) for more explanations.
+See [ModelAuthorizer](#modelauthorizer) for more explanations.
 ### Commands
 
-- Generate a new set of files `php artisan railken:make:manager [path] [namespace]`.
+- Generate a new set of files `php artisan railken:make:manager [path] [namespace]`. E.g. php artisan railken:make:manager App "App\Foo"
+- Generate a new attribute  `php artisan railken:make:manager [path] [namespace] [attribute]`.  E.g. php artisan railken:make:manager App "App\Foo" Title
+
 
 ### ModelManager
 This is the main class, all the operations are performed using this: creating, updating, deleting, retrieving. This class is composed of components which are: validator, repository, authorizer, parameters, serializer
@@ -243,18 +260,6 @@ class FooParameterBag extends ParameterBag
 
 		$this->filter(['name']);
 
-		if ($agent instanceof UserAgentContract) {
-			// ..
-        }
-
-        if ($agent instanceof GuestAgentContract) {
-            // ..
-        }
-
-        if ($agent instanceof SystemAgentContract) {
-            // ..
-        }
-
 		return $this;
 	}
 
@@ -268,18 +273,6 @@ class FooParameterBag extends ParameterBag
 	public function filterRead(AgentContract $agent)
 	{
 		$this->filter(['id', 'name', 'created_at', 'updated_at']);
-
-		if ($agent instanceof UserAgentContract) {
-			// ..
-        }
-
-        if ($agent instanceof GuestAgentContract) {
-            // ..
-        }
-
-        if ($agent instanceof SystemAgentContract) {
-            // ..
-        }
 
 		return $this;
 	}
@@ -327,53 +320,6 @@ class FooValidator implements ModelValidatorContract
         return $errors;
     }
 
-    /**
-     * Validate "required" values
-     *
-     * @param EntityContract $entity
-     * @param ParameterBag $parameters
-     *
-     * @return Collection
-     */
-    public function validateRequired(ParameterBag $parameters)
-    {
-        $errors = new Collection();
-
-        !$parameters->exists('name') && $errors->push(new Exceptions\FooNameNotDefinedException($parameters->get('name')));
-
-        return $errors;
-    }
-
-    /**
-     * Validate "not valid" values
-     *
-     * @param ParameterBag $parameters
-     *
-     * @return Collection
-     */
-    public function validateValue(EntityContract $entity, ParameterBag $parameters)
-    {
-        $errors = new Collection();
-
-        $parameters->exists('name') && !$this->validName($parameters->get('name')) &&
-            $errors->push(new Exceptions\FooNameNotValidException($parameters->get('name')));
-
-
-        return $errors;
-    }
-
-    /**
-     * Validate name
-     *
-     * @param string $name
-     *
-     * @return boolean
-     */
-    public function validName($name)
-    {
-        return $name === null || (strlen($name) >= 3 && strlen($name) < 255);
-    }
-
 }
 
 
@@ -387,6 +333,7 @@ namespace App\Foo;
 
 use Railken\Laravel\Manager\Contracts\ModelSerializerContract;
 use Railken\Laravel\Manager\Contracts\EntityContract;
+use Illuminate\Support\Collection;
 use Railken\Bag;
 
 class FooSerializer implements ModelSerializerContract
@@ -399,28 +346,13 @@ class FooSerializer implements ModelSerializerContract
 	 *
 	 * @return Bag
 	 */
-	public function serialize(EntityContract $entity)
-	{
-		$bag = $this->serializeBrief($entity);
+    public function serialize(EntityContract $entity, Collection $select)
+    {
+        $bag = (new Bag($entity->toArray()))->only($select->toArray());
 
 		return $bag;
 	}
 
-	/**
-	 * Serialize entity
-	 *
-	 * @param EntityContract $entity
-	 *
-	 * @return Bag
-	 */
-	public function serializeBrief(EntityContract $entity)
-	{
-		$bag = new Bag();
-
-		$bag->set('id', $entity->id);
-
-		return $bag;
-	}
 }
 ```
 
