@@ -144,8 +144,7 @@ class Generator
 
         $content = $this->parse($data, $content);
 
-
-        File::put($to, $content);
+        !File::exists($to) && File::put($to, $content);
     }
 
     public function parse($vars, $content)
