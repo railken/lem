@@ -29,10 +29,13 @@ class $NAME$Manager extends ModelManager
         Tokens::NOT_AUTHORIZED => Exceptions\$NAME:CAMELIZED$NotAuthorizedException::class
     ];
 
-	/**
-	 * Construct
-	 */
-	public function __construct(AgentContract $agent)
+    /**
+     * Construct
+     *
+     * @param AgentContract $agent
+     *
+     */
+	public function __construct(AgentContract $agent = null)
 	{
 		parent::__construct($agent);
 	}

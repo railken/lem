@@ -33,8 +33,11 @@ class ArticleManager extends ModelManager
 
 	/**
 	 * Construct
+     *
+     * @param AgentContract $agent
+     *
 	 */
-	public function __construct(AgentContract $agent)
+	public function __construct(AgentContract $agent = null)
 	{
 		parent::__construct($agent);
 	}

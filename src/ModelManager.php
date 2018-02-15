@@ -14,6 +14,7 @@ use Railken\Laravel\Manager\Contracts\ModelValidatorContract;
 use Railken\Laravel\Manager\Contracts\ParameterBagContract;
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\Contracts\AgentContract;
+use Railken\Laravel\Manager\Agents\SystemAgent;
 
 abstract class ModelManager implements ManagerContract
 {
@@ -53,8 +54,13 @@ abstract class ModelManager implements ManagerContract
     /**
      * Construct
      */
-    public function __construct(AgentContract $agent)
+    public function __construct(AgentContract $agent = null)
     {   
+
+        if (!$agent) {
+            $agent = new Agents\SystemAgent();
+        }
+
         $this->agent = $agent;
 
         foreach (static::$__components[get_class($this)] as $key => $component) {

@@ -22,7 +22,7 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
     public function testModelMissingRepositoryExceptionNull()
     {
         UserManager::repository(null);
-        new UserManager(new User());
+        new UserManager();
     }
 
     /**
@@ -31,7 +31,7 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
     public function testModelMissingRepositoryExceptionNotValid()
     {
         UserManager::repository(stdClass::class);
-        new UserManager(new User());
+        new UserManager();
     }
 
     /**
@@ -40,7 +40,7 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
     public function testModelMissingValidatorExceptionNull()
     {
         UserManager::validator(null);
-        new UserManager(new User());
+        new UserManager();
     }
 
     /**
@@ -49,7 +49,7 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
     public function testModelMissingValidatorExceptionNotValid()
     {
         UserManager::validator(stdClass::class);
-        new UserManager(new User());
+        new UserManager();
     }
 
     /**
@@ -58,7 +58,7 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
     public function testModelMissingParametersExceptionNull()
     {
         UserManager::parameters(null);
-        new UserManager(new User());
+        new UserManager();
     }
 
     /**
@@ -67,7 +67,7 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
     public function testModelMissingParametersExceptionNotValid()
     {
         UserManager::parameters(stdClass::class);
-        new UserManager(new User());
+        new UserManager();
     }
 
     /**
@@ -76,7 +76,7 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
     public function testModelMissingAuthorizerExceptionNull()
     {
         UserManager::authorizer(null);
-        new UserManager(new User());
+        new UserManager();
     }
 
     /**
@@ -85,7 +85,7 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
     public function testModelMissingAuthorizerExceptionNotValid()
     {
         UserManager::authorizer(stdClass::class);
-        new UserManager(new User());
+        new UserManager();
     }
     /**
      * @expectedException Railken\Laravel\Manager\Exceptions\ModelMissingSerializerException
@@ -93,7 +93,7 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
     public function testModelMissingSerializerExceptionNull()
     {
         UserManager::serializer(null);
-        new UserManager(new User());
+        new UserManager();
     }
 
     /**
@@ -102,6 +102,6 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
     public function testModelMissingSerializerExceptionNotValid()
     {
         UserManager::serializer(stdClass::class);
-        new UserManager(new User());
+        new UserManager();
     }
 }

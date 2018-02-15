@@ -90,7 +90,7 @@ class BasicTest extends \Orchestra\Testbench\TestCase
     {
 
 
-        $um = new UserManager(new User());
+        $um = new UserManager();
 
         # Testing validation
         $this->assertEquals("USER_USERNAME_NOT_DEFINED", $um->create($this->getUserBag()->remove('username'))->getError()->getCode());
@@ -118,7 +118,7 @@ class BasicTest extends \Orchestra\Testbench\TestCase
      */ 
     public function testArticles() 
     { 
-        $um = new UserManager(new User()); 
+        $um = new UserManager(); 
         $user = $um->create(['email' => 'test1@test.net', 'username' => 'test1', 'password' => microtime()])->getResource(); 
 
         // $generator = new Generator();
