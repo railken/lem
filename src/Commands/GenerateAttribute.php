@@ -45,7 +45,7 @@ class GenerateAttribute extends Command
         $this->info("{$this->argument('namespace')} generated. There are still changes to do:\n
             - Update your migration\n
             - Update fillable in Model\n
-            - Add the class name in $attributes in the manager\n
+            - Add the class name in attributes in the manager\n
             - Update the serializer\n
         ");
     }
