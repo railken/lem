@@ -128,10 +128,12 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         $ab = ['title' => 'foo', 'description' => 'bar', 'author_id' => $user->id]; 
 
 
-
+        $this->assertEquals(4, $am->create($ab)->getErrors()->count());
         $this->assertEquals("ARTICLE_NOT_AUTHORIZED", $am->create($ab)->getError(0)->getCode());
         $this->assertEquals("ARTICLE_TITLE_NOT_AUTHTORIZED", $am->create($ab)->getError(1)->getCode());
         $this->assertEquals("ARTICLE_DESCRIPTION_NOT_AUTHTORIZED", $am->create($ab)->getError(2)->getCode());
+        $this->assertEquals("ARTICLE_AUTHOR_ID_NOT_AUTHTORIZED", $am->create($ab)->getError(3)->getCode());
+        
         $user->addPermission('article.create');
         $user->addPermission('article.attributes.title.*');
         $user->addPermission('article.attributes.description.*');
