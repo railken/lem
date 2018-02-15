@@ -63,6 +63,19 @@ abstract class ModelRepository implements ModelRepositoryContract
     }
 
     /**
+     * Find one by
+     *
+     * @param integer $id
+     *
+     * @return Entity
+     */
+    public function findOneById($id)
+    {
+        return $this->findOneBy(['id' => $id]);
+    }
+
+
+    /**
      * Find where in
      *
      * @param array $parameters
