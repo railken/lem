@@ -11,6 +11,14 @@ use Railken\Laravel\Manager\Tokens;
 class $NAME$Manager extends ModelManager
 {	
 
+    /**
+     * List of all attributes
+     *
+     * @var array
+     */
+    protected $attributes = [
+        Attributes\Name\NameAttribute::class
+    ];
 
     /**
      * List of all exceptions
@@ -20,7 +28,6 @@ class $NAME$Manager extends ModelManager
     protected $exceptions = [
         Tokens::NOT_AUTHORIZED => Exceptions\$NAME:CAMELIZED$NotAuthorizedException::class
     ];
-
 
 	/**
 	 * Construct

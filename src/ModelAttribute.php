@@ -3,6 +3,8 @@
 namespace Railken\Laravel\Manager;
 
 use Railken\Laravel\Manager\Contracts\AttributeContract;
+use Railken\Laravel\Manager\Contracts\EntityContract;
+use Railken\Laravel\Manager\Contracts\ManagerContract;
 use Illuminate\Support\Collection;
 
 abstract class ModelAttribute implements AttributeContract
@@ -26,7 +28,52 @@ abstract class ModelAttribute implements AttributeContract
 
         return $this;
     }
+
+    /**
+     * Get manager
+     *
+     * @return ManagerContract
+     */
+    public function getManager()
+    {
+        return $this->manager;
+    }
         
+
+
+    /**
+     *  Retrieve a permission name given code
+     *
+     * @param string $code
+     *
+     * @return string
+     */
+    public function getException($code)
+    {
+
+        if (!isset($this->exceptions[$code]))
+            throw new Exceptions\ExceptionNotDefinedException($this, $code);
+
+        return $this->exceptions[$code];
+    }
+
+
+    /**
+     * Retrieve a permission name given code
+     *
+     * @param string $code
+     *
+     * @return string
+     */
+    public function getPermission($code)
+    {
+
+        if (!isset($this->permissions[$code]))
+            throw new Exceptions\PermissionNotDefinedException($this, $code);
+
+        return $this->permissions[$code];
+    }
+
     /**
      * Validate
      *
@@ -86,7 +133,10 @@ abstract class ModelAttribute implements AttributeContract
     {
         $errors = new Collection();
 
-        !$this->getManager()->getAgent()->can($this->permissions[$action]) && $errors->push(new $this->exceptions[Tokens::NOT_AUTHORIZED]($action));
+        $permission = $this->getPermission($action);
+        $exception = $this->getException(Tokens::NOT_AUTHORIZED);
+
+        !$this->getManager()->getAgent()->can($permission) && $errors->push(new $exception($permission));
 
         return $errors;
     }

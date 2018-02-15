@@ -19,13 +19,14 @@ class $NAME$$ATTRIBUTE:CAMELIZED$NotAuthorizedException extends $NAME$AttributeE
 	 * @var string
 	 */
 	protected $code = '$NAME:UPPERCASE$_$ATTRIBUTE:UPPERCASE$_NOT_AUTHTORIZED';
-
+	
 	/**
 	 * The message
 	 *
 	 * @var string
 	 */
-	protected $message = "You're not authorized to interact with %s during the process of %s";
+	protected $message = "You're not authorized to interact with %s, missing %s permission";
+
 
 
 

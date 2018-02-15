@@ -121,11 +121,23 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         $um = new UserManager(new User()); 
         $user = $um->create(['email' => 'test1@test.net', 'username' => 'test1', 'password' => microtime()])->getResource(); 
 
-        // $generator = new Generator(); 
-        $am = new ArticleManager(new User()); 
+        // $generator = new Generator();
+
+        $user = new User(); 
+        $am = new ArticleManager($user); 
  
         $ab = ['title' => 'foo', 'description' => 'bar', 'author_id' => $user->id]; 
-    
+
+
+
+        $this->assertEquals("ARTICLE_NOT_AUTHORIZED", $am->create($ab)->getError(0)->getCode());
+        $this->assertEquals("ARTICLE_TITLE_NOT_AUTHTORIZED", $am->create($ab)->getError(1)->getCode());
+        $this->assertEquals("ARTICLE_DESCRIPTION_NOT_AUTHTORIZED", $am->create($ab)->getError(2)->getCode());
+        $user->addPermission('article.create');
+        $user->addPermission('article.attributes.title.*');
+        $user->addPermission('article.attributes.description.*');
+        $user->addPermission('article.attributes.author_id.*');
+
         $this->assertEquals(1, $am->create($ab)->ok()); 
     } 
 }

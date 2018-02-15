@@ -50,7 +50,7 @@ class ModelAuthorizer implements ModelAuthorizerContract
         foreach ($this->manager->getAttributes() as $attribute) {
             $attribute = new $attribute();
             $attribute->setManager($this->manager);
-            $errors = $errors->merge($attribute->authorize($action, $entity, $parameters));
+            $errors = $errors->merge($attribute->authorize(Tokens::PERMISSION_FILL, $entity, $parameters));
         }
 
         return $errors;
@@ -69,10 +69,31 @@ class ModelAuthorizer implements ModelAuthorizerContract
     {
         $errors = new Collection();
 
-        $exception = $this->manager->getException(Tokens::NOT_AUTHORIZED);        
-        !$this->manager->getAgent()->can($this->permissions[$action]) && $errors->push(new $exception($action));
+
+        $exception = $this->manager->getException(Tokens::NOT_AUTHORIZED);
+        $permission = $this->getPermission($action);        
+
+        !$this->manager->getAgent()->can($permission) && $errors->push(new $exception($permission));
 
         return $errors;
     }
+
+
+    /**
+     *  Retrieve a permission name given code
+     *
+     * @param string $code
+     *
+     * @return string
+     */
+    public function getPermission($code)
+    {
+
+        if (!isset($this->permissions[$code]))
+            throw new Exceptions\PermissionNotDefinedException($this, $code);
+
+        return $this->permissions[$code];
+    }
+
     
 }

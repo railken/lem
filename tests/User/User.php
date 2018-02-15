@@ -59,7 +59,6 @@ class User extends Authenticatable implements EntityContract, AgentContract
 
     public $permissions = [
         'user.*',
-        'article.*'
     ];
 
     public function can($permission, $arguments = []) 

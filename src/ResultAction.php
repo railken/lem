@@ -91,9 +91,9 @@ class ResultAction
      *
      * @return mixed
      */
-    public function getError()
+    public function getError($index = 0)
     {
-        return $this->getErrors()->first();
+        return $this->errors->get($index);
     }
 
     /**

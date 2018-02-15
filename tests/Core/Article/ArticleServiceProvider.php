@@ -2,7 +2,6 @@
 
 namespace Railken\Laravel\Manager\Tests\Core\Article;
 
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class ArticleServiceProvider extends ServiceProvider
@@ -14,12 +13,12 @@ class ArticleServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        Article::observe(ArticleObserver::class);
+
         ArticleManager::repository(ArticleRepository::class);
+        ArticleManager::serializer(ArticleSerializer::class);
         ArticleManager::parameters(ArticleParameterBag::class);
         ArticleManager::validator(ArticleValidator::class);
-        ArticleManager::serializer(ArticleSerializer::class);
         ArticleManager::authorizer(ArticleAuthorizer::class);
-
-        Article::observe(ArticleObserver::class);
     }
 }

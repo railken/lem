@@ -2,7 +2,7 @@
 
 namespace Railken\Laravel\Manager\Tests\Core\Article\Exceptions;
 
-class $NAMENotFoundException extends ArticleException
+class ArticleNotFoundException extends ArticleException
 {
 
 	/**
@@ -10,7 +10,7 @@ class $NAMENotFoundException extends ArticleException
 	 *
 	 * @var string
 	 */
-	protected $code = 'Article_NOT_FOUND';
+	protected $code = 'ARTICLE_NOT_FOUND';
 
 	/**
 	 * The message

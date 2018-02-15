@@ -113,9 +113,25 @@ abstract class ModelManager implements ManagerContract
     {
 
         if (!isset($this->exceptions[$code]))
-            throw new Exceptions\ModelExceptionNotDefinedException($this, $code);
+            throw new Exceptions\ExceptionNotDefinedException($this, $code);
 
         return $this->exceptions[$code];
+    }
+
+    /**
+     * Retrieve a permission name given code
+     *
+     * @param string $code
+     *
+     * @return string
+     */
+    public function getPermission($code)
+    {
+
+        if (!isset($this->permissions[$code]))
+            throw new Exceptions\PermissionNotDefinedException($this, $code);
+
+        return $this->permissions[$code];
     }
 
     /**

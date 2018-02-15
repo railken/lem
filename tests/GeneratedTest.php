@@ -66,10 +66,12 @@ class GeneratedTest extends \Orchestra\Testbench\TestCase
      */
     public function testGenerate()
     {
+        $generator = new Generator();
+
         if (!File::exists(__DIR__."/Generated/Foo")) {
-            $generator = new Generator();
             $generator->generate(__DIR__."/Generated", "Railken\Laravel\Manager\Tests\Generated\Foo");
         }
+
 
         $this->assertEquals(true, File::exists(__DIR__."/Generated/Foo"));
         (new FooServiceProvider($this->app))->register();

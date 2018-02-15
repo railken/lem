@@ -1,16 +1,17 @@
 <?php
 
-namespace $NAMESPACE$\Attributes\$ATTRIBUTE:CAMELIZED$;
+namespace Railken\Laravel\Manager\Tests\Core\Article\Attributes\AuthorId;
 
 
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\ModelAttribute;
 use Railken\Laravel\Manager\Traits\AttributeValidateTrait;
-use $NAMESPACE$\Attributes\$ATTRIBUTE:CAMELIZED$\Exceptions as Exceptions;
+use Railken\Laravel\Manager\Tests\Core\Article\Attributes\AuthorId\Exceptions as Exceptions;
 use Respect\Validation\Validator as v;
 use Railken\Laravel\Manager\Tokens;
+use Railken\Laravel\Manager\Tests\User\User;
 
-class $ATTRIBUTE:CAMELIZED$Attribute extends ModelAttribute
+class AuthorIdAttribute extends ModelAttribute
 {
 
 	/**
@@ -18,7 +19,7 @@ class $ATTRIBUTE:CAMELIZED$Attribute extends ModelAttribute
 	 *
 	 * @var string
 	 */
-	protected $name = '$ATTRIBUTE:UNDERSCORE$';
+	protected $name = 'author_id';
 
     /**
      * Is the attribute required
@@ -41,17 +42,17 @@ class $ATTRIBUTE:CAMELIZED$Attribute extends ModelAttribute
      * @var array
      */
     protected $exceptions = [
-    	Tokens::NOT_DEFINED => Exceptions\$NAME$$ATTRIBUTE:CAMELIZED$NotDefinedException::class,
-    	Tokens::NOT_VALID => Exceptions\$NAME$$ATTRIBUTE:CAMELIZED$NotValidException::class,
-        Tokens::NOT_AUTHORIZED => Exceptions\$NAME$$ATTRIBUTE:CAMELIZED$NotAuthorizedException::class
+    	Tokens::NOT_DEFINED => Exceptions\ArticleAuthorIdNotDefinedException::class,
+    	Tokens::NOT_VALID => Exceptions\ArticleAuthorIdNotValidException::class,
+        Tokens::NOT_AUTHORIZED => Exceptions\ArticleAuthorIdNotAuthorizedException::class
     ];
 
     /**
      * List of all permissions
      */
     protected $permissions = [
-        Tokens::PERMISSION_FILL => '$NAME:UNDERSCORE$.attributes.$ATTRIBUTE:UNDERSCORE$.fill',
-        Tokens::PERMISSION_SHOW => '$NAME:UNDERSCORE$.attributes.$ATTRIBUTE:UNDERSCORE$.show'
+        Tokens::PERMISSION_FILL => 'article.attributes.author_id.fill',
+        Tokens::PERMISSION_SHOW => 'article.attributes.author_id.show'
     ];
 
     /**
@@ -64,7 +65,7 @@ class $ATTRIBUTE:CAMELIZED$Attribute extends ModelAttribute
      */
 	public function valid(EntityContract $entity, $value)
 	{
-		return v::length(1, 255)->validate($value);
+		return true;
 	}
 
 

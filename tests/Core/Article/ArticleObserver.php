@@ -88,7 +88,7 @@ class ArticleObserver
      */
     public function saved(EntityContract $entity)
     {
-        // ..
+    	// ..
     }
 
     /**

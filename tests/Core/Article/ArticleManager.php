@@ -3,49 +3,40 @@
 namespace Railken\Laravel\Manager\Tests\Core\Article;
 
 use Railken\Laravel\Manager\Contracts\EntityContract;
-use Railken\Laravel\Manager\ModelManager;
-use Railken\Laravel\Manager\Contracts\ParameterBagContract;
-use Railken\Laravel\Manager\Tests\User\UserManager;
 use Railken\Laravel\Manager\Contracts\AgentContract;
+use Railken\Laravel\Manager\ModelManager;
+use Railken\Laravel\Manager\ParameterBag;
 use Railken\Laravel\Manager\Tokens;
 
-
 class ArticleManager extends ModelManager
-{
+{	
+
     /**
+     * List of all attributes
+     *
      * @var array
      */
-    protected static $__components = [];
+    protected $attributes = [
+        Attributes\Title\TitleAttribute::class,
+        Attributes\Description\DescriptionAttribute::class,
+        Attributes\AuthorId\AuthorIdAttribute::class
+    ];
 
     /**
+     * List of all exceptions
+     *
      * @var array
      */
     protected $exceptions = [
         Tokens::NOT_AUTHORIZED => Exceptions\ArticleNotAuthorizedException::class
     ];
-    
-    /**
-     * Construct
-     */
-    public function __construct(AgentContract $agent)
-    {
-        parent::__construct($agent);
-    }
 
-    /**
-     * Fill the entity
-     *
-     * @param EntityContract $entity
-     * @param ParameterBagContract $parameters
-     *
-     * @return EntityContract
-    */
-    public function fill(EntityContract $entity, ParameterBagContract $parameters)
-    {
+	/**
+	 * Construct
+	 */
+	public function __construct(AgentContract $agent)
+	{
+		parent::__construct($agent);
+	}
 
-        foreach (['author' => 'author'] as $relation => $method)
-            $parameters->exists($relation) && $entity->$method()->associate($parameters->get($relation));
-
-        return parent::fill($entity, $parameters);
-    }
 }

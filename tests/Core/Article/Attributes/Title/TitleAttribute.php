@@ -1,16 +1,16 @@
 <?php
 
-namespace $NAMESPACE$\Attributes\$ATTRIBUTE:CAMELIZED$;
+namespace Railken\Laravel\Manager\Tests\Core\Article\Attributes\Title;
 
 
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\ModelAttribute;
 use Railken\Laravel\Manager\Traits\AttributeValidateTrait;
-use $NAMESPACE$\Attributes\$ATTRIBUTE:CAMELIZED$\Exceptions as Exceptions;
+use Railken\Laravel\Manager\Tests\Core\Article\Attributes\Title\Exceptions as Exceptions;
 use Respect\Validation\Validator as v;
 use Railken\Laravel\Manager\Tokens;
 
-class $ATTRIBUTE:CAMELIZED$Attribute extends ModelAttribute
+class TitleAttribute extends ModelAttribute
 {
 
 	/**
@@ -18,7 +18,7 @@ class $ATTRIBUTE:CAMELIZED$Attribute extends ModelAttribute
 	 *
 	 * @var string
 	 */
-	protected $name = '$ATTRIBUTE:UNDERSCORE$';
+	protected $name = 'title';
 
     /**
      * Is the attribute required
@@ -41,17 +41,17 @@ class $ATTRIBUTE:CAMELIZED$Attribute extends ModelAttribute
      * @var array
      */
     protected $exceptions = [
-    	Tokens::NOT_DEFINED => Exceptions\$NAME$$ATTRIBUTE:CAMELIZED$NotDefinedException::class,
-    	Tokens::NOT_VALID => Exceptions\$NAME$$ATTRIBUTE:CAMELIZED$NotValidException::class,
-        Tokens::NOT_AUTHORIZED => Exceptions\$NAME$$ATTRIBUTE:CAMELIZED$NotAuthorizedException::class
+    	Tokens::NOT_DEFINED => Exceptions\ArticleTitleNotDefinedException::class,
+    	Tokens::NOT_VALID => Exceptions\ArticleTitleNotValidException::class,
+        Tokens::NOT_AUTHORIZED => Exceptions\ArticleTitleNotAuthorizedException::class
     ];
 
     /**
      * List of all permissions
      */
     protected $permissions = [
-        Tokens::PERMISSION_FILL => '$NAME:UNDERSCORE$.attributes.$ATTRIBUTE:UNDERSCORE$.fill',
-        Tokens::PERMISSION_SHOW => '$NAME:UNDERSCORE$.attributes.$ATTRIBUTE:UNDERSCORE$.show'
+        Tokens::PERMISSION_FILL => 'article.attributes.title.fill',
+        Tokens::PERMISSION_SHOW => 'article.attributes.title.show'
     ];
 
     /**
