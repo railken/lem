@@ -44,7 +44,7 @@ class GenerateAttribute extends Command
         $generator->generateAttribute(base_path($this->argument('path')), $this->argument('namespace'), $this->argument('attribute'));
         $this->info("{$this->argument('namespace')} generated. There are still changes to do:\n
             - Update your migration\n
-            - Update $fillable in Model\n
+            - Update fillable in Model\n
             - Add the class name in $attributes in the manager\n
             - Update the serializer\n
         ");
