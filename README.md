@@ -126,7 +126,7 @@ See [ModelAuthorizer](#modelauthorizer) for more explanations.
 ### Commands
 
 - Generate a new set of files `php artisan railken:make:manager [path] [namespace]`. E.g. php artisan railken:make:manager App "App\Foo"
-- Generate a new attribute  `php artisan railken:make:manager [path] [namespace] [attribute]`.  E.g. php artisan railken:make:manager App "App\Foo" Title
+- Generate a new attribute  `php artisan railken:make:manager-attribute [path] [namespace] [attribute]`.  E.g. php artisan railken:make:manager-attribute App "App\Foo" Title
 
 
 ### ModelManager

@@ -14,7 +14,7 @@ class GenerateAttribute extends Command
      *
      * @var string
      */
-    protected $signature = 'railken:generate:manager:attribute {path} {namespace} {attribute}';
+    protected $signature = 'railken:make:manager-attribute {path} {namespace} {attribute}';
 
     /**
      * The console command description.
