@@ -391,7 +391,7 @@ abstract class ModelManager implements ManagerContract
         $parameters = $this->castParameters($parameters);
 
         foreach ($this->getAttributes() as $attribute) {
-            $parameters = $attribute->onFill($entity, $parameters);
+            $attribute->onFill($entity, $parameters);
         }
 
         $entity->fill($parameters->all());

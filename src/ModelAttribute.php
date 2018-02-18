@@ -126,8 +126,7 @@ abstract class ModelAttribute implements AttributeContract
      */
     public function onFill(EntityContract $entity, ParameterBag $parameters)
     {
-        
-        return $parameters;
+        // ...
     }
     
 
