@@ -113,9 +113,24 @@ abstract class ModelAttribute implements AttributeContract
 
 
         return $errors;
-    
     }
     
+
+    /**
+     * Fill entity value
+     *
+     * @param EntityContract $entity
+     * @param ParameterBag $parameters
+     *
+     * @return Collection
+     */
+    public function onFill(EntityContract $entity, ParameterBag $parameters)
+    {
+        
+        return $parameters;
+    }
+    
+
     /**
      * Is a value valid ?
      *
