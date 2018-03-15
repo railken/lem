@@ -7,8 +7,9 @@ use Railken\Laravel\Manager\Contracts\ModelValidatorContract;
 use Railken\Laravel\Manager\ParameterBag;
 use Illuminate\Support\Collection;
 use Railken\Laravel\Manager\Tests\User\Exceptions as Exceptions;
+use Railken\Laravel\Manager\ModelValidator;
 
-class UserValidator implements ModelValidatorContract
+class UserValidator extends ModelValidator
 {
 
     /**
@@ -21,7 +22,7 @@ class UserValidator implements ModelValidatorContract
      *
      * @param UserManager $manager
      */
-    public function __construct(UserManager $manager)
+    public function __construct(UserManager $manager = null)
     {
         $this->manager = $manager;
     }

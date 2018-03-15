@@ -7,6 +7,8 @@ use Railken\Laravel\Manager\Contracts\ModelRepositoryContract;
 abstract class ModelRepository implements ModelRepositoryContract
 {
 
+    use Traits\HasModelManagerTrait;
+
     /**
      * Class entity
      *

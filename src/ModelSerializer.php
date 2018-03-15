@@ -7,17 +7,15 @@ use Railken\Laravel\Manager\Contracts\ManagerContract;
 
 abstract class ModelSerializer implements ModelSerializerContract
 {
-    /**
-     * @var ModelManager
-     */
-    protected $manager;
+    
+    use Traits\HasModelManagerTrait;
 
     /**
      * Construct
      *
      * @param ManagerContract $manager
      */
-    public function __construct(ManagerContract $manager)
+    public function __construct(ManagerContract $manager = null)
     {
         $this->manager = $manager;
     }

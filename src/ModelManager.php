@@ -74,7 +74,7 @@ abstract class ModelManager implements ManagerContract
         $this->attributes = $attributes;
         
         foreach (static::$__components[get_class($this)] as $key => $component) {
-            class_exists($component) && $this->$key = new $component($this);
+            class_exists($component) && $this->$key = (new $component());
         }
 
         if (!isset($this->validator) || !$this->validator instanceof ModelValidatorContract) {
@@ -96,6 +96,12 @@ abstract class ModelManager implements ManagerContract
         if (!isset($this->authorizer) || !$this->authorizer instanceof ModelAuthorizerContract) {
             throw new Exceptions\ModelMissingAuthorizerException($this);
         }
+
+        $this->validator->setManager($this);
+        $this->serializer->setManager($this);
+        $this->parameters->setManager($this);
+        $this->repository->setManager($this);
+        $this->authorizer->setManager($this);
 
     }
 

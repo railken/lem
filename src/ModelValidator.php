@@ -11,17 +11,14 @@ use Illuminate\Support\Collection;
 class ModelValidator implements ModelValidatorContract
 {
 
-    /**
-     * @var ModelManager
-     */
-    protected $manager;
+    use Traits\HasModelManagerTrait;
 
     /**
      * Construct
      *
      * @param ManagerContract $manager
      */
-    public function __construct(ManagerContract $manager)
+    public function __construct(ManagerContract $manager = null)
     {
         $this->manager = $manager;
     }
