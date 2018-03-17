@@ -4,3 +4,5 @@ tests/Generated/
 \.php_cs\.cache
 
 TODO\.md
+
+build/logs/clover\.xml
