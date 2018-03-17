@@ -10,7 +10,6 @@ use Illuminate\Support\Collection;
 
 class ModelAuthorizer implements ModelAuthorizerContract
 {
-
     use Traits\HasModelManagerTrait;
     
     /**
@@ -73,7 +72,7 @@ class ModelAuthorizer implements ModelAuthorizerContract
 
 
         $exception = $this->manager->getException(Tokens::NOT_AUTHORIZED);
-        $permission = $this->getPermission($action);        
+        $permission = $this->getPermission($action);
 
         !$this->manager->getAgent()->can($permission) && $errors->push(new $exception($permission));
 
@@ -90,22 +89,19 @@ class ModelAuthorizer implements ModelAuthorizerContract
      */
     public function getPermission($code)
     {
-
-        if (!isset($this->permissions[$code]))
+        if (!isset($this->permissions[$code])) {
             throw new Exceptions\PermissionNotDefinedException($this, $code);
+        }
 
         return $this->permissions[$code];
     }
 
     public function getAuthorizedAttributes(string $action, EntityContract $entity)
     {
-
-        return $this->manager->getAttributes()->filter(function($attribute) use ($action, $entity) {
+        return $this->manager->getAttributes()->filter(function ($attribute) use ($action, $entity) {
             $errors = $attribute->authorize($action, $entity, []);
 
             return $errors->count() === 0;
-
         });
-
     }
 }

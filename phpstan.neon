@@ -1,5 +1,8 @@
 parameters:
+	reportUnmatchedIgnoredErrors: false
 	ignoreErrors:
 		- '#Access to an undefined property Railken\\Laravel\\Manager\\ModelManager::\$([a-zA-Z0-9_]+)#'
 		- '#Call to an undefined static method Railken\\Laravel\\Manager\\Tests\\User\\UserManager::([a-zA-Z0-9_]+)\(\)#'
+		- '#Call to an undefined static method Railken\\Laravel\\Manager\\Tests\\Core\\Article\\ArticleManager::([a-zA-Z0-9_]+)\(\)#'
+		- '#Call to an undefined static method Railken\\Laravel\\Manager\\Tests\\Generated\\Foo\\FooManager::([a-zA-Z0-9_]+)\(\)#'
 		- '#Call to an undefined static method Illuminate\\Support\\Facades\\([a-zA-Z0-9_]+)::([a-zA-Z0-9_]+)\(\)#'

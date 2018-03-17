@@ -10,7 +10,6 @@ use Illuminate\Support\Collection;
 
 class ModelValidator implements ModelValidatorContract
 {
-
     use Traits\HasModelManagerTrait;
 
     /**
@@ -60,7 +59,6 @@ class ModelValidator implements ModelValidatorContract
      */
     public function validateUniqueness($entity, $parameters)
     {
-
         $errors = new Collection();
 
         foreach ($this->manager->getUnique() as $name => $attributes) {
@@ -78,8 +76,9 @@ class ModelValidator implements ModelValidatorContract
 
                 $value = $parameters->get($attribute, $entity->$attribute);
 
-                if ($value)
+                if ($value) {
                     $where[$col] = is_object($value) ? $value->id : $value;
+                }
             }
 
             $entity->exists && $q->where('id', '!=', $entity->id);
@@ -89,8 +88,7 @@ class ModelValidator implements ModelValidatorContract
 
                 $errors->push(new $class($where));
             }
-
-        }  
+        }
 
         return $errors;
     }

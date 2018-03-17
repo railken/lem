@@ -25,7 +25,7 @@ abstract class ModelAttribute implements AttributeContract
     protected $required = false;
 
     /**
-     * Is the attribute unique 
+     * Is the attribute unique
      *
      * @var boolean
      */
@@ -83,9 +83,9 @@ abstract class ModelAttribute implements AttributeContract
      */
     public function getException($code)
     {
-
-        if (!isset($this->exceptions[$code]))
+        if (!isset($this->exceptions[$code])) {
             throw new Exceptions\ExceptionNotDefinedException($this, $code);
+        }
 
         return $this->exceptions[$code];
     }
@@ -100,9 +100,9 @@ abstract class ModelAttribute implements AttributeContract
      */
     public function getPermission($code)
     {
-
-        if (!isset($this->permissions[$code]))
+        if (!isset($this->permissions[$code])) {
             throw new Exceptions\PermissionNotDefinedException($this, $code);
+        }
 
         return $this->permissions[$code];
     }
@@ -209,5 +209,4 @@ abstract class ModelAttribute implements AttributeContract
     {
         return $this->name;
     }
-
 }

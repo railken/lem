@@ -7,7 +7,6 @@ use Railken\Laravel\Manager\Contracts\ManagerContract;
 
 abstract class ModelSerializer implements ModelSerializerContract
 {
-    
     use Traits\HasModelManagerTrait;
 
     /**
@@ -19,7 +18,4 @@ abstract class ModelSerializer implements ModelSerializerContract
     {
         $this->manager = $manager;
     }
-
-    
-
 }

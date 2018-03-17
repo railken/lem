@@ -115,39 +115,38 @@ class Generator
 
         $this->put(
             $base_path,
-            "/Attributes/ModelAttribute.php.stub", 
-            "/Attributes/{$attribute_camelized}/{$attribute_camelized}Attribute.php", 
+            "/Attributes/ModelAttribute.php.stub",
+            "/Attributes/{$attribute_camelized}/{$attribute_camelized}Attribute.php",
             $vars
         );
 
         $this->put(
             $base_path,
-            "/Attributes/Exceptions/ModelAttributeNotDefinedException.php.stub", 
-            "/Attributes/{$attribute_camelized}/Exceptions/{$name}{$attribute_camelized}NotDefinedException.php", 
+            "/Attributes/Exceptions/ModelAttributeNotDefinedException.php.stub",
+            "/Attributes/{$attribute_camelized}/Exceptions/{$name}{$attribute_camelized}NotDefinedException.php",
             $vars
         );
 
         $this->put(
             $base_path,
-            "/Attributes/Exceptions/ModelAttributeNotValidException.php.stub", 
-            "/Attributes/{$attribute_camelized}/Exceptions/{$name}{$attribute_camelized}NotValidException.php", 
+            "/Attributes/Exceptions/ModelAttributeNotValidException.php.stub",
+            "/Attributes/{$attribute_camelized}/Exceptions/{$name}{$attribute_camelized}NotValidException.php",
             $vars
         );
 
         $this->put(
             $base_path,
-            "/Attributes/Exceptions/ModelAttributeNotAuthorizedException.php.stub", 
-            "/Attributes/{$attribute_camelized}/Exceptions/{$name}{$attribute_camelized}NotAuthorizedException.php", 
+            "/Attributes/Exceptions/ModelAttributeNotAuthorizedException.php.stub",
+            "/Attributes/{$attribute_camelized}/Exceptions/{$name}{$attribute_camelized}NotAuthorizedException.php",
             $vars
         );
 
         $this->put(
             $base_path,
-            "/Attributes/Exceptions/ModelAttributeNotUniqueException.php.stub", 
+            "/Attributes/Exceptions/ModelAttributeNotUniqueException.php.stub",
             "/Attributes/{$attribute_camelized}/Exceptions/{$name}{$attribute_camelized}NotUniqueException.php",
             $vars
          );
- 
     }
 
     /**

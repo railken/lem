@@ -4,8 +4,6 @@ namespace Railken\Laravel\Manager;
 
 class Tokens
 {
-
-
     const NOT_DEFINED = 'NOT_DEFINED';
     const NOT_VALID = 'NOT_VALID';
     const NOT_UNIQUE = 'NOT_UNIQUE';
@@ -15,5 +13,4 @@ class Tokens
     const PERMISSION_UPDATE = 'UPDATE';
     const PERMISSION_SHOW = 'SHOW';
     const PERMISSION_REMOVE = 'REMOVE';
-
 }

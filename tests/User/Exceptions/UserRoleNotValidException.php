@@ -24,5 +24,5 @@ class UserRoleNotValidException extends UserAttributeException
      *
      * @var string
      */
-    protected $message = "The %s must be ".User::ROLE_ADMIN." or ".User::ROLE_USER."";
+    protected $message = "The %s is not valid";
 }

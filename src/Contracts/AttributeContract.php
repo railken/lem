@@ -8,7 +8,7 @@ use Railken\Laravel\Manager\ParameterBag;
 interface AttributeContract
 {
 
-	/**
+    /**
      * Validate
      *
      * @param EntityContract $entity

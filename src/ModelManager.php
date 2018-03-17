@@ -17,9 +17,8 @@ use Railken\Laravel\Manager\Contracts\AgentContract;
 use Railken\Laravel\Manager\Agents\SystemAgent;
 
 /**
- * Abstract Model class, used for all our own models.
+ * Abstract ModelManager class
  *
- * @method static void repository()
  */
 abstract class ModelManager implements ManagerContract
 {
@@ -59,8 +58,7 @@ abstract class ModelManager implements ManagerContract
      * Construct
      */
     public function __construct(AgentContract $agent = null)
-    {   
-
+    {
         if (!$agent) {
             $agent = new Agents\SystemAgent();
         }
@@ -72,7 +70,7 @@ abstract class ModelManager implements ManagerContract
         foreach ($this->attributes as $attribute) {
             $attribute = new $attribute();
             $attribute->setManager($this);
-            $attributes[$attribute->getName()] = $attribute; 
+            $attributes[$attribute->getName()] = $attribute;
         }
 
         $this->attributes = $attributes;
@@ -106,7 +104,6 @@ abstract class ModelManager implements ManagerContract
         $this->parameters->setManager($this);
         $this->repository->setManager($this);
         $this->authorizer->setManager($this);
-
     }
 
     /**
@@ -139,9 +136,9 @@ abstract class ModelManager implements ManagerContract
      */
     public function getException($code)
     {
-
-        if (!isset($this->exceptions[$code]))
+        if (!isset($this->exceptions[$code])) {
             throw new Exceptions\ExceptionNotDefinedException($this, $code);
+        }
 
         return $this->exceptions[$code];
     }
@@ -155,9 +152,9 @@ abstract class ModelManager implements ManagerContract
      */
     public function getPermission($code)
     {
-
-        if (!isset($this->permissions[$code]))
+        if (!isset($this->permissions[$code])) {
             throw new Exceptions\PermissionNotDefinedException($this, $code);
+        }
 
         return $this->permissions[$code];
     }
@@ -266,8 +263,6 @@ abstract class ModelManager implements ManagerContract
      */
     public function create($parameters)
     {
-
-
         $result = new ResultAction();
         $entity = $this->repository->newEntity();
 
@@ -372,8 +367,9 @@ abstract class ModelManager implements ManagerContract
 
         $result->addErrors($this->authorizer->authorize(Tokens::PERMISSION_REMOVE, $entity, $this->parameters::factory([])));
 
-        if (!$result->ok())
+        if (!$result->ok()) {
             return $result;
+        }
 
         try {
             DB::beginTransaction();
@@ -441,5 +437,4 @@ abstract class ModelManager implements ManagerContract
 
         return $entity ? $this->update($entity, $parameters) : $this->create($parameters);
     }
-
 }

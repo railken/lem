@@ -35,7 +35,7 @@ abstract class ArticleAttributeException extends ArticleException
     {
         $this->label = $this->attribute;
 
-        return parent::__construct($value);
+        parent::__construct($value);
     }
 
 }

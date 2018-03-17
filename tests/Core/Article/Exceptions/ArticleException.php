@@ -49,6 +49,8 @@ abstract class ArticleException extends Exception implements ExceptionContract
         }
 
         $this->message = sprintf($this->message, $this->label, $value);
+
+        parent::__construct();
     }
 
     /**

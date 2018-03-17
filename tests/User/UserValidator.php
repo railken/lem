@@ -13,21 +13,6 @@ class UserValidator extends ModelValidator
 {
 
     /**
-     * @var UserManager
-     */
-    protected $manager;
-
-    /**
-     * Construct
-     *
-     * @param UserManager $manager
-     */
-    public function __construct(UserManager $manager = null)
-    {
-        $this->manager = $manager;
-    }
-
-    /**
      * Validate
      *
      * @param EntityContract $entity
@@ -91,9 +76,6 @@ class UserValidator extends ModelValidator
 
         $parameters->exists('password') && !$this->validPassword($parameters->get('password')) &&
             $errors->push(new Exceptions\UserPasswordNotValidException($parameters->get('password')));
-
-        $parameters->exists('role') && !$this->validRole($parameters->get('role')) &&
-            $errors->push(new Exceptions\UserRoleNotValidException($parameters->get('role')));
 
 
         return $errors;

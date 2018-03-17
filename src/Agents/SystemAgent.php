@@ -4,19 +4,19 @@ namespace Railken\Laravel\Manager\Agents;
 
 use Railken\Laravel\Manager\Contracts\AgentContract;
 
-class SystemAgent implements AgentContract 
+class SystemAgent implements AgentContract
 {
 
-	/**
-	 * Has permission
-	 *
-	 * @param string $permission
-	 * @param array $arguments
-	 *
-	 * @return boolean
-	 */
-	public function can($permission, $arguments = [])
-	{
-		return true;
-	}
+    /**
+     * Has permission
+     *
+     * @param string $permission
+     * @param array $arguments
+     *
+     * @return boolean
+     */
+    public function can($permission, $arguments = [])
+    {
+        return true;
+    }
 }

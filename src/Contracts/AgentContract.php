@@ -13,5 +13,4 @@ interface AgentContract
      * @return bool
      */
     public function can($ability, $arguments = []);
-
 }

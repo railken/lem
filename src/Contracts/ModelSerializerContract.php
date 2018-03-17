@@ -15,5 +15,4 @@ interface ModelSerializerContract
      * @return Collection
      */
     public function serialize(EntityContract $entity, Collection $select);
-
 }

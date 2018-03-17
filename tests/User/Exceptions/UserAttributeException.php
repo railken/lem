@@ -36,6 +36,6 @@ class UserAttributeException extends UserException implements ExceptionContract
     {
         $this->label = $this->attribute;
 
-        return parent::__construct($value);
+        parent::__construct($value);
     }
 }

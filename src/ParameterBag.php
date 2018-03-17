@@ -8,9 +8,8 @@ use Railken\Laravel\Manager\Contracts\ParameterBagContract;
 
 abstract class ParameterBag extends Bag implements ParameterBagContract
 {
-
-	use Traits\HasModelManagerTrait;
-	
+    use Traits\HasModelManagerTrait;
+    
     /**
      * Filter current bag
      *
@@ -20,5 +19,4 @@ abstract class ParameterBag extends Bag implements ParameterBagContract
     {
         return $this;
     }
-    
 }
