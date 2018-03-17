@@ -23,7 +23,7 @@ class $NAME$ extends Model implements EntityContract
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['name'];
+	protected $fillable = [];
 
 	/**
 	 * The attributes that should be mutated to dates.

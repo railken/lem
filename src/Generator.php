@@ -3,6 +3,10 @@
 namespace Railken\Laravel\Manager;
 
 use Illuminate\Support\Collection;
+use PhpParser\Error;
+use PhpParser\NodeTraverser;
+use PhpParser\ParserFactory;
+use PhpParser\PrettyPrinter;
 
 class Generator
 {
@@ -146,7 +150,31 @@ class Generator
             "/Attributes/Exceptions/ModelAttributeNotUniqueException.php.stub",
             "/Attributes/{$attribute_camelized}/Exceptions/{$name}{$attribute_camelized}NotUniqueException.php",
             $vars
-         );
+        );
+
+
+        $code = file_get_contents($base_path."/{$name}.php");
+        $traverser     = new NodeTraverser;
+        $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
+        $prettyPrinter = new PrettyPrinter\Standard;
+
+        $traverser->addVisitor(new ModelVisitor($attribute_underscore));
+
+        try {
+
+            $stmts = $parser->parse($code);
+
+            // traverse
+            $stmts = $traverser->traverse($stmts);
+
+            // pretty print
+            $code = $prettyPrinter->prettyPrintFile($stmts);
+
+            file_put_contents($base_path."/{$name}.php", $code);
+
+        } catch (Error $e) {
+            echo 'Parse Error: ', $e->getMessage();
+        }
     }
 
     /**
