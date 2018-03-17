@@ -6,9 +6,15 @@ use Railken\Laravel\Manager\Contracts\AttributeContract;
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\Contracts\ManagerContract;
 use Illuminate\Support\Collection;
+use Respect\Validation\Validator as v;
 
 abstract class ModelAttribute implements AttributeContract
 {
+
+    /**
+     * @var string
+     */
+    protected $name;
 
     /**
      * Is the attribute required
@@ -29,6 +35,18 @@ abstract class ModelAttribute implements AttributeContract
      * @var ManagerContract
      */
     protected $manager;
+
+    /**
+     * @var array
+     */
+    protected $exceptions;
+    
+    /**
+     * List of all permissions
+     *
+     * @var array
+     */
+    protected $permissions;
 
     /**
      * Set manager
@@ -114,7 +132,19 @@ abstract class ModelAttribute implements AttributeContract
 
         return $errors;
     }
-    
+
+    /**
+     * Is a value valid ?
+     *
+     * @param EntityContract $entity
+     * @param mixed $value
+     *
+     * @return boolean
+     */
+    public function valid(EntityContract $entity, $value)
+    {
+        return v::length(1, 255)->validate($value);
+    }
 
     /**
      * Fill entity value

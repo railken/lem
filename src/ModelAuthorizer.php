@@ -14,6 +14,13 @@ class ModelAuthorizer implements ModelAuthorizerContract
     use Traits\HasModelManagerTrait;
     
     /**
+     * List of all permissions
+     *
+     * @var array
+     */
+    protected $permissions;
+
+    /**
      * Construct
      *
      * @param ManagerContract $manager

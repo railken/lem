@@ -10,7 +10,7 @@ interface ModelRepositoryContract
      *
      * @param array $parameters
      *
-     * @return entity
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function newEntity(array $parameters = []);
 
@@ -26,7 +26,7 @@ interface ModelRepositoryContract
      *
      * @param array $parameters
      *
-     * @return Collection
+     * @return \Illuminate\Support\Collection
      */
     public function findBy($parameters);
 
@@ -35,7 +35,7 @@ interface ModelRepositoryContract
      *
      * @param array $parameters
      *
-     * @return Entity
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function findOneBy($parameters);
 
@@ -44,14 +44,14 @@ interface ModelRepositoryContract
      *
      * @param array $parameters
      *
-     * @return Collection
+     * @return \Illuminate\Support\Collection
      */
     public function findWhereIn(array $parameters);
 
     /**
      * Return query
      *
-     * @return QueryBuilder
+     * @return \Illuminate\Database\Query\Builder
      */
-    public function getQuery();
+    public function newQuery();
 }

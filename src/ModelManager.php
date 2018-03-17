@@ -16,6 +16,11 @@ use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\Contracts\AgentContract;
 use Railken\Laravel\Manager\Agents\SystemAgent;
 
+/**
+ * Abstract Model class, used for all our own models.
+ *
+ * @method static void repository()
+ */
 abstract class ModelManager implements ManagerContract
 {
     /**
@@ -36,8 +41,7 @@ abstract class ModelManager implements ManagerContract
     /**
      * @var array
      */
-    protected $exceptions = [
-    ];
+    protected $exceptions = [];
 
 
     /**
@@ -408,11 +412,12 @@ abstract class ModelManager implements ManagerContract
     /**
      * First or create
      *
+     * @param ParameterBag|array $criteria
      * @param ParameterBag|array $parameters
      *
      * @return EntityContract
      */
-    public function findOrCreate($parameters)
+    public function findOrCreate($criteria, $parameters)
     {
         $parameters = $this->castParameters($parameters);
         $entity = $this->findOneBy($criteria);

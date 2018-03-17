@@ -2,7 +2,6 @@
 
 namespace Railken\Laravel\Manager;
 
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Collection;
 
 class Generator
@@ -62,21 +61,19 @@ class Generator
             'NAME:UPPERCASE' => strtoupper($name),
         ];
 
-        $this->base_path = $base_path;
-
-        $this->put("/Model.php.stub", "/{$name}.php", $vars);
-        $this->put("/ModelManager.php.stub", "/{$name}Manager.php", $vars);
-        $this->put("/ModelRepository.php.stub", "/{$name}Repository.php", $vars);
-        $this->put("/ModelValidator.php.stub", "/{$name}Validator.php", $vars);
-        $this->put("/ModelAuthorizer.php.stub", "/{$name}Authorizer.php", $vars);
-        $this->put("/ModelObserver.php.stub", "/{$name}Observer.php", $vars);
-        $this->put("/ModelSerializer.php.stub", "/{$name}Serializer.php", $vars);
-        $this->put("/ModelParameterBag.php.stub", "/{$name}ParameterBag.php", $vars);
-        $this->put("/ModelServiceProvider.php.stub", "/{$name}ServiceProvider.php", $vars);
-        $this->put("/Exceptions/ModelException.php.stub", "/Exceptions/{$name}Exception.php", $vars);
-        $this->put("/Exceptions/ModelNotFoundException.php.stub", "/Exceptions/{$name}NotFoundException.php", $vars);
-        $this->put("/Exceptions/ModelNotAuthorizedException.php.stub", "/Exceptions/{$name}NotAuthorizedException.php", $vars);
-        $this->put("/Exceptions/ModelAttributeException.php.stub", "/Exceptions/{$name}AttributeException.php", $vars);
+        $this->put($base_path, "/Model.php.stub", "/{$name}.php", $vars);
+        $this->put($base_path, "/ModelManager.php.stub", "/{$name}Manager.php", $vars);
+        $this->put($base_path, "/ModelRepository.php.stub", "/{$name}Repository.php", $vars);
+        $this->put($base_path, "/ModelValidator.php.stub", "/{$name}Validator.php", $vars);
+        $this->put($base_path, "/ModelAuthorizer.php.stub", "/{$name}Authorizer.php", $vars);
+        $this->put($base_path, "/ModelObserver.php.stub", "/{$name}Observer.php", $vars);
+        $this->put($base_path, "/ModelSerializer.php.stub", "/{$name}Serializer.php", $vars);
+        $this->put($base_path, "/ModelParameterBag.php.stub", "/{$name}ParameterBag.php", $vars);
+        $this->put($base_path, "/ModelServiceProvider.php.stub", "/{$name}ServiceProvider.php", $vars);
+        $this->put($base_path, "/Exceptions/ModelException.php.stub", "/Exceptions/{$name}Exception.php", $vars);
+        $this->put($base_path, "/Exceptions/ModelNotFoundException.php.stub", "/Exceptions/{$name}NotFoundException.php", $vars);
+        $this->put($base_path, "/Exceptions/ModelNotAuthorizedException.php.stub", "/Exceptions/{$name}NotAuthorizedException.php", $vars);
+        $this->put($base_path, "/Exceptions/ModelAttributeException.php.stub", "/Exceptions/{$name}AttributeException.php", $vars);
 
         $this->generateAttribute($path, $namespace, 'id');
         $this->generateAttribute($path, $namespace, 'name');
@@ -94,7 +91,7 @@ class Generator
      *
      * @return void
      */
-    public function generateAttribute($path, $namespace, $attribute)
+    public function generateAttribute($path, $namespace, $attribute, $arguments = [])
     {
         $namespaces = collect(explode("\\", $namespace));
         $name = $namespaces->last();
@@ -116,40 +113,68 @@ class Generator
             'ATTRIBUTE:UPPERCASE' => strtoupper($attribute)
         ];
 
-        $this->base_path = $base_path;
+        $this->put(
+            $base_path,
+            "/Attributes/ModelAttribute.php.stub", 
+            "/Attributes/{$attribute_camelized}/{$attribute_camelized}Attribute.php", 
+            $vars
+        );
 
-        $this->put("/Attributes/ModelAttribute.php.stub", "/Attributes/{$attribute_camelized}/{$attribute_camelized}Attribute.php", $vars);
-        $this->put("/Attributes/Exceptions/ModelAttributeNotDefinedException.php.stub", "/Attributes/{$attribute_camelized}/Exceptions/{$name}".($attribute_camelized)."NotDefinedException.php", $vars);
-        $this->put("/Attributes/Exceptions/ModelAttributeNotValidException.php.stub", "/Attributes/{$attribute_camelized}/Exceptions/{$name}".($attribute_camelized)."NotValidException.php", $vars);
-        $this->put("/Attributes/Exceptions/ModelAttributeNotAuthorizedException.php.stub", "/Attributes/{$attribute_camelized}/Exceptions/{$name}".($attribute_camelized)."NotAuthorizedException.php", $vars);
-        $this->put("/Attributes/Exceptions/ModelAttributeNotUniqueException.php.stub", "/Attributes/{$attribute_camelized}/Exceptions/{$name}".($attribute_camelized)."NotUniqueException.php", $vars);
+        $this->put(
+            $base_path,
+            "/Attributes/Exceptions/ModelAttributeNotDefinedException.php.stub", 
+            "/Attributes/{$attribute_camelized}/Exceptions/{$name}{$attribute_camelized}NotDefinedException.php", 
+            $vars
+        );
+
+        $this->put(
+            $base_path,
+            "/Attributes/Exceptions/ModelAttributeNotValidException.php.stub", 
+            "/Attributes/{$attribute_camelized}/Exceptions/{$name}{$attribute_camelized}NotValidException.php", 
+            $vars
+        );
+
+        $this->put(
+            $base_path,
+            "/Attributes/Exceptions/ModelAttributeNotAuthorizedException.php.stub", 
+            "/Attributes/{$attribute_camelized}/Exceptions/{$name}{$attribute_camelized}NotAuthorizedException.php", 
+            $vars
+        );
+
+        $this->put(
+            $base_path,
+            "/Attributes/Exceptions/ModelAttributeNotUniqueException.php.stub", 
+            "/Attributes/{$attribute_camelized}/Exceptions/{$name}{$attribute_camelized}NotUniqueException.php",
+            $vars
+         );
  
     }
 
     /**
      * Generate a new file from $source to $to
      *
+     * @param string $base_path
      * @param string $source
      * @param string $to
      * @param array $data
      *
      * @return void
      */
-    public function put($source, $to, $data = [])
+    public function put($base_path, $source, $to, $data = [])
     {
-        $content = File::get(__DIR__."/stubs".$source);
+        $content = file_get_contents(__DIR__."/stubs".$source);
 
-        $to = $this->base_path.$to;
+        $to = $base_path.$to;
 
 
         $to_dir = dirname($to);
 
 
-        !File::exists($to_dir) && File::makeDirectory($to_dir, 0775, true);
+        !file_exists($to_dir) && mkdir($to_dir, 0775, true);
 
         $content = $this->parse($data, $content);
 
-        !File::exists($to) && File::put($to, $content);
+        !file_exists($to) && file_put_contents($to, $content);
     }
 
     public function parse($vars, $content)

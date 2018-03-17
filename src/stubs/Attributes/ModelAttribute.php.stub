@@ -7,8 +7,8 @@ use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\ModelAttribute;
 use Railken\Laravel\Manager\Traits\AttributeValidateTrait;
 use $NAMESPACE$\Attributes\$ATTRIBUTE:CAMELIZED$\Exceptions as Exceptions;
-use Respect\Validation\Validator as v;
 use Railken\Laravel\Manager\Tokens;
+use Respect\Validation\Validator as v;
 
 class $ATTRIBUTE:CAMELIZED$Attribute extends ModelAttribute
 {

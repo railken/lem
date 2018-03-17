@@ -21,7 +21,7 @@ abstract class ModelRepository implements ModelRepositoryContract
      *
      * @param array $parameters
      *
-     * @return entity
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function newEntity(array $parameters = [])
     {
@@ -45,7 +45,7 @@ abstract class ModelRepository implements ModelRepositoryContract
      *
      * @param array $parameters
      *
-     * @return Collection
+     * @return \Illuminate\Support\Collection
      */
     public function findBy($parameters)
     {
@@ -57,7 +57,7 @@ abstract class ModelRepository implements ModelRepositoryContract
      *
      * @param array $parameters
      *
-     * @return Entity
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function findOneBy($parameters)
     {
@@ -69,7 +69,7 @@ abstract class ModelRepository implements ModelRepositoryContract
      *
      * @param integer $id
      *
-     * @return Entity
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function findOneById($id)
     {
@@ -82,7 +82,7 @@ abstract class ModelRepository implements ModelRepositoryContract
      *
      * @param array $parameters
      *
-     * @return Collection
+     * @return \Illuminate\Support\Collection
      */
     public function findWhereIn(array $parameters)
     {
@@ -99,9 +99,20 @@ abstract class ModelRepository implements ModelRepositoryContract
     /**
      * Return query
      *
-     * @return QueryBuilder
+     * @return \Illuminate\Database\Query\Builder
      */
     public function getQuery()
+    {
+        return $this->newQuery();
+    }
+
+
+    /**
+     * Return query
+     *
+     * @return \Illuminate\Database\Query\Builder
+     */
+    public function newQuery()
     {
         return $this->newEntity()->newQuery();
     }

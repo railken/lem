@@ -14,7 +14,7 @@ interface AttributeContract
      * @param EntityContract $entity
      * @param ParameterBag $parameters
      *
-     * @return Collection
+     * @return \Illuminate\Support\Collection
      */
     public function validate(EntityContract $entity, ParameterBag $parameters);
 }
