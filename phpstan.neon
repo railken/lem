@@ -1,0 +1,6 @@
+parameters:
+	ignoreErrors:
+		- '#Access to an undefined property Railken\\Laravel\\Manager\\ModelManager::\$([a-zA-Z0-9_]+)#'
+		- '#Call to an undefined static method Illuminate\\Support\\Facades\\([a-zA-Z0-9_]+)::([a-zA-Z0-9_]+)\(\)#'
+
+ 
