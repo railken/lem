@@ -67,5 +67,4 @@ class $ATTRIBUTE:CAMELIZED$Attribute extends ModelAttribute
 		return v::length(1, 255)->validate($value);
 	}
 
-
 }

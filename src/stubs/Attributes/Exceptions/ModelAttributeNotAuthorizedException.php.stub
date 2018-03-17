@@ -27,7 +27,4 @@ class $NAME$$ATTRIBUTE:CAMELIZED$NotAuthorizedException extends $NAME$AttributeE
 	 */
 	protected $message = "You're not authorized to interact with %s, missing %s permission";
 
-
-
-
 }

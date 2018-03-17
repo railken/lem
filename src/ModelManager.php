@@ -29,7 +29,7 @@ abstract class ModelManager implements ManagerContract
     protected static $__components = [];
 
     /**
-     * @var attributes
+     * @var array
      */
     protected $attributes = [];
 

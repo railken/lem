@@ -35,7 +35,7 @@ abstract class $NAME$AttributeException extends $NAME$Exception
     {
         $this->label = $this->attribute;
 
-        return parent::__construct($value);
+        parent::__construct($value);
     }
 
 }
