@@ -102,7 +102,7 @@ abstract class ModelManager implements ManagerContract
     }
 
     /**
-     * Initialize components
+     * Initialize components.
      *
      * @return void
      */
@@ -346,17 +346,18 @@ abstract class ModelManager implements ManagerContract
         try {
             DB::beginTransaction();
 
-            # Global
+            // Global
             $result->addErrors($this->authorizer->authorize($permission, $entity, $parameters));
             $result->addErrors($this->validator->validate($entity, $parameters));
 
-            # Attributes
+            // Attributes
             foreach ($this->getAttributes() as $attribute) {
                 $result->addErrors($attribute->fill($entity, $parameters));
             }
 
             if (!$result->ok()) {
                 DB::rollBack();
+
                 return $result;
             }
 
