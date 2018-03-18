@@ -4,10 +4,10 @@ namespace Railken\Laravel\Manager;
 
 use PhpParser\Lexer;
 use PhpParser\NodeTraverser;
-use PhpParser\Parser;
-use PhpParser\PrettyPrinter;
 use PhpParser\NodeVisitor;
 use PhpParser\NodeVisitorAbstract;
+use PhpParser\Parser;
+use PhpParser\PrettyPrinter;
 use Railken\Laravel\Manager\Parser\Visitors as Visitors;
 
 class Generator
@@ -158,14 +158,13 @@ class Generator
     }
 
     /**
-     * Parse the code with a visitor
+     * Parse the code with a visitor.
      *
-     * @param string $path
+     * @param string                         $path
      * @param \PhpParser\NodeVisitorAbstract $visitor
      */
     public function parseCode($path, NodeVisitorAbstract $visitor)
     {
-
         $lexer = new Lexer\Emulative([
             'usedAttributes' => [
                 'comments',
@@ -175,10 +174,10 @@ class Generator
         ]);
 
         $parser = new Parser\Php7($lexer, [
-            'useIdentifierNodes' => true,
+            'useIdentifierNodes'         => true,
             'useConsistentVariableNodes' => true,
-            'useExpressionStatements' => true,
-            'useNopStatements' => false,
+            'useExpressionStatements'    => true,
+            'useNopStatements'           => false,
         ]);
 
         $traverser = new NodeTraverser();
