@@ -113,4 +113,21 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
         UserManager::serializer(stdClass::class);
         new UserManager();
     }
+
+
+    /**
+     * @expectedException \Railken\Laravel\Manager\Exceptions\ExceptionNotDefinedException
+     */
+    public function testExceptionNotDefinedException()
+    {
+        (new UserManager())->getException("WRONG_EXCEPTION_CODE");
+    }
+
+    /**
+     * @expectedException \Railken\Laravel\Manager\Exceptions\PermissionNotDefinedException
+     */
+    public function testPermissionNotDefinedException()
+    {
+        (new UserManager())->getPermission("WRONG_PERMISSION_CODE");
+    }
 }

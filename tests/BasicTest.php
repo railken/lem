@@ -102,7 +102,9 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         $um->update($resource, $this->getUserBag());
         $um->remove($resource);
 
-        $um->findOneBy(['username' => 'test123']);
+        $this->assertEquals(null, $um->findOneBy(['username' => 'test123']));
+        $this->assertEquals(0, count($um->findBy(['username' => 'test123'])));
+
     }
 
     /**
