@@ -410,7 +410,6 @@ abstract class ModelManager implements ManagerContract
         }
 
         return $result;
-
     }
 
     /**

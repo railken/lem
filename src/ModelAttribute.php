@@ -182,7 +182,6 @@ abstract class ModelAttribute implements AttributeContract
      */
     public function fill(EntityContract $entity, ParameterBag $parameters)
     {
-
         $errors = new Collection();
         $errors = $errors->merge($this->authorize(Tokens::PERMISSION_FILL, $entity, $parameters));
         $errors = $errors->merge($this->validate($entity, $parameters));
