@@ -3,10 +3,8 @@
 namespace Railken\Laravel\Manager;
 
 use Illuminate\Support\Collection;
-use PhpParser\Error;
-use PhpParser\NodeTraverser;
-use PhpParser\ParserFactory;
-use PhpParser\PrettyPrinter;
+
+use PhpParser\{Lexer, NodeTraverser, NodeVisitor, Parser, PrettyPrinter};
 
 class Generator
 {
@@ -153,28 +151,32 @@ class Generator
         );
 
 
-        $code = file_get_contents($base_path."/{$name}.php");
-        $traverser     = new NodeTraverser;
-        $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
-        $prettyPrinter = new PrettyPrinter\Standard;
 
+        $lexer = new Lexer\Emulative([
+            'usedAttributes' => [
+                'comments',
+                'startLine', 'endLine',
+                'startTokenPos', 'endTokenPos',
+            ],
+        ]);
+        $parser = new Parser\Php7($lexer);
+
+        $traverser = new NodeTraverser();
         $traverser->addVisitor(new ModelVisitor($attribute_underscore));
 
-        try {
+        $printer = new PrettyPrinter\Standard();
+        $code = file_get_contents($base_path."/{$name}.php");
+        $oldStmts = $parser->parse($code);
+        $oldTokens = $lexer->getTokens();
 
-            $stmts = $parser->parse($code);
+        $newStmts = $traverser->traverse($oldStmts);
 
-            // traverse
-            $stmts = $traverser->traverse($stmts);
 
-            // pretty print
-            $code = $prettyPrinter->prettyPrintFile($stmts);
+        $newCode = $printer->printFormatPreserving($newStmts, $oldStmts, $oldTokens);
 
-            file_put_contents($base_path."/{$name}.php", $code);
+        print_r($newCode);
 
-        } catch (Error $e) {
-            echo 'Parse Error: ', $e->getMessage();
-        }
+        file_put_contents($base_path."/{$name}.php", $newCode);
     }
 
     /**
