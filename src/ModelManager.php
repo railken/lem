@@ -363,15 +363,7 @@ abstract class ModelManager implements ManagerContract
      */
     public function create($parameters)
     {
-        $result = new ResultAction();
-        $entity = $this->repository->newEntity();
-
-        $parameters = $this->castParameters($parameters);
-
-        $result->addErrors($this->authorizer->authorize(Tokens::PERMISSION_CREATE, $entity, $parameters));
-        $result->addErrors($this->validator->validate($entity, $parameters));
-
-        return $result->ok() ? $this->edit($entity, $parameters) : $result;
+        return $this->update($this->repository->newEntity(), $parameters, Tokens::PERMISSION_CREATE);
     }
 
     /**
@@ -379,30 +371,11 @@ abstract class ModelManager implements ManagerContract
      *
      * @param EntityContract     $entity
      * @param ParameterBag|array $parameters
+     * @param string             $permission
      *
      * @return ResultAction
      */
-    public function update(EntityContract $entity, $parameters)
-    {
-        $parameters = $this->castParameters($parameters);
-
-        $result = new ResultAction();
-
-        $result->addErrors($this->authorizer->authorize(Tokens::PERMISSION_UPDATE, $entity, $parameters));
-        $result->addErrors($this->validator->validate($entity, $parameters));
-
-        return $result->ok() ? $this->edit($entity, $parameters) : $result;
-    }
-
-    /**
-     * Update a EntityContract given parameters.
-     *
-     * @param EntityContract     $entity
-     * @param ParameterBag|array $parameters
-     *
-     * @return ResultAction
-     */
-    public function edit(EntityContract $entity, $parameters)
+    public function update(EntityContract $entity, $parameters, $permission = Tokens::PERMISSION_UPDATE)
     {
         $parameters = $this->castParameters($parameters);
 
@@ -411,7 +384,20 @@ abstract class ModelManager implements ManagerContract
         try {
             DB::beginTransaction();
 
-            $this->fill($entity, $parameters);
+            # Global
+            $result->addErrors($this->authorizer->authorize($permission, $entity, $parameters));
+            $result->addErrors($this->validator->validate($entity, $parameters));
+
+            # Attributes
+            foreach ($this->getAttributes() as $attribute) {
+                $result->addErrors($attribute->fill($entity, $parameters));
+            }
+
+            if (!$result->ok()) {
+                DB::rollBack();
+                return $result;
+            }
+
             $this->save($entity);
 
             $result->getResources()->push($entity);
@@ -424,6 +410,7 @@ abstract class ModelManager implements ManagerContract
         }
 
         return $result;
+
     }
 
     /**
@@ -480,27 +467,6 @@ abstract class ModelManager implements ManagerContract
         }
 
         return $result;
-    }
-
-    /**
-     * Fill entity EntityContract with array.
-     *
-     * @param EntityContract       $entity
-     * @param ParameterBagContract $parameters
-     *
-     * @return void
-     */
-    public function fill(EntityContract $entity, ParameterBagContract $parameters)
-    {
-        $parameters = $this->castParameters($parameters);
-
-        foreach ($this->getAttributes() as $attribute) {
-            $attribute->onFill($entity, $parameters);
-        }
-
-        $entity->fill($parameters->all());
-
-        return $entity;
     }
 
     /**

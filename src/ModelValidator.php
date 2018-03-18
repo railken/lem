@@ -39,9 +39,6 @@ class ModelValidator implements ModelValidatorContract
             $errors = $errors->merge($this->$method($entity, $parameters));
         });
 
-        foreach ($this->manager->getAttributes() as $attribute) {
-            $errors = $errors->merge($attribute->validate($entity, $parameters));
-        }
 
         return $errors;
     }

@@ -47,10 +47,6 @@ class ModelAuthorizer implements ModelAuthorizerContract
             $errors = $errors->merge($this->$method($action, $entity, $parameters));
         });
 
-        foreach ($this->manager->getAttributes() as $attribute) {
-            $errors = $errors->merge($attribute->authorize(Tokens::PERMISSION_FILL, $entity, $parameters));
-        }
-
         return $errors;
     }
 

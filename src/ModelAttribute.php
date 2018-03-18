@@ -114,6 +114,27 @@ abstract class ModelAttribute implements AttributeContract
     }
 
     /**
+     * Is a value valid ?
+     *
+     * @param string         $action
+     * @param EntityContract $entity
+     * @param mixed          $value
+     *
+     * @return bool
+     */
+    public function authorize(string $action, EntityContract $entity, $value)
+    {
+        $errors = new Collection();
+
+        $permission = $this->getPermission($action);
+        $exception = $this->getException(Tokens::NOT_AUTHORIZED);
+
+        !$this->getManager()->getAgent()->can($permission) && $errors->push(new $exception($permission));
+
+        return $errors;
+    }
+
+    /**
      * Validate.
      *
      * @param EntityContract $entity
@@ -159,9 +180,16 @@ abstract class ModelAttribute implements AttributeContract
      *
      * @return Collection
      */
-    public function onFill(EntityContract $entity, ParameterBag $parameters)
+    public function fill(EntityContract $entity, ParameterBag $parameters)
     {
-        // ...
+
+        $errors = new Collection();
+        $errors = $errors->merge($this->authorize(Tokens::PERMISSION_FILL, $entity, $parameters));
+        $errors = $errors->merge($this->validate($entity, $parameters));
+        
+        $parameters->exists($this->name) && $entity->fill([$this->name => $parameters->get($this->name)]);
+
+        return $errors;
     }
 
     /**
@@ -179,27 +207,6 @@ abstract class ModelAttribute implements AttributeContract
         $entity->exists && $q->where('id', $entity->id);
 
         return $q->count() > 0;
-    }
-
-    /**
-     * Is a value valid ?
-     *
-     * @param string         $action
-     * @param EntityContract $entity
-     * @param mixed          $value
-     *
-     * @return bool
-     */
-    public function authorize(string $action, EntityContract $entity, $value)
-    {
-        $errors = new Collection();
-
-        $permission = $this->getPermission($action);
-        $exception = $this->getException(Tokens::NOT_AUTHORIZED);
-
-        !$this->getManager()->getAgent()->can($permission) && $errors->push(new $exception($permission));
-
-        return $errors;
     }
 
     /**
