@@ -4,19 +4,17 @@ namespace $NAMESPACE$\Exceptions;
 
 class $NAME$NotFoundException extends $NAME$Exception
 {
+    /**
+     * The code to identify the error.
+     *
+     * @var string
+     */
+    protected $code = '$NAME:UPPERCASE$_NOT_FOUND';
 
-	/**
-	 * The code to identify the error
-	 *
-	 * @var string
-	 */
-	protected $code = '$NAME:UPPERCASE$_NOT_FOUND';
-
-	/**
-	 * The message
-	 *
-	 * @var string
-	 */
-	protected $message = "Not found";
-	
+    /**
+     * The message.
+     *
+     * @var string
+     */
+    protected $message = 'Not found';
 }

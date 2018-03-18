@@ -6,7 +6,6 @@ use Railken\Laravel\Manager\Contracts\EntityContract;
 
 class $NAME$Observer
 {
-
     /**
      * Listen to the entity retrieved event.
      *
@@ -88,7 +87,7 @@ class $NAME$Observer
      */
     public function saved(EntityContract $entity)
     {
-    	// ..
+        // ..
     }
 
     /**
