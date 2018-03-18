@@ -2,7 +2,6 @@
 
 namespace Railken\Laravel\Manager\Parser;
 
-
 use PhpParser\V4\Lexer;
 use PhpParser\V4\NodeTraverser;
 use PhpParser\V4\NodeVisitor;
@@ -12,7 +11,6 @@ use PhpParser\V4\PrettyPrinter;
 
 class Parser
 {
-
     /**
      * Parse the code with a visitor.
      *
@@ -21,7 +19,6 @@ class Parser
      */
     public function edit($path, NodeVisitorAbstract $visitor)
     {
-        
         $lexer = new Lexer\Emulative([
             'usedAttributes' => [
                 'comments',
