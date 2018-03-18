@@ -6,3 +6,5 @@ tests/Generated/
 TODO\.md
 
 build/logs/clover\.xml
+
+composer\.lock
