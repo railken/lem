@@ -5,11 +5,8 @@ namespace Railken\Laravel\Manager\Tests;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Railken\Bag;
-use Railken\Laravel\Manager\Agents\SystemAgent;
 use Railken\Laravel\Manager\Tests\Core\Article\ArticleManager;
 use Railken\Laravel\Manager\Tests\Core\Article\ArticleServiceProvider;
-use Railken\Laravel\Manager\Tests\Core\Comment\CommentManager;
-use Railken\Laravel\Manager\Tests\Core\Comment\CommentServiceProvider;
 use Railken\Laravel\Manager\Tests\User\User;
 use Railken\Laravel\Manager\Tests\User\UserManager;
 use Railken\Laravel\Manager\Tests\User\UserServiceProvider;
@@ -17,30 +14,11 @@ use Railken\Laravel\Manager\Tests\User\UserServiceProvider;
 class BasicTest extends \Orchestra\Testbench\TestCase
 {
     /**
-     * Define environment setup.
-     *
-     * @param  \Illuminate\Foundation\Application  $app
-     * @return void
-     */
-    protected function getEnvironmentSetUp($app)
-    {
-    }
-
-    protected function getPackageProviders($app)
-    {
-        return [
-            \Railken\Laravel\Manager\ManagerServiceProvider::class,
-            UserServiceProvider::class,
-            ArticleServiceProvider::class,
-        ];
-    }
-
-    /**
      * Setup the test environment.
      */
     public function setUp()
     {
-        $dotenv = new \Dotenv\Dotenv(__DIR__."/..", '.env');
+        $dotenv = new \Dotenv\Dotenv(__DIR__.'/..', '.env');
         $dotenv->load();
 
         parent::setUp();
@@ -70,11 +48,10 @@ class BasicTest extends \Orchestra\Testbench\TestCase
             $table->softDeletes();
             $table->foreign('author_id')->references('id')->on('users');
         });
-
     }
 
     /**
-     * Return a new instance of user bag
+     * Return a new instance of user bag.
      *
      * @return Bag
      */
@@ -84,28 +61,26 @@ class BasicTest extends \Orchestra\Testbench\TestCase
     }
 
     /**
-     * Test basics
+     * Test basics.
      */
     public function testBasics()
     {
-
-
         $um = new UserManager();
 
-        # Testing validation
-        $this->assertEquals("USER_USERNAME_NOT_DEFINED", $um->create($this->getUserBag()->remove('username'))->getError()->getCode());
-        $this->assertEquals("USER_USERNAME_NOT_VALID", $um->create($this->getUserBag()->set('username', 'wr'))->getError()->getCode());
-        $this->assertEquals("USER_PASSWORD_NOT_DEFINED", $um->create($this->getUserBag()->remove('password'))->getError()->getCode());
-        $this->assertEquals("USER_PASSWORD_NOT_VALID", $um->create($this->getUserBag()->set('password', 'wrong'))->getError()->getCode());
-        $this->assertEquals("USER_EMAIL_NOT_DEFINED", $um->create($this->getUserBag()->remove('email'))->getError()->getCode());
-        $this->assertEquals("USER_EMAIL_NOT_VALID", $um->create($this->getUserBag()->set('email', 'wrong'))->getError()->getCode());
+        // Testing validation
+        $this->assertEquals('USER_USERNAME_NOT_DEFINED', $um->create($this->getUserBag()->remove('username'))->getError()->getCode());
+        $this->assertEquals('USER_USERNAME_NOT_VALID', $um->create($this->getUserBag()->set('username', 'wr'))->getError()->getCode());
+        $this->assertEquals('USER_PASSWORD_NOT_DEFINED', $um->create($this->getUserBag()->remove('password'))->getError()->getCode());
+        $this->assertEquals('USER_PASSWORD_NOT_VALID', $um->create($this->getUserBag()->set('password', 'wrong'))->getError()->getCode());
+        $this->assertEquals('USER_EMAIL_NOT_DEFINED', $um->create($this->getUserBag()->remove('email'))->getError()->getCode());
+        $this->assertEquals('USER_EMAIL_NOT_VALID', $um->create($this->getUserBag()->set('email', 'wrong'))->getError()->getCode());
 
-        # Testing correct
+        // Testing correct
         $resource = $um->create($this->getUserBag())->getResource();
         $this->assertEquals($this->getUserBag()->get('username'), $resource->username);
 
-        # Testing uniqueness
-        $this->assertEquals("USER_EMAIL_NOT_UNIQUE", $um->create($this->getUserBag())->getErrors()->first()->getCode());
+        // Testing uniqueness
+        $this->assertEquals('USER_EMAIL_NOT_UNIQUE', $um->create($this->getUserBag())->getErrors()->first()->getCode());
 
         $um->update($resource, $this->getUserBag());
         $um->remove($resource);
@@ -113,30 +88,30 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         $um->findOneBy(['username' => 'test123']);
     }
 
-    /** 
-     * Test 
-     */ 
-    public function testArticles() 
-    { 
-        $um = new UserManager(); 
-        $user = $um->create(['email' => 'test1@test.net', 'username' => 'test1', 'password' => microtime()])->getResource(); 
+    /**
+     * Test.
+     */
+    public function testArticles()
+    {
+        $um = new UserManager();
+        $user = $um->create(['email' => 'test1@test.net', 'username' => 'test1', 'password' => microtime()])->getResource();
 
         // $generator = new Generator();
 
-        $am = new ArticleManager($user); 
- 
-        $ab = ['title' => 'foo', 'description' => 'bar', 'author_id' => $user->id]; 
+        $am = new ArticleManager($user);
+
+        $ab = ['title' => 'foo', 'description' => 'bar', 'author_id' => $user->id];
 
         $this->assertEquals(8, $am->create($ab)->getErrors()->count());
-        $this->assertEquals("ARTICLE_NOT_AUTHORIZED", $am->create($ab)->getError(0)->getCode());
-        $this->assertEquals("ARTICLE_ID_NOT_AUTHTORIZED", $am->create($ab)->getError(1)->getCode());
-        $this->assertEquals("ARTICLE_TITLE_NOT_AUTHTORIZED", $am->create($ab)->getError(2)->getCode());
-        $this->assertEquals("ARTICLE_DESCRIPTION_NOT_AUTHTORIZED", $am->create($ab)->getError(3)->getCode());
-        $this->assertEquals("ARTICLE_AUTHOR_ID_NOT_AUTHTORIZED", $am->create($ab)->getError(4)->getCode());
-        $this->assertEquals("ARTICLE_CREATED_AT_NOT_AUTHTORIZED", $am->create($ab)->getError(5)->getCode());
-        $this->assertEquals("ARTICLE_UPDATED_AT_NOT_AUTHTORIZED", $am->create($ab)->getError(6)->getCode());
-        $this->assertEquals("ARTICLE_DELETED_AT_NOT_AUTHTORIZED", $am->create($ab)->getError(7)->getCode());
-        
+        $this->assertEquals('ARTICLE_NOT_AUTHORIZED', $am->create($ab)->getError(0)->getCode());
+        $this->assertEquals('ARTICLE_ID_NOT_AUTHTORIZED', $am->create($ab)->getError(1)->getCode());
+        $this->assertEquals('ARTICLE_TITLE_NOT_AUTHTORIZED', $am->create($ab)->getError(2)->getCode());
+        $this->assertEquals('ARTICLE_DESCRIPTION_NOT_AUTHTORIZED', $am->create($ab)->getError(3)->getCode());
+        $this->assertEquals('ARTICLE_AUTHOR_ID_NOT_AUTHTORIZED', $am->create($ab)->getError(4)->getCode());
+        $this->assertEquals('ARTICLE_CREATED_AT_NOT_AUTHTORIZED', $am->create($ab)->getError(5)->getCode());
+        $this->assertEquals('ARTICLE_UPDATED_AT_NOT_AUTHTORIZED', $am->create($ab)->getError(6)->getCode());
+        $this->assertEquals('ARTICLE_DELETED_AT_NOT_AUTHTORIZED', $am->create($ab)->getError(7)->getCode());
+
         $user->addPermission('article.create');
         $user->addPermission('article.attributes.id.*');
         $user->addPermission('article.attributes.title.*');
@@ -146,11 +121,8 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         $user->addPermission('article.attributes.updated_at.*');
         $user->addPermission('article.attributes.deleted_at.*');
 
-
-
-
         $result = $am->create($ab);
-        $this->assertEquals(1, $result->ok()); 
+        $this->assertEquals(1, $result->ok());
 
         $resource = $result->getResource();
 
@@ -160,7 +132,25 @@ class BasicTest extends \Orchestra\Testbench\TestCase
             'author_id' => $resource->author->id,
             'id' => $resource->id,
             'created_at' => $resource->created_at,
-            'updated_at' => $resource->updated_at
+            'updated_at' => $resource->updated_at,
         ], $am->serializer->serialize($resource)->toArray());
-    } 
+    }
+
+    /**
+     * Define environment setup.
+     *
+     * @param \Illuminate\Foundation\Application $app
+     */
+    protected function getEnvironmentSetUp($app)
+    {
+    }
+
+    protected function getPackageProviders($app)
+    {
+        return [
+            \Railken\Laravel\Manager\ManagerServiceProvider::class,
+            UserServiceProvider::class,
+            ArticleServiceProvider::class,
+        ];
+    }
 }

@@ -8,35 +8,35 @@ use Exception;
 abstract class ArticleException extends Exception implements ExceptionContract
 {
     /**
-     * The reason (label) for which this exception is thrown
+     * The reason (label) for which this exception is thrown.
      *
      * @var string
      */
     protected $label = 'article';
 
     /**
-     * The code to identify the error
+     * The code to identify the error.
      *
      * @var string
      */
     protected $code = 'ARTICLE_ERROR';
 
     /**
-     * The message
+     * The message.
      *
      * @var string
      */
-    protected $message = "An error occurred with %s";
+    protected $message = 'An error occurred with %s';
 
     /**
-     * Value of attribute
+     * Value of attribute.
      *
      * @var mixed
      */
     protected $value;
 
     /**
-     * Construct
+     * Construct.
      *
      * @param mixed $value
      */
@@ -54,7 +54,7 @@ abstract class ArticleException extends Exception implements ExceptionContract
     }
 
     /**
-     * Rapresents the exception in the array format
+     * Rapresents the exception in the array format.
      *
      * @return array
      */
@@ -69,7 +69,7 @@ abstract class ArticleException extends Exception implements ExceptionContract
     }
 
     /**
-     * Get value of attribute
+     * Get value of attribute.
      *
      * @return mixed
      */
@@ -79,7 +79,7 @@ abstract class ArticleException extends Exception implements ExceptionContract
     }
 
     /**
-     * Get attribute
+     * Get attribute.
      *
      * @return string
      */

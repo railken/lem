@@ -3,14 +3,11 @@
 namespace Railken\Laravel\Manager\Tests\User;
 
 use Railken\Laravel\Manager\ModelManager;
-use Railken\Laravel\Manager\ParameterBag;
 use Railken\Laravel\Manager\Contracts\AgentContract;
 use Railken\Laravel\Manager\Tokens;
 
-
 class UserManager extends ModelManager
 {
-
     /**
      * @var array
      */
@@ -20,14 +17,13 @@ class UserManager extends ModelManager
      * @var array
      */
     protected $exceptions = [
-        Tokens::NOT_AUTHORIZED => Exceptions\UserNotAuthorizedException::class
+        Tokens::NOT_AUTHORIZED => Exceptions\UserNotAuthorizedException::class,
     ];
 
     /**
-     * Construct
+     * Construct.
      *
      * @param AgentContract $agent
-     *
      */
     public function __construct(AgentContract $agent = null)
     {

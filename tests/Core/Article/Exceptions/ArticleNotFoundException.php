@@ -4,18 +4,17 @@ namespace Railken\Laravel\Manager\Tests\Core\Article\Exceptions;
 
 class ArticleNotFoundException extends ArticleException
 {
+    /**
+     * The code to identify the error.
+     *
+     * @var string
+     */
+    protected $code = 'ARTICLE_NOT_FOUND';
 
-	/**
-	 * The code to identify the error
-	 *
-	 * @var string
-	 */
-	protected $code = 'ARTICLE_NOT_FOUND';
-
-	/**
-	 * The message
-	 *
-	 * @var string
-	 */
-	protected $message = "Not found";
+    /**
+     * The message.
+     *
+     * @var string
+     */
+    protected $message = 'Not found';
 }

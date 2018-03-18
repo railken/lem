@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\Tests\User\User;
-
 class Article extends Model implements EntityContract
 {
     use SoftDeletes;
@@ -23,7 +22,7 @@ class Article extends Model implements EntityContract
      *
      * @var array
      */
-    protected $fillable = ['title', 'description', 'author_id'];
+    protected $fillable = ['title', 'description', 'author_id', 'deleted_at'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -31,9 +30,9 @@ class Article extends Model implements EntityContract
      * @var array
      */
     protected $dates = ['deleted_at'];
-
+    
     /**
-     * Get the author that wrote the article
+     * Get the author that wrote the article.
      */
     public function author()
     {

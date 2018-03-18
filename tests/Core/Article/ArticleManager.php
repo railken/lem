@@ -2,17 +2,14 @@
 
 namespace Railken\Laravel\Manager\Tests\Core\Article;
 
-use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\Contracts\AgentContract;
 use Railken\Laravel\Manager\ModelManager;
-use Railken\Laravel\Manager\ParameterBag;
 use Railken\Laravel\Manager\Tokens;
 
 class ArticleManager extends ModelManager
-{	
-
+{
     /**
-     * List of all attributes
+     * List of all attributes.
      *
      * @var array
      */
@@ -23,27 +20,25 @@ class ArticleManager extends ModelManager
         Attributes\AuthorId\AuthorIdAttribute::class,
         Attributes\CreatedAt\CreatedAtAttribute::class,
         Attributes\UpdatedAt\UpdatedAtAttribute::class,
-        Attributes\DeletedAt\DeletedAtAttribute::class
+        Attributes\DeletedAt\DeletedAtAttribute::class,
     ];
 
     /**
-     * List of all exceptions
+     * List of all exceptions.
      *
      * @var array
      */
     protected $exceptions = [
-        Tokens::NOT_AUTHORIZED => Exceptions\ArticleNotAuthorizedException::class
+        Tokens::NOT_AUTHORIZED => Exceptions\ArticleNotAuthorizedException::class,
     ];
 
-	/**
-	 * Construct
+    /**
+     * Construct.
      *
      * @param AgentContract $agent
-     *
-	 */
-	public function __construct(AgentContract $agent = null)
-	{
-		parent::__construct($agent);
-	}
-
+     */
+    public function __construct(AgentContract $agent = null)
+    {
+        parent::__construct($agent);
+    }
 }

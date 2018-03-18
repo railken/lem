@@ -7,13 +7,15 @@ use Railken\Laravel\Manager\Contracts\AgentContract;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 class User extends Authenticatable implements EntityContract, AgentContract
 {
     use Notifiable;
     use SoftDeletes;
 
+    public $permissions = [
+        'user.*',
+    ];
 
     /**
      * The table associated with the model.
@@ -28,7 +30,7 @@ class User extends Authenticatable implements EntityContract, AgentContract
      * @var array
      */
     protected $fillable = [
-        'username', 'email', 'password'
+        'username', 'email', 'password',
     ];
 
     /**
@@ -44,11 +46,11 @@ class User extends Authenticatable implements EntityContract, AgentContract
      * The attributes that should be mutated to dates.
      *
      * @var array
-    */
+     */
     protected $dates = ['deleted_at'];
 
     /**
-     * Set value for attribute password
+     * Set value for attribute password.
      *
      * @param string $password
      */
@@ -57,21 +59,16 @@ class User extends Authenticatable implements EntityContract, AgentContract
         $this->attributes['password'] = bcrypt($password);
     }
 
-    public $permissions = [
-        'user.*',
-    ];
-
-    public function can($permission, $arguments = []) 
+    public function can($permission, $arguments = [])
     {
-
-        $pp = explode(".", $permission);
+        $pp = explode('.', $permission);
         foreach ($this->permissions as $p) {
             if ($permission == $p) {
                 return true;
             }
-            $p = explode(".", $p);
+            $p = explode('.', $p);
             foreach ($p as $k => $in) {
-                if ($in == '*') {
+                if ('*' == $in) {
                     return true;
                 }
                 if (!isset($pp[$k])) {
@@ -82,10 +79,10 @@ class User extends Authenticatable implements EntityContract, AgentContract
                 }
             }
         }
-        return false;
 
+        return false;
     }
-    
+
     public function addPermission($permission)
     {
         $this->permissions[] = $permission;

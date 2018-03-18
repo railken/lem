@@ -15,28 +15,11 @@ use Railken\Laravel\Manager\Tests\User\User;
 class GeneratedTest extends \Orchestra\Testbench\TestCase
 {
     /**
-     * Define environment setup.
-     *
-     * @param  \Illuminate\Foundation\Application  $app
-     * @return void
-     */
-    protected function getEnvironmentSetUp($app)
-    {
-    }
-
-    protected function getPackageProviders($app)
-    {
-        return [
-            \Railken\Laravel\Manager\ManagerServiceProvider::class
-        ];
-    }
-
-    /**
      * Setup the test environment.
      */
     public function setUp()
     {
-        $dotenv = new \Dotenv\Dotenv(__DIR__."/..", '.env');
+        $dotenv = new \Dotenv\Dotenv(__DIR__.'/..', '.env');
         $dotenv->load();
 
         parent::setUp();
@@ -52,7 +35,7 @@ class GeneratedTest extends \Orchestra\Testbench\TestCase
     }
 
     /**
-     * Return a new instance of user bag
+     * Return a new instance of user bag.
      *
      * @return Bag
      */
@@ -62,19 +45,19 @@ class GeneratedTest extends \Orchestra\Testbench\TestCase
     }
 
     /**
-     * Test generate Command
+     * Test generate Command.
      */
     public function testGenerate()
     {
         $generator = new Generator();
 
-        File::deleteDirectory(__DIR__."/Generated/Foo", true);
+        File::deleteDirectory(__DIR__.'/Generated/Foo', true);
 
-        $generator->generate(__DIR__."/Generated", "Railken\Laravel\Manager\Tests\Generated\Foo");
+        $generator->generate(__DIR__.'/Generated', "Railken\Laravel\Manager\Tests\Generated\Foo");
 
-        $generator->generateAttribute(__DIR__."/Core", "Railken\Laravel\Manager\Tests\Core\Article", "deleted_at");
+        $generator->generateAttribute(__DIR__.'/Core', "Railken\Laravel\Manager\Tests\Core\Article", 'deleted_at');
 
-        $this->assertEquals(true, File::exists(__DIR__."/Generated/Foo"));
+        $this->assertEquals(true, File::exists(__DIR__.'/Generated/Foo'));
         (new FooServiceProvider($this->app))->register();
 
         $user = new User();
@@ -82,11 +65,9 @@ class GeneratedTest extends \Orchestra\Testbench\TestCase
 
         $bag = new FooParameterBag(['name' => 'ban']);
 
-        $this->assertEquals("FOO_NOT_AUTHORIZED", $m->create($bag)->getError()->getCode());
-
+        $this->assertEquals('FOO_NOT_AUTHORIZED', $m->create($bag)->getError()->getCode());
 
         $user->addPermission('foo.*');
-
 
         $foo = $m->create($bag->set('name', 'baar'))->getResource();
         $m->update($foo, $bag->set('name', 'fee'))->getResource();
@@ -94,6 +75,21 @@ class GeneratedTest extends \Orchestra\Testbench\TestCase
         $foo_s = $m->findOneBy(['name' => 'fee']);
 
         $this->assertEquals($foo->id, $foo_s->id);
+    }
 
+    /**
+     * Define environment setup.
+     *
+     * @param \Illuminate\Foundation\Application $app
+     */
+    protected function getEnvironmentSetUp($app)
+    {
+    }
+
+    protected function getPackageProviders($app)
+    {
+        return [
+            \Railken\Laravel\Manager\ManagerServiceProvider::class,
+        ];
     }
 }

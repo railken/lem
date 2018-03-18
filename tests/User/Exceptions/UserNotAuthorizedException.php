@@ -7,16 +7,15 @@ use Exception;
 
 class UserNotAuthorizedException extends Exception implements ModelNotAuthorizedExceptionContract
 {
-
     /**
-     * The code to identify the error
+     * The code to identify the error.
      *
      * @var string
      */
     protected $code = 'USER_NOT_AUTHORIZED';
 
     /**
-     * The message
+     * The message.
      *
      * @var string
      */

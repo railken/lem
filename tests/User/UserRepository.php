@@ -6,24 +6,23 @@ use Railken\Laravel\Manager\ModelRepository;
 
 class UserRepository extends ModelRepository
 {
-
     /**
-     * Class name entity
+     * Class name entity.
      *
      * @var string
      */
     public $entity = User::class;
 
     /**
-     * return whatever or not the email is unique
+     * return whatever or not the email is unique.
      *
      * @param string $email
-     * @param User $user
+     * @param User   $user
      *
      * @return bool
      */
     public function isUniqueEmail($email, User $user)
     {
-        return $this->getQuery()->where('email', $email)->where('id', '!=', $user->id)->count() == 0;
+        return 0 == $this->getQuery()->where('email', $email)->where('id', '!=', $user->id)->count();
     }
 }

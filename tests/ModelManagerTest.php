@@ -3,21 +3,12 @@
 namespace Railken\Laravel\Manager\Tests;
 
 use Railken\Laravel\Manager\Tests\User\UserManager;
-use Railken\Laravel\Manager\Tests\User\User;
 use stdClass;
 
 class ModelManagerTest extends \Orchestra\Testbench\TestCase
 {
-    protected function getPackageProviders($app)
-    {
-        return [
-            \Railken\Laravel\Manager\ManagerServiceProvider::class,
-            \Railken\Laravel\Manager\Tests\User\UserServiceProvider::class,
-        ];
-    }
-
     /**
-     * @expectedException Railken\Laravel\Manager\Exceptions\ModelMissingRepositoryException
+     * @expectedException \Railken\Laravel\Manager\Exceptions\ModelMissingRepositoryException
      */
     public function testModelMissingRepositoryExceptionNull()
     {
@@ -26,7 +17,7 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
     }
 
     /**
-     * @expectedException Railken\Laravel\Manager\Exceptions\ModelMissingRepositoryException
+     * @expectedException \Railken\Laravel\Manager\Exceptions\ModelMissingRepositoryException
      */
     public function testModelMissingRepositoryExceptionNotValid()
     {
@@ -35,7 +26,7 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
     }
 
     /**
-     * @expectedException Railken\Laravel\Manager\Exceptions\ModelMissingValidatorException
+     * @expectedException \Railken\Laravel\Manager\Exceptions\ModelMissingValidatorException
      */
     public function testModelMissingValidatorExceptionNull()
     {
@@ -44,7 +35,7 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
     }
 
     /**
-     * @expectedException Railken\Laravel\Manager\Exceptions\ModelMissingValidatorException
+     * @expectedException \Railken\Laravel\Manager\Exceptions\ModelMissingValidatorException
      */
     public function testModelMissingValidatorExceptionNotValid()
     {
@@ -53,7 +44,7 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
     }
 
     /**
-     * @expectedException Railken\Laravel\Manager\Exceptions\ModelMissingParametersException
+     * @expectedException \Railken\Laravel\Manager\Exceptions\ModelMissingParametersException
      */
     public function testModelMissingParametersExceptionNull()
     {
@@ -62,7 +53,7 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
     }
 
     /**
-     * @expectedException Railken\Laravel\Manager\Exceptions\ModelMissingParametersException
+     * @expectedException \Railken\Laravel\Manager\Exceptions\ModelMissingParametersException
      */
     public function testModelMissingParametersExceptionNotValid()
     {
@@ -71,7 +62,7 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
     }
 
     /**
-     * @expectedException Railken\Laravel\Manager\Exceptions\ModelMissingAuthorizerException
+     * @expectedException \Railken\Laravel\Manager\Exceptions\ModelMissingAuthorizerException
      */
     public function testModelMissingAuthorizerExceptionNull()
     {
@@ -80,15 +71,16 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
     }
 
     /**
-     * @expectedException Railken\Laravel\Manager\Exceptions\ModelMissingAuthorizerException
+     * @expectedException \Railken\Laravel\Manager\Exceptions\ModelMissingAuthorizerException
      */
     public function testModelMissingAuthorizerExceptionNotValid()
     {
         UserManager::authorizer(stdClass::class);
         new UserManager();
     }
+
     /**
-     * @expectedException Railken\Laravel\Manager\Exceptions\ModelMissingSerializerException
+     * @expectedException \Railken\Laravel\Manager\Exceptions\ModelMissingSerializerException
      */
     public function testModelMissingSerializerExceptionNull()
     {
@@ -97,11 +89,19 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
     }
 
     /**
-     * @expectedException Railken\Laravel\Manager\Exceptions\ModelMissingSerializerException
+     * @expectedException \Railken\Laravel\Manager\Exceptions\ModelMissingSerializerException
      */
     public function testModelMissingSerializerExceptionNotValid()
     {
         UserManager::serializer(stdClass::class);
         new UserManager();
+    }
+
+    protected function getPackageProviders($app)
+    {
+        return [
+            \Railken\Laravel\Manager\ManagerServiceProvider::class,
+            \Railken\Laravel\Manager\Tests\User\UserServiceProvider::class,
+        ];
     }
 }

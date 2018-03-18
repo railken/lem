@@ -3,20 +3,17 @@
 namespace Railken\Laravel\Manager\Tests\User;
 
 use Railken\Laravel\Manager\Contracts\EntityContract;
-use Railken\Laravel\Manager\Contracts\ModelValidatorContract;
 use Railken\Laravel\Manager\ParameterBag;
 use Illuminate\Support\Collection;
-use Railken\Laravel\Manager\Tests\User\Exceptions as Exceptions;
 use Railken\Laravel\Manager\ModelValidator;
 
 class UserValidator extends ModelValidator
 {
-
     /**
-     * Validate
+     * Validate.
      *
      * @param EntityContract $entity
-     * @param ParameterBag $parameters
+     * @param ParameterBag   $parameters
      *
      * @return Collection
      */
@@ -34,7 +31,7 @@ class UserValidator extends ModelValidator
     }
 
     /**
-     * Validate "required" values
+     * Validate "required" values.
      *
      * @param ParameterBag $parameters
      *
@@ -52,10 +49,10 @@ class UserValidator extends ModelValidator
     }
 
     /**
-     * Validate "not valid" values
+     * Validate "not valid" values.
      *
      * @param EntityContract $entity
-     * @param ParameterBag $parameters
+     * @param ParameterBag   $parameters
      *
      * @return Collection
      */
@@ -66,23 +63,20 @@ class UserValidator extends ModelValidator
         $parameters->exists('username') && !$this->validUsername($parameters->get('username')) &&
             $errors->push(new Exceptions\UserUsernameNotValidException($parameters->get('username')));
 
-
         $parameters->exists('email') && !$this->validEmail($parameters->get('email')) &&
             $errors->push(new Exceptions\UserEmailNotValidException($parameters->get('email')));
 
         $parameters->exists('email') && !$this->manager->getRepository()->isUniqueEmail($parameters->get('email'), $entity) &&
             $errors->push(new Exceptions\UserEmailNotUniqueException($parameters->get('email')));
 
-
         $parameters->exists('password') && !$this->validPassword($parameters->get('password')) &&
             $errors->push(new Exceptions\UserPasswordNotValidException($parameters->get('password')));
-
 
         return $errors;
     }
 
     /**
-     * Validate email
+     * Validate email.
      *
      * @param string $email
      *
@@ -93,9 +87,8 @@ class UserValidator extends ModelValidator
         return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
 
-
     /**
-     * Validate password
+     * Validate password.
      *
      * @param string $password
      *
@@ -107,7 +100,7 @@ class UserValidator extends ModelValidator
     }
 
     /**
-     * Validate username
+     * Validate username.
      *
      * @param string $username
      *
