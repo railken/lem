@@ -40,7 +40,6 @@ class GenerateAttribute extends Command
     {
         $generator = new Generator();
         $generator->generateAttribute(base_path($this->argument('path')), $this->argument('namespace'), $this->argument('attribute'));
-        $this->info("{$this->argument('namespace')} generated. Remember to add the attribute to the migration. $fillable already populated.");
-        $this->info('Run php-cs-fixer to fix missing lines');
+        $this->info("{$this->argument('namespace')} generated. ");
     }
 }
