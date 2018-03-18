@@ -9,7 +9,7 @@ use Railken\Laravel\Manager\Tokens;
 class UserManager extends ModelManager
 {
     /**
-     * List of all attributes
+     * List of all attributes.
      *
      * @var array
      */
@@ -23,7 +23,7 @@ class UserManager extends ModelManager
     ];
 
     /**
-     * List of all exceptions
+     * List of all exceptions.
      *
      * @var array
      */

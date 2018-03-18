@@ -3,15 +3,13 @@
 namespace Railken\Laravel\Manager\Tests;
 
 use Railken\Laravel\Manager\Tests\User\UserManager;
-use stdClass;
 
 class ModelAttributeTest extends \Orchestra\Testbench\TestCase
 {
-
     /**
-     * Get package providers
+     * Get package providers.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param \Illuminate\Foundation\Application $app
      *
      * @return array
      */
@@ -26,7 +24,7 @@ class ModelAttributeTest extends \Orchestra\Testbench\TestCase
     }
 
     /**
-     * Get attribute
+     * Get attribute.
      *
      * @return Attribute
      */
@@ -40,7 +38,7 @@ class ModelAttributeTest extends \Orchestra\Testbench\TestCase
      */
     public function testExceptionNotDefinedException()
     {
-        $this->getAttribute()->getException("WRONG_EXCEPTION_CODE");
+        $this->getAttribute()->getException('WRONG_EXCEPTION_CODE');
     }
 
     /**
@@ -48,6 +46,6 @@ class ModelAttributeTest extends \Orchestra\Testbench\TestCase
      */
     public function testPermissionNotDefinedException()
     {
-        $this->getAttribute()->getPermission("WRONG_PERMISSION_CODE");
+        $this->getAttribute()->getPermission('WRONG_PERMISSION_CODE');
     }
 }
