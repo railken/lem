@@ -39,6 +39,11 @@ class ArticleManager extends ModelManager
      */
     public function __construct(AgentContract $agent = null)
     {
+        $this->setRepository(new ArticleRepository($this));
+        $this->setSerializer(new ArticleSerializer($this));
+        $this->setValidator(new ArticleValidator($this));
+        $this->setAuthorizer(new ArticleAuthorizer($this));
+
         parent::__construct($agent);
     }
 }

@@ -11,12 +11,6 @@ class UserServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        UserManager::repository(UserRepository::class);
-        UserManager::parameters(UserParameterBag::class);
-        UserManager::validator(UserValidator::class);
-        UserManager::serializer(UserSerializer::class);
-        UserManager::authorizer(UserAuthorizer::class);
-
         User::observe(UserObserver::class);
     }
 }

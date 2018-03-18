@@ -40,6 +40,12 @@ class $NAME$Manager extends ModelManager
      */
 	public function __construct(AgentContract $agent = null)
 	{
+
+        $this->setRepository(new $NAME$Repository($this));
+        $this->setSerializer(new $NAME$Serializer($this));
+        $this->setValidator(new $NAME$Validator($this));
+        $this->setAuthorizer(new $NAME$Authorizer($this));
+
 		parent::__construct($agent);
 	}
 

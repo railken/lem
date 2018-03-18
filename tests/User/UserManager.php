@@ -38,6 +38,11 @@ class UserManager extends ModelManager
      */
     public function __construct(AgentContract $agent = null)
     {
+        $this->setRepository(new UserRepository($this));
+        $this->setSerializer(new UserSerializer($this));
+        $this->setValidator(new UserValidator($this));
+        $this->setAuthorizer(new UserAuthorizer($this));
+
         parent::__construct($agent);
     }
 }

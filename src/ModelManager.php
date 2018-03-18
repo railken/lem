@@ -50,6 +50,26 @@ abstract class ModelManager implements ManagerContract
     protected $permissions = [];
 
     /**
+     * @var \Railken\Laravel\Manager\Contracts\ModelSerializerContract
+     */
+    public $serializer;
+
+    /**
+     * @var \Railken\Laravel\Manager\Contracts\ModelValidatorContract
+     */
+    public $validator;
+
+    /**
+     * @var \Railken\Laravel\Manager\Contracts\ModelRepositoryContract
+     */
+    public $repository;
+
+    /**
+     * @var \Railken\Laravel\Manager\Contracts\ModelAuthorizerContract
+     */
+    public $authorizer;
+
+    /**
      * Construct.
      */
     public function __construct(AgentContract $agent = null)
@@ -60,6 +80,17 @@ abstract class ModelManager implements ManagerContract
 
         $this->agent = $agent;
 
+        $this->initializeAttributes();
+        $this->initializeComponents();
+    }
+
+    /**
+     * Initialize attributes.
+     *
+     * @return void
+     */
+    public function initializeAttributes()
+    {
         $attributes = new Collection();
 
         foreach ($this->attributes as $attribute) {
@@ -68,36 +99,122 @@ abstract class ModelManager implements ManagerContract
         }
 
         $this->attributes = $attributes;
+    }
 
-        foreach (static::$__components[get_class($this)] as $key => $component) {
-            class_exists($component) && $this->$key = (new $component());
-        }
-
-        if (!isset($this->validator) || !$this->validator instanceof ModelValidatorContract) {
+    /**
+     * Initialize components
+     *
+     * @return void
+     */
+    public function initializeComponents()
+    {
+        if (!$this->validator) {
             throw new Exceptions\ModelMissingValidatorException($this);
         }
 
-        if (!isset($this->serializer) || !$this->serializer instanceof ModelSerializerContract) {
+        if (!$this->serializer) {
             throw new Exceptions\ModelMissingSerializerException($this);
         }
 
-        if (!isset($this->parameters) || !$this->parameters instanceof ParameterBagContract) {
-            throw new Exceptions\ModelMissingParametersException($this);
-        }
-
-        if (!isset($this->repository) || !$this->repository instanceof ModelRepositoryContract) {
+        if (!$this->repository) {
             throw new Exceptions\ModelMissingRepositoryException($this);
         }
 
-        if (!isset($this->authorizer) || !$this->authorizer instanceof ModelAuthorizerContract) {
+        if (!$this->authorizer) {
             throw new Exceptions\ModelMissingAuthorizerException($this);
         }
+    }
 
-        $this->validator->setManager($this);
-        $this->serializer->setManager($this);
-        $this->parameters->setManager($this);
-        $this->repository->setManager($this);
-        $this->authorizer->setManager($this);
+    /**
+     * Set a repository.
+     *
+     * @param \Railken\Laravel\Manager\Contracts\ModelRepositoryContract
+     *
+     * @return $this
+     */
+    public function setRepository(ModelRepositoryContract $repository)
+    {
+        $this->repository = $repository;
+
+        return $this;
+    }
+
+    /**
+     * Retrieve a repository.
+     *
+     * @return \Railken\Laravel\Manager\Contracts\ModelRepositoryContract
+     */
+    public function getRepository()
+    {
+        return $this->repository;
+    }
+
+    /**
+     * Set a repository.
+     *
+     * @param \Railken\Laravel\Manager\Contracts\ModelSerializerContract
+     *
+     * @return $this
+     */
+    public function setSerializer(ModelSerializerContract $serializer)
+    {
+        $this->serializer = $serializer;
+
+        return $this;
+    }
+
+    /**
+     * Retrieve the serializer.
+     *
+     * @return \Railken\Laravel\Manager\Contracts\ModelSerializerContract
+     */
+    public function getSerializer()
+    {
+        return $this->serializer;
+    }
+
+    /**
+     * Set a authorizer.
+     *
+     * @param \Railken\Laravel\Manager\Contracts\ModelAuthorizerContract
+     *
+     * @return $this
+     */
+    public function setAuthorizer(ModelAuthorizerContract $authorizer)
+    {
+        $this->authorizer = $authorizer;
+
+        return $this;
+    }
+
+    /**
+     * Retrieve the authorizer.
+     *
+     * @return \Railken\Laravel\Manager\Contracts\ModelAuthorizerContract
+     */
+    public function getAuthorizer()
+    {
+        return $this->authorizer;
+    }
+
+    /**
+     * @param \Railken\Laravel\Manager\Contracts\ModelValidatorContract
+     *
+     * @return $this
+     */
+    public function setValidator(ModelValidatorContract $validator)
+    {
+        $this->validator = $validator;
+
+        return $this;
+    }
+
+    /**
+     * @return \Railken\Laravel\Manager\Contracts\ModelValidatorContract
+     */
+    public function getValidator()
+    {
+        return $this->validator;
     }
 
     /**
@@ -196,17 +313,7 @@ abstract class ModelManager implements ManagerContract
      */
     public function castParameters($parameters)
     {
-        return $this->parameters::factory($parameters);
-    }
-
-    /**
-     * Retrieve repository.
-     *
-     * @return ModelRepository
-     */
-    public function getRepository()
-    {
-        return $this->repository;
+        return ParameterBag::factory($parameters);
     }
 
     /**
@@ -260,7 +367,6 @@ abstract class ModelManager implements ManagerContract
         $entity = $this->repository->newEntity();
 
         $parameters = $this->castParameters($parameters);
-        $parameters->filterWrite();
 
         $result->addErrors($this->authorizer->authorize(Tokens::PERMISSION_CREATE, $entity, $parameters));
         $result->addErrors($this->validator->validate($entity, $parameters));
@@ -279,7 +385,6 @@ abstract class ModelManager implements ManagerContract
     public function update(EntityContract $entity, $parameters)
     {
         $parameters = $this->castParameters($parameters);
-        $parameters->filterWrite();
 
         $result = new ResultAction();
 
@@ -358,7 +463,7 @@ abstract class ModelManager implements ManagerContract
     {
         $result = new ResultAction();
 
-        $result->addErrors($this->authorizer->authorize(Tokens::PERMISSION_REMOVE, $entity, $this->parameters::factory([])));
+        $result->addErrors($this->authorizer->authorize(Tokens::PERMISSION_REMOVE, $entity, ParameterBag::factory([])));
 
         if (!$result->ok()) {
             return $result;

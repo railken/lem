@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Schema;
 use Railken\Bag;
 use Railken\Laravel\Manager\Generator;
 use Railken\Laravel\Manager\Tests\Generated\Foo\FooManager;
-use Railken\Laravel\Manager\Tests\Generated\Foo\FooParameterBag;
 use Railken\Laravel\Manager\Tests\Generated\Foo\FooServiceProvider;
 use Railken\Laravel\Manager\Tests\User\User;
 
@@ -78,7 +77,7 @@ class GeneratedTest extends \Orchestra\Testbench\TestCase
         $user = new User();
         $m = new FooManager($user);
 
-        $bag = new FooParameterBag(['name' => 'ban']);
+        $bag = new Bag(['name' => 'ban']);
 
         $this->assertEquals('FOO_NOT_AUTHORIZED', $m->create($bag)->getError()->getCode());
 

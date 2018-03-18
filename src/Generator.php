@@ -73,7 +73,6 @@ class Generator
         $this->put($base_path, '/ModelAuthorizer.php.stub', "/{$name}Authorizer.php", $vars);
         $this->put($base_path, '/ModelObserver.php.stub', "/{$name}Observer.php", $vars);
         $this->put($base_path, '/ModelSerializer.php.stub', "/{$name}Serializer.php", $vars);
-        $this->put($base_path, '/ModelParameterBag.php.stub', "/{$name}ParameterBag.php", $vars);
         $this->put($base_path, '/ModelServiceProvider.php.stub', "/{$name}ServiceProvider.php", $vars);
         $this->put($base_path, '/Exceptions/ModelException.php.stub', "/Exceptions/{$name}Exception.php", $vars);
         $this->put($base_path, '/Exceptions/ModelNotFoundException.php.stub', "/Exceptions/{$name}NotFoundException.php", $vars);

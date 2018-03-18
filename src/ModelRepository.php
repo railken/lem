@@ -3,6 +3,7 @@
 namespace Railken\Laravel\Manager;
 
 use Railken\Laravel\Manager\Contracts\ModelRepositoryContract;
+use Railken\Laravel\Manager\Contracts\ManagerContract;
 
 abstract class ModelRepository implements ModelRepositoryContract
 {
@@ -14,6 +15,16 @@ abstract class ModelRepository implements ModelRepositoryContract
      * @var string
      */
     public $entity;
+
+    /**
+     * Construct.
+     *
+     * @param \Railken\Laravel\Manager\Contracts\ManagerContract $manager
+     */
+    public function __construct(ManagerContract $manager)
+    {
+        $this->setManager($manager);
+    }
 
     /**
      * Retrieve new instance of entity.

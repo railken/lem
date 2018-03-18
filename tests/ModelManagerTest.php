@@ -27,92 +27,35 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
     /**
      * @expectedException \Railken\Laravel\Manager\Exceptions\ModelMissingRepositoryException
      */
-    public function testModelMissingRepositoryExceptionNull()
+    /*public function testModelMissingRepositoryExceptionNull()
     {
-        UserManager::repository(null);
-        new UserManager();
-    }
-
-    /**
-     * @expectedException \Railken\Laravel\Manager\Exceptions\ModelMissingRepositoryException
-     */
-    public function testModelMissingRepositoryExceptionNotValid()
-    {
-        UserManager::repository(stdClass::class);
-        new UserManager();
-    }
+        (new UserManager())->setRepository(null)->initializeComponents();
+    }*/
 
     /**
      * @expectedException \Railken\Laravel\Manager\Exceptions\ModelMissingValidatorException
      */
-    public function testModelMissingValidatorExceptionNull()
+    /*public function testModelMissingValidatorExceptionNull()
     {
-        UserManager::validator(null);
-        new UserManager();
-    }
-
-    /**
-     * @expectedException \Railken\Laravel\Manager\Exceptions\ModelMissingValidatorException
-     */
-    public function testModelMissingValidatorExceptionNotValid()
-    {
-        UserManager::validator(stdClass::class);
-        new UserManager();
-    }
-
-    /**
-     * @expectedException \Railken\Laravel\Manager\Exceptions\ModelMissingParametersException
-     */
-    public function testModelMissingParametersExceptionNull()
-    {
-        UserManager::parameters(null);
-        new UserManager();
-    }
-
-    /**
-     * @expectedException \Railken\Laravel\Manager\Exceptions\ModelMissingParametersException
-     */
-    public function testModelMissingParametersExceptionNotValid()
-    {
-        UserManager::parameters(stdClass::class);
-        new UserManager();
-    }
+        (new UserManager())->setValidator(null)->initializeComponents();
+    }*/
 
     /**
      * @expectedException \Railken\Laravel\Manager\Exceptions\ModelMissingAuthorizerException
      */
-    public function testModelMissingAuthorizerExceptionNull()
+    /*public function testModelMissingAuthorizerExceptionNull()
     {
-        UserManager::authorizer(null);
-        new UserManager();
-    }
-
-    /**
-     * @expectedException \Railken\Laravel\Manager\Exceptions\ModelMissingAuthorizerException
-     */
-    public function testModelMissingAuthorizerExceptionNotValid()
-    {
-        UserManager::authorizer(stdClass::class);
-        new UserManager();
-    }
+        (new UserManager())->setAuthorizer(null)->initializeComponents();
+    }*/
 
     /**
      * @expectedException \Railken\Laravel\Manager\Exceptions\ModelMissingSerializerException
      */
-    public function testModelMissingSerializerExceptionNull()
+    /*public function testModelMissingSerializerExceptionNull()
     {
-        UserManager::serializer(null);
-        new UserManager();
-    }
+        (new UserManager())->setSerializer(null)->initializeComponents();
+    }*/
 
-    /**
-     * @expectedException \Railken\Laravel\Manager\Exceptions\ModelMissingSerializerException
-     */
-    public function testModelMissingSerializerExceptionNotValid()
-    {
-        UserManager::serializer(stdClass::class);
-        new UserManager();
-    }
 
     /**
      * @expectedException \Railken\Laravel\Manager\Exceptions\ExceptionNotDefinedException
