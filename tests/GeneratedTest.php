@@ -86,7 +86,7 @@ class GeneratedTest extends \Orchestra\Testbench\TestCase
         $foo = $m->create($bag->set('name', 'baar'))->getResource();
         $m->update($foo, $bag->set('name', 'fee'))->getResource();
 
-        $foo_s = $m->findOneBy(['name' => 'fee']);
+        $foo_s = $m->getRepository()->findOneBy(['name' => 'fee']);
 
         $this->assertEquals($foo->id, $foo_s->id);
     }

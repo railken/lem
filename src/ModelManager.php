@@ -317,44 +317,6 @@ abstract class ModelManager implements ManagerContract
     }
 
     /**
-     * Find.
-     *
-     * @param ParameterBag|mixed $parameters
-     *
-     * @return EntityContract
-     */
-    public function findOneBy($parameters)
-    {
-        $parameters = $this->castParameters($parameters);
-
-        $result = $this->repository->findOneBy($parameters->all());
-
-        // Convert to ResultAction
-        // Check Permission
-
-        return $result;
-    }
-
-    /**
-     * Find by parameters.
-     *
-     * @param ParameterBag|array $parameters
-     *
-     * @return Collection
-     */
-    public function findBy($parameters)
-    {
-        $parameters = $this->castParameters($parameters);
-
-        $results = $this->repository->findBy($parameters->all());
-
-        // Convert to ResultAction
-        // Check Permission
-
-        return $results;
-    }
-
-    /**
      * Create a new EntityContract given parameters.
      *
      * @param ParameterBag|array $parameters
