@@ -7,6 +7,8 @@ use PhpParser\NodeTraverser;
 use PhpParser\Parser;
 use PhpParser\PrettyPrinter;
 use PhpParser\NodeVisitor;
+use PhpParser\NodeVisitorAbstract;
+use Railken\Laravel\Manager\Parser\Visitors as Visitors;
 
 class Generator
 {
@@ -151,6 +153,19 @@ class Generator
             $vars
         );
 
+        $this->parseCode($base_path."/{$name}.php", new Visitors\ModelVisitor($attribute_underscore));
+        $this->parseCode($base_path."/{$name}Manager.php", new Visitors\ModelManagerVisitor(['Attributes', $attribute_camelized, "{$attribute_camelized}Attribute"]));
+    }
+
+    /**
+     * Parse the code with a visitor
+     *
+     * @param string $path
+     * @param \PhpParser\NodeVisitorAbstract $visitor
+     */
+    public function parseCode($path, NodeVisitorAbstract $visitor)
+    {
+
         $lexer = new Lexer\Emulative([
             'usedAttributes' => [
                 'comments',
@@ -158,7 +173,6 @@ class Generator
                 'startTokenPos', 'endTokenPos',
             ],
         ]);
-
 
         $parser = new Parser\Php7($lexer, [
             'useIdentifierNodes' => true,
@@ -169,10 +183,10 @@ class Generator
 
         $traverser = new NodeTraverser();
         $traverser->addVisitor(new NodeVisitor\CloningVisitor());
-        $traverser->addVisitor(new ModelVisitor($attribute_underscore));
+        $traverser->addVisitor($visitor);
 
         $printer = new PrettyPrinter\Standard();
-        $code = file_get_contents($base_path."/{$name}.php");
+        $code = file_get_contents($path);
         $oldStmts = $parser->parse($code);
         $oldTokens = $lexer->getTokens();
 
@@ -182,7 +196,7 @@ class Generator
 
         print_r($newCode);
 
-        file_put_contents($base_path."/{$name}.php", $newCode);
+        file_put_contents($path, $newCode);
     }
 
     /**
