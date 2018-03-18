@@ -1,6 +1,5 @@
 vendor/
 .env
-tests/Generated/
 \.php_cs\.cache
 
 TODO\.md
