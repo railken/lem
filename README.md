@@ -1,4 +1,4 @@
-# Laravel Model Manager
+# Entity Manager Laravel
 
 [![Build Status](https://travis-ci.org/railken/entity-manager-laravel.svg?branch=master)](https://travis-ci.org/railken/entity-manager-laravel)
 [![Maintainability](https://api.codeclimate.com/v1/badges/65d87e15f0b65a6cbe0f/maintainability)](https://codeclimate.com/github/railken/entity-manager-laravel/maintainability)
@@ -8,7 +8,7 @@
 [![Latest stable](https://img.shields.io/packagist/v/railken/entity-manager-laravel.svg?style=flat-square)](https://packagist.org/packages/railken/laravel-manager)
 [![PHP](https://img.shields.io/travis/php-v/railken/entity-manager-laravel.svg)](https://secure.php.net/)
 
-A precise way to structure your model in sub parts and improve readability and maintainability of your code.
+A precise way to structure your logic to improve readability and maintainability of your code when building API.
 
 ## Requirements
 
