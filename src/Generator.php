@@ -6,6 +6,7 @@ use PhpParser\Lexer;
 use PhpParser\NodeTraverser;
 use PhpParser\Parser;
 use PhpParser\PrettyPrinter;
+use PhpParser\NodeVisitor;
 
 class Generator
 {
@@ -157,9 +158,17 @@ class Generator
                 'startTokenPos', 'endTokenPos',
             ],
         ]);
-        $parser = new Parser\Php7($lexer);
+
+
+        $parser = new Parser\Php7($lexer, [
+            'useIdentifierNodes' => true,
+            'useConsistentVariableNodes' => true,
+            'useExpressionStatements' => true,
+            'useNopStatements' => false,
+        ]);
 
         $traverser = new NodeTraverser();
+        $traverser->addVisitor(new NodeVisitor\CloningVisitor());
         $traverser->addVisitor(new ModelVisitor($attribute_underscore));
 
         $printer = new PrettyPrinter\Standard();
