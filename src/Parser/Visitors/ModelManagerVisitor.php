@@ -18,14 +18,14 @@ class ModelManagerVisitor extends NodeVisitorAbstract
     {
         if ($node instanceof \PhpParser\Node\Stmt\Property && $node->props[0]->name == 'attributes') {
             $results = array_filter($node->props[0]->default->items, function ($node) {
-                return implode("\\", $node->value->class->parts) === implode("\\", $this->attribute);
+                return implode('\\', $node->value->class->parts) === implode('\\', $this->attribute);
             });
 
             print_r($this->attribute);
             if (count($results) < 1) {
                 $node->props[0]->default->items[] = new \PhpParser\Node\Expr\ClassConstFetch(
                     new \PhpParser\Node\Name($this->attribute),
-                    new \PhpParser\Node\Identifier("class")
+                    new \PhpParser\Node\Identifier('class')
                 );
 
                 return $node;
