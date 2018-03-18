@@ -185,7 +185,7 @@ abstract class ModelAttribute implements AttributeContract
         $errors = new Collection();
         $errors = $errors->merge($this->authorize(Tokens::PERMISSION_FILL, $entity, $parameters));
         $errors = $errors->merge($this->validate($entity, $parameters));
-        
+
         $parameters->exists($this->name) && $entity->fill([$this->name => $parameters->get($this->name)]);
 
         return $errors;

@@ -3,7 +3,6 @@
 namespace Railken\Laravel\Manager\Tests;
 
 use Railken\Laravel\Manager\Tests\User\UserManager;
-use stdClass;
 
 class ModelManagerTest extends \Orchestra\Testbench\TestCase
 {
@@ -55,7 +54,6 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
     {
         (new UserManager())->setSerializer(null)->initializeComponents();
     }*/
-
 
     /**
      * @expectedException \Railken\Laravel\Manager\Exceptions\ExceptionNotDefinedException
