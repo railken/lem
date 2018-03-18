@@ -3,11 +3,11 @@
 namespace Railken\Laravel\Manager\Parser\Visitors;
 
 use PhpParser\V4\Node;
-use PhpParser\V4\NodeVisitorAbstract;
-use PhpParser\V4\Node\Stmt\Property;
 use PhpParser\V4\Node\Expr\ClassConstFetch;
-use PhpParser\V4\Node\Name;
 use PhpParser\V4\Node\Identifier;
+use PhpParser\V4\Node\Name;
+use PhpParser\V4\Node\Stmt\Property;
+use PhpParser\V4\NodeVisitorAbstract;
 
 class ModelManagerVisitor extends NodeVisitorAbstract
 {
