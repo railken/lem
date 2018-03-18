@@ -30,8 +30,8 @@ class User extends Authenticatable implements EntityContract, AgentContract
      * @var array
      */
     protected $fillable = [
-        'username', 
-        'email', 
+        'username',
+        'email',
         'password',
     ];
 
@@ -41,7 +41,7 @@ class User extends Authenticatable implements EntityContract, AgentContract
      * @var array
      */
     protected $hidden = [
-        'password', 
+        'password',
         'remember_token',
     ];
 

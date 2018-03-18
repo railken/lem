@@ -9,5 +9,4 @@ use Railken\Laravel\Manager\ParameterBag;
 
 class UserValidator extends ModelValidator
 {
-    
 }

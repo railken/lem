@@ -16,8 +16,8 @@ class UserManager extends ModelManager
     protected $attributes = [
         Attributes\Id\IdAttribute::class,
         Attributes\CreatedAt\CreatedAtAttribute::class,
-        Attributes\UpdatedAt\UpdatedAtAttribute::class, 
-        Attributes\Username\UsernameAttribute::class, 
+        Attributes\UpdatedAt\UpdatedAtAttribute::class,
+        Attributes\Username\UsernameAttribute::class,
         Attributes\Email\EmailAttribute::class,
         Attributes\Password\PasswordAttribute::class,
     ];

@@ -50,5 +50,4 @@ class ModelAttributeTest extends \Orchestra\Testbench\TestCase
     {
         $this->getAttribute()->getPermission("WRONG_PERMISSION_CODE");
     }
-
 }

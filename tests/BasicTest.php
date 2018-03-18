@@ -104,7 +104,6 @@ class BasicTest extends \Orchestra\Testbench\TestCase
 
         $this->assertEquals(null, $um->findOneBy(['username' => 'test123']));
         $this->assertEquals(0, count($um->findBy(['username' => 'test123'])));
-
     }
 
     /**

@@ -2,7 +2,6 @@
 
 namespace Railken\Laravel\Manager\Tests\User\Attributes\Email;
 
-
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\ModelAttribute;
 use Railken\Laravel\Manager\Traits\AttributeValidateTrait;
@@ -13,12 +12,12 @@ use Respect\Validation\Validator as v;
 class EmailAttribute extends ModelAttribute
 {
 
-	/**
-	 * Name attribute
-	 *
-	 * @var string
-	 */
-	protected $name = 'email';
+    /**
+     * Name attribute
+     *
+     * @var string
+     */
+    protected $name = 'email';
 
     /**
      * Is the attribute required
@@ -29,7 +28,7 @@ class EmailAttribute extends ModelAttribute
     protected $required = true;
 
     /**
-     * Is the attribute unique 
+     * Is the attribute unique
      *
      * @var boolean
      */
@@ -41,8 +40,8 @@ class EmailAttribute extends ModelAttribute
      * @var array
      */
     protected $exceptions = [
-    	Tokens::NOT_DEFINED => Exceptions\UserEmailNotDefinedException::class,
-    	Tokens::NOT_VALID => Exceptions\UserEmailNotValidException::class,
+        Tokens::NOT_DEFINED => Exceptions\UserEmailNotDefinedException::class,
+        Tokens::NOT_VALID => Exceptions\UserEmailNotValidException::class,
         Tokens::NOT_AUTHORIZED => Exceptions\UserEmailNotAuthorizedException::class,
         Tokens::NOT_UNIQUE => Exceptions\UserEmailNotUniqueException::class
     ];
@@ -63,9 +62,8 @@ class EmailAttribute extends ModelAttribute
      *
      * @return boolean
      */
-	public function valid(EntityContract $entity, $value)
-	{
+    public function valid(EntityContract $entity, $value)
+    {
         return filter_var($value, FILTER_VALIDATE_EMAIL);
-	}
-
+    }
 }

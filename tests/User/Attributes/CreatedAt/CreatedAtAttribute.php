@@ -2,7 +2,6 @@
 
 namespace Railken\Laravel\Manager\Tests\User\Attributes\CreatedAt;
 
-
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\ModelAttribute;
 use Railken\Laravel\Manager\Traits\AttributeValidateTrait;
@@ -13,12 +12,12 @@ use Respect\Validation\Validator as v;
 class CreatedAtAttribute extends ModelAttribute
 {
 
-	/**
-	 * Name attribute
-	 *
-	 * @var string
-	 */
-	protected $name = 'created_at';
+    /**
+     * Name attribute
+     *
+     * @var string
+     */
+    protected $name = 'created_at';
 
     /**
      * Is the attribute required
@@ -29,7 +28,7 @@ class CreatedAtAttribute extends ModelAttribute
     protected $required = false;
 
     /**
-     * Is the attribute unique 
+     * Is the attribute unique
      *
      * @var boolean
      */
@@ -41,8 +40,8 @@ class CreatedAtAttribute extends ModelAttribute
      * @var array
      */
     protected $exceptions = [
-    	Tokens::NOT_DEFINED => Exceptions\UserCreatedAtNotDefinedException::class,
-    	Tokens::NOT_VALID => Exceptions\UserCreatedAtNotValidException::class,
+        Tokens::NOT_DEFINED => Exceptions\UserCreatedAtNotDefinedException::class,
+        Tokens::NOT_VALID => Exceptions\UserCreatedAtNotValidException::class,
         Tokens::NOT_AUTHORIZED => Exceptions\UserCreatedAtNotAuthorizedException::class
     ];
 
@@ -62,9 +61,8 @@ class CreatedAtAttribute extends ModelAttribute
      *
      * @return boolean
      */
-	public function valid(EntityContract $entity, $value)
-	{
-		return v::length(1, 255)->validate($value);
-	}
-
+    public function valid(EntityContract $entity, $value)
+    {
+        return v::length(1, 255)->validate($value);
+    }
 }
