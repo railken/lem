@@ -100,6 +100,8 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         $this->assertEquals('USER_EMAIL_NOT_UNIQUE', $um->create($this->getUserBag())->getErrors()->first()->getCode());
 
         $um->update($resource, $this->getUserBag());
+        
+        $this->assertEquals('test123', $um->getRepository()->findOneBy(['username' => 'test123'])->username);
         $this->assertEquals(1, count($um->getRepository()->findBy(['username' => 'test123'])));
         $this->assertEquals(1, count($um->getRepository()->findWhereIn(['username' => ['test123']])));
 
