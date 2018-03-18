@@ -19,7 +19,6 @@ use Railken\Laravel\Manager\Contracts\ParameterBagContract;
  */
 abstract class ModelManager implements ManagerContract
 {
-
     /**
      * @var array
      */
