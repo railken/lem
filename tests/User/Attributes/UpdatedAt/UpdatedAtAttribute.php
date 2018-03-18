@@ -3,11 +3,11 @@
 namespace Railken\Laravel\Manager\Tests\User\Attributes\UpdatedAt;
 
 use Railken\Laravel\Manager\Contracts\EntityContract;
-use Railken\Laravel\Manager\ModelAttribute;
+use Railken\Laravel\Manager\Attributes\BaseAttribute;
 use Railken\Laravel\Manager\Tokens;
 use Respect\Validation\Validator as v;
 
-class UpdatedAtAttribute extends ModelAttribute
+class UpdatedAtAttribute extends BaseAttribute
 {
     /**
      * Name attribute.

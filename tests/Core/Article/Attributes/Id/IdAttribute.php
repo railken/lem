@@ -2,10 +2,10 @@
 
 namespace Railken\Laravel\Manager\Tests\Core\Article\Attributes\Id;
 
-use Railken\Laravel\Manager\ModelAttribute;
+use Railken\Laravel\Manager\Attributes\BaseAttribute;
 use Railken\Laravel\Manager\Tokens;
 
-class IdAttribute extends ModelAttribute
+class IdAttribute extends BaseAttribute
 {
     /**
      * Name attribute.

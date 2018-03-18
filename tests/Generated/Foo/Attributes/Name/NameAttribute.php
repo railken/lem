@@ -3,11 +3,11 @@
 namespace Railken\Laravel\Manager\Tests\Generated\Foo\Attributes\Name;
 
 use Railken\Laravel\Manager\Contracts\EntityContract;
-use Railken\Laravel\Manager\ModelAttribute;
+use Railken\Laravel\Manager\Attributes\BaseAttribute;
 use Railken\Laravel\Manager\Tokens;
 use Respect\Validation\Validator as v;
 
-class NameAttribute extends ModelAttribute
+class NameAttribute extends BaseAttribute
 {
     /**
      * Name attribute.

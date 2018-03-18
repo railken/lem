@@ -1,14 +1,17 @@
 <?php
 
-namespace Railken\Laravel\Manager;
+namespace Railken\Laravel\Manager\Attributes;
 
 use Illuminate\Support\Collection;
 use Railken\Laravel\Manager\Contracts\AttributeContract;
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\Contracts\ManagerContract;
+use Railken\Laravel\Manager\Contracts\ParameterBagContract;
+use Railken\Laravel\Manager\Exceptions as Exceptions;
+use Railken\Laravel\Manager\Tokens;
 use Respect\Validation\Validator as v;
 
-abstract class ModelAttribute implements AttributeContract
+abstract class BaseAttribute implements AttributeContract
 {
     /**
      * @var string
@@ -137,24 +140,25 @@ abstract class ModelAttribute implements AttributeContract
     /**
      * Validate.
      *
-     * @param EntityContract $entity
-     * @param ParameterBag   $parameters
+     * @param EntityContract       $entity
+     * @param ParameterBagContract $parameters
      *
      * @return Collection
      */
-    public function validate(EntityContract $entity, ParameterBag $parameters)
+    public function validate(EntityContract $entity, ParameterBagContract $parameters)
     {
         $errors = new Collection();
 
+        $value = $parameters->get($this->name);
+
         $this->required && !$entity->exists && !$parameters->exists($this->name) &&
-            $errors->push(new $this->exceptions[Tokens::NOT_DEFINED]($parameters->get($this->name)));
+            $errors->push(new $this->exceptions[Tokens::NOT_DEFINED]($value));
 
-        $this->unique && $parameters->exists($this->name) && $this->isUnique($entity, $parameters->get($this->name)) &&
-            $errors->push(new $this->exceptions[Tokens::NOT_UNIQUE]($parameters->get($this->name)));
+        $this->unique && $parameters->exists($this->name) && $this->isUnique($entity, $value) &&
+            $errors->push(new $this->exceptions[Tokens::NOT_UNIQUE]($value));
 
-        $parameters->exists($this->name) &&
-            !$this->valid($entity, $parameters->get($this->name)) &&
-            $errors->push(new $this->exceptions[Tokens::NOT_VALID]($parameters->get($this->name)));
+        $parameters->exists($this->name) && !$this->valid($entity, $value) &&
+            $errors->push(new $this->exceptions[Tokens::NOT_VALID]($value));
 
         return $errors;
     }
@@ -173,18 +177,34 @@ abstract class ModelAttribute implements AttributeContract
     }
 
     /**
-     * Fill entity value.
+     * Update entity value.
      *
-     * @param EntityContract $entity
-     * @param ParameterBag   $parameters
+     * @param EntityContract       $entity
+     * @param ParameterBagContract $parameters
      *
      * @return Collection
      */
-    public function fill(EntityContract $entity, ParameterBag $parameters)
+    public function update(EntityContract $entity, ParameterBagContract $parameters)
     {
         $errors = new Collection();
         $errors = $errors->merge($this->authorize(Tokens::PERMISSION_FILL, $entity, $parameters));
         $errors = $errors->merge($this->validate($entity, $parameters));
+        $errors = $errors->merge($this->fill($entity, $parameters));
+
+        return $errors;
+    }
+
+    /**
+     * Update entity value.
+     *
+     * @param EntityContract       $entity
+     * @param ParameterBagContract $parameters
+     *
+     * @return Collection
+     */
+    public function fill(EntityContract $entity, ParameterBagContract $parameters)
+    {
+        $errors = new Collection();
 
         $parameters->exists($this->name) && $entity->fill([$this->name => $parameters->get($this->name)]);
 
@@ -203,7 +223,7 @@ abstract class ModelAttribute implements AttributeContract
     {
         $q = $this->getManager()->getRepository()->getQuery()->where($this->name, $value);
 
-        $entity->exists && $q->where('id', $entity->id);
+        $entity->exists && $q->where('id', '!=', $entity->id);
 
         return $q->count() > 0;
     }

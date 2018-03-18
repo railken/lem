@@ -3,11 +3,11 @@
 namespace Railken\Laravel\Manager\Tests\Core\Article\Attributes\AuthorId;
 
 use Railken\Laravel\Manager\Contracts\EntityContract;
-use Railken\Laravel\Manager\ModelAttribute;
+use Railken\Laravel\Manager\Attributes\BelongsToAttribute;
 use Railken\Laravel\Manager\Tests\User\UserManager;
 use Railken\Laravel\Manager\Tokens;
 
-class AuthorIdAttribute extends ModelAttribute
+class AuthorIdAttribute extends BelongsToAttribute
 {
     /**
      * Name attribute.
@@ -51,17 +51,36 @@ class AuthorIdAttribute extends ModelAttribute
     ];
 
     /**
-     * Is a value valid ?
+     * Retrieve the name of the relation
+     *
+     * @return string
+     */
+    public function getRelationName()
+    {
+        return 'author';
+    }
+
+    /**
+     * Retrieve eloquent relation.
      *
      * @param EntityContract $entity
-     * @param mixed          $value
      *
-     * @return bool
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function valid(EntityContract $entity, $value)
+    public function getRelationBuilder(EntityContract $entity)
     {
-        $user = (new UserManager($this->getManager()->getAgent()))->getRepository()->findOneById($value);
+        return $entity->author();
+    }
 
-        return !empty($user);
+    /**
+     * Retrieve relation manager.
+     *
+     * @param EntityContract $entity
+     *
+     * @return \Railken\Laravel\Manager\Contracts\ManagerContract
+     */
+    public function getRelationManager(EntityContract $entity)
+    {
+        return new \Railken\Laravel\Manager\Tests\User\UserManager($this->getManager()->getAgent());
     }
 }

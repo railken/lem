@@ -4,7 +4,7 @@ namespace Railken\Laravel\Manager\Tests;
 
 use Railken\Laravel\Manager\Tests\User\UserManager;
 
-class ModelAttributeTest extends \Orchestra\Testbench\TestCase
+class BaseAttributeTest extends \Orchestra\Testbench\TestCase
 {
     /**
      * Get package providers.

@@ -322,7 +322,7 @@ abstract class ModelManager implements ManagerContract
 
             // Attributes
             foreach ($this->getAttributes() as $attribute) {
-                $result->addErrors($attribute->fill($entity, $parameters));
+                $result->addErrors($attribute->update($entity, $parameters));
             }
 
             if (!$result->ok()) {

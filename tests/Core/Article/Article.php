@@ -23,7 +23,7 @@ class Article extends Model implements EntityContract
      *
      * @var array
      */
-    protected $fillable = ['title', 'description', 'author_id', 'deleted_at'];
+    protected $fillable = ['title', 'description', 'deleted_at'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -34,6 +34,8 @@ class Article extends Model implements EntityContract
 
     /**
      * Get the author that wrote the article.
+     *
+     * @return \Illuminate\Database\
      */
     public function author()
     {
