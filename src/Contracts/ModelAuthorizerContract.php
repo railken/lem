@@ -6,13 +6,12 @@ use Railken\Laravel\Manager\ParameterBag;
 
 interface ModelAuthorizerContract
 {
-
     /**
-     * Validate
+     * Validate.
      *
-     * @param string $action
+     * @param string         $action
      * @param EntityContract $entity
-     * @param ParameterBag $parameters
+     * @param ParameterBag   $parameters
      *
      * @return \Illuminate\Support\Collection
      */

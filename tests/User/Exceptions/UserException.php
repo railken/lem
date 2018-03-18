@@ -2,8 +2,8 @@
 
 namespace Railken\Laravel\Manager\Tests\User\Exceptions;
 
-use Railken\Laravel\Manager\Contracts\ExceptionContract;
 use Exception;
+use Railken\Laravel\Manager\Contracts\ExceptionContract;
 
 class UserException extends Exception implements ExceptionContract
 {
@@ -61,10 +61,10 @@ class UserException extends Exception implements ExceptionContract
     public function toArray()
     {
         return [
-            'code' => $this->getCode(),
-            'label' => $this->getLabel(),
+            'code'    => $this->getCode(),
+            'label'   => $this->getLabel(),
             'message' => $this->getMessage(),
-            'value' => $this->getValue(),
+            'value'   => $this->getValue(),
         ];
     }
 

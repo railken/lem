@@ -2,18 +2,17 @@
 
 namespace Railken\Laravel\Manager;
 
-use Railken\Laravel\Manager\Contracts\EntityContract;
-use Railken\Laravel\Manager\Contracts\ModelValidatorContract;
-use Railken\Laravel\Manager\Contracts\ManagerContract;
-use Railken\Laravel\Manager\ParameterBag;
 use Illuminate\Support\Collection;
+use Railken\Laravel\Manager\Contracts\EntityContract;
+use Railken\Laravel\Manager\Contracts\ManagerContract;
+use Railken\Laravel\Manager\Contracts\ModelValidatorContract;
 
 class ModelValidator implements ModelValidatorContract
 {
     use Traits\HasModelManagerTrait;
 
     /**
-     * Construct
+     * Construct.
      *
      * @param ManagerContract $manager
      */
@@ -23,9 +22,8 @@ class ModelValidator implements ModelValidatorContract
     }
 
     /**
-     *
      * @param EntityContract $entity
-     * @param ParameterBag $parameters
+     * @param ParameterBag   $parameters
      *
      * @return Collection
      */
@@ -34,7 +32,6 @@ class ModelValidator implements ModelValidatorContract
         $errors = new Collection();
 
         $methods = new Collection(get_class_methods($this));
-
 
         $methods->filter(function ($method) {
             return substr($method, 0, strlen('validate')) === 'validate' && $method !== 'validate';
@@ -48,12 +45,12 @@ class ModelValidator implements ModelValidatorContract
 
         return $errors;
     }
-    
+
     /**
-     * Validate uniqueness
+     * Validate uniqueness.
      *
      * @param EntityContract $entity
-     * @param ParameterBag $parameters
+     * @param ParameterBag   $parameters
      *
      * @return Collection
      */
@@ -69,9 +66,9 @@ class ModelValidator implements ModelValidatorContract
 
             $where = collect();
             foreach ($attributes as $attribute) {
-                $attribute = explode(":", $attribute);
+                $attribute = explode(':', $attribute);
 
-                $col = count($attribute) > 1 ? $attribute[1]: $attribute[0];
+                $col = count($attribute) > 1 ? $attribute[1] : $attribute[0];
                 $attribute = $attribute[0];
 
                 $value = $parameters->get($attribute, $entity->$attribute);

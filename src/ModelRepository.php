@@ -9,14 +9,14 @@ abstract class ModelRepository implements ModelRepositoryContract
     use Traits\HasModelManagerTrait;
 
     /**
-     * Class entity
+     * Class entity.
      *
      * @var string
      */
     public $entity;
 
     /**
-     * Retrieve new instance of entity
+     * Retrieve new instance of entity.
      *
      * @param array $parameters
      *
@@ -30,7 +30,7 @@ abstract class ModelRepository implements ModelRepositoryContract
     }
 
     /**
-     * Return entity
+     * Return entity.
      *
      * @return string
      */
@@ -40,7 +40,7 @@ abstract class ModelRepository implements ModelRepositoryContract
     }
 
     /**
-     * Find by primary
+     * Find by primary.
      *
      * @param array $parameters
      *
@@ -52,7 +52,7 @@ abstract class ModelRepository implements ModelRepositoryContract
     }
 
     /**
-     * Find one by
+     * Find one by.
      *
      * @param array $parameters
      *
@@ -64,9 +64,9 @@ abstract class ModelRepository implements ModelRepositoryContract
     }
 
     /**
-     * Find one by
+     * Find one by.
      *
-     * @param integer $id
+     * @param int $id
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
@@ -75,9 +75,8 @@ abstract class ModelRepository implements ModelRepositoryContract
         return $this->findOneBy(['id' => $id]);
     }
 
-
     /**
-     * Find where in
+     * Find where in.
      *
      * @param array $parameters
      *
@@ -91,12 +90,11 @@ abstract class ModelRepository implements ModelRepositoryContract
             $q->whereIn($name, $value);
         }
 
-
         return $q->get();
     }
 
     /**
-     * Return query
+     * Return query.
      *
      * @return \Illuminate\Database\Query\Builder
      */
@@ -105,9 +103,8 @@ abstract class ModelRepository implements ModelRepositoryContract
         return $this->newQuery();
     }
 
-
     /**
-     * Return query
+     * Return query.
      *
      * @return \Illuminate\Database\Query\Builder
      */

@@ -2,8 +2,8 @@
 
 namespace Railken\Laravel\Manager\Tests\Core\Article\Exceptions;
 
-use Railken\Laravel\Manager\Contracts\ExceptionContract;
 use Exception;
+use Railken\Laravel\Manager\Contracts\ExceptionContract;
 
 abstract class ArticleException extends Exception implements ExceptionContract
 {
@@ -61,10 +61,10 @@ abstract class ArticleException extends Exception implements ExceptionContract
     public function toArray()
     {
         return [
-            'code' => $this->getCode(),
-            'label' => $this->getLabel(),
+            'code'    => $this->getCode(),
+            'label'   => $this->getLabel(),
             'message' => $this->getMessage(),
-            'value' => $this->getValue(),
+            'value'   => $this->getValue(),
         ];
     }
 

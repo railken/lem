@@ -5,7 +5,7 @@ namespace Railken\Laravel\Manager\Contracts;
 interface ParameterBagContract
 {
     /**
-     * Filter current bag
+     * Filter current bag.
      *
      * @return $this
      */

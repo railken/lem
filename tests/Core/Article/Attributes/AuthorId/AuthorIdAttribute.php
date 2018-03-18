@@ -4,8 +4,8 @@ namespace Railken\Laravel\Manager\Tests\Core\Article\Attributes\AuthorId;
 
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\ModelAttribute;
-use Railken\Laravel\Manager\Tokens;
 use Railken\Laravel\Manager\Tests\User\UserManager;
+use Railken\Laravel\Manager\Tokens;
 
 class AuthorIdAttribute extends ModelAttribute
 {
@@ -37,8 +37,8 @@ class AuthorIdAttribute extends ModelAttribute
      * @var array
      */
     protected $exceptions = [
-        Tokens::NOT_DEFINED => Exceptions\ArticleAuthorIdNotDefinedException::class,
-        Tokens::NOT_VALID => Exceptions\ArticleAuthorIdNotValidException::class,
+        Tokens::NOT_DEFINED    => Exceptions\ArticleAuthorIdNotDefinedException::class,
+        Tokens::NOT_VALID      => Exceptions\ArticleAuthorIdNotValidException::class,
         Tokens::NOT_AUTHORIZED => Exceptions\ArticleAuthorIdNotAuthorizedException::class,
     ];
 

@@ -2,11 +2,11 @@
 
 namespace Railken\Laravel\Manager\Tests\Core\Article;
 
-use Railken\Laravel\Manager\ModelSerializer;
-use Railken\Laravel\Manager\Contracts\EntityContract;
 use Illuminate\Support\Collection;
-use Railken\Laravel\Manager\Tokens;
 use Railken\Bag;
+use Railken\Laravel\Manager\Contracts\EntityContract;
+use Railken\Laravel\Manager\ModelSerializer;
+use Railken\Laravel\Manager\Tokens;
 
 class ArticleSerializer extends ModelSerializer
 {

@@ -3,12 +3,10 @@
 namespace Railken\Laravel\Manager\Commands;
 
 use Illuminate\Console\Command;
-
 use Railken\Laravel\Manager\Generator;
 
 class GenerateAttribute extends Command
 {
-
     /**
      * The name and signature of the console command.
      *
@@ -43,6 +41,6 @@ class GenerateAttribute extends Command
         $generator = new Generator();
         $generator->generateAttribute(base_path($this->argument('path')), $this->argument('namespace'), $this->argument('attribute'));
         $this->info("{$this->argument('namespace')} generated. Remember to add the attribute to the migration. $fillable already populated.");
-        $this->info("Run php-cs-fixer to fix missing lines");
+        $this->info('Run php-cs-fixer to fix missing lines');
     }
 }

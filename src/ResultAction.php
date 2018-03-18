@@ -2,29 +2,26 @@
 
 namespace Railken\Laravel\Manager;
 
-use Railken\Laravel\Manager\Exceptions as Exceptions;
 use Illuminate\Support\Collection;
 
 class ResultAction
 {
-
-
     /**
-     * A collection of resources altered during operation
+     * A collection of resources altered during operation.
      *
      * @var Collection
      */
     protected $resources;
 
     /**
-     * List of errors happened during execution
+     * List of errors happened during execution.
      *
      * @var Collection
      */
     protected $errors;
 
     /**
-     * Construct
+     * Construct.
      */
     public function __construct()
     {
@@ -33,7 +30,7 @@ class ResultAction
     }
 
     /**
-     * Set resources
+     * Set resources.
      *
      * @param Collection $resources
      */
@@ -43,7 +40,7 @@ class ResultAction
     }
 
     /**
-     * Get resources
+     * Get resources.
      *
      * @return Collection
      */
@@ -53,7 +50,7 @@ class ResultAction
     }
 
     /**
-     * Get first resource
+     * Get first resource.
      *
      * @return mixed
      */
@@ -63,7 +60,7 @@ class ResultAction
     }
 
     /**
-     * Set errors
+     * Set errors.
      *
      * @param Collection $errors
      *
@@ -77,7 +74,7 @@ class ResultAction
     }
 
     /**
-     * Get errors
+     * Get errors.
      *
      * @return Collection
      */
@@ -87,7 +84,7 @@ class ResultAction
     }
 
     /**
-     * Get error
+     * Get error.
      *
      * @return mixed
      */
@@ -97,7 +94,7 @@ class ResultAction
     }
 
     /**
-     * Add errors
+     * Add errors.
      *
      * @param Collection $errors
      *
@@ -110,9 +107,8 @@ class ResultAction
         return $this;
     }
 
-
     /**
-     * Return if result has been executed without errors
+     * Return if result has been executed without errors.
      *
      * @return bool
      */
@@ -122,7 +118,7 @@ class ResultAction
     }
 
     /**
-     * Return if result has been executed without errors
+     * Return if result has been executed without errors.
      *
      * @return bool
      */
@@ -132,7 +128,7 @@ class ResultAction
     }
 
     /**
-     * Retrieve a "short" version of errors
+     * Retrieve a "short" version of errors.
      *
      * @return Collection
      */

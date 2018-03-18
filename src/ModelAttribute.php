@@ -2,15 +2,14 @@
 
 namespace Railken\Laravel\Manager;
 
+use Illuminate\Support\Collection;
 use Railken\Laravel\Manager\Contracts\AttributeContract;
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\Contracts\ManagerContract;
-use Illuminate\Support\Collection;
 use Respect\Validation\Validator as v;
 
 abstract class ModelAttribute implements AttributeContract
 {
-
     /**
      * @var string
      */
@@ -18,16 +17,16 @@ abstract class ModelAttribute implements AttributeContract
 
     /**
      * Is the attribute required
-     * This will throw not_defined exception for non defined value and non existent model
+     * This will throw not_defined exception for non defined value and non existent model.
      *
-     * @var boolean
+     * @var bool
      */
     protected $required = false;
 
     /**
-     * Is the attribute unique
+     * Is the attribute unique.
      *
-     * @var boolean
+     * @var bool
      */
     protected $unique = false;
 
@@ -40,16 +39,16 @@ abstract class ModelAttribute implements AttributeContract
      * @var array
      */
     protected $exceptions;
-    
+
     /**
-     * List of all permissions
+     * List of all permissions.
      *
      * @var array
      */
     protected $permissions;
 
     /**
-     * Set manager
+     * Set manager.
      *
      * @param ManagerContract $manager
      *
@@ -63,7 +62,7 @@ abstract class ModelAttribute implements AttributeContract
     }
 
     /**
-     * Get manager
+     * Get manager.
      *
      * @return ManagerContract
      */
@@ -71,11 +70,9 @@ abstract class ModelAttribute implements AttributeContract
     {
         return $this->manager;
     }
-        
-
 
     /**
-     *  Retrieve a permission name given code
+     *  Retrieve a permission name given code.
      *
      * @param string $code
      *
@@ -90,9 +87,8 @@ abstract class ModelAttribute implements AttributeContract
         return $this->exceptions[$code];
     }
 
-
     /**
-     * Retrieve a permission name given code
+     * Retrieve a permission name given code.
      *
      * @param string $code
      *
@@ -108,10 +104,10 @@ abstract class ModelAttribute implements AttributeContract
     }
 
     /**
-     * Validate
+     * Validate.
      *
      * @param EntityContract $entity
-     * @param ParameterBag $parameters
+     * @param ParameterBag   $parameters
      *
      * @return Collection
      */
@@ -129,7 +125,6 @@ abstract class ModelAttribute implements AttributeContract
             !$this->valid($entity, $parameters->get($this->name)) &&
             $errors->push(new $this->exceptions[Tokens::NOT_VALID]($parameters->get($this->name)));
 
-
         return $errors;
     }
 
@@ -137,9 +132,9 @@ abstract class ModelAttribute implements AttributeContract
      * Is a value valid ?
      *
      * @param EntityContract $entity
-     * @param mixed $value
+     * @param mixed          $value
      *
-     * @return boolean
+     * @return bool
      */
     public function valid(EntityContract $entity, $value)
     {
@@ -147,10 +142,10 @@ abstract class ModelAttribute implements AttributeContract
     }
 
     /**
-     * Fill entity value
+     * Fill entity value.
      *
      * @param EntityContract $entity
-     * @param ParameterBag $parameters
+     * @param ParameterBag   $parameters
      *
      * @return Collection
      */
@@ -158,15 +153,14 @@ abstract class ModelAttribute implements AttributeContract
     {
         // ...
     }
-    
 
     /**
      * Is a value valid ?
      *
      * @param EntityContract $entity
-     * @param mixed $value
+     * @param mixed          $value
      *
-     * @return boolean
+     * @return bool
      */
     public function isUnique(EntityContract $entity, $value)
     {
@@ -177,16 +171,14 @@ abstract class ModelAttribute implements AttributeContract
         return $q->count() > 0;
     }
 
-
-
     /**
      * Is a value valid ?
      *
-     * @param string $action
+     * @param string         $action
      * @param EntityContract $entity
-     * @param mixed $value
+     * @param mixed          $value
      *
-     * @return boolean
+     * @return bool
      */
     public function authorize(string $action, EntityContract $entity, $value)
     {
@@ -201,7 +193,7 @@ abstract class ModelAttribute implements AttributeContract
     }
 
     /**
-     * Retrieve name attribute
+     * Retrieve name attribute.
      *
      * @return string
      */

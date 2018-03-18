@@ -6,9 +6,8 @@ use Illuminate\Support\Collection;
 
 interface ModelSerializerContract
 {
-
     /**
-     * Serialize
+     * Serialize.
      *
      * @param EntityContract $entity
      *

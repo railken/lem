@@ -3,12 +3,10 @@
 namespace Railken\Laravel\Manager\Commands;
 
 use Illuminate\Console\Command;
-
 use Railken\Laravel\Manager\Generator;
 
 class Generate extends Command
 {
-
     /**
      * The name and signature of the console command.
      *

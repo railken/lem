@@ -2,23 +2,20 @@
 
 namespace Railken\Laravel\Manager;
 
-use Railken\Laravel\Manager\Contracts\ManagerContract;
+use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Exception;
-use Railken\Laravel\Manager\Exceptions as Exceptions;
-use Railken\Laravel\Manager\Contracts\ModelRepositoryContract;
+use Railken\Laravel\Manager\Contracts\AgentContract;
+use Railken\Laravel\Manager\Contracts\EntityContract;
+use Railken\Laravel\Manager\Contracts\ManagerContract;
 use Railken\Laravel\Manager\Contracts\ModelAuthorizerContract;
+use Railken\Laravel\Manager\Contracts\ModelRepositoryContract;
 use Railken\Laravel\Manager\Contracts\ModelSerializerContract;
 use Railken\Laravel\Manager\Contracts\ModelValidatorContract;
 use Railken\Laravel\Manager\Contracts\ParameterBagContract;
-use Railken\Laravel\Manager\Contracts\EntityContract;
-use Railken\Laravel\Manager\Contracts\AgentContract;
-use Railken\Laravel\Manager\Agents\SystemAgent;
 
 /**
- * Abstract ModelManager class
- *
+ * Abstract ModelManager class.
  */
 abstract class ModelManager implements ManagerContract
 {
@@ -42,7 +39,6 @@ abstract class ModelManager implements ManagerContract
      */
     protected $exceptions = [];
 
-
     /**
      * @var AgentContract
      */
@@ -53,9 +49,8 @@ abstract class ModelManager implements ManagerContract
      */
     protected $permissions = [];
 
-
     /**
-     * Construct
+     * Construct.
      */
     public function __construct(AgentContract $agent = null)
     {
@@ -74,7 +69,7 @@ abstract class ModelManager implements ManagerContract
         }
 
         $this->attributes = $attributes;
-        
+
         foreach (static::$__components[get_class($this)] as $key => $component) {
             class_exists($component) && $this->$key = (new $component());
         }
@@ -107,7 +102,7 @@ abstract class ModelManager implements ManagerContract
     }
 
     /**
-     * Retrieve attributes
+     * Retrieve attributes.
      *
      * @return array
      */
@@ -116,9 +111,8 @@ abstract class ModelManager implements ManagerContract
         return $this->attributes;
     }
 
-
     /**
-     * Retrieve unique
+     * Retrieve unique.
      *
      * @return array
      */
@@ -128,7 +122,7 @@ abstract class ModelManager implements ManagerContract
     }
 
     /**
-     * Retrieve an exception class given code
+     * Retrieve an exception class given code.
      *
      * @param string $code
      *
@@ -144,7 +138,7 @@ abstract class ModelManager implements ManagerContract
     }
 
     /**
-     * Retrieve a permission name given code
+     * Retrieve a permission name given code.
      *
      * @param string $code
      *
@@ -160,7 +154,7 @@ abstract class ModelManager implements ManagerContract
     }
 
     /**
-     * Retrieve agent
+     * Retrieve agent.
      *
      * @return AgentContract
      */
@@ -168,12 +162,12 @@ abstract class ModelManager implements ManagerContract
     {
         return $this->agent;
     }
-    
+
     /**
-     * Set components
+     * Set components.
      *
      * @param string $key
-     * @param array $args
+     * @param array  $args
      *
      * @return void
      */
@@ -183,7 +177,7 @@ abstract class ModelManager implements ManagerContract
     }
 
     /**
-     * Get components
+     * Get components.
      *
      * @param string $key
      *
@@ -195,7 +189,7 @@ abstract class ModelManager implements ManagerContract
     }
 
     /**
-     * Convert array to ParameterBag
+     * Convert array to ParameterBag.
      *
      * @param mixed $parameters
      *
@@ -207,7 +201,7 @@ abstract class ModelManager implements ManagerContract
     }
 
     /**
-     * Retrieve repository
+     * Retrieve repository.
      *
      * @return ModelRepository
      */
@@ -217,7 +211,7 @@ abstract class ModelManager implements ManagerContract
     }
 
     /**
-     * Find
+     * Find.
      *
      * @param ParameterBag|mixed $parameters
      *
@@ -236,7 +230,7 @@ abstract class ModelManager implements ManagerContract
     }
 
     /**
-     * Find by parameters
+     * Find by parameters.
      *
      * @param ParameterBag|array $parameters
      *
@@ -255,7 +249,7 @@ abstract class ModelManager implements ManagerContract
     }
 
     /**
-     * Create a new EntityContract given parameters
+     * Create a new EntityContract given parameters.
      *
      * @param ParameterBag|array $parameters
      *
@@ -269,7 +263,6 @@ abstract class ModelManager implements ManagerContract
         $parameters = $this->castParameters($parameters);
         $parameters->filterWrite();
 
-
         $result->addErrors($this->authorizer->authorize(Tokens::PERMISSION_CREATE, $entity, $parameters));
         $result->addErrors($this->validator->validate($entity, $parameters));
 
@@ -277,9 +270,9 @@ abstract class ModelManager implements ManagerContract
     }
 
     /**
-     * Update a EntityContract given parameters
+     * Update a EntityContract given parameters.
      *
-     * @param EntityContract $entity
+     * @param EntityContract     $entity
      * @param ParameterBag|array $parameters
      *
      * @return ResultAction
@@ -298,9 +291,9 @@ abstract class ModelManager implements ManagerContract
     }
 
     /**
-     * Update a EntityContract given parameters
+     * Update a EntityContract given parameters.
      *
-     * @param EntityContract $entity
+     * @param EntityContract     $entity
      * @param ParameterBag|array $parameters
      *
      * @return ResultAction
@@ -322,6 +315,7 @@ abstract class ModelManager implements ManagerContract
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
+
             throw $e;
         }
 
@@ -329,7 +323,7 @@ abstract class ModelManager implements ManagerContract
     }
 
     /**
-     * Save the entity
+     * Save the entity.
      *
      * @param EntityContract $entity
      *
@@ -341,7 +335,7 @@ abstract class ModelManager implements ManagerContract
     }
 
     /**
-     * Remove a EntityContract
+     * Remove a EntityContract.
      *
      * @param EntityContract $entity
      *
@@ -355,7 +349,7 @@ abstract class ModelManager implements ManagerContract
     }
 
     /**
-     * Delete a EntityContract
+     * Delete a EntityContract.
      *
      * @param EntityContract $entity
      *
@@ -377,17 +371,17 @@ abstract class ModelManager implements ManagerContract
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
+
             throw $e;
         }
 
         return $result;
     }
 
-
     /**
-     * Fill entity EntityContract with array
+     * Fill entity EntityContract with array.
      *
-     * @param EntityContract $entity
+     * @param EntityContract       $entity
      * @param ParameterBagContract $parameters
      *
      * @return void
@@ -406,7 +400,7 @@ abstract class ModelManager implements ManagerContract
     }
 
     /**
-     * First or create
+     * First or create.
      *
      * @param ParameterBag|array $criteria
      * @param ParameterBag|array $parameters
@@ -422,7 +416,7 @@ abstract class ModelManager implements ManagerContract
     }
 
     /**
-     * Update or create
+     * Update or create.
      *
      * @param ParameterBag|array $criteria
      * @param ParameterBag|array $parameters

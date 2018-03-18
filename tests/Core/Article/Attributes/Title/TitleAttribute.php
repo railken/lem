@@ -4,8 +4,8 @@ namespace Railken\Laravel\Manager\Tests\Core\Article\Attributes\Title;
 
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\ModelAttribute;
-use Respect\Validation\Validator as v;
 use Railken\Laravel\Manager\Tokens;
+use Respect\Validation\Validator as v;
 
 class TitleAttribute extends ModelAttribute
 {
@@ -37,8 +37,8 @@ class TitleAttribute extends ModelAttribute
      * @var array
      */
     protected $exceptions = [
-        Tokens::NOT_DEFINED => Exceptions\ArticleTitleNotDefinedException::class,
-        Tokens::NOT_VALID => Exceptions\ArticleTitleNotValidException::class,
+        Tokens::NOT_DEFINED    => Exceptions\ArticleTitleNotDefinedException::class,
+        Tokens::NOT_VALID      => Exceptions\ArticleTitleNotValidException::class,
         Tokens::NOT_AUTHORIZED => Exceptions\ArticleTitleNotAuthorizedException::class,
     ];
 
