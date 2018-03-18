@@ -21,7 +21,6 @@ class ModelManagerVisitor extends NodeVisitorAbstract
                 return implode('\\', $node->value->class->parts) === implode('\\', $this->attribute);
             });
 
-            print_r($this->attribute);
             if (count($results) < 1) {
                 $node->props[0]->default->items[] = new \PhpParser\Node\Expr\ClassConstFetch(
                     new \PhpParser\Node\Name($this->attribute),
