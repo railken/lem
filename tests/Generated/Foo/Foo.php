@@ -8,27 +8,26 @@ use Railken\Laravel\Manager\Contracts\EntityContract;
 
 class Foo extends Model implements EntityContract
 {
+    use SoftDeletes;
 
-	use SoftDeletes;
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'foo';
 
-	/**
-	 * The table associated with the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'foo';
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['id', 'name', 'created_at', 'updated_at', 'deleted_at'];
 
-	/**
-	 * The attributes that are mass assignable.
-	 *
-	 * @var array
-	 */
-	protected $fillable = ['id', 'name', 'created_at', 'updated_at', 'deleted_at'];
-
-	/**
-	 * The attributes that should be mutated to dates.
-	 *
-	 * @var array
-	 */
-	protected $dates = ['deleted_at'];
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
 }
