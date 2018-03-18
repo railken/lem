@@ -114,13 +114,12 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
         new UserManager();
     }
 
-
     /**
      * @expectedException \Railken\Laravel\Manager\Exceptions\ExceptionNotDefinedException
      */
     public function testExceptionNotDefinedException()
     {
-        (new UserManager())->getException("WRONG_EXCEPTION_CODE");
+        (new UserManager())->getException('WRONG_EXCEPTION_CODE');
     }
 
     /**
@@ -128,6 +127,6 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
      */
     public function testPermissionNotDefinedException()
     {
-        (new UserManager())->getPermission("WRONG_PERMISSION_CODE");
+        (new UserManager())->getPermission('WRONG_PERMISSION_CODE');
     }
 }

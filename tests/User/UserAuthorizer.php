@@ -8,7 +8,7 @@ use Railken\Laravel\Manager\Tokens;
 class UserAuthorizer extends ModelAuthorizer
 {
     /**
-     * List of all permissions
+     * List of all permissions.
      *
      * @var array
      */
