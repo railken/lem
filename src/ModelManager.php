@@ -19,10 +19,6 @@ use Railken\Laravel\Manager\Contracts\ParameterBagContract;
  */
 abstract class ModelManager implements ManagerContract
 {
-    /**
-     * @var array
-     */
-    protected static $__components = [];
 
     /**
      * @var array
@@ -277,31 +273,6 @@ abstract class ModelManager implements ManagerContract
     public function getAgent()
     {
         return $this->agent;
-    }
-
-    /**
-     * Set components.
-     *
-     * @param string $key
-     * @param array  $args
-     *
-     * @return void
-     */
-    public static function __callStatic($key, $args)
-    {
-        static::$__components[static::class][$key] = $args[0];
-    }
-
-    /**
-     * Get components.
-     *
-     * @param string $key
-     *
-     * @return string
-     */
-    public static function getComponent($key)
-    {
-        return static::$__components[static::class][$key];
     }
 
     /**
