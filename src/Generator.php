@@ -2,13 +2,8 @@
 
 namespace Railken\Laravel\Manager;
 
-use PhpParser\Lexer;
-use PhpParser\NodeTraverser;
-use PhpParser\NodeVisitor;
-use PhpParser\NodeVisitorAbstract;
-use PhpParser\Parser;
-use PhpParser\PrettyPrinter;
 use Railken\Laravel\Manager\Parser\Visitors as Visitors;
+use PhpParser\NodeVisitorAbstract;
 
 class Generator
 {
@@ -164,35 +159,9 @@ class Generator
      */
     public function parseCode($path, NodeVisitorAbstract $visitor)
     {
-        $lexer = new Lexer\Emulative([
-            'usedAttributes' => [
-                'comments',
-                'startLine', 'endLine',
-                'startTokenPos', 'endTokenPos',
-            ],
-        ]);
+        $parser = new Parser\Parser();
 
-        $parser = new Parser\Php7($lexer, [
-            'useIdentifierNodes'         => true,
-            'useConsistentVariableNodes' => true,
-            'useExpressionStatements'    => true,
-            'useNopStatements'           => false,
-        ]);
-
-        $traverser = new NodeTraverser();
-        $traverser->addVisitor(new NodeVisitor\CloningVisitor());
-        $traverser->addVisitor($visitor);
-
-        $printer = new PrettyPrinter\Standard();
-        $code = file_get_contents($path);
-        $oldStmts = $parser->parse($code);
-        $oldTokens = $lexer->getTokens();
-
-        $newStmts = $traverser->traverse($oldStmts);
-
-        $newCode = $printer->printFormatPreserving($newStmts, $oldStmts, $oldTokens);
-
-        file_put_contents($path, $newCode);
+        return $parser->edit($path, $visitor);
     }
 
     /**
