@@ -2,8 +2,10 @@
 
 namespace Railken\Laravel\Manager\Parser\Visitors;
 
-use PhpParser\Node;
-use PhpParser\NodeVisitorAbstract;
+use PhpParser\V4\Node;
+use PhpParser\V4\NodeVisitorAbstract;
+use PhpParser\V4\Node\Stmt\Property;
+use PhpParser\V4\Node\Scalar\String_;
 
 class ModelVisitor extends NodeVisitorAbstract
 {
@@ -16,13 +18,13 @@ class ModelVisitor extends NodeVisitorAbstract
 
     public function leaveNode(Node $node)
     {
-        if ($node instanceof \PhpParser\Node\Stmt\Property && $node->props[0]->name == 'fillable') {
+        if ($node instanceof Property && $node->props[0]->name == 'fillable') {
             $results = array_filter($node->props[0]->default->items, function ($node) {
                 return $node->value->value === $this->attribute;
             });
 
             if (count($results) < 1) {
-                $node->props[0]->default->items[] = new \PhpParser\Node\Scalar\String_($this->attribute);
+                $node->props[0]->default->items[] = new String_($this->attribute);
 
                 return $node;
             }

@@ -3,7 +3,7 @@
 namespace Railken\Laravel\Manager;
 
 use Railken\Laravel\Manager\Parser\Visitors as Visitors;
-use PhpParser\NodeVisitorAbstract;
+use PhpParser\V4\NodeVisitorAbstract;
 
 class Generator
 {

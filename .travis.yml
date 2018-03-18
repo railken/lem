@@ -60,11 +60,10 @@ jobs:
       env: PHPStan
       install: travis_retry composer update --prefer-dist --prefer-stable
       before_script:
-        - travis_retry composer global require --dev --prefer-dist --prefer-stable phpstan/phpstan:^0.9
-        - export PATH=~/.composer/vendor/bin:$PATH
+        - travis_retry composer update --prefer-dist --prefer-stable
       script:
-        - phpstan analyse --level=0 src -c phpstan.neon
-        - phpstan analyse --level=1 tests -c phpstan.neon
+        - ./vendor/bin/phpstan analyse --level=0 src -c phpstan.neon
+        - ./vendor/bin/phpstan analyse --level=1 tests -c phpstan.neon
     - stage: Style
       php: 7.2
       env: php-cs-fixer
