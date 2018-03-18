@@ -35,7 +35,7 @@ abstract class ModelRepository implements ModelRepositoryContract
      */
     public function newEntity(array $parameters = [])
     {
-        $entity = $this->entity;
+        $entity = $this->getEntity();
 
         return new $entity($parameters);
     }
