@@ -106,7 +106,6 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         $this->assertEquals(1, count($um->getRepository()->findWhereIn(['username' => ['test123']])));
 
         $um->remove($resource);
-
     }
 
     /**
