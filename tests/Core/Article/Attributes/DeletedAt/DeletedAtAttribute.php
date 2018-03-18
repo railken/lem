@@ -4,8 +4,8 @@ namespace Railken\Laravel\Manager\Tests\Core\Article\Attributes\DeletedAt;
 
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\ModelAttribute;
-use Respect\Validation\Validator as v;
 use Railken\Laravel\Manager\Tokens;
+use Respect\Validation\Validator as v;
 
 class DeletedAtAttribute extends ModelAttribute
 {
@@ -37,8 +37,8 @@ class DeletedAtAttribute extends ModelAttribute
      * @var array
      */
     protected $exceptions = [
-        Tokens::NOT_DEFINED => Exceptions\ArticleDeletedAtNotDefinedException::class,
-        Tokens::NOT_VALID => Exceptions\ArticleDeletedAtNotValidException::class,
+        Tokens::NOT_DEFINED    => Exceptions\ArticleDeletedAtNotDefinedException::class,
+        Tokens::NOT_VALID      => Exceptions\ArticleDeletedAtNotValidException::class,
         Tokens::NOT_AUTHORIZED => Exceptions\ArticleDeletedAtNotAuthorizedException::class,
     ];
 

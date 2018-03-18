@@ -6,7 +6,6 @@ use Exception;
 
 abstract class ModelMissingComponentException extends Exception
 {
-
     /**
      * @var string
      */

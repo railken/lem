@@ -3,12 +3,9 @@
 namespace Railken\Laravel\Manager;
 
 use Illuminate\Support\ServiceProvider;
-use Railken\Laravel\Manager\Commands as Commands;
-use File;
 
 class ManagerServiceProvider extends ServiceProvider
 {
-
     /**
      * The application instance.
      *
@@ -17,9 +14,9 @@ class ManagerServiceProvider extends ServiceProvider
     public $app;
 
     /**
-     * List of all version accepted
+     * List of all version accepted.
      *
-     * @var Array
+     * @var array
      */
     public $versions = ['5'];
 
@@ -32,7 +29,7 @@ class ManagerServiceProvider extends ServiceProvider
     {
         $this->commands([Commands\Generate::class, Commands\GenerateAttribute::class]);
 
-        $v = explode(".", $this->app->version());
+        $v = explode('.', $this->app->version());
 
         if (!in_array($v[0], $this->versions)) {
             throw new \Exception("Version {$this->app->version()} not supported");

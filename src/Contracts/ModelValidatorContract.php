@@ -6,12 +6,11 @@ use Railken\Laravel\Manager\ParameterBag;
 
 interface ModelValidatorContract
 {
-
     /**
-     * Validate
+     * Validate.
      *
      * @param EntityContract $entity
-     * @param ParameterBag $parameters
+     * @param ParameterBag   $parameters
      *
      * @return \Illuminate\Support\Collection
      */

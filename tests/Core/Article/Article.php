@@ -29,6 +29,7 @@ class Article extends Model implements EntityContract
      * @var array
      */
     protected $dates = ['deleted_at'];
+
     /**
      * Get the author that wrote the article.
      */

@@ -4,9 +4,8 @@ namespace Railken\Laravel\Manager\Contracts;
 
 interface ModelRepositoryContract
 {
-
     /**
-     * Retrieve new instance of entity
+     * Retrieve new instance of entity.
      *
      * @param array $parameters
      *
@@ -15,14 +14,14 @@ interface ModelRepositoryContract
     public function newEntity(array $parameters = []);
 
     /**
-     * Return entity
+     * Return entity.
      *
      * @return string
      */
     public function getEntity();
 
     /**
-     * Find by primary
+     * Find by primary.
      *
      * @param array $parameters
      *
@@ -31,7 +30,7 @@ interface ModelRepositoryContract
     public function findBy($parameters);
 
     /**
-     * Find one by
+     * Find one by.
      *
      * @param array $parameters
      *
@@ -40,7 +39,7 @@ interface ModelRepositoryContract
     public function findOneBy($parameters);
 
     /**
-     * Find where in
+     * Find where in.
      *
      * @param array $parameters
      *
@@ -49,7 +48,7 @@ interface ModelRepositoryContract
     public function findWhereIn(array $parameters);
 
     /**
-     * Return query
+     * Return query.
      *
      * @return \Illuminate\Database\Query\Builder
      */

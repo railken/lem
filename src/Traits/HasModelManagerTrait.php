@@ -26,7 +26,7 @@ trait HasModelManagerTrait
     }
 
     /**
-     * Get manager
+     * Get manager.
      *
      * @return ManagerContract
      */

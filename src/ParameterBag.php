@@ -3,15 +3,14 @@
 namespace Railken\Laravel\Manager;
 
 use Railken\Bag;
-use Railken\Laravel\Manager\Contracts\ManagerContract;
 use Railken\Laravel\Manager\Contracts\ParameterBagContract;
 
 abstract class ParameterBag extends Bag implements ParameterBagContract
 {
     use Traits\HasModelManagerTrait;
-    
+
     /**
-     * Filter current bag
+     * Filter current bag.
      *
      * @return $this
      */

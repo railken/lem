@@ -2,15 +2,15 @@
 
 namespace Railken\Laravel\Manager;
 
-use Railken\Laravel\Manager\Contracts\ModelSerializerContract;
 use Railken\Laravel\Manager\Contracts\ManagerContract;
+use Railken\Laravel\Manager\Contracts\ModelSerializerContract;
 
 abstract class ModelSerializer implements ModelSerializerContract
 {
     use Traits\HasModelManagerTrait;
 
     /**
-     * Construct
+     * Construct.
      *
      * @param ManagerContract $manager
      */

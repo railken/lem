@@ -2,8 +2,8 @@
 
 namespace Railken\Laravel\Manager\Tests\User;
 
-use Railken\Laravel\Manager\ModelManager;
 use Railken\Laravel\Manager\Contracts\AgentContract;
+use Railken\Laravel\Manager\ModelManager;
 use Railken\Laravel\Manager\Tokens;
 
 class UserManager extends ModelManager

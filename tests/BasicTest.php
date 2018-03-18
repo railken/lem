@@ -127,12 +127,12 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         $resource = $result->getResource();
 
         $this->assertEquals([
-            'title' => $resource->title,
+            'title'       => $resource->title,
             'description' => $resource->description,
-            'author_id' => $resource->author->id,
-            'id' => $resource->id,
-            'created_at' => $resource->created_at,
-            'updated_at' => $resource->updated_at,
+            'author_id'   => $resource->author->id,
+            'id'          => $resource->id,
+            'created_at'  => $resource->created_at,
+            'updated_at'  => $resource->updated_at,
         ], $am->serializer->serialize($resource)->toArray());
     }
 

@@ -6,14 +6,13 @@ use Railken\Laravel\Manager\Contracts\AgentContract;
 
 class SystemAgent implements AgentContract
 {
-
     /**
-     * Has permission
+     * Has permission.
      *
      * @param string $permission
-     * @param array $arguments
+     * @param array  $arguments
      *
-     * @return boolean
+     * @return bool
      */
     public function can($permission, $arguments = [])
     {

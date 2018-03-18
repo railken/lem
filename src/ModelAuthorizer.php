@@ -2,25 +2,24 @@
 
 namespace Railken\Laravel\Manager;
 
-use Railken\Laravel\Manager\Contracts\EntityContract;
-use Railken\Laravel\Manager\Contracts\ModelAuthorizerContract;
-use Railken\Laravel\Manager\Contracts\ManagerContract;
-use Railken\Laravel\Manager\ParameterBag;
 use Illuminate\Support\Collection;
+use Railken\Laravel\Manager\Contracts\EntityContract;
+use Railken\Laravel\Manager\Contracts\ManagerContract;
+use Railken\Laravel\Manager\Contracts\ModelAuthorizerContract;
 
 class ModelAuthorizer implements ModelAuthorizerContract
 {
     use Traits\HasModelManagerTrait;
-    
+
     /**
-     * List of all permissions
+     * List of all permissions.
      *
      * @var array
      */
     protected $permissions;
 
     /**
-     * Construct
+     * Construct.
      *
      * @param ManagerContract $manager
      */
@@ -30,10 +29,9 @@ class ModelAuthorizer implements ModelAuthorizerContract
     }
 
     /**
-     *
-     * @param string $action
+     * @param string         $action
      * @param EntityContract $entity
-     * @param ParameterBag $parameters
+     * @param ParameterBag   $parameters
      *
      * @return Collection
      */
@@ -42,7 +40,6 @@ class ModelAuthorizer implements ModelAuthorizerContract
         $errors = new Collection();
 
         $methods = new Collection(get_class_methods($this));
-
 
         $methods->filter(function ($method) {
             return substr($method, 0, strlen('authorize')) === 'authorize' && $method !== 'authorize';
@@ -57,19 +54,16 @@ class ModelAuthorizer implements ModelAuthorizerContract
         return $errors;
     }
 
-
     /**
-     *
-     * @param string $action
+     * @param string         $action
      * @param EntityContract $entity
-     * @param ParameterBag $parameters
+     * @param ParameterBag   $parameters
      *
      * @return Collection
      */
     public function authorizeAction(string $action, EntityContract $entity, ParameterBag $parameters)
     {
         $errors = new Collection();
-
 
         $exception = $this->manager->getException(Tokens::NOT_AUTHORIZED);
         $permission = $this->getPermission($action);
@@ -79,9 +73,8 @@ class ModelAuthorizer implements ModelAuthorizerContract
         return $errors;
     }
 
-
     /**
-     *  Retrieve a permission name given code
+     *  Retrieve a permission name given code.
      *
      * @param string $code
      *
