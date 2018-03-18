@@ -9,11 +9,22 @@ use Railken\Laravel\Manager\Tokens;
 class UserManager extends ModelManager
 {
     /**
+     * List of all attributes
+     *
      * @var array
      */
-    protected static $__components = [];
+    protected $attributes = [
+        Attributes\Id\IdAttribute::class,
+        Attributes\CreatedAt\CreatedAtAttribute::class,
+        Attributes\UpdatedAt\UpdatedAtAttribute::class, 
+        Attributes\Username\UsernameAttribute::class, 
+        Attributes\Email\EmailAttribute::class,
+        Attributes\Password\PasswordAttribute::class,
+    ];
 
     /**
+     * List of all exceptions
+     *
      * @var array
      */
     protected $exceptions = [
