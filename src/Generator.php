@@ -193,8 +193,6 @@ class Generator
 
         $newCode = $printer->printFormatPreserving($newStmts, $oldStmts, $oldTokens);
 
-        print_r($newCode);
-
         file_put_contents($path, $newCode);
     }
 
