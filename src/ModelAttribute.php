@@ -48,6 +48,16 @@ abstract class ModelAttribute implements AttributeContract
     protected $permissions;
 
     /**
+     * Constructor.
+     *
+     * @param ManagerContract $manager
+     */
+    public function __construct(ManagerContract $manager)
+    {
+        $this->setManager($manager);
+    }
+
+    /**
      * Set manager.
      *
      * @param ManagerContract $manager

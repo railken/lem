@@ -26,7 +26,7 @@ class ModelAttributeTest extends \Orchestra\Testbench\TestCase
     /**
      * Get attribute.
      *
-     * @return Attribute
+     * @return \Railken\Laravel\Manager\Contracts\AttributeContract
      */
     public function getAttribute()
     {

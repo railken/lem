@@ -63,8 +63,7 @@ abstract class ModelManager implements ManagerContract
         $attributes = new Collection();
 
         foreach ($this->attributes as $attribute) {
-            $attribute = new $attribute();
-            $attribute->setManager($this);
+            $attribute = new $attribute($this);
             $attributes[$attribute->getName()] = $attribute;
         }
 
