@@ -54,11 +54,11 @@ class ModelValidator implements ModelValidatorContract
     {
         $errors = new Collection();
 
-        foreach ($this->manager->getUnique() as $name => $attributes) {
+        foreach ($this->getManager()->getUnique() as $name => $attributes) {
 
             // Check if attribute exists...
 
-            $q = $this->manager->getRepository()->getQuery();
+            $q = $this->getManager()->getRepository()->getQuery();
 
             $where = collect();
             foreach ($attributes as $attribute) {
@@ -77,7 +77,7 @@ class ModelValidator implements ModelValidatorContract
             $entity->exists && $q->where('id', '!=', $entity->id);
 
             if ($where->count() > 0 && $q->where($where->toArray())->count() > 0) {
-                $class = $this->manager->getException('not_unique');
+                $class = $this->getManager()->getException('not_unique');
 
                 $errors->push(new $class($where));
             }

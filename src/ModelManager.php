@@ -318,8 +318,8 @@ abstract class ModelManager implements ManagerContract
             DB::beginTransaction();
 
             // Global
-            $result->addErrors($this->authorizer->authorize($permission, $entity, $parameters));
-            $result->addErrors($this->validator->validate($entity, $parameters));
+            $result->addErrors($this->getAuthorizer()->authorize($permission, $entity, $parameters));
+            $result->addErrors($this->getValidator()->validate($entity, $parameters));
 
             // Attributes
             foreach ($this->getAttributes() as $attribute) {

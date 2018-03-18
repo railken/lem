@@ -61,10 +61,10 @@ class ModelAuthorizer implements ModelAuthorizerContract
     {
         $errors = new Collection();
 
-        $exception = $this->manager->getException(Tokens::NOT_AUTHORIZED);
+        $exception = $this->getManager()->getException(Tokens::NOT_AUTHORIZED);
         $permission = $this->getPermission($action);
 
-        !$this->manager->getAgent()->can($permission) && $errors->push(new $exception($permission));
+        !$this->getManager()->getAgent()->can($permission) && $errors->push(new $exception($permission));
 
         return $errors;
     }
@@ -87,7 +87,7 @@ class ModelAuthorizer implements ModelAuthorizerContract
 
     public function getAuthorizedAttributes(string $action, EntityContract $entity)
     {
-        return $this->manager->getAttributes()->filter(function ($attribute) use ($action, $entity) {
+        return $this->getManager()->getAttributes()->filter(function ($attribute) use ($action, $entity) {
             $errors = $attribute->authorize($action, $entity, []);
 
             return $errors->count() === 0;

@@ -201,7 +201,7 @@ abstract class ModelAttribute implements AttributeContract
      */
     public function isUnique(EntityContract $entity, $value)
     {
-        $q = $this->manager->getRepository()->getQuery()->where($this->name, $value);
+        $q = $this->getManager()->getRepository()->getQuery()->where($this->name, $value);
 
         $entity->exists && $q->where('id', $entity->id);
 
