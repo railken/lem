@@ -13,11 +13,10 @@ use Railken\Laravel\Manager\Tests\User\UserServiceProvider;
 
 class BasicTest extends \Orchestra\Testbench\TestCase
 {
-
     /**
-     * Get package providers
+     * Get package providers.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param \Illuminate\Foundation\Application $app
      *
      * @return array
      */
