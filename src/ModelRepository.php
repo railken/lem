@@ -2,8 +2,8 @@
 
 namespace Railken\Laravel\Manager;
 
-use Railken\Laravel\Manager\Contracts\ModelRepositoryContract;
 use Railken\Laravel\Manager\Contracts\ManagerContract;
+use Railken\Laravel\Manager\Contracts\ModelRepositoryContract;
 
 abstract class ModelRepository implements ModelRepositoryContract
 {

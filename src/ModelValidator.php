@@ -39,7 +39,6 @@ class ModelValidator implements ModelValidatorContract
             $errors = $errors->merge($this->$method($entity, $parameters));
         });
 
-
         return $errors;
     }
 
