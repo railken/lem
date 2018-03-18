@@ -17,12 +17,14 @@ class Article extends Model implements EntityContract
      * @var string
      */
     protected $table = 'articles';
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = ['title', 'description', 'author_id', 'deleted_at'];
+    
     /**
      * The attributes that should be mutated to dates.
      *
