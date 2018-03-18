@@ -35,7 +35,7 @@ class Article extends Model implements EntityContract
     /**
      * Get the author that wrote the article.
      *
-     * @return \Illuminate\Database\
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function author()
     {
