@@ -7,6 +7,24 @@ use stdClass;
 
 class ModelManagerTest extends \Orchestra\Testbench\TestCase
 {
+
+    /**
+     * Get package providers
+     *
+     * @param  \Illuminate\Foundation\Application  $app
+     *
+     * @return array
+     */
+    protected function getPackageProviders($app)
+    {
+        return [
+
+            \Railken\Laravel\Manager\ManagerServiceProvider::class,
+            \Railken\Laravel\Manager\Tests\User\UserServiceProvider::class,
+            \Railken\Laravel\Manager\Tests\AppServiceProvider::class,
+        ];
+    }
+
     /**
      * @expectedException \Railken\Laravel\Manager\Exceptions\ModelMissingRepositoryException
      */
@@ -95,13 +113,5 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
     {
         UserManager::serializer(stdClass::class);
         new UserManager();
-    }
-
-    protected function getPackageProviders($app)
-    {
-        return [
-            \Railken\Laravel\Manager\ManagerServiceProvider::class,
-            \Railken\Laravel\Manager\Tests\User\UserServiceProvider::class,
-        ];
     }
 }

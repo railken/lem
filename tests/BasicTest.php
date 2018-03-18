@@ -13,6 +13,24 @@ use Railken\Laravel\Manager\Tests\User\UserServiceProvider;
 
 class BasicTest extends \Orchestra\Testbench\TestCase
 {
+
+    /**
+     * Get package providers
+     *
+     * @param  \Illuminate\Foundation\Application  $app
+     *
+     * @return array
+     */
+    protected function getPackageProviders($app)
+    {
+        return [
+            AppServiceProvider::class,
+            \Railken\Laravel\Manager\ManagerServiceProvider::class,
+            UserServiceProvider::class,
+            ArticleServiceProvider::class,
+        ];
+    }
+
     /**
      * Setup the test environment.
      */
@@ -134,23 +152,5 @@ class BasicTest extends \Orchestra\Testbench\TestCase
             'created_at'  => $resource->created_at,
             'updated_at'  => $resource->updated_at,
         ], $am->serializer->serialize($resource)->toArray());
-    }
-
-    /**
-     * Define environment setup.
-     *
-     * @param \Illuminate\Foundation\Application $app
-     */
-    protected function getEnvironmentSetUp($app)
-    {
-    }
-
-    protected function getPackageProviders($app)
-    {
-        return [
-            \Railken\Laravel\Manager\ManagerServiceProvider::class,
-            UserServiceProvider::class,
-            ArticleServiceProvider::class,
-        ];
     }
 }
