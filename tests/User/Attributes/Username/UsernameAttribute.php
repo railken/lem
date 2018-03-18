@@ -2,8 +2,8 @@
 
 namespace Railken\Laravel\Manager\Tests\User\Attributes\Username;
 
-use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\Attributes\BaseAttribute;
+use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\Tokens;
 
 class UsernameAttribute extends BaseAttribute
