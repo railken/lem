@@ -441,7 +441,7 @@ abstract class ModelManager implements ManagerContract
     public function findOrCreate($criteria, $parameters)
     {
         $parameters = $this->castParameters($parameters);
-        $entity = $this->findOneBy($criteria);
+        $entity = $this->getRepository()->findOneBy($criteria);
 
         return $entity ? $entity : $this->create($this->castParameters($parameters));
     }
@@ -458,7 +458,7 @@ abstract class ModelManager implements ManagerContract
     {
         $criteria = $this->castParameters($criteria);
         $parameters = $this->castParameters($parameters);
-        $entity = $this->findOneBy($criteria);
+        $entity = $this->getRepository()->findOneBy($criteria);
 
         return $entity ? $this->update($entity, $parameters) : $this->create($parameters);
     }
