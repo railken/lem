@@ -187,6 +187,11 @@ abstract class BaseAttribute implements AttributeContract
     public function update(EntityContract $entity, ParameterBagContract $parameters)
     {
         $errors = new Collection();
+
+        if (!$parameters->has($this->name) && !$entity->exists) {
+            $parameters->set($this->name, $this->getDefault($entity));
+        }
+
         $errors = $errors->merge($this->authorize(Tokens::PERMISSION_FILL, $entity, $parameters));
         $errors = $errors->merge($this->validate($entity, $parameters));
         $errors = $errors->merge($this->fill($entity, $parameters));
@@ -236,5 +241,17 @@ abstract class BaseAttribute implements AttributeContract
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Retrieve default value
+     *
+     * @param EntityContract $entity
+     *
+     * @return mixed
+     */
+    public function getDefault(EntityContract $entity)
+    {
+        return null;
     }
 }

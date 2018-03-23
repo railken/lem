@@ -62,4 +62,16 @@ class TitleAttribute extends BaseAttribute
     {
         return v::length(1, 255)->validate($value);
     }
+
+    /**
+     * Retrieve default value
+     *
+     * @param EntityContract $entity
+     *
+     * @return mixed
+     */
+    public function getDefault(EntityContract $entity)
+    {
+        return 'a default value';
+    }
 }

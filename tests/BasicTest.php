@@ -154,5 +154,22 @@ class BasicTest extends \Orchestra\Testbench\TestCase
             'created_at'  => $resource->created_at,
             'updated_at'  => $resource->updated_at,
         ], $am->serializer->serialize($resource)->toArray());
+
+        $um->remove($user);
+    }
+
+
+    public function testDefaultValue()
+    {
+        $um = new UserManager();
+        $user = $um->create(['email' => 'test1@test.net', 'username' => 'test1', 'password' => microtime()])->getResource();
+
+        $am = new ArticleManager();
+
+        $result = $am->create(['author_id' => $user->id]);
+
+
+        $this->assertEquals(true, $result->ok());
+        $this->assertEquals('a default value', $result->getResource()->title);
     }
 }

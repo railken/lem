@@ -65,8 +65,13 @@ abstract class BelongsToAttribute extends BaseAttribute implements BelongsToAttr
 
         $m = $this->getRelationManager($entity);
 
-        !$parameters->has($this->getRelationName()) && $parameters->exists($this->getName())
-            && $parameters->set($this->getRelationName(), $m->getRepository()->findOneById($parameters->get($this->getName())));
+        if (!$parameters->has($this->getRelationName()) && $parameters->exists($this->getName())) {
+            $parameters->set($this->getRelationName(), $m->getRepository()->findOneById($parameters->get($this->getName())));
+        }
+
+        if (!$parameters->exists($this->getRelationName()) && !$entity->exists) {
+            $parameters->set($this->getRelationName(), $this->getDefault($entity));
+        }
 
         $errors = $errors->merge($this->authorize(Tokens::PERMISSION_FILL, $entity, $parameters));
         $errors = $errors->merge($this->validate($entity, $parameters));
