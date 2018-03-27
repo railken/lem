@@ -151,11 +151,14 @@ abstract class BaseAttribute implements AttributeContract
 
         $value = $parameters->get($this->name);
 
+
         $this->required && !$entity->exists && !$parameters->exists($this->name) &&
             $errors->push(new $this->exceptions[Tokens::NOT_DEFINED]($value));
 
         $this->unique && $parameters->exists($this->name) && $this->isUnique($entity, $value) &&
             $errors->push(new $this->exceptions[Tokens::NOT_UNIQUE]($value));
+
+
 
         $parameters->exists($this->name) && !$this->valid($entity, $value) &&
             $errors->push(new $this->exceptions[Tokens::NOT_VALID]($value));
@@ -189,7 +192,11 @@ abstract class BaseAttribute implements AttributeContract
         $errors = new Collection();
 
         if (!$parameters->has($this->name) && !$entity->exists) {
-            $parameters->set($this->name, $this->getDefault($entity));
+            $default = $this->getDefault($entity);
+
+            if ($default !== null) {
+                $parameters->set($this->name, $default);
+            }
         }
 
         $errors = $errors->merge($this->authorize(Tokens::PERMISSION_FILL, $entity, $parameters));
