@@ -7,6 +7,8 @@ use Railken\Laravel\Manager\Generator;
 
 class GenerateAttribute extends Command
 {
+    use Traits\PathTrait;
+    
     /**
      * The name and signature of the console command.
      *
@@ -39,7 +41,13 @@ class GenerateAttribute extends Command
     public function handle()
     {
         $generator = new Generator();
-        $generator->generateAttribute(base_path($this->argument('path')), $this->argument('namespace'), $this->argument('attribute'));
+
+        $generator->generateAttribute(
+            $this->getAbsolutePathByParameter($this->argument('path')), 
+            $this->argument('namespace'), 
+            $this->argument('attribute')
+        );
+
         $this->info("{$this->argument('namespace')} generated. ");
     }
 }
