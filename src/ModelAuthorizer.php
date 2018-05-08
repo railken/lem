@@ -5,6 +5,7 @@ namespace Railken\Laravel\Manager;
 use Illuminate\Support\Collection;
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\Contracts\ManagerContract;
+use Railken\Laravel\Manager\Contracts\PolicyContract;
 use Railken\Laravel\Manager\Contracts\ModelAuthorizerContract;
 
 class ModelAuthorizer implements ModelAuthorizerContract
@@ -17,6 +18,13 @@ class ModelAuthorizer implements ModelAuthorizerContract
      * @var array
      */
     protected $permissions;
+
+    /**
+     * List of all policies.
+     *
+     * @var array
+     */
+    protected $policies;
 
     /**
      * Construct.
@@ -102,5 +110,35 @@ class ModelAuthorizer implements ModelAuthorizerContract
     public function getPermissions()
     {
         return $this->permissions;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPolicies()
+    {
+        return $this->policies;
+    }
+
+    /**
+     * Add a policy
+     *
+     * @param PolicyContract $policy
+     */
+    public function addPolicy(PolicyContract $policy)
+    {
+        $this->policies[] = $policy;
+    }
+
+    /**
+     * Filter the new query instance with policies
+     *
+     * @param $query
+     */
+    public function newQuery($query)
+    {
+        foreach ($this->policies as $policy) {
+            $policy->newQuery($query);
+        }
     }
 }

@@ -121,6 +121,10 @@ abstract class ModelRepository implements ModelRepositoryContract
      */
     public function newQuery()
     {
-        return $this->newEntity()->newQuery();
+        $query = $this->newEntity()->newQuery()->select($this->newEntity()->getTable()."*");
+
+        $this->getManager()->getAuthorizer()->filterQuery($query);
+
+        return $query;
     }
 }
