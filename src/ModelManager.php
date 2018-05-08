@@ -66,15 +66,12 @@ abstract class ModelManager implements ManagerContract
 
     /**
      * Construct.
+     *
+     * @param AgentContract $agent
      */
     public function __construct(AgentContract $agent = null)
     {
-        if (!$agent) {
-            $agent = new Agents\SystemAgent();
-        }
-
-        $this->agent = $agent;
-
+        $this->setAgent($agent);
         $this->initializeAttributes();
         $this->initializeComponents();
     }
@@ -262,6 +259,24 @@ abstract class ModelManager implements ManagerContract
         }
 
         return $this->permissions[$code];
+    }
+    
+    /**
+     * set agent
+     *
+     * @param AgentContract $agent
+     *
+     * @return $this
+     */
+    public function setAgent(AgentContract $agent = null)
+    {
+        if (!$agent) {
+            $agent = new Agents\SystemAgent();
+        }
+
+        $this->agent = $agent;
+
+        return $this;
     }
 
     /**
