@@ -138,7 +138,7 @@ class ModelAuthorizer implements ModelAuthorizerContract
     public function newQuery($query)
     {
         foreach ($this->policies as $policy) {
-            $policy->newQuery($query);
+            $policy->newQuery($query, $this->getManager()->getAgent());
         }
     }
 }

@@ -4,5 +4,5 @@ namespace Railken\Laravel\Manager\Contracts;
 
 interface PolicyContract
 {
-	public function newQuery($query);
+	public function newQuery($query, AgentContract $agent);
 }
