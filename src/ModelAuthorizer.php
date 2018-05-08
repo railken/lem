@@ -93,4 +93,14 @@ class ModelAuthorizer implements ModelAuthorizerContract
             return $errors->count() === 0;
         });
     }
+    
+    /** 
+     * Retrieve permissions
+     *
+     * @return array
+     */
+    public function getPermissions()
+    {
+        return $this->permissions;
+    }
 }
