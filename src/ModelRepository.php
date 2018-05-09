@@ -123,7 +123,7 @@ abstract class ModelRepository implements ModelRepositoryContract
     {
         $query = $this->newEntity()->newQuery()->select($this->newEntity()->getTable()."*");
 
-        $this->getManager()->getAuthorizer()->filterQuery($query);
+        $this->getManager()->getAuthorizer()->newQuery($query);
 
         return $query;
     }

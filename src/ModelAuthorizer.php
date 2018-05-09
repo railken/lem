@@ -17,14 +17,14 @@ class ModelAuthorizer implements ModelAuthorizerContract
      *
      * @var array
      */
-    protected $permissions;
+    protected $permissions = [];
 
     /**
      * List of all policies.
      *
      * @var array
      */
-    protected $policies;
+    protected $policies = [];
 
     /**
      * Construct.
