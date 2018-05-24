@@ -40,6 +40,7 @@ class $ATTRIBUTE:CAMELIZED$Attribute extends BaseAttribute
         Tokens::NOT_DEFINED    => Exceptions\$NAME$$ATTRIBUTE:CAMELIZED$NotDefinedException::class,
         Tokens::NOT_VALID      => Exceptions\$NAME$$ATTRIBUTE:CAMELIZED$NotValidException::class,
         Tokens::NOT_AUTHORIZED => Exceptions\$NAME$$ATTRIBUTE:CAMELIZED$NotAuthorizedException::class,
+        Tokens::NOT_UNIQUE     => Exceptions\$NAME$$ATTRIBUTE:CAMELIZED$NotUniqueException::class,
     ];
 
     /**
