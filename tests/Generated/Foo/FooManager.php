@@ -9,6 +9,13 @@ use Railken\Laravel\Manager\Tokens;
 class FooManager extends ModelManager
 {
     /**
+     * Class name entity.
+     *
+     * @var string
+     */
+    public $entity = Foo::class;
+    
+    /**
      * List of all attributes.
      *
      * @var array

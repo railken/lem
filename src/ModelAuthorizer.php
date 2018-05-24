@@ -102,7 +102,7 @@ class ModelAuthorizer implements ModelAuthorizerContract
         });
     }
     
-    /** 
+    /**
      * Retrieve permissions
      *
      * @return array

@@ -70,7 +70,6 @@ abstract class BelongsToAttribute extends BaseAttribute implements BelongsToAttr
         }
 
         if (!$parameters->exists($this->getRelationName()) && !$entity->exists) {
-            
             $default = $this->getDefault($entity);
 
             if ($default !== null) {

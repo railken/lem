@@ -9,6 +9,13 @@ use Railken\Laravel\Manager\Tokens;
 class ArticleManager extends ModelManager
 {
     /**
+     * Class name entity.
+     *
+     * @var string
+     */
+    public $entity = Article::class;
+
+    /**
      * List of all attributes.
      *
      * @var array

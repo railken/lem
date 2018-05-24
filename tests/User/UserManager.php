@@ -9,6 +9,13 @@ use Railken\Laravel\Manager\Tokens;
 class UserManager extends ModelManager
 {
     /**
+     * Class name entity.
+     *
+     * @var string
+     */
+    public $entity = User::class;
+    
+    /**
      * List of all attributes.
      *
      * @var array

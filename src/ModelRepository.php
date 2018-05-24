@@ -10,13 +10,6 @@ abstract class ModelRepository implements ModelRepositoryContract
     use Traits\HasModelManagerTrait;
 
     /**
-     * Class entity.
-     *
-     * @var string
-     */
-    public $entity;
-
-    /**
      * Construct.
      *
      * @param \Railken\Laravel\Manager\Contracts\ManagerContract $manager
@@ -35,6 +28,7 @@ abstract class ModelRepository implements ModelRepositoryContract
      */
     public function newEntity(array $parameters = [])
     {
+        return $this->getManager()->newEntity($parameters);
         $entity = $this->getEntity();
 
         return new $entity($parameters);
@@ -47,7 +41,7 @@ abstract class ModelRepository implements ModelRepositoryContract
      */
     public function getEntity()
     {
-        return $this->entity;
+        return $this->getManager()->getEntity();
     }
 
     /**

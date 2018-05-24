@@ -262,7 +262,7 @@ abstract class BaseAttribute implements AttributeContract
         return null;
     }
     
-    /** 
+    /**
      * Retrieve permissions
      *
      * @return array

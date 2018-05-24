@@ -76,6 +76,31 @@ abstract class ModelManager implements ManagerContract
         $this->initializeComponents();
     }
 
+
+    /**
+     * Retrieve new instance of entity.
+     *
+     * @param array $parameters
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function newEntity(array $parameters = [])
+    {
+        $entity = $this->getEntity();
+
+        return new $entity($parameters);
+    }
+
+    /**
+     * Return entity.
+     *
+     * @return string
+     */
+    public function getEntity()
+    {
+        return $this->entity;
+    }
+
     /**
      * Initialize attributes.
      *
