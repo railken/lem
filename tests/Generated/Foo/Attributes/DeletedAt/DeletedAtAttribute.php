@@ -40,6 +40,7 @@ class DeletedAtAttribute extends BaseAttribute
         Tokens::NOT_DEFINED    => Exceptions\FooDeletedAtNotDefinedException::class,
         Tokens::NOT_VALID      => Exceptions\FooDeletedAtNotValidException::class,
         Tokens::NOT_AUTHORIZED => Exceptions\FooDeletedAtNotAuthorizedException::class,
+        Tokens::NOT_UNIQUE     => Exceptions\FooDeletedAtNotUniqueException::class,
     ];
 
     /**

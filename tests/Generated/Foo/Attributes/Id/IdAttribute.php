@@ -40,6 +40,7 @@ class IdAttribute extends BaseAttribute
         Tokens::NOT_DEFINED    => Exceptions\FooIdNotDefinedException::class,
         Tokens::NOT_VALID      => Exceptions\FooIdNotValidException::class,
         Tokens::NOT_AUTHORIZED => Exceptions\FooIdNotAuthorizedException::class,
+        Tokens::NOT_UNIQUE     => Exceptions\FooIdNotUniqueException::class,
     ];
 
     /**

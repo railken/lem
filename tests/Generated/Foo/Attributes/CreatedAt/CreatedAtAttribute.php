@@ -40,6 +40,7 @@ class CreatedAtAttribute extends BaseAttribute
         Tokens::NOT_DEFINED    => Exceptions\FooCreatedAtNotDefinedException::class,
         Tokens::NOT_VALID      => Exceptions\FooCreatedAtNotValidException::class,
         Tokens::NOT_AUTHORIZED => Exceptions\FooCreatedAtNotAuthorizedException::class,
+        Tokens::NOT_UNIQUE     => Exceptions\FooCreatedAtNotUniqueException::class,
     ];
 
     /**

@@ -40,6 +40,7 @@ class UpdatedAtAttribute extends BaseAttribute
         Tokens::NOT_DEFINED    => Exceptions\FooUpdatedAtNotDefinedException::class,
         Tokens::NOT_VALID      => Exceptions\FooUpdatedAtNotValidException::class,
         Tokens::NOT_AUTHORIZED => Exceptions\FooUpdatedAtNotAuthorizedException::class,
+        Tokens::NOT_UNIQUE     => Exceptions\FooUpdatedAtNotUniqueException::class,
     ];
 
     /**

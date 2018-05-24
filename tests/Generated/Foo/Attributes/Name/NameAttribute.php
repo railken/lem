@@ -40,6 +40,7 @@ class NameAttribute extends BaseAttribute
         Tokens::NOT_DEFINED    => Exceptions\FooNameNotDefinedException::class,
         Tokens::NOT_VALID      => Exceptions\FooNameNotValidException::class,
         Tokens::NOT_AUTHORIZED => Exceptions\FooNameNotAuthorizedException::class,
+        Tokens::NOT_UNIQUE     => Exceptions\FooNameNotUniqueException::class,
     ];
 
     /**

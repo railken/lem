@@ -20,13 +20,9 @@ class FooSerializer extends ModelSerializer
      */
     public function serialize(EntityContract $entity, Collection $select = null)
     {
-        $bag = new Bag($entity->toArray());
+        $bag = parent::serialize($entity, $select);
 
-        if ($select) {
-            $bag = $bag->only($select->toArray());
-        }
-
-        $bag = $bag->only($this->getManager()->authorizer->getAuthorizedAttributes(Tokens::PERMISSION_SHOW, $entity)->keys()->toArray());
+        // ...
 
         return $bag;
     }
