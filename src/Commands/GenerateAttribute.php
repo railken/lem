@@ -43,11 +43,11 @@ class GenerateAttribute extends Command
         $generator = new Generator();
 
         $generator->generateAttribute(
-            $this->getAbsolutePathByParameter($this->argument('path')),
+            $path = $this->getAbsolutePathByParameter($this->argument('path')),
             $this->argument('namespace'),
             $this->argument('attribute')
         );
 
-        $this->info("{$this->argument('namespace')} generated. ");
+        $this->info("Attribute {$this->argument('attribute')} in {$path} generated.");
     }
 }

@@ -42,9 +42,9 @@ class Generate extends Command
     {
         $generator = new Generator();
         $generator->generate(
-            $this->getAbsolutePathByParameter($this->argument('path')),
+            $path = $this->getAbsolutePathByParameter($this->argument('path')),
             $this->argument('namespace')
         );
-        $this->info("{$this->argument('namespace')} generated.");
+        $this->info("Manager {$this->argument('namespace')} in {$path} generated.");
     }
 }

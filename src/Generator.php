@@ -50,7 +50,7 @@ class Generator
     {
         $namespaces = collect(explode('\\', $namespace));
         $name = $namespaces->last();
-        $base_path = $path.'/'.$name;
+        $base_path = $path;
 
         $name = $this->camelize($name);
         $vars = [
@@ -94,7 +94,7 @@ class Generator
     {
         $namespaces = collect(explode('\\', $namespace));
         $name = $namespaces->last();
-        $base_path = $path.'/'.$name;
+        $base_path = $path;
         $name = $this->camelize($name);
 
         $attribute_ucf = ucfirst($attribute);
