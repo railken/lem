@@ -7,6 +7,7 @@ use Railken\Laravel\Manager\Contracts\ModelSerializerContract;
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\Tokens;
 use Illuminate\Support\Collection;
+use Railken\Bag;
 
 abstract class ModelSerializer implements ModelSerializerContract
 {
