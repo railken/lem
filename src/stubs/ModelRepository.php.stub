@@ -6,5 +6,4 @@ use Railken\Laravel\Manager\ModelRepository;
 
 class $NAME$Repository extends ModelRepository
 {
-	
 }
