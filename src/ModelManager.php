@@ -358,7 +358,10 @@ abstract class ModelManager implements ManagerContract
 
             // Global
             $result->addErrors($this->getAuthorizer()->authorize($permission, $entity, $parameters));
-            $result->addErrors($this->getValidator()->validate($entity, $parameters));
+
+            if ($result->ok()) {
+                $result->addErrors($this->getValidator()->validate($entity, $parameters));
+            }
 
             // Attributes
             foreach ($this->getAttributes() as $attribute) {
