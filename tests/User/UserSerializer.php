@@ -17,7 +17,7 @@ class UserSerializer extends ModelSerializer
      *
      * @return array
      */
-    public function serialize(EntityContract $entity, Collection $select)
+    public function serialize(EntityContract $entity, Collection $select = null)
     {
         $bag = (new Bag($entity->toArray()))->only($select->toArray());
 

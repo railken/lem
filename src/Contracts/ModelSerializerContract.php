@@ -10,8 +10,9 @@ interface ModelSerializerContract
      * Serialize.
      *
      * @param EntityContract $entity
+     * @param Collection     $select
      *
      * @return Collection
      */
-    public function serialize(EntityContract $entity, Collection $select);
+    public function serialize(EntityContract $entity, Collection $select = null);
 }
