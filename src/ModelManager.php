@@ -325,6 +325,31 @@ abstract class ModelManager implements ManagerContract
     {
         return ParameterBag::factory($parameters);
     }
+    
+    /**
+     * @param string $method
+     * @param array $args
+     *
+     * @return mixed
+     */
+    public function __call($method, $args)
+    {
+        if (preg_match("/OrFail$/", $method)) {
+            $method = preg_replace("/OrFail$/", "", $method);
+
+            if (method_exists($this, $method)) {
+                $return = $this->$method(...$args);
+
+                if ($return instanceof ResultAction) {
+                    if (!$return->ok()) {
+                        throw new Exceptions\Exception(sprintf('Something went wrong while interacting with %s, errors: %s', $this->getEntity(), json_encode($return->getSimpleErrors())));
+                    }
+                }
+            }
+        }
+
+        trigger_error('Call to undefined method '.__CLASS__.'::'.$method.'()', E_USER_ERROR);
+    }
 
     /**
      * Create a new EntityContract given parameters.
@@ -336,43 +361,6 @@ abstract class ModelManager implements ManagerContract
     public function create($parameters)
     {
         return $this->update($this->repository->newEntity(), $parameters, Tokens::PERMISSION_CREATE);
-    }
-
-    /**
-     * Create or fail
-     *
-     * @param ParameterBag|array $parameters
-     *
-     * @return ResultAction
-     */
-    public function createOrFail($parameters)
-    {
-        $result = $this->create($parameters);
-
-        if (!$result->ok()) {
-            throw new Exceptions\Exception(sprintf('Something went wrong while creating %s, errors: %s', $this->getEntity(), json_encode($result->getSimpleErrors())));
-        }
-
-        return $result;
-    }
-
-    /**
-     * Update a EntityContract given parameters.
-     *
-     * @param EntityContract     $entity
-     * @param ParameterBag|array $parameters
-     *
-     * @return ResultAction
-     */
-    public function updateOrFail(EntityContract $entity, $parameters)
-    {
-        $result = $this->update($entity, $parameters);
-
-        if (!$result->ok()) {
-            throw new Exceptions\Exception(sprintf('Something went wrong while updating %s, errors: %s', $this->getEntity(), json_encode($result->getSimpleErrors())));
-        }
-
-        return $result;
     }
 
     /**
