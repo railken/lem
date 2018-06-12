@@ -88,6 +88,9 @@ class GeneratedTest extends \Orchestra\Testbench\TestCase
 
         $foo_s = $m->getRepository()->findOneBy(['name' => 'fee']);
 
+        $this->assertEquals(true, $m->findOrCreate(['name' => 'test'])->ok());
+        $this->assertEquals(true, $m->findOrCreate(['name' => 'test'])->ok());
+
         $this->assertEquals($foo->id, $foo_s->id);
     }
 }

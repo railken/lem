@@ -452,12 +452,23 @@ abstract class ModelManager implements ManagerContract
      *
      * @return EntityContract
      */
-    public function findOrCreate($criteria, $parameters)
+    public function findOrCreate($criteria, $parameters = null)
     {
+        if ($parameters === null) {
+            $parameters = $criteria;
+        }
+
         $parameters = $this->castParameters($parameters);
         $entity = $this->getRepository()->findOneBy($criteria);
 
-        return $entity ? $entity : $this->create($this->castParameters($parameters));
+        if (!$entity) {
+            return $this->create($this->castParameters($parameters));
+        }
+
+        $result = new ResultAction();
+        $result->getResources()->push($entity);
+
+        return $result;
     }
 
     /**
