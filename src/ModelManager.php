@@ -343,6 +343,8 @@ abstract class ModelManager implements ManagerContract
                 if ($return instanceof ResultAction) {
                     if (!$return->ok()) {
                         throw new Exceptions\Exception(sprintf('Something went wrong while interacting with %s, errors: %s', $this->getEntity(), json_encode($return->getSimpleErrors())));
+                    } else {
+                        return $return;
                     }
                 }
             }
