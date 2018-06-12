@@ -339,6 +339,43 @@ abstract class ModelManager implements ManagerContract
     }
 
     /**
+     * Create or fail
+     *
+     * @param ParameterBag|array $parameters
+     *
+     * @return ResultAction
+     */
+    public function createOrFail($parameters)
+    {
+        $result = $this->create($parameters);
+
+        if (!$result->ok()) {
+            throw new Exceptions\Exception(sprintf('Something went wrong while creating %s, errors: %s', $this->getEntity(), json_encode($result->getSimpleErrors())));
+        }
+
+        return $result;
+    }
+
+    /**
+     * Update a EntityContract given parameters.
+     *
+     * @param EntityContract     $entity
+     * @param ParameterBag|array $parameters
+     *
+     * @return ResultAction
+     */
+    public function updateOrFail(EntityContract $entity, $parameters)
+    {
+        $result = $this->update($entity, $parameters);
+
+        if (!$result->ok()) {
+            throw new Exceptions\Exception(sprintf('Something went wrong while updating %s, errors: %s', $this->getEntity(), json_encode($result->getSimpleErrors())));
+        }
+
+        return $result;
+    }
+
+    /**
      * Update a EntityContract given parameters.
      *
      * @param EntityContract     $entity

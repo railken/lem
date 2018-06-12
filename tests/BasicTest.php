@@ -108,6 +108,26 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         $um->remove($resource);
     }
 
+
+    /**
+     * @expectedException \Railken\Laravel\Manager\Exceptions\Exception
+     */
+    public function testCreateOrFail()
+    {
+        $um = new UserManager();
+        $um->createOrFail($this->getUserBag()->remove('username'));
+    }
+
+    /**
+     * @expectedException \Railken\Laravel\Manager\Exceptions\Exception
+     */
+    public function testUpdateOrFail()
+    {
+        $um = new UserManager();
+        $user = $um->create($this->getUserBag())->getResource();
+        $um->updateOrFail($user, $this->getUserBag()->set('username', '1'));
+    }
+
     /**
      * Test.
      */
