@@ -24,13 +24,15 @@ abstract class BelongsToAttribute extends BaseAttribute implements BelongsToAttr
     {
         $errors = new Collection();
 
+        $value = $parameters->get($this->getRelationName());
+
         $this->required && !$entity->exists && !$parameters->exists($this->getRelationName()) &&
             $errors->push(new $this->exceptions[Tokens::NOT_DEFINED]($parameters->get($this->getName())));
 
-        $this->unique && $parameters->exists($this->getRelationName()) && $this->isUnique($entity, $parameters->get($this->getRelationName())) &&
+        $this->unique && $parameters->exists($this->getRelationName()) && $this->isUnique($entity, $value) &&
             $errors->push(new $this->exceptions[Tokens::NOT_UNIQUE]($parameters->get($this->getName())));
 
-        $parameters->exists($this->getRelationName()) && !$this->valid($entity, $parameters->get($this->getRelationName())) &&
+        $parameters->exists($this->getRelationName()) && ($value !== null || $this->required) && !$this->valid($entity, $value) &&
             $errors->push(new $this->exceptions[Tokens::NOT_VALID]($parameters->get($this->getName())));
 
         return $errors;
