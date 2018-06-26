@@ -70,12 +70,21 @@ abstract class BelongsToAttribute extends BaseAttribute implements BelongsToAttr
         if (!$parameters->has($this->getRelationName()) && $parameters->exists($this->getName())) {
             $parameters->set($this->getRelationName(), $m->getRepository()->findOneById($parameters->get($this->getName())));
         }
-        
+  
         if ($parameters->has($this->getRelationName())) {
             $val = $parameters->get($this->getRelationName());
 
             if (is_array($val) || $val instanceof \stdClass) {
-                $parameters->set($this->getRelationName(), $m->create(json_decode(json_encode($val), true))->getResource());
+                $params = json_decode(json_encode($val), true);
+                $rentity = $entity->{$this->getRelationName()};
+
+                $result = $entity->exists ? $m->update($rentity, $params) : $m->create($params);
+
+                if (!$result->ok()) {
+                    $errors = $errors->merge($result->getErrors());
+                }
+
+                $parameters->set($this->getRelationName(), $result->getResource());
             }
         }
 
