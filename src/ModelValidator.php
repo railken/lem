@@ -70,7 +70,7 @@ class ModelValidator implements ModelValidatorContract
                 $value = $parameters->get($attribute, $entity->$attribute);
 
                 if ($value) {
-                    $where[$col] = is_object($value) ? $value->id : $value;
+                    $where[$col] = is_object($value) && $value instanceof EntityContract ? $value->id : $value;
                 }
             }
 

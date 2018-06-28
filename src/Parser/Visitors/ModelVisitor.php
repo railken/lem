@@ -2,10 +2,10 @@
 
 namespace Railken\Laravel\Manager\Parser\Visitors;
 
-use PhpParser\V4\Node;
-use PhpParser\V4\Node\Scalar\String_;
-use PhpParser\V4\Node\Stmt\Property;
-use PhpParser\V4\NodeVisitorAbstract;
+use PhpParser\Node;
+use PhpParser\Node\Scalar\String_;
+use PhpParser\Node\Stmt\Property;
+use PhpParser\NodeVisitorAbstract;
 
 class ModelVisitor extends NodeVisitorAbstract
 {

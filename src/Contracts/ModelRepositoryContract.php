@@ -39,6 +39,15 @@ interface ModelRepositoryContract
     public function findOneBy($parameters);
 
     /**
+     * Find one by.
+     *
+     * @param int $id
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function findOneById($id);
+
+    /**
      * Find where in.
      *
      * @param array $parameters
@@ -53,4 +62,11 @@ interface ModelRepositoryContract
      * @return \Illuminate\Database\Query\Builder
      */
     public function newQuery();
+    
+    /**
+     * Return query.
+     *
+     * @return \Illuminate\Database\Query\Builder
+     */
+    public function getQuery();
 }

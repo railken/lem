@@ -2,12 +2,12 @@
 
 namespace Railken\Laravel\Manager\Parser;
 
-use PhpParser\V4\Lexer;
-use PhpParser\V4\NodeTraverser;
-use PhpParser\V4\NodeVisitor;
-use PhpParser\V4\NodeVisitorAbstract;
-use PhpParser\V4\Parser\Php7;
-use PhpParser\V4\PrettyPrinter;
+use PhpParser\Lexer;
+use PhpParser\NodeTraverser;
+use PhpParser\NodeVisitor;
+use PhpParser\NodeVisitorAbstract;
+use PhpParser\Parser\Php7;
+use PhpParser\PrettyPrinter;
 
 class Parser
 {
