@@ -448,7 +448,7 @@ abstract class ModelManager implements ManagerContract
      *
      * @return ResultAction
      */
-    protected function delete(EntityContract $entity)
+    public function delete(EntityContract $entity)
     {
         $result = new ResultAction();
 

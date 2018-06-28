@@ -3,8 +3,9 @@
 namespace Railken\Laravel\Manager;
 
 use Illuminate\Support\Collection;
+use Railken\Laravel\Manager\Contracts\ResultActionContract;
 
-class ResultAction
+class ResultAction implements ResultActionContract
 {
     /**
      * A collection of resources altered during operation.
