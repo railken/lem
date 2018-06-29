@@ -46,7 +46,7 @@ class Generator
      *
      * @return void
      */
-    public function generate($path, $namespace)
+    public function generate(string $path, string $namespace)
     {
         $namespaces = collect(explode('\\', $namespace));
         $name = $namespaces->last();
@@ -90,7 +90,7 @@ class Generator
      *
      * @return void
      */
-    public function generateAttribute($path, $namespace, $attribute, $arguments = [])
+    public function generateAttribute(string $path, string $namespace, string $attribute, array $arguments = [])
     {
         $namespaces = collect(explode('\\', $namespace));
         $name = $namespaces->last();

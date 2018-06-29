@@ -14,7 +14,7 @@ interface BelongsToAttributeContract
     /**
      * Retrieve eloquent relation.
      *
-     * @param EntityContract $entity
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -23,7 +23,7 @@ interface BelongsToAttributeContract
     /**
      * Retrieve relation manager.
      *
-     * @param EntityContract $entity
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
      *
      * @return \Railken\Laravel\Manager\Contracts\ManagerContract
      */

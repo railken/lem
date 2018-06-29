@@ -4,6 +4,7 @@ vendor/
 
 TODO\.md
 
-build/logs/clover\.xml
+build
 
 composer\.lock
+build/

@@ -3,6 +3,7 @@
 namespace Railken\Laravel\Manager\Contracts;
 
 use Railken\Laravel\Manager\Tokens;
+use Railken\Bag;
 
 interface ManagerContract
 {
@@ -20,7 +21,7 @@ interface ManagerContract
      *
      * @param array $parameters
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \Railken\Laravel\Manager\Contracts\EntityContract
      */
     public function newEntity(array $parameters = []);
 
@@ -48,7 +49,7 @@ interface ManagerContract
     /**
      * Set a repository.
      *
-     * @param \Railken\Laravel\Manager\Contracts\ModelRepositoryContract
+     * @param \Railken\Laravel\Manager\Contracts\ModelRepositoryContract $repository
      *
      * @return $this
      */
@@ -64,7 +65,7 @@ interface ManagerContract
     /**
      * Set a repository.
      *
-     * @param \Railken\Laravel\Manager\Contracts\ModelSerializerContract
+     * @param \Railken\Laravel\Manager\Contracts\ModelSerializerContract $serializer
      *
      * @return $this
      */
@@ -80,7 +81,7 @@ interface ManagerContract
     /**
      * Set a authorizer.
      *
-     * @param \Railken\Laravel\Manager\Contracts\ModelAuthorizerContract
+     * @param \Railken\Laravel\Manager\Contracts\ModelAuthorizerContract $authorizer
      *
      * @return $this
      */
@@ -94,7 +95,7 @@ interface ManagerContract
     public function getAuthorizer();
 
     /**
-     * @param \Railken\Laravel\Manager\Contracts\ModelValidatorContract
+     * @param \Railken\Laravel\Manager\Contracts\ModelValidatorContract $validator
      *
      * @return $this
      */
@@ -108,7 +109,7 @@ interface ManagerContract
     /**
      * Retrieve attributes.
      *
-     * @return array
+     * @return array|\Illuminate\Support\Collection
      */
     public function getAttributes();
 
@@ -154,18 +155,18 @@ interface ManagerContract
     public function getAgent();
 
     /**
-     * Convert array to ParameterBagContract.
+     * Convert array to Bag.
      *
      * @param mixed $parameters
      *
-     * @return ParameterBagContract
+     * @return Bag
      */
     public function castParameters($parameters);
 
     /**
      * Create a new EntityContract given parameters.
      *
-     * @param ParameterBagContract|array $parameters
+     * @param Bag|array $parameters
      *
      * @return ResultActionContract
      */
@@ -175,7 +176,7 @@ interface ManagerContract
      * Update a EntityContract given parameters.
      *
      * @param EntityContract     $entity
-     * @param ParameterBagContract|array $parameters
+     * @param Bag|array $parameters
      * @param string             $permission
      *
      * @return ResultActionContract
@@ -185,7 +186,7 @@ interface ManagerContract
     /**
      * Save the entity.
      *
-     * @param EntityContract $entity
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
      *
      * @return EntityContract
      */
@@ -194,7 +195,7 @@ interface ManagerContract
     /**
      * Remove a EntityContract.
      *
-     * @param EntityContract $entity
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
      *
      * @return void
      */
@@ -203,7 +204,7 @@ interface ManagerContract
     /**
      * Delete a EntityContract.
      *
-     * @param EntityContract $entity
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
      *
      * @return ResultActionContract
      */
@@ -212,18 +213,18 @@ interface ManagerContract
     /**
      * First or create.
      *
-     * @param ParameterBagContract|array $criteria
-     * @param ParameterBagContract|array $parameters
+     * @param Bag|array $criteria
+     * @param Bag|array $parameters
      *
-     * @return EntityContract
+     * @return ResultActionContract
      */
     public function findOrCreate($criteria, $parameters = null);
 
     /**
      * Update or create.
      *
-     * @param ParameterBagContract|array $criteria
-     * @param ParameterBagContract|array $parameters
+     * @param Bag|array $criteria
+     * @param Bag|array $parameters
      *
      * @return ResultActionContract
      */

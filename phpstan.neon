@@ -7,3 +7,4 @@ parameters:
 		- '#Call to an undefined static method Railken\\Laravel\\Manager\\Tests\\Generated\\Foo\\FooManager::([a-zA-Z0-9_]+)\(\)#'
 		- '#Call to an undefined static method Illuminate\\Support\\Facades\\([a-zA-Z0-9_]+)::([a-zA-Z0-9_]+)\(\)#'
 		- '#Instantiated class Railken\\Laravel\\Manager\\Tests\\Generated\\Foo\\([a-zA-Z0-9_]+) not found#'
+		- '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::select()#'

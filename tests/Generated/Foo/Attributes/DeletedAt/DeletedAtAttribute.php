@@ -54,7 +54,7 @@ class DeletedAtAttribute extends BaseAttribute
     /**
      * Is a value valid ?
      *
-     * @param EntityContract $entity
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
      * @param mixed          $value
      *
      * @return bool

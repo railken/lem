@@ -16,7 +16,7 @@ abstract class ModelSerializer implements ModelSerializerContract
     /**
      * Construct.
      *
-     * @param ManagerContract $manager
+     * @param ManagerContract|null $manager
      */
     public function __construct(ManagerContract $manager = null)
     {
@@ -26,10 +26,10 @@ abstract class ModelSerializer implements ModelSerializerContract
     /**
      * Serialize entity.
      *
-     * @param EntityContract $entity
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
      * @param Collection     $select
      *
-     * @return array
+     * @return \Railken\Bag
      */
     public function serialize(EntityContract $entity, Collection $select = null)
     {
@@ -39,7 +39,7 @@ abstract class ModelSerializer implements ModelSerializerContract
             $bag = $bag->only($select->toArray());
         }
 
-        $bag = $bag->only($this->getManager()->authorizer->getAuthorizedAttributes(Tokens::PERMISSION_SHOW, $entity)->keys()->toArray());
+        $bag = $bag->only($this->getManager()->getAuthorizer()->getAuthorizedAttributes(Tokens::PERMISSION_SHOW, $entity)->keys()->toArray());
 
         return $bag;
     }

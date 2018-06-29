@@ -24,7 +24,7 @@ abstract class ModelRepository implements ModelRepositoryContract
      *
      * @param array $parameters
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \Railken\Laravel\Manager\Contracts\EntityContract
      */
     public function newEntity(array $parameters = [])
     {
@@ -61,7 +61,7 @@ abstract class ModelRepository implements ModelRepositoryContract
      *
      * @param array $parameters
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \Railken\Laravel\Manager\Contracts\EntityContract|null|object
      */
     public function findOneBy($parameters)
     {
@@ -73,7 +73,7 @@ abstract class ModelRepository implements ModelRepositoryContract
      *
      * @param int $id
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \Railken\Laravel\Manager\Contracts\EntityContract|null|object
      */
     public function findOneById($id)
     {
@@ -117,7 +117,7 @@ abstract class ModelRepository implements ModelRepositoryContract
     {
         $query = $this->newEntity()->newQuery()->select($this->newEntity()->getTable().".*");
 
-        $this->getManager()->getAuthorizer()->newQuery($query);
+        // $this->getManager()->getAuthorizer()->newQuery($query);
 
         return $query;
     }

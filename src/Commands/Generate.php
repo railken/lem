@@ -40,6 +40,10 @@ class Generate extends Command
      */
     public function handle()
     {
+        if (!is_string($this->argument('namespace'))) {
+            throw new \Exception("Wut?");
+        }
+        
         $generator = new Generator();
         $generator->generate(
             $path = $this->getAbsolutePathByParameter($this->argument('path')),

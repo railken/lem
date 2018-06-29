@@ -40,8 +40,17 @@ class Parser
 
         $printer = new PrettyPrinter\Standard();
         $code = file_get_contents($path);
+
+        if ($code === false) {
+            throw new \Exception("Wut");
+        }
+
         $oldStmts = $parser->parse($code);
         $oldTokens = $lexer->getTokens();
+
+        if (!$oldStmts) {
+            throw new \Exception();
+        }
 
         $newStmts = $traverser->traverse($oldStmts);
 

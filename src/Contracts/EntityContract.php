@@ -5,9 +5,8 @@ namespace Railken\Laravel\Manager\Contracts;
 /**
  * All entities that are used in manager must be under this contract.
  *
- * @property public $id
- * @property public $exists
- * @property public $exists
+ * @property int $id
+ * @property bool $exists
  */
 interface EntityContract
 {
@@ -39,4 +38,25 @@ interface EntityContract
      * @throws \Exception
      */
     public function delete();
+
+    /**
+     * Convert the model instance to an array.
+     *
+     * @return array
+     */
+    public function toArray();
+
+    /**
+     * Get a new query builder for the model's table.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function newQuery();
+
+    /**
+     * Get the table associated with the model.
+     *
+     * @return string
+     */
+    public function getTable();
 }

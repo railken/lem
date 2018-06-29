@@ -21,6 +21,10 @@ class ModelManagerVisitor extends NodeVisitorAbstract
     public function leaveNode(Node $node)
     {
         if ($node instanceof Property && $node->props[0]->name == 'attributes') {
+            if (!$node->props[0]->default || !isset($node->props[0]->default->items)) {
+                throw new \Exception(sprintf("Cannot retrieve attribute correctly %s", $node->props[0]->name));
+            }
+            
             $results = array_filter($node->props[0]->default->items, function ($node) {
                 return implode('\\', $node->value->class->parts) === implode('\\', $this->attribute);
             });

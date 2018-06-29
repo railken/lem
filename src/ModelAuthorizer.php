@@ -7,6 +7,7 @@ use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\Contracts\ManagerContract;
 use Railken\Laravel\Manager\Contracts\PolicyContract;
 use Railken\Laravel\Manager\Contracts\ModelAuthorizerContract;
+use Railken\Bag;
 
 class ModelAuthorizer implements ModelAuthorizerContract
 {
@@ -29,7 +30,7 @@ class ModelAuthorizer implements ModelAuthorizerContract
     /**
      * Construct.
      *
-     * @param ManagerContract $manager
+     * @param ManagerContract|null $manager
      */
     public function __construct(ManagerContract $manager = null)
     {
@@ -38,12 +39,12 @@ class ModelAuthorizer implements ModelAuthorizerContract
 
     /**
      * @param string         $action
-     * @param EntityContract $entity
-     * @param ParameterBag   $parameters
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
+     * @param Bag   $parameters
      *
      * @return Collection
      */
-    public function authorize(string $action, EntityContract $entity, ParameterBag $parameters)
+    public function authorize(string $action, EntityContract $entity, Bag $parameters)
     {
         $errors = new Collection();
 
@@ -60,19 +61,21 @@ class ModelAuthorizer implements ModelAuthorizerContract
 
     /**
      * @param string         $action
-     * @param EntityContract $entity
-     * @param ParameterBag   $parameters
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
+     * @param Bag   $parameters
      *
      * @return Collection
      */
-    public function authorizeAction(string $action, EntityContract $entity, ParameterBag $parameters)
+    public function authorizeAction(string $action, EntityContract $entity, Bag $parameters)
     {
         $errors = new Collection();
 
         $exception = $this->getManager()->getException(Tokens::NOT_AUTHORIZED);
         $permission = $this->getPermission($action);
 
-        !$this->getManager()->getAgent()->can($permission) && $errors->push(new $exception($permission));
+        if (!$this->getManager()->getAgent()->can($permission)) {
+            $errors->push(new $exception($permission));
+        }
 
         return $errors;
     }
@@ -133,7 +136,7 @@ class ModelAuthorizer implements ModelAuthorizerContract
     /**
      * Filter the new query instance with policies
      *
-     * @param $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
      */
     public function newQuery($query)
     {

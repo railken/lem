@@ -12,7 +12,8 @@ use Railken\Laravel\Manager\Contracts\ModelAuthorizerContract;
 use Railken\Laravel\Manager\Contracts\ModelRepositoryContract;
 use Railken\Laravel\Manager\Contracts\ModelSerializerContract;
 use Railken\Laravel\Manager\Contracts\ModelValidatorContract;
-use Railken\Laravel\Manager\Contracts\ParameterBagContract;
+use Railken\Laravel\Manager\Contracts\ResultActionContract;
+use Railken\Bag;
 
 /**
  * Abstract ModelManager class.
@@ -20,9 +21,9 @@ use Railken\Laravel\Manager\Contracts\ParameterBagContract;
 abstract class ModelManager implements ManagerContract
 {
     /**
-     * @var array
+     * @var array|Collection
      */
-    protected $attributes = [];
+    protected $attributes;
 
     /**
      * @var array
@@ -47,22 +48,22 @@ abstract class ModelManager implements ManagerContract
     /**
      * @var \Railken\Laravel\Manager\Contracts\ModelSerializerContract
      */
-    public $serializer;
+    public $serializer = null;
 
     /**
      * @var \Railken\Laravel\Manager\Contracts\ModelValidatorContract
      */
-    public $validator;
+    public $validator = null;
 
     /**
      * @var \Railken\Laravel\Manager\Contracts\ModelRepositoryContract
      */
-    public $repository;
+    public $repository = null;
 
     /**
      * @var \Railken\Laravel\Manager\Contracts\ModelAuthorizerContract
      */
-    public $authorizer;
+    public $authorizer = null;
 
     /**
      * Construct.
@@ -82,7 +83,7 @@ abstract class ModelManager implements ManagerContract
      *
      * @param array $parameters
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \Railken\Laravel\Manager\Contracts\EntityContract
      */
     public function newEntity(array $parameters = [])
     {
@@ -125,19 +126,19 @@ abstract class ModelManager implements ManagerContract
      */
     public function initializeComponents()
     {
-        if (!$this->validator) {
+        if ($this->validator === null) {
             throw new Exceptions\ModelMissingValidatorException($this);
         }
 
-        if (!$this->serializer) {
+        if ($this->serializer === null) {
             throw new Exceptions\ModelMissingSerializerException($this);
         }
 
-        if (!$this->repository) {
+        if ($this->repository === null) {
             throw new Exceptions\ModelMissingRepositoryException($this);
         }
 
-        if (!$this->authorizer) {
+        if ($this->authorizer === null) {
             throw new Exceptions\ModelMissingAuthorizerException($this);
         }
     }
@@ -145,7 +146,7 @@ abstract class ModelManager implements ManagerContract
     /**
      * Set a repository.
      *
-     * @param \Railken\Laravel\Manager\Contracts\ModelRepositoryContract
+     * @param \Railken\Laravel\Manager\Contracts\ModelRepositoryContract $repository
      *
      * @return $this
      */
@@ -169,7 +170,7 @@ abstract class ModelManager implements ManagerContract
     /**
      * Set a repository.
      *
-     * @param \Railken\Laravel\Manager\Contracts\ModelSerializerContract
+     * @param \Railken\Laravel\Manager\Contracts\ModelSerializerContract $serializer
      *
      * @return $this
      */
@@ -193,7 +194,7 @@ abstract class ModelManager implements ManagerContract
     /**
      * Set a authorizer.
      *
-     * @param \Railken\Laravel\Manager\Contracts\ModelAuthorizerContract
+     * @param \Railken\Laravel\Manager\Contracts\ModelAuthorizerContract $authorizer
      *
      * @return $this
      */
@@ -215,7 +216,7 @@ abstract class ModelManager implements ManagerContract
     }
 
     /**
-     * @param \Railken\Laravel\Manager\Contracts\ModelValidatorContract
+     * @param \Railken\Laravel\Manager\Contracts\ModelValidatorContract $validator
      *
      * @return $this
      */
@@ -237,7 +238,7 @@ abstract class ModelManager implements ManagerContract
     /**
      * Retrieve attributes.
      *
-     * @return array
+     * @return array|\Illuminate\Support\Collection
      */
     public function getAttributes()
     {
@@ -315,15 +316,15 @@ abstract class ModelManager implements ManagerContract
     }
 
     /**
-     * Convert array to ParameterBag.
+     * Convert array to Bag.
      *
      * @param mixed $parameters
      *
-     * @return ParameterBagContract
+     * @return Bag
      */
     public function castParameters($parameters)
     {
-        return ParameterBag::factory($parameters);
+        return Bag::factory($parameters);
     }
     
     /**
@@ -342,7 +343,7 @@ abstract class ModelManager implements ManagerContract
 
                 if ($return instanceof ResultAction) {
                     if (!$return->ok()) {
-                        throw new Exceptions\Exception(sprintf('Something went wrong while interacting with %s, errors: %s', $this->getEntity(), json_encode($return->getSimpleErrors())));
+                        throw new Exceptions\Exception(sprintf('Something went wrong while interacting with %s, errors: %s', $this->getEntity(), (string)json_encode($return->getSimpleErrors())));
                     } else {
                         return $return;
                     }
@@ -356,9 +357,9 @@ abstract class ModelManager implements ManagerContract
     /**
      * Create a new EntityContract given parameters.
      *
-     * @param ParameterBag|array $parameters
+     * @param Bag|array $parameters
      *
-     * @return ResultAction
+     * @return ResultActionContract
      */
     public function create($parameters)
     {
@@ -368,11 +369,11 @@ abstract class ModelManager implements ManagerContract
     /**
      * Update a EntityContract given parameters.
      *
-     * @param EntityContract     $entity
-     * @param ParameterBag|array $parameters
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract     $entity
+     * @param Bag|array $parameters
      * @param string             $permission
      *
-     * @return ResultAction
+     * @return ResultActionContract
      */
     public function update(EntityContract $entity, $parameters, $permission = Tokens::PERMISSION_UPDATE)
     {
@@ -418,9 +419,9 @@ abstract class ModelManager implements ManagerContract
     /**
      * Save the entity.
      *
-     * @param EntityContract $entity
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
      *
-     * @return EntityContract
+     * @return boolean
      */
     public function save(EntityContract $entity)
     {
@@ -430,29 +431,27 @@ abstract class ModelManager implements ManagerContract
     /**
      * Remove a EntityContract.
      *
-     * @param EntityContract $entity
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
      *
-     * @return void
+     * @return ResultActionContract
      */
     public function remove(EntityContract $entity)
     {
-        $result = new ResultAction();
-
-        return $result->ok() ? $this->delete($entity) : $result;
+        return $this->delete($entity);
     }
 
     /**
      * Delete a EntityContract.
      *
-     * @param EntityContract $entity
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
      *
-     * @return ResultAction
+     * @return ResultActionContract
      */
     public function delete(EntityContract $entity)
     {
         $result = new ResultAction();
 
-        $result->addErrors($this->authorizer->authorize(Tokens::PERMISSION_REMOVE, $entity, ParameterBag::factory([])));
+        $result->addErrors($this->authorizer->authorize(Tokens::PERMISSION_REMOVE, $entity, Bag::factory([])));
 
         if (!$result->ok()) {
             return $result;
@@ -474,13 +473,17 @@ abstract class ModelManager implements ManagerContract
     /**
      * First or create.
      *
-     * @param ParameterBag|array $criteria
-     * @param ParameterBag|array $parameters
+     * @param Bag|array $criteria
+     * @param Bag|array $parameters
      *
-     * @return EntityContract
+     * @return ResultActionContract
      */
     public function findOrCreate($criteria, $parameters = null)
     {
+        if ($criteria instanceof Bag) {
+            $criteria = $criteria->toArray();
+        }
+
         if ($parameters === null) {
             $parameters = $criteria;
         }
@@ -488,8 +491,8 @@ abstract class ModelManager implements ManagerContract
         $parameters = $this->castParameters($parameters);
         $entity = $this->getRepository()->findOneBy($criteria);
 
-        if (!$entity) {
-            return $this->create($this->castParameters($parameters));
+        if ($entity !== null) {
+            return $this->create($parameters);
         }
 
         $result = new ResultAction();
@@ -501,17 +504,24 @@ abstract class ModelManager implements ManagerContract
     /**
      * Update or create.
      *
-     * @param ParameterBag|array $criteria
-     * @param ParameterBag|array $parameters
+     * @param Bag|array $criteria
+     * @param Bag|array $parameters
      *
-     * @return ResultAction
+     * @return ResultActionContract
      */
-    public function updateOrCreate($criteria, $parameters)
+    public function updateOrCreate($criteria, $parameters = null)
     {
-        $criteria = $this->castParameters($criteria);
+        if ($criteria instanceof Bag) {
+            $criteria = $criteria->toArray();
+        }
+
+        if ($parameters === null) {
+            $parameters = $criteria;
+        }
+
         $parameters = $this->castParameters($parameters);
         $entity = $this->getRepository()->findOneBy($criteria);
 
-        return $entity ? $this->update($entity, $parameters) : $this->create($parameters);
+        return $entity !== null ? $this->update($entity, $parameters) : $this->create($parameters);
     }
 }

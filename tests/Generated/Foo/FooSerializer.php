@@ -13,10 +13,10 @@ class FooSerializer extends ModelSerializer
     /**
      * Serialize entity.
      *
-     * @param EntityContract $entity
-     * @param Collection     $select
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
+     * @param \Illuminate\Support\Collection $select
      *
-     * @return array
+     * @return \Railken\Bag
      */
     public function serialize(EntityContract $entity, Collection $select = null)
     {

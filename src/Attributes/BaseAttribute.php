@@ -6,7 +6,7 @@ use Illuminate\Support\Collection;
 use Railken\Laravel\Manager\Contracts\AttributeContract;
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\Contracts\ManagerContract;
-use Railken\Laravel\Manager\Contracts\ParameterBagContract;
+use Railken\Bag;
 use Railken\Laravel\Manager\Exceptions as Exceptions;
 use Railken\Laravel\Manager\Tokens;
 use Respect\Validation\Validator as v;
@@ -24,14 +24,14 @@ abstract class BaseAttribute implements AttributeContract
      *
      * @var bool
      */
-    protected $required = false;
+    protected $required;
 
     /**
      * Is the attribute unique.
      *
      * @var bool
      */
-    protected $unique = false;
+    protected $unique;
 
     /**
      * @var ManagerContract
@@ -91,7 +91,7 @@ abstract class BaseAttribute implements AttributeContract
      *
      * @return string
      */
-    public function getException($code)
+    public function getException(string $code)
     {
         if (!isset($this->exceptions[$code])) {
             throw new Exceptions\ExceptionNotDefinedException($this, $code);
@@ -107,7 +107,7 @@ abstract class BaseAttribute implements AttributeContract
      *
      * @return string
      */
-    public function getPermission($code)
+    public function getPermission(string $code)
     {
         if (!isset($this->permissions[$code])) {
             throw new Exceptions\PermissionNotDefinedException($this, $code);
@@ -120,10 +120,10 @@ abstract class BaseAttribute implements AttributeContract
      * Is a value valid ?
      *
      * @param string         $action
-     * @param EntityContract $entity
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
      * @param mixed          $value
      *
-     * @return bool
+     * @return Collection
      */
     public function authorize(string $action, EntityContract $entity, $value)
     {
@@ -132,7 +132,9 @@ abstract class BaseAttribute implements AttributeContract
         $permission = $this->getPermission($action);
         $exception = $this->getException(Tokens::NOT_AUTHORIZED);
 
-        !$this->getManager()->getAgent()->can($permission) && $errors->push(new $exception($permission));
+        if (!$this->getManager()->getAgent()->can($permission)) {
+            $errors->push(new $exception($permission));
+        }
 
         return $errors;
     }
@@ -140,26 +142,28 @@ abstract class BaseAttribute implements AttributeContract
     /**
      * Validate.
      *
-     * @param EntityContract       $entity
-     * @param ParameterBagContract $parameters
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
+     * @param \Railken\Bag $parameters
      *
      * @return Collection
      */
-    public function validate(EntityContract $entity, ParameterBagContract $parameters)
+    public function validate(EntityContract $entity, Bag $parameters)
     {
         $errors = new Collection();
 
         $value = $parameters->get($this->name);
 
-        $this->required && !$entity->exists && !$parameters->exists($this->name) &&
+        if ($this->required && !$entity->exists && !$parameters->exists($this->name)) {
             $errors->push(new $this->exceptions[Tokens::NOT_DEFINED]($value));
+        }
 
-        $this->unique && $parameters->exists($this->name) && $this->isUnique($entity, $value) &&
+        if ($this->unique && $parameters->exists($this->name) && $this->isUnique($entity, $value)) {
             $errors->push(new $this->exceptions[Tokens::NOT_UNIQUE]($value));
+        }
 
-
-        $parameters->exists($this->name) && ($value !== null || $this->required) && !$this->valid($entity, $value) &&
+        if ($parameters->exists($this->name) && ($value !== null || $this->required) && !$this->valid($entity, $value)) {
             $errors->push(new $this->exceptions[Tokens::NOT_VALID]($value));
+        }
 
         return $errors;
     }
@@ -167,7 +171,7 @@ abstract class BaseAttribute implements AttributeContract
     /**
      * Is a value valid ?
      *
-     * @param EntityContract $entity
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
      * @param mixed          $value
      *
      * @return bool
@@ -180,12 +184,12 @@ abstract class BaseAttribute implements AttributeContract
     /**
      * Update entity value.
      *
-     * @param EntityContract       $entity
-     * @param ParameterBagContract $parameters
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
+     * @param \Railken\Bag $parameters
      *
      * @return Collection
      */
-    public function update(EntityContract $entity, ParameterBagContract $parameters)
+    public function update(EntityContract $entity, Bag $parameters)
     {
         $errors = new Collection();
 
@@ -207,16 +211,18 @@ abstract class BaseAttribute implements AttributeContract
     /**
      * Update entity value.
      *
-     * @param EntityContract       $entity
-     * @param ParameterBagContract $parameters
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
+     * @param \Railken\Bag $parameters
      *
      * @return Collection
      */
-    public function fill(EntityContract $entity, ParameterBagContract $parameters)
+    public function fill(EntityContract $entity, Bag $parameters)
     {
         $errors = new Collection();
 
-        $parameters->exists($this->name) && $entity->fill([$this->name => $parameters->get($this->name)]);
+        if ($parameters->exists($this->name)) {
+            $entity->fill([$this->name => $parameters->get($this->name)]);
+        }
 
         return $errors;
     }
@@ -224,7 +230,7 @@ abstract class BaseAttribute implements AttributeContract
     /**
      * Is a value valid ?
      *
-     * @param EntityContract $entity
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
      * @param mixed          $value
      *
      * @return bool
@@ -233,7 +239,9 @@ abstract class BaseAttribute implements AttributeContract
     {
         $q = $this->getManager()->getRepository()->getQuery()->where($this->name, $value);
 
-        $entity->exists && $q->where('id', '!=', $entity->id);
+        if ($entity->exists) {
+            $q->where('id', '!=', $entity->id);
+        }
 
         return $q->count() > 0;
     }
@@ -251,7 +259,7 @@ abstract class BaseAttribute implements AttributeContract
     /**
      * Retrieve default value
      *
-     * @param EntityContract $entity
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
      *
      * @return mixed
      */

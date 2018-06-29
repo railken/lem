@@ -9,7 +9,7 @@ class FooObserver
     /**
      * Listen to the entity retrieved event.
      *
-     * @param EntityContract $entity
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
      *
      * @return void
      */
@@ -21,7 +21,7 @@ class FooObserver
     /**
      * Listen to the entity creating event.
      *
-     * @param EntityContract $entity
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
      *
      * @return void
      */
@@ -33,7 +33,7 @@ class FooObserver
     /**
      * Listen to the entity created event.
      *
-     * @param EntityContract $entity
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
      *
      * @return void
      */
@@ -45,7 +45,7 @@ class FooObserver
     /**
      * Listen to the entity updating event.
      *
-     * @param EntityContract $entity
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
      *
      * @return void
      */
@@ -57,7 +57,7 @@ class FooObserver
     /**
      * Listen to the entity updated event.
      *
-     * @param EntityContract $entity
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
      *
      * @return void
      */
@@ -69,7 +69,7 @@ class FooObserver
     /**
      * Listen to the entity saving event.
      *
-     * @param EntityContract $entity
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
      *
      * @return void
      */
@@ -81,7 +81,7 @@ class FooObserver
     /**
      * Listen to the entity saved event.
      *
-     * @param EntityContract $entity
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
      *
      * @return void
      */
@@ -93,7 +93,7 @@ class FooObserver
     /**
      * Listen to the entity deleting event.
      *
-     * @param EntityContract $entity
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
      *
      * @return void
      */
@@ -105,7 +105,7 @@ class FooObserver
     /**
      * Listen to the entity deleted event.
      *
-     * @param EntityContract $entity
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
      *
      * @return void
      */
@@ -117,7 +117,7 @@ class FooObserver
     /**
      * Listen to the entity restoring event.
      *
-     * @param EntityContract $entity
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
      *
      * @return void
      */
@@ -129,7 +129,7 @@ class FooObserver
     /**
      * Listen to the entity restored event.
      *
-     * @param EntityContract $entity
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
      *
      * @return void
      */

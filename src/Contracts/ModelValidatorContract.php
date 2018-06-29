@@ -2,17 +2,17 @@
 
 namespace Railken\Laravel\Manager\Contracts;
 
-use Railken\Laravel\Manager\ParameterBag;
+use Railken\Bag;
 
 interface ModelValidatorContract
 {
     /**
      * Validate.
      *
-     * @param EntityContract $entity
-     * @param ParameterBag   $parameters
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
+     * @param Bag   $parameters
      *
      * @return \Illuminate\Support\Collection
      */
-    public function validate(EntityContract $entity, ParameterBag $parameters);
+    public function validate(EntityContract $entity, Bag $parameters);
 }

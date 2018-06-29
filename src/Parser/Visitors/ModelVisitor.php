@@ -19,6 +19,10 @@ class ModelVisitor extends NodeVisitorAbstract
     public function leaveNode(Node $node)
     {
         if ($node instanceof Property && $node->props[0]->name == 'fillable') {
+            if (!$node->props[0]->default || !isset($node->props[0]->default->items)) {
+                throw new \Exception(sprintf("Cannot retrieve attribute correctly %s", $node->props[0]->name));
+            }
+
             $results = array_filter($node->props[0]->default->items, function ($node) {
                 return $node->value->value === $this->attribute;
             });

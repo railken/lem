@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\Contracts\ManagerContract;
 use Railken\Laravel\Manager\Contracts\ModelValidatorContract;
+use Railken\Bag;
 
 class ModelValidator implements ModelValidatorContract
 {
@@ -22,12 +23,12 @@ class ModelValidator implements ModelValidatorContract
     }
 
     /**
-     * @param EntityContract $entity
-     * @param ParameterBag   $parameters
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
+     * @param Bag   $parameters
      *
      * @return Collection
      */
-    public function validate(EntityContract $entity, ParameterBag $parameters)
+    public function validate(EntityContract $entity, Bag $parameters)
     {
         $errors = new Collection();
 
@@ -45,8 +46,8 @@ class ModelValidator implements ModelValidatorContract
     /**
      * Validate uniqueness.
      *
-     * @param EntityContract $entity
-     * @param ParameterBag   $parameters
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
+     * @param Bag   $parameters
      *
      * @return Collection
      */
@@ -74,7 +75,9 @@ class ModelValidator implements ModelValidatorContract
                 }
             }
 
-            $entity->exists && $q->where('id', '!=', $entity->id);
+            if ($entity->exists) {
+                $q->where('id', '!=', $entity->id);
+            }
 
             if ($where->count() > 0 && $q->where($where->toArray())->count() > 0) {
                 $class = $this->getManager()->getException(Tokens::NOT_UNIQUE);

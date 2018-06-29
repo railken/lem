@@ -9,7 +9,7 @@ interface ModelRepositoryContract
      *
      * @param array $parameters
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \Railken\Laravel\Manager\Contracts\EntityContract
      */
     public function newEntity(array $parameters = []);
 
@@ -34,7 +34,7 @@ interface ModelRepositoryContract
      *
      * @param array $parameters
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \Railken\Laravel\Manager\Contracts\EntityContract
      */
     public function findOneBy($parameters);
 
@@ -43,7 +43,7 @@ interface ModelRepositoryContract
      *
      * @param int $id
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \Railken\Laravel\Manager\Contracts\EntityContract
      */
     public function findOneById($id);
 
