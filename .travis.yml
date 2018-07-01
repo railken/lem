@@ -7,12 +7,13 @@ services:
 
 addons:
   apt:
+    sources:
+      - mysql-5.7-trusty
     packages:
+      - mysql-server
+      - mysql-client
       - libxml2-utils
-  code_climate:
-    repo_token:
-      secure: "vMSyMnp6aDmCgJ9TOS7YCKh5y5UH31M3YXNMLyvfaIdA/EDCvftesl7ahj74BWW2JaRu0OFKt0WCGLbwSZgqwGU+LoZXo49QruqZrl/s1kLLAtLQCOyuroqP88WDwawvffCOrA6yex6GfU0wJPqdQz6TkD/SCh/2ixPbVunh+9Ui69VXVWz4oY5444ni7+XJ/J0TWE3I7TED0Pi6VoNzAikB7hMJBg/gUmLITqfUVsXtGmAznVOS93hamFQIyXdJ6P5ivvsqEGlIzFhCMbOhDoKa5aRFlaB7XuTOujAGKfeK2vz8V0wiZZvXIrUipGtjmMmYcwHhBQ5t5XIeSxVZxina4Ml/SP8MhsOdWwDx1KGcbk6vIRZIdSUUfeCflQcW6XmAjfHX7IPXq1GnOYVaARFyKV6aa8nmpBudmWuQFcMhMDfYgJuBfzAYnxccTzLIN102cFpH0c4icywuQ6B/3j9M+2sKqpZnYzFbRJ9B0gjn4LKBt90OvWI4VUh6c0aUwFY8OqlgkDX9TGWcto0skAKqp8oQ4voh/uKMCagpem36pM8IUxBGLssAXfHYYy1jpRLad84hotWVzExe7e24Tjft675c3ZSeYvG85tRfJjANOFdB1M5Ydx5db/kmHDL5XkExuwZoapHI1hG64mHZnVJwc8QnDb/nRoiThxaiA4A="
-
+      
 php:
   - 7.1
   - 7.2
@@ -25,7 +26,6 @@ matrix:
 env:
   matrix:
     - DEPENDENCIES="high"
-    - DEPENDENCIES="low"
   global:
     - DEFAULT_COMPOSER_FLAGS="--no-interaction --no-ansi --no-progress --no-suggest"
 
@@ -37,6 +37,7 @@ install:
   - if [[ "$DEPENDENCIES" = 'low' ]]; then travis_retry composer update $DEFAULT_COMPOSER_FLAGS --prefer-lowest; fi
 
 before_script:
+  - mysql_upgrade -u root 
   - mysql -h localhost -e "CREATE DATABASE homestead;"
   - mysql -h localhost -e "GRANT USAGE ON *.* TO homestead@localhost IDENTIFIED BY 'secret';"
   - mysql -h localhost -e "GRANT ALL PRIVILEGES ON homestead.* TO homestead@localhost;"
