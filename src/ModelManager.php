@@ -12,7 +12,7 @@ use Railken\Laravel\Manager\Contracts\ModelAuthorizerContract;
 use Railken\Laravel\Manager\Contracts\ModelRepositoryContract;
 use Railken\Laravel\Manager\Contracts\ModelSerializerContract;
 use Railken\Laravel\Manager\Contracts\ModelValidatorContract;
-use Railken\Laravel\Manager\Contracts\ResultActionContract;
+use Railken\Laravel\Manager\Contracts\ResultContract;
 use Railken\Bag;
 
 /**
@@ -341,7 +341,7 @@ abstract class ModelManager implements ManagerContract
             if (method_exists($this, $method)) {
                 $return = $this->$method(...$args);
 
-                if ($return instanceof ResultAction) {
+                if ($return instanceof Result) {
                     if (!$return->ok()) {
                         throw new Exceptions\Exception(sprintf('Something went wrong while interacting with %s, errors: %s', $this->getEntity(), (string)json_encode($return->getSimpleErrors())));
                     } else {
@@ -359,7 +359,7 @@ abstract class ModelManager implements ManagerContract
      *
      * @param Bag|array $parameters
      *
-     * @return ResultActionContract
+     * @return ResultContract
      */
     public function create($parameters)
     {
@@ -373,13 +373,13 @@ abstract class ModelManager implements ManagerContract
      * @param Bag|array $parameters
      * @param string             $permission
      *
-     * @return ResultActionContract
+     * @return ResultContract
      */
     public function update(EntityContract $entity, $parameters, $permission = Tokens::PERMISSION_UPDATE)
     {
         $parameters = $this->castParameters($parameters);
 
-        $result = new ResultAction();
+        $result = new Result();
 
         try {
             DB::beginTransaction();
@@ -433,7 +433,7 @@ abstract class ModelManager implements ManagerContract
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
      *
-     * @return ResultActionContract
+     * @return ResultContract
      */
     public function remove(EntityContract $entity)
     {
@@ -445,11 +445,11 @@ abstract class ModelManager implements ManagerContract
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
      *
-     * @return ResultActionContract
+     * @return ResultContract
      */
     public function delete(EntityContract $entity)
     {
-        $result = new ResultAction();
+        $result = new Result();
 
         $result->addErrors($this->authorizer->authorize(Tokens::PERMISSION_REMOVE, $entity, Bag::factory([])));
 
@@ -476,7 +476,7 @@ abstract class ModelManager implements ManagerContract
      * @param Bag|array $criteria
      * @param Bag|array $parameters
      *
-     * @return ResultActionContract
+     * @return ResultContract
      */
     public function findOrCreate($criteria, $parameters = null)
     {
@@ -495,7 +495,7 @@ abstract class ModelManager implements ManagerContract
             return $this->create($parameters);
         }
 
-        $result = new ResultAction();
+        $result = new Result();
         $result->getResources()->push($entity);
 
         return $result;
@@ -507,7 +507,7 @@ abstract class ModelManager implements ManagerContract
      * @param Bag|array $criteria
      * @param Bag|array $parameters
      *
-     * @return ResultActionContract
+     * @return ResultContract
      */
     public function updateOrCreate($criteria, $parameters = null)
     {

@@ -4,7 +4,7 @@ namespace Railken\Laravel\Manager\Contracts;
 
 use Illuminate\Support\Collection;
 
-interface ResultActionContract
+interface ResultContract
 {
     /**
      * Set resources.

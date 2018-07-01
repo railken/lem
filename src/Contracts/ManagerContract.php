@@ -168,7 +168,7 @@ interface ManagerContract
      *
      * @param Bag|array $parameters
      *
-     * @return ResultActionContract
+     * @return ResultContract
      */
     public function create($parameters);
 
@@ -179,7 +179,7 @@ interface ManagerContract
      * @param Bag|array $parameters
      * @param string             $permission
      *
-     * @return ResultActionContract
+     * @return ResultContract
      */
     public function update(EntityContract $entity, $parameters, $permission = Tokens::PERMISSION_UPDATE);
 
@@ -206,7 +206,7 @@ interface ManagerContract
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
      *
-     * @return ResultActionContract
+     * @return ResultContract
      */
     public function delete(EntityContract $entity);
 
@@ -216,7 +216,7 @@ interface ManagerContract
      * @param Bag|array $criteria
      * @param Bag|array $parameters
      *
-     * @return ResultActionContract
+     * @return ResultContract
      */
     public function findOrCreate($criteria, $parameters = null);
 
@@ -226,7 +226,7 @@ interface ManagerContract
      * @param Bag|array $criteria
      * @param Bag|array $parameters
      *
-     * @return ResultActionContract
+     * @return ResultContract
      */
     public function updateOrCreate($criteria, $parameters);
 }
