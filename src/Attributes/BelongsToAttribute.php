@@ -81,10 +81,23 @@ abstract class BelongsToAttribute extends BaseAttribute implements BelongsToAttr
                 $params = json_decode((string)json_encode($val), true);
                 $rentity = $entity->{$this->getRelationName()};
 
-                $result = $entity->exists ? $m->update($rentity, $params) : $m->create($params);
+                $unique_keys = $m->getAttributes()->filter(function ($attribute) {
+                    return $attribute->getUnique();
+                })->keys()->toArray();
+
+                $criteria = (new Bag($params))->only($unique_keys);
+
+
+                if ($entity->exists) {
+                    $result = $m->update($rentity, $params);
+                } else {
+                    $result = $criteria->count() === 0 ? $m->create($params) : $m->findOrCreate($criteria, $params);
+                }
 
                 if (!$result->ok()) {
                     $errors = $errors->merge($result->getErrors());
+
+                    return $errors;
                 }
 
                 $parameters->set($this->getRelationName(), $result->getResource());

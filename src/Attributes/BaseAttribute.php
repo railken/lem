@@ -277,4 +277,14 @@ abstract class BaseAttribute implements AttributeContract
     {
         return $this->permissions;
     }
+
+    /**
+     * Is the attribute unique?
+     *
+     * @return boolean
+     */
+    public function getUnique()
+    {
+        return $this->unique;
+    }
 }

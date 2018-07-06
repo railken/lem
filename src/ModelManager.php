@@ -491,7 +491,7 @@ abstract class ModelManager implements ManagerContract
         $parameters = $this->castParameters($parameters);
         $entity = $this->getRepository()->findOneBy($criteria);
 
-        if ($entity !== null) {
+        if ($entity === null) {
             return $this->create($parameters);
         }
 
