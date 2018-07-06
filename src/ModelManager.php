@@ -392,9 +392,7 @@ abstract class ModelManager implements ManagerContract
             }
 
             // Attributes
-            foreach ($this->getAttributes() as $attribute) {
-                $result->addErrors($attribute->update($entity, $parameters));
-            }
+            $result->addErrors($this->fill($entity, $parameters)->getErrors());
 
             if (!$result->ok()) {
                 DB::rollBack();
@@ -411,6 +409,25 @@ abstract class ModelManager implements ManagerContract
             DB::rollBack();
 
             throw $e;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Fill entity
+     *
+     * @param EntityContract     $entity
+     * @param ParameterBag|array $parameters
+     *
+     * @return ResultAction
+     */
+    public function fill(EntityContract $entity, $parameters)
+    {
+        $result = new Result();
+
+        foreach ($this->getAttributes() as $attribute) {
+            $result->addErrors($attribute->update($entity, $parameters));
         }
 
         return $result;
