@@ -418,7 +418,7 @@ abstract class ModelManager implements ManagerContract
      * Fill entity
      *
      * @param EntityContract     $entity
-     * @param ParameterBag|array $parameters
+     * @param Bag|array $parameters
      *
      * @return ResultAction
      */
