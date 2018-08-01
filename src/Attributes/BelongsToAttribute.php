@@ -87,6 +87,8 @@ abstract class BelongsToAttribute extends BaseAttribute implements BelongsToAttr
 
                 $criteria = (new Bag($params))->only($unique_keys);
 
+                $params = $this->filterRelationParameters(new Bag($params));
+
 
                 if ($entity->exists) {
                     $result = $m->update($rentity, $params);
@@ -121,6 +123,11 @@ abstract class BelongsToAttribute extends BaseAttribute implements BelongsToAttr
         }
 
         return $errors;
+    }
+
+    public function filterRelationParameters(Bag $parameters)
+    {
+        return $parameters;
     }
 
     /**
