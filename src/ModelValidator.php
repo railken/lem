@@ -3,10 +3,10 @@
 namespace Railken\Laravel\Manager;
 
 use Illuminate\Support\Collection;
+use Railken\Bag;
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\Contracts\ManagerContract;
 use Railken\Laravel\Manager\Contracts\ModelValidatorContract;
-use Railken\Bag;
 
 class ModelValidator implements ModelValidatorContract
 {
@@ -24,7 +24,7 @@ class ModelValidator implements ModelValidatorContract
 
     /**
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param Bag   $parameters
+     * @param Bag                                               $parameters
      *
      * @return Collection
      */
@@ -47,7 +47,7 @@ class ModelValidator implements ModelValidatorContract
      * Validate uniqueness.
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param Bag   $parameters
+     * @param Bag                                               $parameters
      *
      * @return Collection
      */
@@ -56,7 +56,6 @@ class ModelValidator implements ModelValidatorContract
         $errors = new Collection();
 
         foreach ($this->getManager()->getUnique() as $name => $attributes) {
-
             // Check if attribute exists...
 
             $q = $this->getManager()->getRepository()->getQuery();

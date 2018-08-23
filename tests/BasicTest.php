@@ -14,23 +14,6 @@ use Railken\Laravel\Manager\Tests\User\UserServiceProvider;
 class BasicTest extends \Orchestra\Testbench\TestCase
 {
     /**
-     * Get package providers.
-     *
-     * @param \Illuminate\Foundation\Application $app
-     *
-     * @return array
-     */
-    protected function getPackageProviders($app)
-    {
-        return [
-            AppServiceProvider::class,
-            \Railken\Laravel\Manager\ManagerServiceProvider::class,
-            UserServiceProvider::class,
-            ArticleServiceProvider::class,
-        ];
-    }
-
-    /**
      * Setup the test environment.
      */
     public function setUp()
@@ -108,7 +91,6 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         $um->remove($resource);
     }
 
-
     /**
      * @expectedException \Railken\Laravel\Manager\Exceptions\Exception
      */
@@ -178,7 +160,6 @@ class BasicTest extends \Orchestra\Testbench\TestCase
         $um->remove($user);
     }
 
-
     public function testDefaultValue()
     {
         $um = new UserManager();
@@ -188,8 +169,24 @@ class BasicTest extends \Orchestra\Testbench\TestCase
 
         $result = $am->create(['author_id' => $user->id]);
 
-
         $this->assertEquals(true, $result->ok());
         $this->assertEquals('a default value', $result->getResource()->title);
+    }
+
+    /**
+     * Get package providers.
+     *
+     * @param \Illuminate\Foundation\Application $app
+     *
+     * @return array
+     */
+    protected function getPackageProviders($app)
+    {
+        return [
+            AppServiceProvider::class,
+            \Railken\Laravel\Manager\ManagerServiceProvider::class,
+            UserServiceProvider::class,
+            ArticleServiceProvider::class,
+        ];
     }
 }

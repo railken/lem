@@ -10,7 +10,7 @@ interface AttributeContract
      * Validate.
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param \Railken\Bag $parameters
+     * @param \Railken\Bag                                      $parameters
      *
      * @return \Illuminate\Support\Collection
      */

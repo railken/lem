@@ -8,7 +8,7 @@ use Railken\Laravel\Manager\Generator;
 class GenerateAttribute extends Command
 {
     use Traits\PathTrait;
-    
+
     /**
      * The name and signature of the console command.
      *
@@ -25,8 +25,6 @@ class GenerateAttribute extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -41,11 +39,11 @@ class GenerateAttribute extends Command
     public function handle()
     {
         if (!is_string($this->argument('namespace'))) {
-            throw new \Exception("Wut?");
+            throw new \Exception('Wut?');
         }
 
         if (!is_string($this->argument('attribute'))) {
-            throw new \Exception("Wut?");
+            throw new \Exception('Wut?');
         }
 
         $generator = new Generator();

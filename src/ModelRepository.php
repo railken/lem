@@ -115,7 +115,7 @@ abstract class ModelRepository implements ModelRepositoryContract
      */
     public function newQuery()
     {
-        $query = $this->newEntity()->newQuery()->select($this->newEntity()->getTable().".*");
+        $query = $this->newEntity()->newQuery()->select($this->newEntity()->getTable().'.*');
 
         // $this->getManager()->getAuthorizer()->newQuery($query);
 

@@ -2,19 +2,17 @@
 
 namespace Railken\Laravel\Manager\Contracts;
 
-use Railken\Laravel\Manager\Tokens;
 use Railken\Bag;
+use Railken\Laravel\Manager\Tokens;
 
 interface ManagerContract
 {
-
     /**
      * Construct.
      *
      * @param AgentContract $agent
      */
     public function __construct(AgentContract $agent = null);
-
 
     /**
      * Retrieve new instance of entity.
@@ -34,15 +32,11 @@ interface ManagerContract
 
     /**
      * Initialize attributes.
-     *
-     * @return void
      */
     public function initializeAttributes();
 
     /**
      * Initialize components.
-     *
-     * @return void
      */
     public function initializeComponents();
 
@@ -137,9 +131,9 @@ interface ManagerContract
      * @return string
      */
     public function getPermission($code);
-    
+
     /**
-     * set agent
+     * set agent.
      *
      * @param AgentContract $agent
      *
@@ -175,9 +169,9 @@ interface ManagerContract
     /**
      * Update a EntityContract given parameters.
      *
-     * @param EntityContract     $entity
-     * @param Bag|array $parameters
-     * @param string             $permission
+     * @param EntityContract $entity
+     * @param Bag|array      $parameters
+     * @param string         $permission
      *
      * @return ResultContract
      */
@@ -196,8 +190,6 @@ interface ManagerContract
      * Remove a EntityContract.
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     *
-     * @return void
      */
     public function remove(EntityContract $entity);
 

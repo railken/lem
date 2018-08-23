@@ -10,7 +10,7 @@ interface ModelSerializerContract
      * Serialize.
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param Collection     $select
+     * @param Collection                                        $select
      *
      * @return Collection
      */

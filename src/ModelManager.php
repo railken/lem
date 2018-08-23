@@ -5,6 +5,7 @@ namespace Railken\Laravel\Manager;
 use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Railken\Bag;
 use Railken\Laravel\Manager\Contracts\AgentContract;
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\Contracts\ManagerContract;
@@ -13,13 +14,31 @@ use Railken\Laravel\Manager\Contracts\ModelRepositoryContract;
 use Railken\Laravel\Manager\Contracts\ModelSerializerContract;
 use Railken\Laravel\Manager\Contracts\ModelValidatorContract;
 use Railken\Laravel\Manager\Contracts\ResultContract;
-use Railken\Bag;
 
 /**
  * Abstract ModelManager class.
  */
 abstract class ModelManager implements ManagerContract
 {
+    /**
+     * @var \Railken\Laravel\Manager\Contracts\ModelSerializerContract
+     */
+    public $serializer = null;
+
+    /**
+     * @var \Railken\Laravel\Manager\Contracts\ModelValidatorContract
+     */
+    public $validator = null;
+
+    /**
+     * @var \Railken\Laravel\Manager\Contracts\ModelRepositoryContract
+     */
+    public $repository = null;
+
+    /**
+     * @var \Railken\Laravel\Manager\Contracts\ModelAuthorizerContract
+     */
+    public $authorizer = null;
     /**
      * @var array|Collection
      */
@@ -46,26 +65,6 @@ abstract class ModelManager implements ManagerContract
     protected $permissions = [];
 
     /**
-     * @var \Railken\Laravel\Manager\Contracts\ModelSerializerContract
-     */
-    public $serializer = null;
-
-    /**
-     * @var \Railken\Laravel\Manager\Contracts\ModelValidatorContract
-     */
-    public $validator = null;
-
-    /**
-     * @var \Railken\Laravel\Manager\Contracts\ModelRepositoryContract
-     */
-    public $repository = null;
-
-    /**
-     * @var \Railken\Laravel\Manager\Contracts\ModelAuthorizerContract
-     */
-    public $authorizer = null;
-
-    /**
      * Construct.
      *
      * @param AgentContract $agent
@@ -77,6 +76,32 @@ abstract class ModelManager implements ManagerContract
         $this->initializeComponents();
     }
 
+    /**
+     * @param string $method
+     * @param array  $args
+     *
+     * @return mixed
+     */
+    public function __call($method, $args)
+    {
+        if (preg_match('/OrFail$/', $method)) {
+            $method = preg_replace('/OrFail$/', '', $method);
+
+            if (method_exists($this, $method)) {
+                $return = $this->$method(...$args);
+
+                if ($return instanceof Result) {
+                    if (!$return->ok()) {
+                        throw new Exceptions\Exception(sprintf('Something went wrong while interacting with %s, errors: %s', $this->getEntity(), (string) json_encode($return->getSimpleErrors())));
+                    } else {
+                        return $return;
+                    }
+                }
+            }
+        }
+
+        trigger_error('Call to undefined method '.__CLASS__.'::'.$method.'()', E_USER_ERROR);
+    }
 
     /**
      * Retrieve new instance of entity.
@@ -104,8 +129,6 @@ abstract class ModelManager implements ManagerContract
 
     /**
      * Initialize attributes.
-     *
-     * @return void
      */
     public function initializeAttributes()
     {
@@ -121,8 +144,6 @@ abstract class ModelManager implements ManagerContract
 
     /**
      * Initialize components.
-     *
-     * @return void
      */
     public function initializeComponents()
     {
@@ -286,9 +307,9 @@ abstract class ModelManager implements ManagerContract
 
         return $this->permissions[$code];
     }
-    
+
     /**
-     * set agent
+     * set agent.
      *
      * @param AgentContract $agent
      *
@@ -326,33 +347,6 @@ abstract class ModelManager implements ManagerContract
     {
         return Bag::factory($parameters);
     }
-    
-    /**
-     * @param string $method
-     * @param array $args
-     *
-     * @return mixed
-     */
-    public function __call($method, $args)
-    {
-        if (preg_match("/OrFail$/", $method)) {
-            $method = preg_replace("/OrFail$/", "", $method);
-
-            if (method_exists($this, $method)) {
-                $return = $this->$method(...$args);
-
-                if ($return instanceof Result) {
-                    if (!$return->ok()) {
-                        throw new Exceptions\Exception(sprintf('Something went wrong while interacting with %s, errors: %s', $this->getEntity(), (string)json_encode($return->getSimpleErrors())));
-                    } else {
-                        return $return;
-                    }
-                }
-            }
-        }
-
-        trigger_error('Call to undefined method '.__CLASS__.'::'.$method.'()', E_USER_ERROR);
-    }
 
     /**
      * Create a new EntityContract given parameters.
@@ -369,9 +363,9 @@ abstract class ModelManager implements ManagerContract
     /**
      * Update a EntityContract given parameters.
      *
-     * @param \Railken\Laravel\Manager\Contracts\EntityContract     $entity
-     * @param Bag|array $parameters
-     * @param string             $permission
+     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
+     * @param Bag|array                                         $parameters
+     * @param string                                            $permission
      *
      * @return ResultContract
      */
@@ -415,10 +409,10 @@ abstract class ModelManager implements ManagerContract
     }
 
     /**
-     * Fill entity
+     * Fill entity.
      *
-     * @param EntityContract     $entity
-     * @param Bag|array $parameters
+     * @param EntityContract $entity
+     * @param Bag|array      $parameters
      *
      * @return ResultAction
      */
@@ -438,7 +432,7 @@ abstract class ModelManager implements ManagerContract
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
      *
-     * @return boolean
+     * @return bool
      */
     public function save(EntityContract $entity)
     {

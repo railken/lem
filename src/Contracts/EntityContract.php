@@ -5,27 +5,27 @@ namespace Railken\Laravel\Manager\Contracts;
 /**
  * All entities that are used in manager must be under this contract.
  *
- * @property int $id
+ * @property int  $id
  * @property bool $exists
  */
 interface EntityContract
 {
-
     /**
      * Fill the model with an array of attributes.
      *
-     * @param  array  $attributes
+     * @param array $attributes
+     *
      * @return $this
      *
      * @throws \Illuminate\Database\Eloquent\MassAssignmentException
      */
     public function fill(array $attributes);
 
-
     /**
      * Save the model to the database.
      *
-     * @param  array  $options
+     * @param array $options
+     *
      * @return bool
      */
     public function save(array $options = []);

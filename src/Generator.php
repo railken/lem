@@ -43,8 +43,6 @@ class Generator
      *
      * @param string $path
      * @param string $namespace
-     *
-     * @return void
      */
     public function generate(string $path, string $namespace)
     {
@@ -87,8 +85,6 @@ class Generator
      * @param string $path
      * @param string $namespace
      * @param string $attribute
-     *
-     * @return void
      */
     public function generateAttribute(string $path, string $namespace, string $attribute, array $arguments = [])
     {
@@ -171,8 +167,6 @@ class Generator
      * @param string $source
      * @param string $to
      * @param array  $data
-     *
-     * @return void
      */
     public function put($base_path, $source, $to, $data = [])
     {

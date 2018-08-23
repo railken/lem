@@ -42,7 +42,7 @@ class Parser
         $code = file_get_contents($path);
 
         if ($code === false) {
-            throw new \Exception("Wut");
+            throw new \Exception('Wut');
         }
 
         $oldStmts = $parser->parse($code);

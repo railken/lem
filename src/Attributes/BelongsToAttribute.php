@@ -3,9 +3,9 @@
 namespace Railken\Laravel\Manager\Attributes;
 
 use Illuminate\Support\Collection;
+use Railken\Bag;
 use Railken\Laravel\Manager\Contracts\BelongsToAttributeContract;
 use Railken\Laravel\Manager\Contracts\EntityContract;
-use Railken\Bag;
 use Railken\Laravel\Manager\Tokens;
 
 abstract class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeContract
@@ -16,7 +16,7 @@ abstract class BelongsToAttribute extends BaseAttribute implements BelongsToAttr
      * Validate.
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param \Railken\Bag $parameters
+     * @param \Railken\Bag                                      $parameters
      *
      * @return Collection
      */
@@ -45,7 +45,7 @@ abstract class BelongsToAttribute extends BaseAttribute implements BelongsToAttr
      * Is a value valid ?
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param mixed          $value
+     * @param mixed                                             $value
      *
      * @return bool
      */
@@ -60,7 +60,7 @@ abstract class BelongsToAttribute extends BaseAttribute implements BelongsToAttr
      * Update entity value.
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param \Railken\Bag $parameters
+     * @param \Railken\Bag                                      $parameters
      *
      * @return Collection
      */
@@ -73,12 +73,12 @@ abstract class BelongsToAttribute extends BaseAttribute implements BelongsToAttr
         if (!$parameters->has($this->getRelationName()) && $parameters->exists($this->getName())) {
             $parameters->set($this->getRelationName(), $m->getRepository()->findOneById($parameters->get($this->getName())));
         }
-  
+
         if ($parameters->has($this->getRelationName())) {
             $val = $parameters->get($this->getRelationName());
 
             if (is_array($val) || ($val instanceof \stdClass)) {
-                $params = json_decode((string)json_encode($val), true);
+                $params = json_decode((string) json_encode($val), true);
                 $rentity = $entity->{$this->getRelationName()};
 
                 $unique_keys = $m->getAttributes()->filter(function ($attribute) {
@@ -88,7 +88,6 @@ abstract class BelongsToAttribute extends BaseAttribute implements BelongsToAttr
                 $criteria = (new Bag($params))->only($unique_keys);
 
                 $params = $this->filterRelationParameters(new Bag($params));
-
 
                 if ($entity->exists) {
                     $result = $m->update($rentity, $params);
@@ -114,7 +113,6 @@ abstract class BelongsToAttribute extends BaseAttribute implements BelongsToAttr
             }
         }
 
-
         $errors = $errors->merge($this->authorize(Tokens::PERMISSION_FILL, $entity, $parameters));
         $errors = $errors->merge($this->validate($entity, $parameters));
 
@@ -134,7 +132,7 @@ abstract class BelongsToAttribute extends BaseAttribute implements BelongsToAttr
      * Update entity value.
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param \Railken\Bag $parameters
+     * @param \Railken\Bag                                      $parameters
      *
      * @return Collection
      */

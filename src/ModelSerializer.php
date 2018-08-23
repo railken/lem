@@ -2,12 +2,11 @@
 
 namespace Railken\Laravel\Manager;
 
-use Railken\Laravel\Manager\Contracts\ManagerContract;
-use Railken\Laravel\Manager\Contracts\ModelSerializerContract;
-use Railken\Laravel\Manager\Contracts\EntityContract;
-use Railken\Laravel\Manager\Tokens;
 use Illuminate\Support\Collection;
 use Railken\Bag;
+use Railken\Laravel\Manager\Contracts\EntityContract;
+use Railken\Laravel\Manager\Contracts\ManagerContract;
+use Railken\Laravel\Manager\Contracts\ModelSerializerContract;
 
 abstract class ModelSerializer implements ModelSerializerContract
 {
@@ -27,7 +26,7 @@ abstract class ModelSerializer implements ModelSerializerContract
      * Serialize entity.
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param Collection     $select
+     * @param Collection                                        $select
      *
      * @return \Railken\Bag
      */

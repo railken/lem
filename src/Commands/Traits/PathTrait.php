@@ -6,7 +6,7 @@ trait PathTrait
 {
     public function getAbsolutePathByParameter($path)
     {
-        if ($path[0] !== "/") {
+        if ($path[0] !== '/') {
             $path = base_path($path);
         }
 

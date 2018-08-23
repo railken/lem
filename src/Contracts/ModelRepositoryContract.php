@@ -62,7 +62,7 @@ interface ModelRepositoryContract
      * @return \Illuminate\Database\Query\Builder
      */
     public function newQuery();
-    
+
     /**
      * Return query.
      *

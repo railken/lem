@@ -65,6 +65,7 @@ interface ResultContract
      * @return bool
      */
     public function success();
+
     /**
      * Return if result has been executed without errors.
      *

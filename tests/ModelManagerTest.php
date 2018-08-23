@@ -7,23 +7,6 @@ use Railken\Laravel\Manager\Tests\User\UserManager;
 class ModelManagerTest extends \Orchestra\Testbench\TestCase
 {
     /**
-     * Get package providers.
-     *
-     * @param \Illuminate\Foundation\Application $app
-     *
-     * @return array
-     */
-    protected function getPackageProviders($app)
-    {
-        return [
-
-            \Railken\Laravel\Manager\ManagerServiceProvider::class,
-            \Railken\Laravel\Manager\Tests\User\UserServiceProvider::class,
-            \Railken\Laravel\Manager\Tests\AppServiceProvider::class,
-        ];
-    }
-
-    /**
      * @expectedException \Railken\Laravel\Manager\Exceptions\ModelMissingRepositoryException
      */
     /*public function testModelMissingRepositoryExceptionNull()
@@ -69,5 +52,21 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
     public function testPermissionNotDefinedException()
     {
         (new UserManager())->getPermission('WRONG_PERMISSION_CODE');
+    }
+
+    /**
+     * Get package providers.
+     *
+     * @param \Illuminate\Foundation\Application $app
+     *
+     * @return array
+     */
+    protected function getPackageProviders($app)
+    {
+        return [
+            \Railken\Laravel\Manager\ManagerServiceProvider::class,
+            \Railken\Laravel\Manager\Tests\User\UserServiceProvider::class,
+            \Railken\Laravel\Manager\Tests\AppServiceProvider::class,
+        ];
     }
 }

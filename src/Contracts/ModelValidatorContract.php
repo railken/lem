@@ -10,7 +10,7 @@ interface ModelValidatorContract
      * Validate.
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param Bag   $parameters
+     * @param Bag                                               $parameters
      *
      * @return \Illuminate\Support\Collection
      */

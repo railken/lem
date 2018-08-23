@@ -7,23 +7,6 @@ use Railken\Laravel\Manager\Tests\User\UserManager;
 class BaseAttributeTest extends \Orchestra\Testbench\TestCase
 {
     /**
-     * Get package providers.
-     *
-     * @param \Illuminate\Foundation\Application $app
-     *
-     * @return array
-     */
-    protected function getPackageProviders($app)
-    {
-        return [
-
-            \Railken\Laravel\Manager\ManagerServiceProvider::class,
-            \Railken\Laravel\Manager\Tests\User\UserServiceProvider::class,
-            \Railken\Laravel\Manager\Tests\AppServiceProvider::class,
-        ];
-    }
-
-    /**
      * Get attribute.
      *
      * @return \Railken\Laravel\Manager\Contracts\AttributeContract
@@ -47,5 +30,21 @@ class BaseAttributeTest extends \Orchestra\Testbench\TestCase
     public function testPermissionNotDefinedException()
     {
         $this->getAttribute()->getPermission('WRONG_PERMISSION_CODE');
+    }
+
+    /**
+     * Get package providers.
+     *
+     * @param \Illuminate\Foundation\Application $app
+     *
+     * @return array
+     */
+    protected function getPackageProviders($app)
+    {
+        return [
+            \Railken\Laravel\Manager\ManagerServiceProvider::class,
+            \Railken\Laravel\Manager\Tests\User\UserServiceProvider::class,
+            \Railken\Laravel\Manager\Tests\AppServiceProvider::class,
+        ];
     }
 }

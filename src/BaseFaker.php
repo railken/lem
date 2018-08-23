@@ -13,7 +13,7 @@ abstract class BaseFaker implements FakerContract
      */
     public static function make()
     {
-        return new static;
+        return new static();
     }
 
     /**
@@ -21,9 +21,10 @@ abstract class BaseFaker implements FakerContract
      */
     public function entity()
     {
-        $manager = new $this->manager;
+        $manager = new $this->manager();
         $entity = $manager->newEntity();
         $manager->fillOrFail($entity, $this->parameters());
+
         return $entity;
     }
 }

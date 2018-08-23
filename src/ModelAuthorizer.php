@@ -3,11 +3,11 @@
 namespace Railken\Laravel\Manager;
 
 use Illuminate\Support\Collection;
+use Railken\Bag;
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\Contracts\ManagerContract;
-use Railken\Laravel\Manager\Contracts\PolicyContract;
 use Railken\Laravel\Manager\Contracts\ModelAuthorizerContract;
-use Railken\Bag;
+use Railken\Laravel\Manager\Contracts\PolicyContract;
 
 class ModelAuthorizer implements ModelAuthorizerContract
 {
@@ -38,9 +38,9 @@ class ModelAuthorizer implements ModelAuthorizerContract
     }
 
     /**
-     * @param string         $action
+     * @param string                                            $action
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param Bag   $parameters
+     * @param Bag                                               $parameters
      *
      * @return Collection
      */
@@ -60,9 +60,9 @@ class ModelAuthorizer implements ModelAuthorizerContract
     }
 
     /**
-     * @param string         $action
+     * @param string                                            $action
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param Bag   $parameters
+     * @param Bag                                               $parameters
      *
      * @return Collection
      */
@@ -104,9 +104,9 @@ class ModelAuthorizer implements ModelAuthorizerContract
             return $errors->count() === 0;
         });
     }
-    
+
     /**
-     * Retrieve permissions
+     * Retrieve permissions.
      *
      * @return array
      */
@@ -124,7 +124,7 @@ class ModelAuthorizer implements ModelAuthorizerContract
     }
 
     /**
-     * Add a policy
+     * Add a policy.
      *
      * @param PolicyContract $policy
      */
@@ -134,7 +134,7 @@ class ModelAuthorizer implements ModelAuthorizerContract
     }
 
     /**
-     * Filter the new query instance with policies
+     * Filter the new query instance with policies.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
      */

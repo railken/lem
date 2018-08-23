@@ -3,10 +3,10 @@
 namespace Railken\Laravel\Manager\Attributes;
 
 use Illuminate\Support\Collection;
+use Railken\Bag;
 use Railken\Laravel\Manager\Contracts\AttributeContract;
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\Contracts\ManagerContract;
-use Railken\Bag;
 use Railken\Laravel\Manager\Exceptions as Exceptions;
 use Railken\Laravel\Manager\Tokens;
 use Respect\Validation\Validator as v;
@@ -119,9 +119,9 @@ abstract class BaseAttribute implements AttributeContract
     /**
      * Is a value valid ?
      *
-     * @param string         $action
+     * @param string                                            $action
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param mixed          $value
+     * @param mixed                                             $value
      *
      * @return Collection
      */
@@ -143,7 +143,7 @@ abstract class BaseAttribute implements AttributeContract
      * Validate.
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param \Railken\Bag $parameters
+     * @param \Railken\Bag                                      $parameters
      *
      * @return Collection
      */
@@ -172,7 +172,7 @@ abstract class BaseAttribute implements AttributeContract
      * Is a value valid ?
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param mixed          $value
+     * @param mixed                                             $value
      *
      * @return bool
      */
@@ -185,7 +185,7 @@ abstract class BaseAttribute implements AttributeContract
      * Update entity value.
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param \Railken\Bag $parameters
+     * @param \Railken\Bag                                      $parameters
      *
      * @return Collection
      */
@@ -212,7 +212,7 @@ abstract class BaseAttribute implements AttributeContract
      * Update entity value.
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param \Railken\Bag $parameters
+     * @param \Railken\Bag                                      $parameters
      *
      * @return Collection
      */
@@ -231,7 +231,7 @@ abstract class BaseAttribute implements AttributeContract
      * Is a value valid ?
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param mixed          $value
+     * @param mixed                                             $value
      *
      * @return bool
      */
@@ -257,7 +257,7 @@ abstract class BaseAttribute implements AttributeContract
     }
 
     /**
-     * Retrieve default value
+     * Retrieve default value.
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
      *
@@ -267,9 +267,9 @@ abstract class BaseAttribute implements AttributeContract
     {
         return null;
     }
-    
+
     /**
-     * Retrieve permissions
+     * Retrieve permissions.
      *
      * @return array
      */
@@ -281,7 +281,7 @@ abstract class BaseAttribute implements AttributeContract
     /**
      * Is the attribute unique?
      *
-     * @return boolean
+     * @return bool
      */
     public function getUnique()
     {

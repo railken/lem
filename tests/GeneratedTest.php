@@ -14,21 +14,6 @@ use Railken\Laravel\Manager\Tests\User\User;
 class GeneratedTest extends \Orchestra\Testbench\TestCase
 {
     /**
-     * Get package providers.
-     *
-     * @param \Illuminate\Foundation\Application $app
-     *
-     * @return array
-     */
-    protected function getPackageProviders($app)
-    {
-        return [
-            AppServiceProvider::class,
-            \Railken\Laravel\Manager\ManagerServiceProvider::class,
-        ];
-    }
-
-    /**
      * Setup the test environment.
      */
     public function setUp()
@@ -92,5 +77,20 @@ class GeneratedTest extends \Orchestra\Testbench\TestCase
         $this->assertEquals(true, $m->findOrCreate(['name' => 'test'])->ok());
 
         $this->assertEquals($foo->id, $foo_s->id);
+    }
+
+    /**
+     * Get package providers.
+     *
+     * @param \Illuminate\Foundation\Application $app
+     *
+     * @return array
+     */
+    protected function getPackageProviders($app)
+    {
+        return [
+            AppServiceProvider::class,
+            \Railken\Laravel\Manager\ManagerServiceProvider::class,
+        ];
     }
 }

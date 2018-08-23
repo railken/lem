@@ -14,7 +14,7 @@ class UserManager extends ModelManager
      * @var string
      */
     public $entity = User::class;
-    
+
     /**
      * List of all attributes.
      *
