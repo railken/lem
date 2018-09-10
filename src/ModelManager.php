@@ -299,6 +299,16 @@ abstract class ModelManager implements ManagerContract
     }
 
     /**
+     * Retrieve all exceptions.
+     *
+     * @return array
+     */
+    public function getExceptions()
+    {
+        return $this->exceptions;
+    }
+
+    /**
      * Retrieve a permission name given code.
      *
      * @param string $code
@@ -312,6 +322,16 @@ abstract class ModelManager implements ManagerContract
         }
 
         return $this->permissions[$code];
+    }
+
+    /**
+     * Retrieve all permissions.
+     *
+     * @return array
+     */
+    public function getPermissions()
+    {
+        return $this->permissions;
     }
 
     /**

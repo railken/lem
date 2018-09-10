@@ -115,6 +115,16 @@ abstract class BaseAttribute implements AttributeContract
     }
 
     /**
+     * Retrieve all exceptions.
+     *
+     * @return array
+     */
+    public function getExceptions()
+    {
+        return $this->exceptions;
+    }
+
+    /**
      * Retrieve a permission name given code.
      *
      * @param string $code
@@ -128,6 +138,16 @@ abstract class BaseAttribute implements AttributeContract
         }
 
         return $this->permissions[$code];
+    }
+
+    /**
+     * Retrieve permissions.
+     *
+     * @return array
+     */
+    public function getPermissions()
+    {
+        return $this->permissions;
     }
 
     /**
@@ -280,16 +300,6 @@ abstract class BaseAttribute implements AttributeContract
     public function getDefault(EntityContract $entity)
     {
         return null;
-    }
-
-    /**
-     * Retrieve permissions.
-     *
-     * @return array
-     */
-    public function getPermissions()
-    {
-        return $this->permissions;
     }
 
     /**
