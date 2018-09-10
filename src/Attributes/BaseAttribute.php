@@ -24,14 +24,28 @@ abstract class BaseAttribute implements AttributeContract
      *
      * @var bool
      */
-    protected $required;
+    protected $required = false;
 
     /**
      * Is the attribute unique.
      *
      * @var bool
      */
-    protected $unique;
+    protected $unique = false;
+
+    /**
+     * Is the attribute fillable.
+     *
+     * @var bool
+     */
+    protected $fillable = true;
+
+    /**
+     * A comment.
+     *
+     * @var string
+     */
+    protected $comment;
 
     /**
      * @var ManagerContract
@@ -286,5 +300,35 @@ abstract class BaseAttribute implements AttributeContract
     public function getUnique()
     {
         return $this->unique;
+    }
+
+    /**
+     * Is the attribute required?
+     *
+     * @return bool
+     */
+    public function getRequired()
+    {
+        return $this->required;
+    }
+
+    /**
+     * Retrieve the comment.
+     *
+     * @return string
+     */
+    public function getComment()
+    {
+        return $this->comment;
+    }
+
+    /**
+     * Is the attribute fillable?
+     *
+     * @return bool
+     */
+    public function getFillable()
+    {
+        return $this->fillable;
     }
 }

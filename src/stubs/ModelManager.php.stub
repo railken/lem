@@ -14,6 +14,13 @@ class $NAME$Manager extends ModelManager
      * @var string
      */
     public $entity = $NAME$::class;
+
+    /**
+     * Describe this manager.
+     *
+     * @var string
+     */
+    public $comment = "...";
     
     /**
      * List of all attributes.

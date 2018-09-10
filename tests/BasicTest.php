@@ -6,7 +6,6 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Railken\Bag;
 use Railken\Laravel\Manager\Tests\Core\Article\ArticleManager;
-use Railken\Laravel\Manager\Tests\Core\Article\ArticleServiceProvider;
 use Railken\Laravel\Manager\Tests\User\User;
 use Railken\Laravel\Manager\Tests\User\UserManager;
 use Railken\Laravel\Manager\Tests\User\UserServiceProvider;
@@ -186,7 +185,6 @@ class BasicTest extends \Orchestra\Testbench\TestCase
             AppServiceProvider::class,
             \Railken\Laravel\Manager\ManagerServiceProvider::class,
             UserServiceProvider::class,
-            ArticleServiceProvider::class,
         ];
     }
 }

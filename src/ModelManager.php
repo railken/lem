@@ -39,10 +39,16 @@ abstract class ModelManager implements ManagerContract
      * @var \Railken\Laravel\Manager\Contracts\ModelAuthorizerContract
      */
     public $authorizer = null;
+
     /**
      * @var array|Collection
      */
     protected $attributes;
+
+    /**
+     * @var string
+     */
+    protected $comment;
 
     /**
      * @var array
@@ -534,5 +540,25 @@ abstract class ModelManager implements ManagerContract
         $entity = $this->getRepository()->findOneBy($criteria);
 
         return $entity !== null ? $this->update($entity, $parameters) : $this->create($parameters);
+    }
+
+    /**
+     * Get name.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return (new ReflectionClass($this->getRepository()->newEntity()))->getShortName();
+    }
+
+    /**
+     * Get Comment.
+     *
+     * @return string
+     */
+    public function getComment()
+    {
+        return $this->comment;
     }
 }

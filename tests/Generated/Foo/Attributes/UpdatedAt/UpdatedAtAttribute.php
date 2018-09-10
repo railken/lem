@@ -32,6 +32,20 @@ class UpdatedAtAttribute extends BaseAttribute
     protected $unique = false;
 
     /**
+     * Is the attribute fillable.
+     *
+     * @var bool
+     */
+    protected $fillable = false;
+
+    /**
+     * Describe this attribute.
+     *
+     * @var string
+     */
+    public $comment = "...";
+
+    /**
      * List of all exceptions used in validation.
      *
      * @var array
