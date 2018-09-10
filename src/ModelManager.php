@@ -569,7 +569,7 @@ abstract class ModelManager implements ManagerContract
      */
     public function getName()
     {
-        return (new ReflectionClass($this->getRepository()->newEntity()))->getShortName();
+        return (new \ReflectionClass($this->getRepository()->newEntity()))->getShortName();
     }
 
     /**
