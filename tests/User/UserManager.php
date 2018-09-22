@@ -2,6 +2,7 @@
 
 namespace Railken\Laravel\Manager\Tests\User;
 
+use Railken\Laravel\Manager\Attributes;
 use Railken\Laravel\Manager\Contracts\AgentContract;
 use Railken\Laravel\Manager\ModelManager;
 use Railken\Laravel\Manager\Tokens;
@@ -14,20 +15,6 @@ class UserManager extends ModelManager
      * @var string
      */
     public $entity = User::class;
-
-    /**
-     * List of all attributes.
-     *
-     * @var array
-     */
-    protected $attributes = [
-        Attributes\Id\IdAttribute::class,
-        Attributes\CreatedAt\CreatedAtAttribute::class,
-        Attributes\UpdatedAt\UpdatedAtAttribute::class,
-        Attributes\Username\UsernameAttribute::class,
-        Attributes\Email\EmailAttribute::class,
-        Attributes\Password\PasswordAttribute::class,
-    ];
 
     /**
      * List of all exceptions.
@@ -51,5 +38,28 @@ class UserManager extends ModelManager
         $this->setAuthorizer(new UserAuthorizer($this));
 
         parent::__construct($agent);
+    }
+
+    /**
+     * List of all attributes.
+     *
+     * @var array
+     */
+    protected function createAttributes()
+    {
+        return [
+            Attributes\IdAttribute::make(),
+            Attributes\TextAttribute::make('username')
+                ->setRequired(true)
+                ->setMinLength(3),
+            Attributes\EmailAttribute::make()
+                ->setUnique(true)
+                ->setRequired(true),
+            Attributes\PasswordAttribute::make()
+                ->setRequired(true),
+            Attributes\CreatedAtAttribute::make(),
+            Attributes\UpdatedAtAttribute::make(),
+            Attributes\DeletedAtAttribute::make(),
+        ];
     }
 }

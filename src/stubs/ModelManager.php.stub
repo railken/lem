@@ -5,6 +5,7 @@ namespace $NAMESPACE$;
 use Railken\Laravel\Manager\Contracts\AgentContract;
 use Railken\Laravel\Manager\ModelManager;
 use Railken\Laravel\Manager\Tokens;
+use Railken\Laravel\Manager\Attributes;
 
 class $NAME$Manager extends ModelManager
 {
@@ -21,15 +22,6 @@ class $NAME$Manager extends ModelManager
      * @var string
      */
     public $comment = "...";
-    
-    /**
-     * List of all attributes.
-     *
-     * @var array
-     */
-    protected $attributes = [
-        
-    ];
 
     /**
      * List of all exceptions.
@@ -53,5 +45,22 @@ class $NAME$Manager extends ModelManager
         $this->setAuthorizer(new $NAME$Authorizer($this));
 
         parent::__construct($agent);
+    }
+    
+    /**
+     * List of all attributes.
+     *
+     * @var array
+     */
+    protected function createAttributes()
+    {
+        return [
+            Attributes\IdAttribute::make(),
+            Attributes\TextAttribute::make('name'),
+            Attributes\TextAttribute::make('description')->setMaxLength(4096),
+            Attributes\CreatedAtAttribute::make(),
+            Attributes\UpdatedAtAttribute::make(),
+            Attributes\DeletedAtAttribute::make(),
+        ];    
     }
 }

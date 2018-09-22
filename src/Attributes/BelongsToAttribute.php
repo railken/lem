@@ -8,9 +8,79 @@ use Railken\Laravel\Manager\Contracts\BelongsToAttributeContract;
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\Tokens;
 
-abstract class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeContract
+class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeContract
 {
-    public $relation_manager;
+    /**
+     * @var string
+     */
+    protected $relationName;
+
+    /**
+     * @var string
+     */
+    protected $relationManager;
+
+    /**
+     * Set the name of the relation.
+     *
+     * @param string $relationName
+     *
+     * @return $this
+     */
+    public function setRelationName(string $relationName): self
+    {
+        $this->relationName = $relationName;
+
+        return $this;
+    }
+
+    /**
+     * Retrieve the name of the relation.
+     *
+     * @return string
+     */
+    public function getRelationName(): string
+    {
+        return $this->relationName;
+    }
+
+    /**
+     * Retrieve eloquent relation.
+     *
+     * @param EntityContract $entity
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function getRelationBuilder(EntityContract $entity)
+    {
+        return $entity->{$this->relationName}();
+    }
+
+    /**
+     * Set relation manager.
+     *
+     * @param string $relationManager
+     */
+    public function setRelationManager(string $relationManager): self
+    {
+        $this->relationManager = $relationManager;
+
+        return $this;
+    }
+
+    /**
+     * Retrieve relation manager.
+     *
+     * @param EntityContract $entity
+     *
+     * @return \Railken\Laravel\Manager\Contracts\ManagerContract
+     */
+    public function getRelationManager(EntityContract $entity)
+    {
+        $class = $this->relationManager;
+
+        return new $class($this->getManager()->getAgent());
+    }
 
     /**
      * Validate.
@@ -27,15 +97,15 @@ abstract class BelongsToAttribute extends BaseAttribute implements BelongsToAttr
         $value = $parameters->get($this->getRelationName());
 
         if ($this->required && !$entity->exists && !$parameters->exists($this->getRelationName())) {
-            $errors->push(new $this->exceptions[Tokens::NOT_DEFINED]($parameters->get($this->getName())));
+            $errors->push($this->newException(Tokens::NOT_DEFINED)->setValue($parameters->get($this->getName())));
         }
 
         if ($this->unique && $parameters->exists($this->getRelationName()) && $this->isUnique($entity, $value)) {
-            $errors->push(new $this->exceptions[Tokens::NOT_UNIQUE]($parameters->get($this->getName())));
+            $errors->push($this->newException(Tokens::NOT_UNIQUE)->setValue($parameters->get($this->getName())));
         }
 
         if ($parameters->exists($this->getRelationName()) && ($value !== null || $this->required) && !$this->valid($entity, $value)) {
-            $errors->push(new $this->exceptions[Tokens::NOT_VALID]($parameters->get($this->getName())));
+            $errors->push($this->newException(Tokens::NOT_VALID)->setValue($parameters->get($this->getName())));
         }
 
         return $errors;

@@ -5,14 +5,21 @@ namespace $NAMESPACE$;
 use Illuminate\Support\ServiceProvider;
 
 class $NAME$ServiceProvider extends ServiceProvider
-{
+{   
+
+	/**
+     * Bootstrap any application services.
+     */
+    public function boot()
+    {
+        $NAME$::observe($NAME$Observer::class);
+    }
+
     /**
-     * Register bindings in the container.
-     *
-     * @return void
+     * Register the service provider.
      */
     public function register()
     {
-        $NAME$::observe($NAME$Observer::class);
+    	// ...
     }
 }

@@ -7,6 +7,11 @@ use Railken\Laravel\Manager\Contracts\FakerContract;
 abstract class BaseFaker implements FakerContract
 {
     /**
+     * @var \Railken\Laravel\Manager\Contracts\ManagerContract
+     */
+    protected $manager;
+
+    /**
      * Create a new instance.
      *
      * @return static

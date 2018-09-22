@@ -54,8 +54,6 @@ class GeneratedTest extends \Orchestra\Testbench\TestCase
 
         $generator->generate(__DIR__.'/Generated/Foo', "Railken\Laravel\Manager\Tests\Generated\Foo");
 
-        $generator->generateAttribute(__DIR__.'/Core/Article', "Railken\Laravel\Manager\Tests\Core\Article", 'deleted_at');
-
         $this->assertEquals(true, File::exists(__DIR__.'/Generated/Foo'));
         (new FooServiceProvider($this->app))->register();
 

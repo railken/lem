@@ -7,9 +7,9 @@ use Railken\Laravel\Manager\Contracts\ManagerContract;
 trait HasModelManagerTrait
 {
     /**
-     * @var ManagerContract|null
+     * @var ManagerContract
      */
-    protected $manager = null;
+    protected $manager;
 
     /**
      * Set manager.
@@ -28,7 +28,7 @@ trait HasModelManagerTrait
     /**
      * Get manager.
      *
-     * @return ManagerContract|null
+     * @return ManagerContract
      */
     public function getManager()
     {

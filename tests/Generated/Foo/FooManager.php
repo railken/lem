@@ -2,6 +2,7 @@
 
 namespace Railken\Laravel\Manager\Tests\Generated\Foo;
 
+use Railken\Laravel\Manager\Attributes;
 use Railken\Laravel\Manager\Contracts\AgentContract;
 use Railken\Laravel\Manager\ModelManager;
 use Railken\Laravel\Manager\Tokens;
@@ -20,14 +21,7 @@ class FooManager extends ModelManager
      *
      * @var string
      */
-    public $comment = "...";
-    
-    /**
-     * List of all attributes.
-     *
-     * @var array
-     */
-    protected $attributes = [Attributes\Id\IdAttribute::class, Attributes\Name\NameAttribute::class, Attributes\CreatedAt\CreatedAtAttribute::class, Attributes\UpdatedAt\UpdatedAtAttribute::class, Attributes\DeletedAt\DeletedAtAttribute::class];
+    public $comment = '...';
 
     /**
      * List of all exceptions.
@@ -51,5 +45,22 @@ class FooManager extends ModelManager
         $this->setAuthorizer(new FooAuthorizer($this));
 
         parent::__construct($agent);
+    }
+
+    /**
+     * List of all attributes.
+     *
+     * @var array
+     */
+    protected function createAttributes()
+    {
+        return [
+            Attributes\IdAttribute::make(),
+            Attributes\TextAttribute::make('name'),
+            Attributes\TextAttribute::make('description')->setMaxLength(4096),
+            Attributes\CreatedAtAttribute::make(),
+            Attributes\UpdatedAtAttribute::make(),
+            Attributes\DeletedAtAttribute::make(),
+        ];
     }
 }

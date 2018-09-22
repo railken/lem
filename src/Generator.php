@@ -3,7 +3,6 @@
 namespace Railken\Laravel\Manager;
 
 use PhpParser\NodeVisitorAbstract;
-use Railken\Laravel\Manager\Parser\Visitors as Visitors;
 
 class Generator
 {
@@ -71,80 +70,6 @@ class Generator
         $this->put($base_path, '/Exceptions/ModelNotFoundException.php.stub', "/Exceptions/{$name}NotFoundException.php", $vars);
         $this->put($base_path, '/Exceptions/ModelNotAuthorizedException.php.stub', "/Exceptions/{$name}NotAuthorizedException.php", $vars);
         $this->put($base_path, '/Exceptions/ModelAttributeException.php.stub', "/Exceptions/{$name}AttributeException.php", $vars);
-
-        $this->generateAttribute($path, $namespace, 'id');
-        $this->generateAttribute($path, $namespace, 'name');
-        $this->generateAttribute($path, $namespace, 'created_at');
-        $this->generateAttribute($path, $namespace, 'updated_at');
-        $this->generateAttribute($path, $namespace, 'deleted_at');
-    }
-
-    /**
-     * Generate a new ModelStructure folder.
-     *
-     * @param string $path
-     * @param string $namespace
-     * @param string $attribute
-     */
-    public function generateAttribute(string $path, string $namespace, string $attribute, array $arguments = [])
-    {
-        $namespaces = collect(explode('\\', $namespace));
-        $name = $namespaces->last();
-        $base_path = $path;
-        $name = $this->camelize($name);
-
-        $attribute_ucf = ucfirst($attribute);
-
-        $attribute_camelized = $this->camelize($attribute);
-        $attribute_underscore = $this->underscore($attribute);
-
-        $vars = [
-            'NAMESPACE'            => $namespace,
-            'NAME'                 => $name,
-            'NAME:UNDERSCORE'      => strtolower($name),
-            'NAME:UPPERCASE'       => strtoupper($name),
-            'ATTRIBUTE:UNDERSCORE' => $attribute_underscore,
-            'ATTRIBUTE:CAMELIZED'  => $attribute_camelized,
-            'ATTRIBUTE:UPPERCASE'  => strtoupper($attribute),
-        ];
-
-        $this->put(
-            $base_path,
-            '/Attributes/ModelAttribute.php.stub',
-            "/Attributes/{$attribute_camelized}/{$attribute_camelized}Attribute.php",
-            $vars
-        );
-
-        $this->put(
-            $base_path,
-            '/Attributes/Exceptions/ModelAttributeNotDefinedException.php.stub',
-            "/Attributes/{$attribute_camelized}/Exceptions/{$name}{$attribute_camelized}NotDefinedException.php",
-            $vars
-        );
-
-        $this->put(
-            $base_path,
-            '/Attributes/Exceptions/ModelAttributeNotValidException.php.stub',
-            "/Attributes/{$attribute_camelized}/Exceptions/{$name}{$attribute_camelized}NotValidException.php",
-            $vars
-        );
-
-        $this->put(
-            $base_path,
-            '/Attributes/Exceptions/ModelAttributeNotAuthorizedException.php.stub',
-            "/Attributes/{$attribute_camelized}/Exceptions/{$name}{$attribute_camelized}NotAuthorizedException.php",
-            $vars
-        );
-
-        $this->put(
-            $base_path,
-            '/Attributes/Exceptions/ModelAttributeNotUniqueException.php.stub',
-            "/Attributes/{$attribute_camelized}/Exceptions/{$name}{$attribute_camelized}NotUniqueException.php",
-            $vars
-        );
-
-        $this->parseCode($base_path."/{$name}.php", new Visitors\ModelVisitor($attribute_underscore));
-        $this->parseCode($base_path."/{$name}Manager.php", new Visitors\ModelManagerVisitor(['Attributes', $attribute_camelized, "{$attribute_camelized}Attribute"]));
     }
 
     /**

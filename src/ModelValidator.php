@@ -79,9 +79,9 @@ class ModelValidator implements ModelValidatorContract
             }
 
             if ($where->count() > 0 && $q->where($where->toArray())->count() > 0) {
-                $class = $this->getManager()->getException(Tokens::NOT_UNIQUE);
+                $exception = $this->getManager()->getException(Tokens::NOT_UNIQUE);
 
-                $errors->push(new $class($where));
+                $errors->push($exception($where));
             }
         }
 

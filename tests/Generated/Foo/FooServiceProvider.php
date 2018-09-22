@@ -7,12 +7,18 @@ use Illuminate\Support\ServiceProvider;
 class FooServiceProvider extends ServiceProvider
 {
     /**
-     * Register bindings in the container.
-     *
-     * @return void
+     * Bootstrap any application services.
+     */
+    public function boot()
+    {
+        Foo::observe(FooObserver::class);
+    }
+
+    /**
+     * Register the service provider.
      */
     public function register()
     {
-        Foo::observe(FooObserver::class);
+        // ...
     }
 }

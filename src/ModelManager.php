@@ -140,9 +140,10 @@ abstract class ModelManager implements ManagerContract
     {
         $attributes = new Collection();
 
-        foreach ($this->attributes as $attribute) {
-            $attribute = new $attribute($this);
+        foreach ($this->createAttributes() as $attribute) {
             $attributes[$attribute->getName()] = $attribute;
+            $attribute->setManager($this);
+            $attribute->boot();
         }
 
         $this->attributes = $attributes;
@@ -265,7 +266,7 @@ abstract class ModelManager implements ManagerContract
     /**
      * Retrieve attributes.
      *
-     * @return array|\Illuminate\Support\Collection
+     * @return \Illuminate\Support\Collection
      */
     public function getAttributes()
     {
@@ -440,7 +441,7 @@ abstract class ModelManager implements ManagerContract
      * @param EntityContract $entity
      * @param Bag|array      $parameters
      *
-     * @return ResultAction
+     * @return Result
      */
     public function fill(EntityContract $entity, $parameters)
     {
@@ -528,7 +529,7 @@ abstract class ModelManager implements ManagerContract
         $parameters = $this->castParameters($parameters);
         $entity = $this->getRepository()->findOneBy($criteria);
 
-        if ($entity === null) {
+        if ($entity == null) {
             return $this->create($parameters);
         }
 
@@ -580,5 +581,21 @@ abstract class ModelManager implements ManagerContract
     public function getComment()
     {
         return $this->comment;
+    }
+
+    /**
+     * Create attributes.
+     *
+     * @return array
+     */
+    protected function createAttributes()
+    {
+        $r = [];
+
+        foreach ($this->attributes as $attribute) {
+            $r[] = $attribute::make()->setManager($this);
+        }
+
+        return $r;
     }
 }

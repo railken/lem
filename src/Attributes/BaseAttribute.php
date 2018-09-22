@@ -2,17 +2,22 @@
 
 namespace Railken\Laravel\Manager\Attributes;
 
+use Closure;
+use Exception;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Railken\Bag;
 use Railken\Laravel\Manager\Contracts\AttributeContract;
 use Railken\Laravel\Manager\Contracts\EntityContract;
-use Railken\Laravel\Manager\Contracts\ManagerContract;
 use Railken\Laravel\Manager\Exceptions as Exceptions;
 use Railken\Laravel\Manager\Tokens;
+use Railken\Laravel\Manager\Traits\HasModelManagerTrait;
 use Respect\Validation\Validator as v;
 
 abstract class BaseAttribute implements AttributeContract
 {
+    use HasModelManagerTrait;
+
     /**
      * @var string
      */
@@ -38,7 +43,7 @@ abstract class BaseAttribute implements AttributeContract
      *
      * @var bool
      */
-    protected $fillable = true;
+    protected $fillable = false;
 
     /**
      * A comment.
@@ -48,54 +53,76 @@ abstract class BaseAttribute implements AttributeContract
     protected $comment;
 
     /**
-     * @var ManagerContract
+     * Default value.
+     *
+     * @var Closure
      */
-    protected $manager;
+    protected $default;
 
     /**
+     * List of all exceptions used in validation.
+     *
      * @var array
      */
-    protected $exceptions;
+    protected $exceptions = [
+        Tokens::NOT_DEFINED    => Exceptions\AttributeNotDefinedException::class,
+        Tokens::NOT_VALID      => Exceptions\AttributeNotValidException::class,
+        Tokens::NOT_AUTHORIZED => Exceptions\AttributeNotAuthorizedException::class,
+        Tokens::NOT_UNIQUE     => Exceptions\AttributeNotUniqueException::class,
+    ];
 
     /**
      * List of all permissions.
-     *
-     * @var array
      */
-    protected $permissions;
+    protected $permissions = [
+        Tokens::PERMISSION_FILL => '%s.attributes.%s.fill',
+        Tokens::PERMISSION_SHOW => '%s.attributes.%s.show',
+    ];
 
     /**
-     * Constructor.
+     * Create a new instance.
      *
-     * @param ManagerContract $manager
+     * @param string $name
      */
-    public function __construct(ManagerContract $manager)
+    public function __construct(string $name = null)
     {
-        $this->setManager($manager);
+        if ($name !== null) {
+            $this->name = $name;
+        }
     }
 
     /**
-     * Set manager.
-     *
-     * @param ManagerContract $manager
-     *
-     * @return $this
+     * Create a new instance.
      */
-    public function setManager(ManagerContract $manager)
+    public static function make()
     {
-        $this->manager = $manager;
-
-        return $this;
+        return new static(...func_get_args());
     }
 
     /**
-     * Get manager.
-     *
-     * @return ManagerContract
+     * Boot attribute.
      */
-    public function getManager()
+    public function boot()
     {
-        return $this->manager;
+        $this->bootExceptions();
+        $this->bootPermissions();
+    }
+
+    /**
+     * Boot exceptions.
+     */
+    public function bootExceptions()
+    {
+    }
+
+    /**
+     * Boot permissions.
+     */
+    public function bootPermissions()
+    {
+        foreach ($this->permissions as $token => $permission) {
+            $this->permissions[$token] = sprintf($permission, Str::kebab($this->getManager()->getName()), Str::kebab($this->getName()));
+        }
     }
 
     /**
@@ -112,6 +139,20 @@ abstract class BaseAttribute implements AttributeContract
         }
 
         return $this->exceptions[$code];
+    }
+
+    /**
+     * Create a new instance of exception.
+     *
+     * @param string $code
+     *
+     * @return \Exception
+     */
+    public function newException(string $code): Exception
+    {
+        $exception = $this->getException($code);
+
+        return new $exception(strtoupper(Str::kebab($this->getManager()->getName().'_'.$this->getName())));
     }
 
     /**
@@ -164,10 +205,9 @@ abstract class BaseAttribute implements AttributeContract
         $errors = new Collection();
 
         $permission = $this->getPermission($action);
-        $exception = $this->getException(Tokens::NOT_AUTHORIZED);
 
         if (!$this->getManager()->getAgent()->can($permission)) {
-            $errors->push(new $exception($permission));
+            $errors->push($this->newException(Tokens::NOT_AUTHORIZED)->setValue($permission));
         }
 
         return $errors;
@@ -188,15 +228,15 @@ abstract class BaseAttribute implements AttributeContract
         $value = $parameters->get($this->name);
 
         if ($this->required && !$entity->exists && !$parameters->exists($this->name)) {
-            $errors->push(new $this->exceptions[Tokens::NOT_DEFINED]($value));
+            $errors->push($this->newException(Tokens::NOT_DEFINED)->setValue($value));
         }
 
         if ($this->unique && $parameters->exists($this->name) && $this->isUnique($entity, $value)) {
-            $errors->push(new $this->exceptions[Tokens::NOT_UNIQUE]($value));
+            $errors->push($this->newException(Tokens::NOT_UNIQUE)->setValue($value));
         }
 
         if ($parameters->exists($this->name) && ($value !== null || $this->required) && !$this->valid($entity, $value)) {
-            $errors->push(new $this->exceptions[Tokens::NOT_VALID]($value));
+            $errors->push($this->newException(Tokens::NOT_VALID)->setValue($value));
         }
 
         return $errors;
@@ -291,6 +331,20 @@ abstract class BaseAttribute implements AttributeContract
     }
 
     /**
+     * Set default value.
+     *
+     * @param Closure $default
+     *
+     * @return $this
+     */
+    public function setDefault(Closure $default): self
+    {
+        $this->default = $default;
+
+        return $this;
+    }
+
+    /**
      * Retrieve default value.
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
@@ -299,7 +353,23 @@ abstract class BaseAttribute implements AttributeContract
      */
     public function getDefault(EntityContract $entity)
     {
-        return null;
+        $method = $this->default;
+
+        return $method !== null ? $method($entity) : null;
+    }
+
+    /**
+     * Set unique.
+     *
+     * @param bool $unique
+     *
+     * @return bool
+     */
+    public function setUnique(bool $unique): self
+    {
+        $this->unique = $unique;
+
+        return $this;
     }
 
     /**
@@ -313,6 +383,20 @@ abstract class BaseAttribute implements AttributeContract
     }
 
     /**
+     * Set Required.
+     *
+     * @param bool $required
+     *
+     * @return $this
+     */
+    public function setRequired(bool $required): self
+    {
+        $this->required = $required;
+
+        return $this;
+    }
+
+    /**
      * Is the attribute required?
      *
      * @return bool
@@ -323,6 +407,20 @@ abstract class BaseAttribute implements AttributeContract
     }
 
     /**
+     * Set comment.
+     *
+     * @param string $comment
+     *
+     * @return $this
+     */
+    public function setComment(string $comment): self
+    {
+        $this->comment = $comment;
+
+        return $this;
+    }
+
+    /**
      * Retrieve the comment.
      *
      * @return string
@@ -330,6 +428,20 @@ abstract class BaseAttribute implements AttributeContract
     public function getComment()
     {
         return $this->comment;
+    }
+
+    /**
+     * Set fillable.
+     *
+     * @param bool $fillable
+     *
+     * @return $this
+     */
+    public function setFillable(bool $fillable): self
+    {
+        $this->fillable = $fillable;
+
+        return $this;
     }
 
     /**

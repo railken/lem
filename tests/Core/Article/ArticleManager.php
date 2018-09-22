@@ -2,8 +2,11 @@
 
 namespace Railken\Laravel\Manager\Tests\Core\Article;
 
+use Railken\Laravel\Manager\Attributes;
 use Railken\Laravel\Manager\Contracts\AgentContract;
+use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\ModelManager;
+use Railken\Laravel\Manager\Tests\User\UserManager;
 use Railken\Laravel\Manager\Tokens;
 
 class ArticleManager extends ModelManager
@@ -14,21 +17,6 @@ class ArticleManager extends ModelManager
      * @var string
      */
     public $entity = Article::class;
-
-    /**
-     * List of all attributes.
-     *
-     * @var array
-     */
-    protected $attributes = [
-        Attributes\Id\IdAttribute::class,
-        Attributes\Title\TitleAttribute::class,
-        Attributes\Description\DescriptionAttribute::class,
-        Attributes\AuthorId\AuthorIdAttribute::class,
-        Attributes\CreatedAt\CreatedAtAttribute::class,
-        Attributes\UpdatedAt\UpdatedAtAttribute::class,
-        Attributes\DeletedAt\DeletedAtAttribute::class,
-    ];
 
     /**
      * List of all exceptions.
@@ -52,5 +40,30 @@ class ArticleManager extends ModelManager
         $this->setAuthorizer(new ArticleAuthorizer($this));
 
         parent::__construct($agent);
+    }
+
+    /**
+     * List of all attributes.
+     *
+     * @var array
+     */
+    protected function createAttributes()
+    {
+        return [
+            Attributes\IdAttribute::make(),
+            Attributes\TextAttribute::make('title')
+                ->setUnique(true)
+                ->setDefault(function (EntityContract $entity) {
+                    return 'a default value';
+                }),
+            Attributes\TextAttribute::make('description')
+                ->setMaxLength(4096),
+            Attributes\BelongsToAttribute::make('author_id')
+                ->setRelationName('author')
+                ->setRelationManager(UserManager::class),
+            Attributes\CreatedAtAttribute::make(),
+            Attributes\UpdatedAtAttribute::make(),
+            Attributes\DeletedAtAttribute::make(),
+        ];
     }
 }

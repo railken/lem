@@ -13,7 +13,7 @@ class BaseAttributeTest extends \Orchestra\Testbench\TestCase
      */
     public function getAttribute()
     {
-        return new \Railken\Laravel\Manager\Tests\User\Attributes\Email\EmailAttribute(new UserManager());
+        return \Railken\Laravel\Manager\Attributes\EmailAttribute::make()->setManager(new UserManager());
     }
 
     /**

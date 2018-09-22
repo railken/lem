@@ -6,6 +6,6 @@ trait PathTrait
 {
     public function getAbsolutePathByParameter($path)
     {
-        return getcwd()."/".$path;
+        return getcwd().'/'.$path;
     }
 }
