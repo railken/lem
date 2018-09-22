@@ -3,8 +3,10 @@
 namespace Railken\Laravel\Manager\Tests\Generated\Foo;
 
 use Illuminate\Support\Collection;
+use Railken\Bag;
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\ModelSerializer;
+use Railken\Laravel\Manager\Tokens;
 
 class FooSerializer extends ModelSerializer
 {
@@ -12,7 +14,7 @@ class FooSerializer extends ModelSerializer
      * Serialize entity.
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param \Illuminate\Support\Collection                    $select
+     * @param \Illuminate\Support\Collection $select
      *
      * @return \Railken\Bag
      */

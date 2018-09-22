@@ -5,8 +5,9 @@ namespace Railken\Laravel\Manager\Tests\Generated\Foo;
 use Illuminate\Support\ServiceProvider;
 
 class FooServiceProvider extends ServiceProvider
-{
-    /**
+{   
+
+	/**
      * Bootstrap any application services.
      */
     public function boot()
@@ -19,6 +20,6 @@ class FooServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // ...
+    	// ...
     }
 }

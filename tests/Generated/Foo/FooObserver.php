@@ -10,6 +10,8 @@ class FooObserver
      * Listen to the entity retrieved event.
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
+     *
+     * @return void
      */
     public function retrieved(EntityContract $entity)
     {
@@ -20,6 +22,8 @@ class FooObserver
      * Listen to the entity creating event.
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
+     *
+     * @return void
      */
     public function creating(EntityContract $entity)
     {
@@ -30,6 +34,8 @@ class FooObserver
      * Listen to the entity created event.
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
+     *
+     * @return void
      */
     public function created(EntityContract $entity)
     {
@@ -40,6 +46,8 @@ class FooObserver
      * Listen to the entity updating event.
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
+     *
+     * @return void
      */
     public function updating(EntityContract $entity)
     {
@@ -50,6 +58,8 @@ class FooObserver
      * Listen to the entity updated event.
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
+     *
+     * @return void
      */
     public function updated(EntityContract $entity)
     {
@@ -60,6 +70,8 @@ class FooObserver
      * Listen to the entity saving event.
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
+     *
+     * @return void
      */
     public function saving(EntityContract $entity)
     {
@@ -70,6 +82,8 @@ class FooObserver
      * Listen to the entity saved event.
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
+     *
+     * @return void
      */
     public function saved(EntityContract $entity)
     {
@@ -80,6 +94,8 @@ class FooObserver
      * Listen to the entity deleting event.
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
+     *
+     * @return void
      */
     public function deleting(EntityContract $entity)
     {
@@ -90,6 +106,8 @@ class FooObserver
      * Listen to the entity deleted event.
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
+     *
+     * @return void
      */
     public function deleted(EntityContract $entity)
     {
@@ -100,6 +118,8 @@ class FooObserver
      * Listen to the entity restoring event.
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
+     *
+     * @return void
      */
     public function restoring(EntityContract $entity)
     {
@@ -110,6 +130,8 @@ class FooObserver
      * Listen to the entity restored event.
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
+     *
+     * @return void
      */
     public function restored(EntityContract $entity)
     {
