@@ -2,36 +2,45 @@
 
 namespace Railken\Lem;
 
-use Railken\Lem\Contracts\ManagerContract;
 use Railken\Lem\Contracts\RepositoryContract;
 
-abstract class Repository implements RepositoryContract
+class Repository implements RepositoryContract
 {
-    use Concerns\HasManager;
-
     /**
-     * Construct.
+     * Entity class.
      *
-     * @param \Railken\Lem\Contracts\ManagerContract $manager
+     * @param string $entity
      */
-    public function __construct(ManagerContract $manager)
-    {
-        $this->setManager($manager);
-    }
+    protected $entity;
 
     /**
      * Retrieve new instance of entity.
      *
-     * @param array $parameters
-     *
      * @return \Railken\Lem\Contracts\EntityContract
      */
-    public function newEntity(array $parameters = [])
+    public function newEntity()
     {
-        return $this->getManager()->newEntity($parameters);
         $entity = $this->getEntity();
 
-        return new $entity($parameters);
+        if ($entity == null) {
+            throw new Exceptions\RepositoryEntityNotDefinedException();
+        }
+
+        return new $entity();
+    }
+
+    /**
+     * Set entity.
+     *
+     * @param string $entity
+     *
+     * @return $this
+     */
+    public function setEntity(string $entity)
+    {
+        $this->entity = $entity;
+
+        return $this;
     }
 
     /**
@@ -39,9 +48,19 @@ abstract class Repository implements RepositoryContract
      *
      * @return string
      */
-    public function getEntity()
+    public function getEntity(): string
     {
-        return $this->getManager()->getEntity();
+        return $this->entity;
+    }
+
+    /**
+     * Find all.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function findAll()
+    {
+        return $this->getQuery()->get();
     }
 
     /**
@@ -51,7 +70,7 @@ abstract class Repository implements RepositoryContract
      *
      * @return \Illuminate\Support\Collection
      */
-    public function findBy($parameters)
+    public function findBy($parameters = [])
     {
         return $this->getQuery()->where($parameters)->get();
     }
@@ -63,7 +82,7 @@ abstract class Repository implements RepositoryContract
      *
      * @return \Railken\Lem\Contracts\EntityContract|null|object
      */
-    public function findOneBy($parameters)
+    public function findOneBy($parameters = [])
     {
         return $this->getQuery()->where($parameters)->first();
     }
@@ -115,10 +134,6 @@ abstract class Repository implements RepositoryContract
      */
     public function newQuery()
     {
-        $query = $this->newEntity()->newQuery()->select($this->newEntity()->getTable().'.*');
-
-        // $this->getManager()->getAuthorizer()->newQuery($query);
-
-        return $query;
+        return $this->newEntity()->newQuery()->select($this->newEntity()->getTable().'.*');
     }
 }

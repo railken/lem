@@ -4,9 +4,9 @@ namespace Railken\Lem\Tests\Core\Article;
 
 use Illuminate\Support\Collection;
 use Railken\Lem\Contracts\EntityContract;
-use Railken\Lem\Serializer;
+use Railken\Lem\Serializer as BaseSerializer;
 
-class ArticleSerializer extends Serializer
+class Serializer extends BaseSerializer
 {
     /**
      * Serialize entity.

@@ -2,11 +2,11 @@
 
 namespace $NAMESPACE$;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model as BaseModel;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Railken\Lem\Contracts\EntityContract;
 
-class $NAME$ extends Model implements EntityContract
+class Model extends BaseModel implements EntityContract
 {
     use SoftDeletes;
 

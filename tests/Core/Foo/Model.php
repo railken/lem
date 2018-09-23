@@ -1,12 +1,12 @@
 <?php
 
-namespace Railken\Lem\Tests\Generated\Foo;
+namespace Railken\Lem\Tests\Core\Foo;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model as BaseModel;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Railken\Lem\Contracts\EntityContract;
 
-class Foo extends Model implements EntityContract
+class Model extends BaseModel implements EntityContract
 {
     use SoftDeletes;
 

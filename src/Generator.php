@@ -56,12 +56,12 @@ class Generator
             'NAME:UPPERCASE'  => strtoupper($name),
         ];
 
-        $this->put($base_path, '/Model.php.stub', "/{$name}.php", $vars);
-        $this->put($base_path, '/ModelManager.php.stub', "/{$name}Manager.php", $vars);
-        $this->put($base_path, '/ModelRepository.php.stub', "/{$name}Repository.php", $vars);
-        $this->put($base_path, '/ModelValidator.php.stub', "/{$name}Validator.php", $vars);
-        $this->put($base_path, '/ModelSerializer.php.stub', "/{$name}Serializer.php", $vars);
-        $this->put($base_path, '/ModelAuthorizer.php.stub', "/{$name}Authorizer.php", $vars);
+        $this->put($base_path, '/Model.php.stub', '/Model.php', $vars);
+        $this->put($base_path, '/Manager.php.stub', '/Manager.php', $vars);
+        $this->put($base_path, '/Repository.php.stub', '/Repository.php', $vars);
+        $this->put($base_path, '/Validator.php.stub', '/Validator.php', $vars);
+        $this->put($base_path, '/Serializer.php.stub', '/Serializer.php', $vars);
+        $this->put($base_path, '/Authorizer.php.stub', '/Authorizer.php', $vars);
     }
 
     /**

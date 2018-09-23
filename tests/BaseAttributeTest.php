@@ -2,7 +2,7 @@
 
 namespace Railken\Lem\Tests;
 
-use Railken\Lem\Tests\User\UserManager;
+use Railken\Lem\Tests\Core\User;
 
 class BaseAttributeTest extends BaseTest
 {
@@ -13,7 +13,7 @@ class BaseAttributeTest extends BaseTest
      */
     public function getAttribute()
     {
-        return \Railken\Lem\Attributes\EmailAttribute::make()->setManager(new UserManager());
+        return \Railken\Lem\Attributes\EmailAttribute::make()->setManager(new User\Manager());
     }
 
     /**

@@ -5,9 +5,8 @@ namespace Railken\Lem\Tests;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Railken\Bag;
-use Railken\Lem\Tests\Core\Article\ArticleManager;
-use Railken\Lem\Tests\User\User;
-use Railken\Lem\Tests\User\UserManager;
+use Railken\Lem\Tests\Core\Article;
+use Railken\Lem\Tests\Core\User;
 
 class BasicTest extends BaseTest
 {
@@ -63,7 +62,7 @@ class BasicTest extends BaseTest
      */
     public function testBasics()
     {
-        $um = new UserManager();
+        $um = new User\Manager();
 
         // Testing validation
         $this->assertEquals('USER_USERNAME_NOT_DEFINED', $um->create($this->getUserBag()->remove('username'))->getError()->getCode());
@@ -94,7 +93,7 @@ class BasicTest extends BaseTest
      */
     public function testCreateOrFail()
     {
-        $um = new UserManager();
+        $um = new User\Manager();
         $um->createOrFail($this->getUserBag()->remove('username'));
     }
 
@@ -103,7 +102,7 @@ class BasicTest extends BaseTest
      */
     public function testUpdateOrFail()
     {
-        $um = new UserManager();
+        $um = new User\Manager();
         $user = $um->create($this->getUserBag())->getResource();
         $um->updateOrFail($user, $this->getUserBag()->set('username', '1'));
     }
@@ -113,26 +112,30 @@ class BasicTest extends BaseTest
      */
     public function testArticles()
     {
-        $um = new UserManager();
+        $um = new User\Manager();
         $user = $um->create(['email' => 'test1@test.net', 'username' => 'test1', 'password' => microtime()])->getResource();
 
         // $generator = new Generator();
 
-        $am = new ArticleManager($user);
+        $am = new Article\Manager($user);
 
         $ab = ['title' => 'foo', 'description' => 'bar', 'author_id' => $user->id];
 
-        $this->assertEquals(8, $am->create($ab)->getErrors()->count());
+        $this->assertEquals(1, $am->create($ab)->getErrors()->count());
         $this->assertEquals('ARTICLE_NOT_AUTHORIZED', $am->create($ab)->getError(0)->getCode());
-        $this->assertEquals('ARTICLE_ID_NOT_AUTHORIZED', $am->create($ab)->getError(1)->getCode());
-        $this->assertEquals('ARTICLE_TITLE_NOT_AUTHORIZED', $am->create($ab)->getError(2)->getCode());
-        $this->assertEquals('ARTICLE_DESCRIPTION_NOT_AUTHORIZED', $am->create($ab)->getError(3)->getCode());
-        $this->assertEquals('ARTICLE_AUTHOR_ID_NOT_AUTHORIZED', $am->create($ab)->getError(4)->getCode());
-        $this->assertEquals('ARTICLE_CREATED_AT_NOT_AUTHORIZED', $am->create($ab)->getError(5)->getCode());
-        $this->assertEquals('ARTICLE_UPDATED_AT_NOT_AUTHORIZED', $am->create($ab)->getError(6)->getCode());
-        $this->assertEquals('ARTICLE_DELETED_AT_NOT_AUTHORIZED', $am->create($ab)->getError(7)->getCode());
 
         $user->addPermission('article.create');
+
+        $this->assertEquals(7, $am->create($ab)->getErrors()->count());
+
+        $this->assertEquals('ARTICLE_ID_NOT_AUTHORIZED', $am->create($ab)->getError(0)->getCode());
+        $this->assertEquals('ARTICLE_TITLE_NOT_AUTHORIZED', $am->create($ab)->getError(1)->getCode());
+        $this->assertEquals('ARTICLE_DESCRIPTION_NOT_AUTHORIZED', $am->create($ab)->getError(2)->getCode());
+        $this->assertEquals('ARTICLE_AUTHOR_ID_NOT_AUTHORIZED', $am->create($ab)->getError(3)->getCode());
+        $this->assertEquals('ARTICLE_CREATED_AT_NOT_AUTHORIZED', $am->create($ab)->getError(4)->getCode());
+        $this->assertEquals('ARTICLE_UPDATED_AT_NOT_AUTHORIZED', $am->create($ab)->getError(5)->getCode());
+        $this->assertEquals('ARTICLE_DELETED_AT_NOT_AUTHORIZED', $am->create($ab)->getError(6)->getCode());
+
         $user->addPermission('article.attributes.id.*');
         $user->addPermission('article.attributes.title.*');
         $user->addPermission('article.attributes.description.*');
@@ -160,10 +163,10 @@ class BasicTest extends BaseTest
 
     public function testDefaultValue()
     {
-        $um = new UserManager();
+        $um = new User\Manager();
         $user = $um->create(['email' => 'test1@test.net', 'username' => 'test1', 'password' => microtime()])->getResource();
 
-        $am = new ArticleManager();
+        $am = new Article\Manager();
 
         $result = $am->create(['author_id' => $user->id]);
 

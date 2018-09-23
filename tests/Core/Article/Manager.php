@@ -5,17 +5,17 @@ namespace Railken\Lem\Tests\Core\Article;
 use Railken\Lem\Attributes;
 use Railken\Lem\Contracts\AgentContract;
 use Railken\Lem\Contracts\EntityContract;
-use Railken\Lem\Manager;
-use Railken\Lem\Tests\User\UserManager;
+use Railken\Lem\Manager as BaseManager;
+use Railken\Lem\Tests\Core\User;
 
-class ArticleManager extends Manager
+class Manager extends BaseManager
 {
     /**
      * Class name entity.
      *
      * @var string
      */
-    public $entity = Article::class;
+    public $entity = Model::class;
 
     /**
      * Construct.
@@ -24,10 +24,10 @@ class ArticleManager extends Manager
      */
     public function __construct(AgentContract $agent = null)
     {
-        $this->setRepository(new ArticleRepository($this));
-        $this->setSerializer(new ArticleSerializer($this));
-        $this->setValidator(new ArticleValidator($this));
-        $this->setAuthorizer(new ArticleAuthorizer($this));
+        $this->setRepository(new Repository());
+        $this->setSerializer(new Serializer($this));
+        $this->setValidator(new Validator($this));
+        $this->setAuthorizer(new Authorizer($this));
 
         parent::__construct($agent);
     }
@@ -50,7 +50,7 @@ class ArticleManager extends Manager
                 ->setMaxLength(4096),
             Attributes\BelongsToAttribute::make('author_id')
                 ->setRelationName('author')
-                ->setRelationManager(UserManager::class),
+                ->setRelationManager(User\Manager::class),
             Attributes\CreatedAtAttribute::make(),
             Attributes\UpdatedAtAttribute::make(),
             Attributes\DeletedAtAttribute::make(),

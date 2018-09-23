@@ -11,6 +11,7 @@ use Railken\Lem\Contracts\ValidatorContract;
 class Validator implements ValidatorContract
 {
     use Concerns\HasManager;
+    use Concerns\CallMethods;
 
     /**
      * Construct.
@@ -32,12 +33,8 @@ class Validator implements ValidatorContract
     {
         $errors = new Collection();
 
-        $methods = new Collection(get_class_methods($this));
-
-        $methods->filter(function ($method) {
-            return substr($method, 0, strlen('validate')) === 'validate' && $method !== 'validate';
-        })->map(function ($method) use (&$errors, $entity, $parameters) {
-            $errors = $errors->merge($this->$method($entity, $parameters));
+        $this->callMethods('validate', [$entity, $parameters], function ($return) use (&$errors) {
+            $errors = $errors->merge($return);
         });
 
         return $errors;

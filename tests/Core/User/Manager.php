@@ -1,33 +1,28 @@
 <?php
 
-namespace Railken\Lem\Tests\User;
+namespace Railken\Lem\Tests\Core\User;
 
 use Railken\Lem\Attributes;
-use Railken\Lem\Contracts\AgentContract;
-use Railken\Lem\Manager;
+use Railken\Lem\Manager as BaseManager;
 
-class UserManager extends Manager
+class Manager extends BaseManager
 {
     /**
      * Class name entity.
      *
      * @var string
      */
-    public $entity = User::class;
+    public $entity = Model::class;
 
     /**
-     * Construct.
-     *
-     * @param AgentContract $agent
+     * Register components.
      */
-    public function __construct(AgentContract $agent = null)
+    public function bootComponents()
     {
-        $this->setRepository(new UserRepository($this));
-        $this->setSerializer(new UserSerializer($this));
-        $this->setValidator(new UserValidator($this));
-        $this->setAuthorizer(new UserAuthorizer($this));
-
-        parent::__construct($agent);
+        $this->setRepository(new Repository());
+        $this->setSerializer(new Serializer($this));
+        $this->setValidator(new Validator($this));
+        $this->setAuthorizer(new Authorizer($this));
     }
 
     /**

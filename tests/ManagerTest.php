@@ -2,7 +2,7 @@
 
 namespace Railken\Lem\Tests;
 
-use Railken\Lem\Tests\User\UserManager;
+use Railken\Lem\Tests\Core\User;
 
 class ManagerTest extends BaseTest
 {
@@ -11,7 +11,7 @@ class ManagerTest extends BaseTest
      */
     /*public function testModelMissingRepositoryExceptionNull()
     {
-        (new UserManager())->setRepository(null)->initializeComponents();
+        (new User\Manager())->setRepository(null)->initializeComponents();
     }*/
 
     /**
@@ -19,7 +19,7 @@ class ManagerTest extends BaseTest
      */
     /*public function testModelMissingValidatorExceptionNull()
     {
-        (new UserManager())->setValidator(null)->initializeComponents();
+        (new User\Manager())->setValidator(null)->initializeComponents();
     }*/
 
     /**
@@ -27,7 +27,7 @@ class ManagerTest extends BaseTest
      */
     /*public function testModelMissingAuthorizerExceptionNull()
     {
-        (new UserManager())->setAuthorizer(null)->initializeComponents();
+        (new User\Manager())->setAuthorizer(null)->initializeComponents();
     }*/
 
     /**
@@ -35,7 +35,7 @@ class ManagerTest extends BaseTest
      */
     /*public function testModelMissingSerializerExceptionNull()
     {
-        (new UserManager())->setSerializer(null)->initializeComponents();
+        (new User\Manager())->setSerializer(null)->initializeComponents();
     }*/
 
     /**
@@ -43,7 +43,7 @@ class ManagerTest extends BaseTest
      */
     public function testExceptionNotDefinedException()
     {
-        (new UserManager())->getException('WRONG_EXCEPTION_CODE');
+        (new User\Manager())->getException('WRONG_EXCEPTION_CODE');
     }
 
     /**
@@ -51,6 +51,6 @@ class ManagerTest extends BaseTest
      */
     public function testPermissionNotDefinedException()
     {
-        (new UserManager())->getAuthorizer()->getPermission('WRONG_PERMISSION_CODE');
+        (new User\Manager())->getAuthorizer()->getPermission('WRONG_PERMISSION_CODE');
     }
 }

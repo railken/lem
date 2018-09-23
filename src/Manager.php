@@ -63,8 +63,9 @@ abstract class Manager implements ManagerContract
     public function __construct(AgentContract $agent = null)
     {
         $this->setAgent($agent);
-        $this->initializeAttributes();
+        $this->bootComponents();
         $this->initializeComponents();
+        $this->initializeAttributes();
     }
 
     /**
@@ -92,6 +93,14 @@ abstract class Manager implements ManagerContract
         }
 
         trigger_error('Call to undefined method '.__CLASS__.'::'.$method.'()', E_USER_ERROR);
+    }
+
+    /**
+     * Boot components.
+     */
+    public function bootComponents()
+    {
+        // ...
     }
 
     /**
@@ -154,6 +163,8 @@ abstract class Manager implements ManagerContract
         if ($this->authorizer === null) {
             throw new Exceptions\ModelMissingAuthorizerException($this);
         }
+
+        $this->getRepository()->setEntity($this->getEntity());
     }
 
     /**
@@ -246,15 +257,15 @@ abstract class Manager implements ManagerContract
         try {
             DB::beginTransaction();
 
-            // Global
             $result->addErrors($this->getAuthorizer()->authorize($permission, $entity, $parameters));
 
             if ($result->ok()) {
                 $result->addErrors($this->getValidator()->validate($entity, $parameters));
             }
 
-            // Attributes
-            $result->addErrors($this->fill($entity, $parameters)->getErrors());
+            if ($result->ok()) {
+                $result->addErrors($this->fill($entity, $parameters)->getErrors());
+            }
 
             if (!$result->ok()) {
                 DB::rollBack();
@@ -411,7 +422,7 @@ abstract class Manager implements ManagerContract
      */
     public function getName()
     {
-        return (new \ReflectionClass($this->getRepository()->newEntity()))->getShortName();
+        return array_values(array_slice(explode('\\', (new \ReflectionClass($this->getRepository()->newEntity()))->getNamespaceName()), -1))[0];
     }
 
     /**

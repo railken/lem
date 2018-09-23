@@ -1,22 +1,20 @@
 <?php
 
-namespace $NAMESPACE$;
+namespace Railken\Lem\Tests\Core\User;
 
 use Illuminate\Support\Collection;
-use Railken\Bag;
 use Railken\Lem\Contracts\EntityContract;
-use Railken\Lem\Serializer;
-use Railken\Lem\Tokens;
+use Railken\Lem\Serializer as BaseSerializer;
 
-class $NAME$Serializer extends Serializer
+class Serializer extends BaseSerializer
 {
     /**
      * Serialize entity.
      *
-     * @param \Railken\Lem\Contracts\EntityContract $entity
-     * @param \Illuminate\Support\Collection $select
+     * @param EntityContract $entity
+     * @param Collection     $select
      *
-     * @return \Railken\Bag
+     * @return array
      */
     public function serialize(EntityContract $entity, Collection $select = null)
     {

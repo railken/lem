@@ -5,20 +5,27 @@ namespace Railken\Lem\Contracts;
 interface RepositoryContract
 {
     /**
-     * Retrieve new instance of entity.
+     * Set entity class.
      *
-     * @param array $parameters
+     * @param string $entity
      *
-     * @return \Railken\Lem\Contracts\EntityContract
+     * @return $this
      */
-    public function newEntity(array $parameters = []);
+    public function setEntity(string $entity);
 
     /**
-     * Return entity.
+     * Get entity class.
      *
      * @return string
      */
     public function getEntity();
+
+    /**
+     * Retrieve new instance of entity.
+     *
+     * @return \Railken\Lem\Contracts\EntityContract
+     */
+    public function newEntity();
 
     /**
      * Find by primary.

@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
 use Railken\Bag;
 use Railken\Lem\Generator;
-use Railken\Lem\Tests\Generated\Foo\FooManager;
-use Railken\Lem\Tests\User\User;
+use Railken\Lem\Tests\Core\Foo;
+use Railken\Lem\Tests\Core\User;
 
 class GeneratedTest extends BaseTest
 {
@@ -49,14 +49,14 @@ class GeneratedTest extends BaseTest
     {
         $generator = new Generator();
 
-        File::deleteDirectory(__DIR__.'/Generated/Foo', true);
+        File::deleteDirectory(__DIR__.'/Core/Foo', true);
 
-        $generator->generate(__DIR__.'/Generated/Foo', "Railken\Lem\Tests\Generated\Foo");
+        $generator->generate(__DIR__.'/Core/Foo', "Railken\Lem\Tests\Core\Foo");
 
-        $this->assertEquals(true, File::exists(__DIR__.'/Generated/Foo'));
+        $this->assertEquals(true, File::exists(__DIR__.'/Core/Foo'));
 
-        $user = new User();
-        $m = new FooManager($user);
+        $user = new User\Model();
+        $m = new Foo\Manager($user);
 
         $bag = new Bag(['name' => 'ban']);
 

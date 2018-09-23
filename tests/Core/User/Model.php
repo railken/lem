@@ -1,6 +1,6 @@
 <?php
 
-namespace Railken\Lem\Tests\User;
+namespace Railken\Lem\Tests\Core\User;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Railken\Lem\Contracts\AgentContract;
 use Railken\Lem\Contracts\EntityContract;
 
-class User extends Authenticatable implements EntityContract, AgentContract
+class Model extends Authenticatable implements EntityContract, AgentContract
 {
     use Notifiable;
     use SoftDeletes;

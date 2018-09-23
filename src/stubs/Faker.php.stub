@@ -1,0 +1,25 @@
+<?php
+
+namespace $NAMESPACE$;
+
+use Railken\Lem\Faker as BaseFaker;
+use Faker\Factory;
+use Railken\Bag;
+
+class Faker extends BaseFaker
+{   
+    /**
+     * @return \Railken\Bag
+     */
+    public function parameters()
+    {
+        $faker = Factory::create();
+
+        $bag = new Bag();
+        $bag->set('key', 'mail.host');
+        $bag->set('value', $faker->password);
+        $bag->set('visibility', 'public');
+
+        return $bag;
+    }
+}

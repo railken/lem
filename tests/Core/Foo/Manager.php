@@ -1,20 +1,20 @@
 <?php
 
-namespace Railken\Lem\Tests\Generated\Foo;
+namespace Railken\Lem\Tests\Core\Foo;
 
 use Railken\Lem\Contracts\AgentContract;
-use Railken\Lem\Manager;
+use Railken\Lem\Manager as BaseManager;
 use Railken\Lem\Tokens;
 use Railken\Lem\Attributes;
 
-class FooManager extends Manager
+class Manager extends BaseManager
 {
     /**
      * Class name entity.
      *
      * @var string
      */
-    public $entity = Foo::class;
+    public $entity = Model::class;
 
     /**
      * Describe this manager.
@@ -39,10 +39,10 @@ class FooManager extends Manager
      */
     public function __construct(AgentContract $agent = null)
     {
-        $this->setRepository(new FooRepository($this));
-        $this->setSerializer(new FooSerializer($this));
-        $this->setValidator(new FooValidator($this));
-        $this->setAuthorizer(new FooAuthorizer($this));
+        $this->setRepository(new Repository);
+        $this->setSerializer(new Serializer($this));
+        $this->setValidator(new Validator($this));
+        $this->setAuthorizer(new Authorizer($this));
 
         parent::__construct($agent);
     }

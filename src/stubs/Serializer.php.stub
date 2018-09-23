@@ -1,14 +1,14 @@
 <?php
 
-namespace Railken\Lem\Tests\Generated\Foo;
+namespace $NAMESPACE$;
 
 use Illuminate\Support\Collection;
 use Railken\Bag;
 use Railken\Lem\Contracts\EntityContract;
-use Railken\Lem\Serializer;
+use Railken\Lem\Serializer as BaseSerializer;
 use Railken\Lem\Tokens;
 
-class FooSerializer extends Serializer
+class Serializer extends BaseSerializer
 {
     /**
      * Serialize entity.

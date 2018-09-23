@@ -2,10 +2,10 @@
 
 namespace $NAMESPACE$;
 
-use Railken\Lem\Authorizer;
+use Railken\Lem\Authorizer as BaseAuthorizer;
 use Railken\Lem\Tokens;
 
-class $NAME$Authorizer extends Authorizer
+class Authorizer extends BaseAuthorizer
 {
     /**
      * List of all permissions.

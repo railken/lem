@@ -2,10 +2,10 @@
 
 namespace Railken\Lem\Tests\Core\Article;
 
-use Railken\Lem\Authorizer;
+use Railken\Lem\Authorizer as BaseAuthorizer;
 use Railken\Lem\Tokens;
 
-class ArticleAuthorizer extends Authorizer
+class Authorizer extends BaseAuthorizer
 {
     protected $permissions = [
         Tokens::PERMISSION_CREATE => 'article.create',

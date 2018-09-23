@@ -1,11 +1,11 @@
 <?php
 
-namespace Railken\Lem\Tests\Generated\Foo;
+namespace Railken\Lem\Tests\Core\Foo;
 
-use Railken\Lem\Authorizer;
+use Railken\Lem\Authorizer as BaseAuthorizer;
 use Railken\Lem\Tokens;
 
-class FooAuthorizer extends Authorizer
+class Authorizer extends BaseAuthorizer
 {
     /**
      * List of all permissions.

@@ -1,20 +1,20 @@
 <?php
 
-namespace Railken\Lem\Tests\User;
+namespace Railken\Lem\Tests\Core\User;
 
-use Railken\Lem\Repository;
+use Railken\Lem\Repository as BaseRepository;
 
-class UserRepository extends Repository
+class Repository extends BaseRepository
 {
     /**
      * return whatever or not the email is unique.
      *
      * @param string $email
-     * @param User   $user
+     * @param Model  $user
      *
      * @return bool
      */
-    public function isUniqueEmail($email, User $user)
+    public function isUniqueEmail($email, Model $user)
     {
         return 0 == $this->getQuery()->where('email', $email)->where('id', '!=', $user->id)->count();
     }
