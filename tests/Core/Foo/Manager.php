@@ -8,8 +8,10 @@ use Railken\Lem\Tokens;
 use Railken\Lem\Attributes;
 
 /**
- * @method Repository getRepository()
- * @method Serializer getSerializer()
+ * @method \Railken\Lem\Tests\Core\Foo\Repository getRepository()
+ * @method \Railken\Lem\Tests\Core\Foo\Validator  getValidator()
+ * @method \Railken\Lem\Tests\Core\Foo\Serializer getSerializer()
+ * @method \Railken\Lem\Tests\Core\Foo\Authorizer getAuthorizer()
  */
 class Manager extends BaseManager
 {
@@ -34,6 +36,6 @@ class Manager extends BaseManager
             Attributes\CreatedAtAttribute::make(),
             Attributes\UpdatedAtAttribute::make(),
             Attributes\DeletedAtAttribute::make(),
-        ];    
+        ];
     }
 }

@@ -8,8 +8,10 @@ use Railken\Lem\Tokens;
 use Railken\Lem\Attributes;
 
 /**
- * @method Repository getRepository()
- * @method Serializer getSerializer()
+ * @method \$NAMESPACE$\Repository getRepository()
+ * @method \$NAMESPACE$\Validator  getValidator()
+ * @method \$NAMESPACE$\Serializer getSerializer()
+ * @method \$NAMESPACE$\Authorizer getAuthorizer()
  */
 class Manager extends BaseManager
 {
