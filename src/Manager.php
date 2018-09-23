@@ -5,6 +5,7 @@ namespace Railken\Lem;
 use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Railken\Bag;
 use Railken\Lem\Contracts\AgentContract;
 use Railken\Lem\Contracts\EntityContract;
@@ -421,6 +422,24 @@ abstract class Manager implements ManagerContract
     public function getComment()
     {
         return $this->comment;
+    }
+
+    /**
+     * Create a new instance of exception.
+     *
+     * @param string $code
+     * @param mixed  $value
+     *
+     * @return \Exception
+     */
+    public function newException(string $code, $value): Exception
+    {
+        $exception = $this->getException($code);
+
+        return new $exception(
+            strtoupper(Str::kebab($this->getName())),
+            $value
+        );
     }
 
     /**
