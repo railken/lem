@@ -31,14 +31,9 @@ interface ManagerContract
     public function getEntity();
 
     /**
-     * Initialize attributes.
+     * Boot manager.
      */
-    public function initializeAttributes();
-
-    /**
-     * Initialize components.
-     */
-    public function initializeComponents();
+    public function boot();
 
     /**
      * Set a repository.

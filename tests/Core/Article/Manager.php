@@ -3,35 +3,12 @@
 namespace Railken\Lem\Tests\Core\Article;
 
 use Railken\Lem\Attributes;
-use Railken\Lem\Contracts\AgentContract;
 use Railken\Lem\Contracts\EntityContract;
 use Railken\Lem\Manager as BaseManager;
 use Railken\Lem\Tests\Core\User;
 
 class Manager extends BaseManager
 {
-    /**
-     * Class name entity.
-     *
-     * @var string
-     */
-    public $entity = Model::class;
-
-    /**
-     * Construct.
-     *
-     * @param AgentContract $agent
-     */
-    public function __construct(AgentContract $agent = null)
-    {
-        $this->setRepository(new Repository());
-        $this->setSerializer(new Serializer($this));
-        $this->setValidator(new Validator($this));
-        $this->setAuthorizer(new Authorizer($this));
-
-        parent::__construct($agent);
-    }
-
     /**
      * List of all attributes.
      *

@@ -63,9 +63,7 @@ abstract class Manager implements ManagerContract
     public function __construct(AgentContract $agent = null)
     {
         $this->setAgent($agent);
-        $this->bootComponents();
-        $this->initializeComponents();
-        $this->initializeAttributes();
+        $this->boot();
     }
 
     /**
@@ -96,11 +94,97 @@ abstract class Manager implements ManagerContract
     }
 
     /**
-     * Boot components.
+     * Get name.
+     *
+     * @return string
      */
-    public function bootComponents()
+    public function getName()
     {
-        // ...
+        return array_values(array_slice(explode('\\', $this->getNamespaceBase()), -1))[0];
+    }
+
+    /**
+     * Create a new instance of exception.
+     *
+     * @param string $code
+     * @param mixed  $value
+     *
+     * @return \Exception
+     */
+    public function newException(string $code, $value): Exception
+    {
+        $exception = $this->getException($code);
+
+        return new $exception(
+            strtoupper(Str::kebab($this->getName())),
+            $value
+        );
+    }
+
+    /**
+     * Get Comment.
+     *
+     * @return string
+     */
+    public function getComment()
+    {
+        return $this->comment;
+    }
+
+    /**
+     * Get base namespace.
+     */
+    public function getNamespaceBase()
+    {
+        return (new \ReflectionClass($this))->getNamespaceName();
+    }
+
+    /**
+     * Register Components.
+     */
+    public function registerClasses()
+    {
+        return [
+            'model'      => $this->getNamespaceBase().'\\Model',
+            'serializer' => $this->getNamespaceBase().'\\Serializer',
+            'repository' => $this->getNamespaceBase().'\\Repository',
+            'validator'  => $this->getNamespaceBase().'\\Validator',
+            'authorizer' => $this->getNamespaceBase().'\\Authorizer',
+            'faker'      => $this->getNamespaceBase().'\\Faker',
+        ];
+    }
+
+    /**
+     * Initialize components.
+     */
+    public function boot()
+    {
+        $classes = $this->registerClasses();
+
+        $this->entity = $classes['model'];
+        $this->validator = new $classes['validator']($this);
+        $this->repository = new $classes['repository']();
+        $this->serializer = new $classes['serializer']($this);
+        $this->authorizer = new $classes['authorizer']($this);
+
+        if ($this->validator === null) {
+            throw new Exceptions\ModelMissingValidatorException($this);
+        }
+
+        if ($this->serializer === null) {
+            throw new Exceptions\ModelMissingSerializerException($this);
+        }
+
+        if ($this->repository === null) {
+            throw new Exceptions\ModelMissingRepositoryException($this);
+        }
+
+        if ($this->authorizer === null) {
+            throw new Exceptions\ModelMissingAuthorizerException($this);
+        }
+
+        $this->getRepository()->setEntity($this->getEntity());
+        $this->bootAttributes();
     }
 
     /**
@@ -130,7 +214,7 @@ abstract class Manager implements ManagerContract
     /**
      * Initialize attributes.
      */
-    public function initializeAttributes()
+    public function bootAttributes()
     {
         $attributes = new Collection();
 
@@ -141,30 +225,6 @@ abstract class Manager implements ManagerContract
         }
 
         $this->attributes = $attributes;
-    }
-
-    /**
-     * Initialize components.
-     */
-    public function initializeComponents()
-    {
-        if ($this->validator === null) {
-            throw new Exceptions\ModelMissingValidatorException($this);
-        }
-
-        if ($this->serializer === null) {
-            throw new Exceptions\ModelMissingSerializerException($this);
-        }
-
-        if ($this->repository === null) {
-            throw new Exceptions\ModelMissingRepositoryException($this);
-        }
-
-        if ($this->authorizer === null) {
-            throw new Exceptions\ModelMissingAuthorizerException($this);
-        }
-
-        $this->getRepository()->setEntity($this->getEntity());
     }
 
     /**
@@ -413,44 +473,6 @@ abstract class Manager implements ManagerContract
         $entity = $this->getRepository()->findOneBy($criteria);
 
         return $entity !== null ? $this->update($entity, $parameters) : $this->create($parameters);
-    }
-
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return array_values(array_slice(explode('\\', (new \ReflectionClass($this->getRepository()->newEntity()))->getNamespaceName()), -1))[0];
-    }
-
-    /**
-     * Get Comment.
-     *
-     * @return string
-     */
-    public function getComment()
-    {
-        return $this->comment;
-    }
-
-    /**
-     * Create a new instance of exception.
-     *
-     * @param string $code
-     * @param mixed  $value
-     *
-     * @return \Exception
-     */
-    public function newException(string $code, $value): Exception
-    {
-        $exception = $this->getException($code);
-
-        return new $exception(
-            strtoupper(Str::kebab($this->getName())),
-            $value
-        );
     }
 
     /**

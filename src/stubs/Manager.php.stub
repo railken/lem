@@ -7,15 +7,12 @@ use Railken\Lem\Manager as BaseManager;
 use Railken\Lem\Tokens;
 use Railken\Lem\Attributes;
 
+/**
+ * @method Repository getRepository()
+ * @method Serializer getSerializer()
+ */
 class Manager extends BaseManager
 {
-    /**
-     * Class name entity.
-     *
-     * @var string
-     */
-    public $entity = Model::class;
-
     /**
      * Describe this manager.
      *
@@ -23,30 +20,6 @@ class Manager extends BaseManager
      */
     public $comment = "...";
 
-    /**
-     * List of all exceptions.
-     *
-     * @var array
-     */
-    protected $exceptions = [
-        // ...
-    ];
-
-    /**
-     * Construct.
-     *
-     * @param AgentContract $agent
-     */
-    public function __construct(AgentContract $agent = null)
-    {
-        $this->setRepository(new Repository);
-        $this->setSerializer(new Serializer($this));
-        $this->setValidator(new Validator($this));
-        $this->setAuthorizer(new Authorizer($this));
-
-        parent::__construct($agent);
-    }
-    
     /**
      * List of all attributes.
      *
