@@ -17,16 +17,12 @@ composer require railken/lara-ore-config
 ```
 
 The package will automatically register itself.
-Lem\ManagerServiceProvider::class,
-```
 
 ## Usage
 
 First you need to generate a new structure folder, use:
 
-`php artisan railken:make:manager App App\Foo`.
-
-Than, add `App\Foo\FooServiceProvider::class` in config/app.php.
+`php artisan railken:make:manager app App\Foo`.
 
 Now you can use it.
 ```php
@@ -124,21 +120,26 @@ See [Authorizer](#modelauthorizer) for more explanations.
 ### Commands
 
 - Generate a new set of files `php artisan railken:make:manager [path] [namespace]`. E.g. php artisan railken:make:manager App "App\Foo"
-- Generate a new attribute  `php artisan railken:make:manager-attribute [path] [namespace] [attribute]`.  E.g. php artisan railken:make:manager-attribute App "App\Foo" Title
 
 
-### ModelManager
+### Manager
 This is the main class, all the operations are performed using this: creating, updating, deleting, retrieving. This class is composed of components which are: validator, repository, authorizer, parameters, serializer
 
-See [ModelManager](https://github.com/railken/laravel-manager/blob/master/src/ModelManager.php).
+See [Manager](https://github.com/railken/lem/blob/master/src/Manager.php).
 ```php
 namespace App\Foo;
 
-use Railken\Lem\ModelManager;
+use Railken\Lem\Manager;
 use Railken\Lem\Contracts\AgentContract;
 
-class FooManager extends ModelManager
+class FooManager extends Manager
 {
+    /**
+     * Class name entity
+     *
+     * @var string
+     */
+    public $entity = Foo::class;
 
     /**
      * Construct
@@ -194,7 +195,7 @@ class Foo extends Model implements EntityContract
 ### Repository
 This is a Repository, the concept is very similar to the Repository of Symfony, code all your queries here.
 
-See [Repository](https://github.com/railken/laravel-manager/blob/master/src/Repository.php) for more information.
+See [Repository](https://github.com/railken/lem/blob/master/src/Repository.php) for more information.
 
 ```php
 namespace App\Foo;
@@ -203,13 +204,6 @@ use Railken\Lem\Repository;
 
 class FooRepository extends Repository
 {
-
-    /**
-     * Class name entity
-     *
-     * @var string
-     */
-    public $entity = Foo::class;
 
     /**
      * Custom method
@@ -222,58 +216,6 @@ class FooRepository extends Repository
     {
         return $this->findOneBy(['name' => $name]);
     }
-
-}
-
-```
-
-### ModelParameterBag
-This is a [Bag](https://github.com/railken/bag). This will contain all methods to filter attributes of a Model.
-Use filterWrite to filter the bag before crearting/updating.
-Use filterRead to filter the bag before retrieving.
-See an [example](https://github.com/railken/laravel-manager/blob/master/tests/Core/Comment/CommentParameterBag.php)
-
-```php
-namespace App\Foo;
-
-use Railken\Lem\Contracts\AgentContract;
-use Railken\Lem\Contracts\ManagerContract;
-use Railken\Lem\Contracts\SystemAgentContract;
-use Railken\Lem\Contracts\GuestAgentContract;
-use Railken\Lem\Contracts\UserAgentContract;
-use Railken\Lem\ParameterBag;
-
-class FooParameterBag extends ParameterBag
-{
-
-	/**
-	 * Filter current bag using agent
-	 *
-	 * @param AgentContract $agent
-	 *
-	 * @return $this
-	 */
-	public function filterWrite(AgentContract $agent)
-	{
-
-		$this->filter(['name']);
-
-		return $this;
-	}
-
-	/**
-	 * Filter current bag using agent for a search
-	 *
-	 * @param AgentContract $agent
-	 *
-	 * @return $this
-	 */
-	public function filterRead(AgentContract $agent)
-	{
-		$this->filter(['id', 'name', 'created_at', 'updated_at']);
-
-		return $this;
-	}
 
 }
 
@@ -352,37 +294,4 @@ class FooSerializer implements SerializerContract
 	}
 
 }
-```
-
-
-### ModelServiceProvider
-This class is very important, it will load all the components,
-Load this provider with all others in your config/app.php
-
-```php
-namespace App\Foo;
-
-use Gate;
-use Illuminate\Support\ServiceProvider;
-
-class FooServiceProvider extends ServiceProvider
-{
-    /**
-     * Register bindings in the container.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        Foo::observe(FooObserver::class);
-        Gate::policy(Foo::class, FooPolicy::class);
-
-        FooManager::repository(FooRepository::class);
-        FooManager::serializer(FooSerializer::class);
-        FooManager::parameters(FooParameterBag::class);
-        FooManager::validator(FooValidator::class);
-        FooManager::authorizer(FooAuthorizer::class);
-    }
-}
-
 ```
