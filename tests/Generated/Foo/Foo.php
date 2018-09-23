@@ -24,7 +24,7 @@ class Foo extends Model implements EntityContract
      */
     protected $fillable = [
         'name',
-        'description',
+        'description'
     ];
 
     /**
@@ -33,6 +33,6 @@ class Foo extends Model implements EntityContract
      * @var array
      */
     protected $dates = [
-        'deleted_at',
+        'deleted_at'
     ];
 }
