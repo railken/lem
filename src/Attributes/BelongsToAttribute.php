@@ -97,15 +97,15 @@ class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeCont
         $value = $parameters->get($this->getRelationName());
 
         if ($this->required && !$entity->exists && !$parameters->exists($this->getRelationName())) {
-            $errors->push($this->newException(Tokens::NOT_DEFINED)->setValue($parameters->get($this->getName())));
+            $errors->push($this->newException(Tokens::NOT_DEFINED, $parameters->get($this->getName())));
         }
 
         if ($this->unique && $parameters->exists($this->getRelationName()) && $this->isUnique($entity, $value)) {
-            $errors->push($this->newException(Tokens::NOT_UNIQUE)->setValue($parameters->get($this->getName())));
+            $errors->push($this->newException(Tokens::NOT_UNIQUE, $parameters->get($this->getName())));
         }
 
         if ($parameters->exists($this->getRelationName()) && ($value !== null || $this->required) && !$this->valid($entity, $value)) {
-            $errors->push($this->newException(Tokens::NOT_VALID)->setValue($parameters->get($this->getName())));
+            $errors->push($this->newException(Tokens::NOT_VALID, $parameters->get($this->getName())));
         }
 
         return $errors;

@@ -2,7 +2,7 @@
 
 namespace Railken\Lem\Exceptions;
 
-abstract class AttributeException extends \Exception
+abstract class ModelException extends \Exception
 {
     /**
      * The reason (attribute) for which this exception is thrown.
@@ -36,12 +36,11 @@ abstract class AttributeException extends \Exception
      * Construct.
      *
      * @param string $model
-     * @param string $attribute
      * @param mixed  $value
      */
-    public function __construct($model = null, $attribute = null, $value = null)
+    public function __construct($model = null, $value = null)
     {
-        $code = sprintf($this->code, $model, $attribute);
+        $code = sprintf($this->code, $model);
         $message = sprintf($this->message, $value);
         $this->value = $value;
         $this->code = $code;

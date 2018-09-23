@@ -2,7 +2,9 @@
 
 namespace Railken\Lem;
 
+use Exception;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Railken\Bag;
 use Railken\Lem\Contracts\AuthorizerContract;
 use Railken\Lem\Contracts\EntityContract;
@@ -12,6 +14,14 @@ class Authorizer implements AuthorizerContract
 {
     use Concerns\HasManager;
     use Concerns\HasPermissions;
+    use Concerns\HasExceptions;
+
+    /**
+     * @var array
+     */
+    protected $exceptions = [
+        Tokens::NOT_AUTHORIZED => Exceptions\ModelNotAuthorizedException::class,
+    ];
 
     /**
      * List of all permissions.
@@ -63,11 +73,10 @@ class Authorizer implements AuthorizerContract
     {
         $errors = new Collection();
 
-        $exception = $this->getManager()->getException(Tokens::NOT_AUTHORIZED);
         $permission = $this->getPermission($action);
 
         if (!$this->getManager()->getAgent()->can($permission)) {
-            $errors->push(new $exception($permission));
+            $errors->push($this->newException(Tokens::NOT_AUTHORIZED, $permission));
         }
 
         return $errors;
@@ -80,5 +89,23 @@ class Authorizer implements AuthorizerContract
 
             return $errors->count() === 0;
         });
+    }
+
+    /**
+     * Create a new instance of exception.
+     *
+     * @param string $code
+     * @param mixed  $value
+     *
+     * @return \Exception
+     */
+    public function newException(string $code, $value): Exception
+    {
+        $exception = $this->getException($code);
+
+        return new $exception(
+            strtoupper(Str::kebab($this->getManager()->getName())),
+            $value
+        );
     }
 }

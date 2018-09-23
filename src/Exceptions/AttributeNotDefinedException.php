@@ -9,7 +9,7 @@ class AttributeNotDefinedException extends AttributeException
      *
      * @var string
      */
-    protected $code = '%s_NOT_DEFINED';
+    protected $code = '%s_%s_NOT_DEFINED';
 
     /**
      * The message.

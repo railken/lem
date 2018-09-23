@@ -43,14 +43,16 @@ abstract class Manager implements ManagerContract
     protected $unique = [];
 
     /**
-     * @var array
-     */
-    protected $exceptions = [];
-
-    /**
      * @var AgentContract
      */
     protected $agent;
+
+    /**
+     * @var array
+     */
+    protected $exceptions = [
+        Tokens::NOT_AUTHORIZED => Exceptions\ModelNotAuthorizedException::class,
+    ];
 
     /**
      * Construct.

@@ -26,7 +26,6 @@ abstract class BaseTest extends \Orchestra\Testbench\TestCase
     {
         return [
             \Railken\Lem\Providers\ManagerServiceProvider::class,
-            \Railken\Lem\Tests\User\UserServiceProvider::class,
             \Railken\Lem\Tests\AppServiceProvider::class,
         ];
     }

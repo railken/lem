@@ -7,7 +7,6 @@ use Railken\Lem\Contracts\AgentContract;
 use Railken\Lem\Contracts\EntityContract;
 use Railken\Lem\Manager;
 use Railken\Lem\Tests\User\UserManager;
-use Railken\Lem\Tokens;
 
 class ArticleManager extends Manager
 {
@@ -17,15 +16,6 @@ class ArticleManager extends Manager
      * @var string
      */
     public $entity = Article::class;
-
-    /**
-     * List of all exceptions.
-     *
-     * @var array
-     */
-    protected $exceptions = [
-        Tokens::NOT_AUTHORIZED => Exceptions\ArticleNotAuthorizedException::class,
-    ];
 
     /**
      * Construct.

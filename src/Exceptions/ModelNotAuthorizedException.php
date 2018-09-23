@@ -2,19 +2,19 @@
 
 namespace Railken\Lem\Exceptions;
 
-class AttributeNotValidException extends AttributeException
+class ModelNotAuthorizedException extends ModelException
 {
     /**
      * The code to identify the error.
      *
      * @var string
      */
-    protected $code = '%s_%s_NOT_VALID';
+    protected $code = '%s_NOT_AUTHORIZED';
 
     /**
      * The message.
      *
      * @var string
      */
-    protected $message = 'The %s is not valid';
+    protected $message = "You're not authorized, missing %s permission";
 }

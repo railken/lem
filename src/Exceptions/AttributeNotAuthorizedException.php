@@ -9,12 +9,12 @@ class AttributeNotAuthorizedException extends AttributeException
      *
      * @var string
      */
-    protected $code = '%s_NOT_AUTHTORIZED';
+    protected $code = '%s_%s_NOT_AUTHORIZED';
 
     /**
      * The message.
      *
      * @var string
      */
-    protected $message = "You're not authorized to interact with %s, missing %s permission";
+    protected $message = "You're not authorized, missing %s permission";
 }

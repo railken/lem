@@ -9,7 +9,7 @@ class AttributeNotUniqueException extends AttributeException
      *
      * @var string
      */
-    protected $code = '%s_NOT_UNIQUE';
+    protected $code = '%s_%s_NOT_UNIQUE';
 
     /**
      * The message.

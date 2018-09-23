@@ -5,7 +5,6 @@ namespace Railken\Lem\Tests\User;
 use Railken\Lem\Attributes;
 use Railken\Lem\Contracts\AgentContract;
 use Railken\Lem\Manager;
-use Railken\Lem\Tokens;
 
 class UserManager extends Manager
 {
@@ -15,15 +14,6 @@ class UserManager extends Manager
      * @var string
      */
     public $entity = User::class;
-
-    /**
-     * List of all exceptions.
-     *
-     * @var array
-     */
-    protected $exceptions = [
-        Tokens::NOT_AUTHORIZED => Exceptions\UserNotAuthorizedException::class,
-    ];
 
     /**
      * Construct.

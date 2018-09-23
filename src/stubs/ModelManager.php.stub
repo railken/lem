@@ -29,7 +29,7 @@ class $NAME$Manager extends Manager
      * @var array
      */
     protected $exceptions = [
-        Tokens::NOT_AUTHORIZED => Exceptions\$NAME:CAMELIZED$NotAuthorizedException::class,
+        // ...
     ];
 
     /**

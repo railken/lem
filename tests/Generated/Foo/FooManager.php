@@ -2,10 +2,10 @@
 
 namespace Railken\Lem\Tests\Generated\Foo;
 
-use Railken\Lem\Attributes;
 use Railken\Lem\Contracts\AgentContract;
 use Railken\Lem\Manager;
 use Railken\Lem\Tokens;
+use Railken\Lem\Attributes;
 
 class FooManager extends Manager
 {
@@ -21,7 +21,7 @@ class FooManager extends Manager
      *
      * @var string
      */
-    public $comment = '...';
+    public $comment = "...";
 
     /**
      * List of all exceptions.
@@ -29,7 +29,7 @@ class FooManager extends Manager
      * @var array
      */
     protected $exceptions = [
-        Tokens::NOT_AUTHORIZED => Exceptions\FooNotAuthorizedException::class,
+        // ...
     ];
 
     /**
@@ -46,7 +46,7 @@ class FooManager extends Manager
 
         parent::__construct($agent);
     }
-
+    
     /**
      * List of all attributes.
      *
@@ -61,6 +61,6 @@ class FooManager extends Manager
             Attributes\CreatedAtAttribute::make(),
             Attributes\UpdatedAtAttribute::make(),
             Attributes\DeletedAtAttribute::make(),
-        ];
+        ];    
     }
 }

@@ -115,14 +115,19 @@ abstract class BaseAttribute implements AttributeContract
      * Create a new instance of exception.
      *
      * @param string $code
+     * @param mixed  $value
      *
      * @return \Exception
      */
-    public function newException(string $code): Exception
+    public function newException(string $code, $value): Exception
     {
         $exception = $this->getException($code);
 
-        return new $exception(strtoupper(Str::kebab($this->getManager()->getName().'_'.$this->getName())));
+        return new $exception(
+            strtoupper(Str::kebab($this->getManager()->getName())),
+            strtoupper(Str::kebab($this->getName())),
+            $value
+        );
     }
 
     /**
@@ -150,7 +155,7 @@ abstract class BaseAttribute implements AttributeContract
         $permission = $this->getPermission($action);
 
         if (!$this->getManager()->getAgent()->can($permission)) {
-            $errors->push($this->newException(Tokens::NOT_AUTHORIZED)->setValue($permission));
+            $errors->push($this->newException(Tokens::NOT_AUTHORIZED, $permission));
         }
 
         return $errors;
@@ -171,15 +176,15 @@ abstract class BaseAttribute implements AttributeContract
         $value = $parameters->get($this->name);
 
         if ($this->required && !$entity->exists && !$parameters->exists($this->name)) {
-            $errors->push($this->newException(Tokens::NOT_DEFINED)->setValue($value));
+            $errors->push($this->newException(Tokens::NOT_DEFINED, $value));
         }
 
         if ($this->unique && $parameters->exists($this->name) && $this->isUnique($entity, $value)) {
-            $errors->push($this->newException(Tokens::NOT_UNIQUE)->setValue($value));
+            $errors->push($this->newException(Tokens::NOT_UNIQUE, $value));
         }
 
         if ($parameters->exists($this->name) && ($value !== null || $this->required) && !$this->valid($entity, $value)) {
-            $errors->push($this->newException(Tokens::NOT_VALID)->setValue($value));
+            $errors->push($this->newException(Tokens::NOT_VALID, $value));
         }
 
         return $errors;
