@@ -1,6 +1,6 @@
 <?php
 
-namespace Railken\Laravel\Manager\Contracts;
+namespace Railken\Lem\Contracts;
 
 interface FakerContract
 {
@@ -10,7 +10,7 @@ interface FakerContract
     public function parameters();
 
     /**
-     * @return \Railken\Laravel\Manager\Contracts\EntityContract
+     * @return \Railken\Lem\Contracts\EntityContract
      */
     public function entity();
 }

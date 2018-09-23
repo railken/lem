@@ -1,47 +1,29 @@
 <?php
 
-namespace Railken\Laravel\Manager;
+namespace Railken\Lem;
 
 use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Railken\Bag;
-use Railken\Laravel\Manager\Contracts\AgentContract;
-use Railken\Laravel\Manager\Contracts\EntityContract;
-use Railken\Laravel\Manager\Contracts\ManagerContract;
-use Railken\Laravel\Manager\Contracts\ModelAuthorizerContract;
-use Railken\Laravel\Manager\Contracts\ModelRepositoryContract;
-use Railken\Laravel\Manager\Contracts\ModelSerializerContract;
-use Railken\Laravel\Manager\Contracts\ModelValidatorContract;
-use Railken\Laravel\Manager\Contracts\ResultContract;
+use Railken\Lem\Contracts\AgentContract;
+use Railken\Lem\Contracts\EntityContract;
+use Railken\Lem\Contracts\ManagerContract;
+use Railken\Lem\Contracts\ResultContract;
 
 /**
- * Abstract ModelManager class.
+ * Abstract Manager class.
  */
-abstract class ModelManager implements ManagerContract
+abstract class Manager implements ManagerContract
 {
-    /**
-     * @var \Railken\Laravel\Manager\Contracts\ModelSerializerContract
-     */
-    public $serializer = null;
+    use Concerns\HasExceptions;
+    use Concerns\HasRepository;
+    use Concerns\HasAuthorizer;
+    use Concerns\HasSerializer;
+    use Concerns\HasValidator;
 
     /**
-     * @var \Railken\Laravel\Manager\Contracts\ModelValidatorContract
-     */
-    public $validator = null;
-
-    /**
-     * @var \Railken\Laravel\Manager\Contracts\ModelRepositoryContract
-     */
-    public $repository = null;
-
-    /**
-     * @var \Railken\Laravel\Manager\Contracts\ModelAuthorizerContract
-     */
-    public $authorizer = null;
-
-    /**
-     * @var array|Collection
+     * @var Collection
      */
     protected $attributes;
 
@@ -64,11 +46,6 @@ abstract class ModelManager implements ManagerContract
      * @var AgentContract
      */
     protected $agent;
-
-    /**
-     * @var array
-     */
-    protected $permissions = [];
 
     /**
      * Construct.
@@ -114,7 +91,7 @@ abstract class ModelManager implements ManagerContract
      *
      * @param array $parameters
      *
-     * @return \Railken\Laravel\Manager\Contracts\EntityContract
+     * @return \Railken\Lem\Contracts\EntityContract
      */
     public function newEntity(array $parameters = [])
     {
@@ -172,98 +149,6 @@ abstract class ModelManager implements ManagerContract
     }
 
     /**
-     * Set a repository.
-     *
-     * @param \Railken\Laravel\Manager\Contracts\ModelRepositoryContract $repository
-     *
-     * @return $this
-     */
-    public function setRepository(ModelRepositoryContract $repository)
-    {
-        $this->repository = $repository;
-
-        return $this;
-    }
-
-    /**
-     * Retrieve a repository.
-     *
-     * @return \Railken\Laravel\Manager\Contracts\ModelRepositoryContract
-     */
-    public function getRepository()
-    {
-        return $this->repository;
-    }
-
-    /**
-     * Set a repository.
-     *
-     * @param \Railken\Laravel\Manager\Contracts\ModelSerializerContract $serializer
-     *
-     * @return $this
-     */
-    public function setSerializer(ModelSerializerContract $serializer)
-    {
-        $this->serializer = $serializer;
-
-        return $this;
-    }
-
-    /**
-     * Retrieve the serializer.
-     *
-     * @return \Railken\Laravel\Manager\Contracts\ModelSerializerContract
-     */
-    public function getSerializer()
-    {
-        return $this->serializer;
-    }
-
-    /**
-     * Set a authorizer.
-     *
-     * @param \Railken\Laravel\Manager\Contracts\ModelAuthorizerContract $authorizer
-     *
-     * @return $this
-     */
-    public function setAuthorizer(ModelAuthorizerContract $authorizer)
-    {
-        $this->authorizer = $authorizer;
-
-        return $this;
-    }
-
-    /**
-     * Retrieve the authorizer.
-     *
-     * @return \Railken\Laravel\Manager\Contracts\ModelAuthorizerContract
-     */
-    public function getAuthorizer()
-    {
-        return $this->authorizer;
-    }
-
-    /**
-     * @param \Railken\Laravel\Manager\Contracts\ModelValidatorContract $validator
-     *
-     * @return $this
-     */
-    public function setValidator(ModelValidatorContract $validator)
-    {
-        $this->validator = $validator;
-
-        return $this;
-    }
-
-    /**
-     * @return \Railken\Laravel\Manager\Contracts\ModelValidatorContract
-     */
-    public function getValidator()
-    {
-        return $this->validator;
-    }
-
-    /**
      * Retrieve attributes.
      *
      * @return \Illuminate\Support\Collection
@@ -281,58 +166,6 @@ abstract class ModelManager implements ManagerContract
     public function getUnique()
     {
         return $this->unique;
-    }
-
-    /**
-     * Retrieve an exception class given code.
-     *
-     * @param string $code
-     *
-     * @return string
-     */
-    public function getException($code)
-    {
-        if (!isset($this->exceptions[$code])) {
-            throw new Exceptions\ExceptionNotDefinedException($this, $code);
-        }
-
-        return $this->exceptions[$code];
-    }
-
-    /**
-     * Retrieve all exceptions.
-     *
-     * @return array
-     */
-    public function getExceptions()
-    {
-        return $this->exceptions;
-    }
-
-    /**
-     * Retrieve a permission name given code.
-     *
-     * @param string $code
-     *
-     * @return string
-     */
-    public function getPermission($code)
-    {
-        if (!isset($this->permissions[$code])) {
-            throw new Exceptions\PermissionNotDefinedException($this, $code);
-        }
-
-        return $this->permissions[$code];
-    }
-
-    /**
-     * Retrieve all permissions.
-     *
-     * @return array
-     */
-    public function getPermissions()
-    {
-        return $this->permissions;
     }
 
     /**
@@ -390,9 +223,9 @@ abstract class ModelManager implements ManagerContract
     /**
      * Update a EntityContract given parameters.
      *
-     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param Bag|array                                         $parameters
-     * @param string                                            $permission
+     * @param \Railken\Lem\Contracts\EntityContract $entity
+     * @param Bag|array                             $parameters
+     * @param string                                $permission
      *
      * @return ResultContract
      */
@@ -457,7 +290,7 @@ abstract class ModelManager implements ManagerContract
     /**
      * Save the entity.
      *
-     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
+     * @param \Railken\Lem\Contracts\EntityContract $entity
      *
      * @return bool
      */
@@ -469,7 +302,7 @@ abstract class ModelManager implements ManagerContract
     /**
      * Remove a EntityContract.
      *
-     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
+     * @param \Railken\Lem\Contracts\EntityContract $entity
      *
      * @return ResultContract
      */
@@ -481,7 +314,7 @@ abstract class ModelManager implements ManagerContract
     /**
      * Delete a EntityContract.
      *
-     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
+     * @param \Railken\Lem\Contracts\EntityContract $entity
      *
      * @return ResultContract
      */

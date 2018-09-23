@@ -1,23 +1,23 @@
 <?php
 
-namespace Railken\Laravel\Manager\Tests;
+namespace Railken\Lem\Tests;
 
-use Railken\Laravel\Manager\Tests\User\UserManager;
+use Railken\Lem\Tests\User\UserManager;
 
-class BaseAttributeTest extends \Orchestra\Testbench\TestCase
+class BaseAttributeTest extends BaseTest
 {
     /**
      * Get attribute.
      *
-     * @return \Railken\Laravel\Manager\Contracts\AttributeContract
+     * @return \Railken\Lem\Contracts\AttributeContract
      */
     public function getAttribute()
     {
-        return \Railken\Laravel\Manager\Attributes\EmailAttribute::make()->setManager(new UserManager());
+        return \Railken\Lem\Attributes\EmailAttribute::make()->setManager(new UserManager());
     }
 
     /**
-     * @expectedException \Railken\Laravel\Manager\Exceptions\ExceptionNotDefinedException
+     * @expectedException \Railken\Lem\Exceptions\ExceptionNotDefinedException
      */
     public function testExceptionNotDefinedException()
     {
@@ -25,26 +25,10 @@ class BaseAttributeTest extends \Orchestra\Testbench\TestCase
     }
 
     /**
-     * @expectedException \Railken\Laravel\Manager\Exceptions\PermissionNotDefinedException
+     * @expectedException \Railken\Lem\Exceptions\PermissionNotDefinedException
      */
     public function testPermissionNotDefinedException()
     {
         $this->getAttribute()->getPermission('WRONG_PERMISSION_CODE');
-    }
-
-    /**
-     * Get package providers.
-     *
-     * @param \Illuminate\Foundation\Application $app
-     *
-     * @return array
-     */
-    protected function getPackageProviders($app)
-    {
-        return [
-            \Railken\Laravel\Manager\ManagerServiceProvider::class,
-            \Railken\Laravel\Manager\Tests\User\UserServiceProvider::class,
-            \Railken\Laravel\Manager\Tests\AppServiceProvider::class,
-        ];
     }
 }

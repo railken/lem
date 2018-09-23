@@ -1,11 +1,11 @@
 <?php
 
-namespace Railken\Laravel\Manager\Tests\User;
+namespace Railken\Lem\Tests\User;
 
-use Railken\Laravel\Manager\ModelAuthorizer;
-use Railken\Laravel\Manager\Tokens;
+use Railken\Lem\Authorizer;
+use Railken\Lem\Tokens;
 
-class UserAuthorizer extends ModelAuthorizer
+class UserAuthorizer extends Authorizer
 {
     /**
      * List of all permissions.

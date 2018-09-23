@@ -1,9 +1,9 @@
 <?php
 
-namespace Railken\Laravel\Manager\Tests\Generated\Foo\Exceptions;
+namespace Railken\Lem\Tests\Generated\Foo\Exceptions;
 
 use Exception;
-use Railken\Laravel\Manager\Contracts\ExceptionContract;
+use Railken\Lem\Contracts\ExceptionContract;
 
 abstract class FooException extends Exception implements ExceptionContract
 {

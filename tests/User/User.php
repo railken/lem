@@ -1,12 +1,12 @@
 <?php
 
-namespace Railken\Laravel\Manager\Tests\User;
+namespace Railken\Lem\Tests\User;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Railken\Laravel\Manager\Contracts\AgentContract;
-use Railken\Laravel\Manager\Contracts\EntityContract;
+use Railken\Lem\Contracts\AgentContract;
+use Railken\Lem\Contracts\EntityContract;
 
 class User extends Authenticatable implements EntityContract, AgentContract
 {

@@ -2,8 +2,8 @@
 
 namespace $NAMESPACE$;
 
-use Railken\Laravel\Manager\ModelValidator;
+use Railken\Lem\Validator;
 
-class $NAME$Validator extends ModelValidator
+class $NAME$Validator extends Validator
 {
 }

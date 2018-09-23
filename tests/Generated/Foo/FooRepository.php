@@ -1,9 +1,9 @@
 <?php
 
-namespace Railken\Laravel\Manager\Tests\Generated\Foo;
+namespace Railken\Lem\Tests\Generated\Foo;
 
-use Railken\Laravel\Manager\ModelRepository;
+use Railken\Lem\Repository;
 
-class FooRepository extends ModelRepository
+class FooRepository extends Repository
 {
 }

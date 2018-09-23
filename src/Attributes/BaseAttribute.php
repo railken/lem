@@ -1,22 +1,24 @@
 <?php
 
-namespace Railken\Laravel\Manager\Attributes;
+namespace Railken\Lem\Attributes;
 
 use Closure;
 use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Railken\Bag;
-use Railken\Laravel\Manager\Contracts\AttributeContract;
-use Railken\Laravel\Manager\Contracts\EntityContract;
-use Railken\Laravel\Manager\Exceptions as Exceptions;
-use Railken\Laravel\Manager\Tokens;
-use Railken\Laravel\Manager\Traits\HasModelManagerTrait;
+use Railken\Lem\Concerns;
+use Railken\Lem\Contracts\AttributeContract;
+use Railken\Lem\Contracts\EntityContract;
+use Railken\Lem\Exceptions as Exceptions;
+use Railken\Lem\Tokens;
 use Respect\Validation\Validator as v;
 
 abstract class BaseAttribute implements AttributeContract
 {
-    use HasModelManagerTrait;
+    use Concerns\HasManager;
+    use Concerns\HasPermissions;
+    use Concerns\HasExceptions;
 
     /**
      * @var string
@@ -100,22 +102,6 @@ abstract class BaseAttribute implements AttributeContract
     }
 
     /**
-     * Boot attribute.
-     */
-    public function boot()
-    {
-        $this->bootExceptions();
-        $this->bootPermissions();
-    }
-
-    /**
-     * Boot exceptions.
-     */
-    public function bootExceptions()
-    {
-    }
-
-    /**
      * Boot permissions.
      */
     public function bootPermissions()
@@ -123,22 +109,6 @@ abstract class BaseAttribute implements AttributeContract
         foreach ($this->permissions as $token => $permission) {
             $this->permissions[$token] = sprintf($permission, Str::kebab($this->getManager()->getName()), Str::kebab($this->getName()));
         }
-    }
-
-    /**
-     *  Retrieve a permission name given code.
-     *
-     * @param string $code
-     *
-     * @return string
-     */
-    public function getException(string $code)
-    {
-        if (!isset($this->exceptions[$code])) {
-            throw new Exceptions\ExceptionNotDefinedException($this, $code);
-        }
-
-        return $this->exceptions[$code];
     }
 
     /**
@@ -156,47 +126,20 @@ abstract class BaseAttribute implements AttributeContract
     }
 
     /**
-     * Retrieve all exceptions.
-     *
-     * @return array
+     * Boot attribute.
      */
-    public function getExceptions()
+    public function boot()
     {
-        return $this->exceptions;
-    }
-
-    /**
-     * Retrieve a permission name given code.
-     *
-     * @param string $code
-     *
-     * @return string
-     */
-    public function getPermission(string $code)
-    {
-        if (!isset($this->permissions[$code])) {
-            throw new Exceptions\PermissionNotDefinedException($this, $code);
-        }
-
-        return $this->permissions[$code];
-    }
-
-    /**
-     * Retrieve permissions.
-     *
-     * @return array
-     */
-    public function getPermissions()
-    {
-        return $this->permissions;
+        $this->bootExceptions();
+        $this->bootPermissions();
     }
 
     /**
      * Is a value valid ?
      *
-     * @param string                                            $action
-     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param mixed                                             $value
+     * @param string                                $action
+     * @param \Railken\Lem\Contracts\EntityContract $entity
+     * @param mixed                                 $value
      *
      * @return Collection
      */
@@ -216,8 +159,8 @@ abstract class BaseAttribute implements AttributeContract
     /**
      * Validate.
      *
-     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param \Railken\Bag                                      $parameters
+     * @param \Railken\Lem\Contracts\EntityContract $entity
+     * @param \Railken\Bag                          $parameters
      *
      * @return Collection
      */
@@ -245,8 +188,8 @@ abstract class BaseAttribute implements AttributeContract
     /**
      * Is a value valid ?
      *
-     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param mixed                                             $value
+     * @param \Railken\Lem\Contracts\EntityContract $entity
+     * @param mixed                                 $value
      *
      * @return bool
      */
@@ -258,8 +201,8 @@ abstract class BaseAttribute implements AttributeContract
     /**
      * Update entity value.
      *
-     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param \Railken\Bag                                      $parameters
+     * @param \Railken\Lem\Contracts\EntityContract $entity
+     * @param \Railken\Bag                          $parameters
      *
      * @return Collection
      */
@@ -285,8 +228,8 @@ abstract class BaseAttribute implements AttributeContract
     /**
      * Update entity value.
      *
-     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param \Railken\Bag                                      $parameters
+     * @param \Railken\Lem\Contracts\EntityContract $entity
+     * @param \Railken\Bag                          $parameters
      *
      * @return Collection
      */
@@ -304,8 +247,8 @@ abstract class BaseAttribute implements AttributeContract
     /**
      * Is a value valid ?
      *
-     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param mixed                                             $value
+     * @param \Railken\Lem\Contracts\EntityContract $entity
+     * @param mixed                                 $value
      *
      * @return bool
      */
@@ -347,7 +290,7 @@ abstract class BaseAttribute implements AttributeContract
     /**
      * Retrieve default value.
      *
-     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
+     * @param \Railken\Lem\Contracts\EntityContract $entity
      *
      * @return mixed
      */

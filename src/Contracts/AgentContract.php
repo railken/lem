@@ -1,6 +1,6 @@
 <?php
 
-namespace Railken\Laravel\Manager\Contracts;
+namespace Railken\Lem\Contracts;
 
 interface AgentContract
 {

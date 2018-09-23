@@ -1,6 +1,6 @@
 <?php
 
-namespace Railken\Laravel\Manager\Exceptions;
+namespace Railken\Lem\Exceptions;
 
 class AttributeNotDefinedException extends AttributeException
 {

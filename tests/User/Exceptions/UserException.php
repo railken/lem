@@ -1,9 +1,9 @@
 <?php
 
-namespace Railken\Laravel\Manager\Tests\User\Exceptions;
+namespace Railken\Lem\Tests\User\Exceptions;
 
 use Exception;
-use Railken\Laravel\Manager\Contracts\ExceptionContract;
+use Railken\Lem\Contracts\ExceptionContract;
 
 class UserException extends Exception implements ExceptionContract
 {

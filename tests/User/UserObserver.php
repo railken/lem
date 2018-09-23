@@ -1,6 +1,6 @@
 <?php
 
-namespace Railken\Laravel\Manager\Tests\User;
+namespace Railken\Lem\Tests\User;
 
 class UserObserver
 {

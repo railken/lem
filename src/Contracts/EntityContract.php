@@ -1,6 +1,6 @@
 <?php
 
-namespace Railken\Laravel\Manager\Contracts;
+namespace Railken\Lem\Contracts;
 
 /**
  * All entities that are used in manager must be under this contract.

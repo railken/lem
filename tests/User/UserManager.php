@@ -1,13 +1,13 @@
 <?php
 
-namespace Railken\Laravel\Manager\Tests\User;
+namespace Railken\Lem\Tests\User;
 
-use Railken\Laravel\Manager\Attributes;
-use Railken\Laravel\Manager\Contracts\AgentContract;
-use Railken\Laravel\Manager\ModelManager;
-use Railken\Laravel\Manager\Tokens;
+use Railken\Lem\Attributes;
+use Railken\Lem\Contracts\AgentContract;
+use Railken\Lem\Manager;
+use Railken\Lem\Tokens;
 
-class UserManager extends ModelManager
+class UserManager extends Manager
 {
     /**
      * Class name entity.

@@ -1,6 +1,6 @@
 <?php
 
-namespace Railken\Laravel\Manager\Contracts;
+namespace Railken\Lem\Contracts;
 
 interface BelongsToAttributeContract
 {
@@ -14,7 +14,7 @@ interface BelongsToAttributeContract
     /**
      * Retrieve eloquent relation.
      *
-     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
+     * @param \Railken\Lem\Contracts\EntityContract $entity
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -23,9 +23,9 @@ interface BelongsToAttributeContract
     /**
      * Retrieve relation manager.
      *
-     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
+     * @param \Railken\Lem\Contracts\EntityContract $entity
      *
-     * @return \Railken\Laravel\Manager\Contracts\ManagerContract
+     * @return \Railken\Lem\Contracts\ManagerContract
      */
     public function getRelationManager(EntityContract $entity);
 }

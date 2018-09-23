@@ -1,11 +1,11 @@
 <?php
 
-namespace Railken\Laravel\Manager\Tests\Core\Article;
+namespace Railken\Lem\Tests\Core\Article;
 
-use Railken\Laravel\Manager\ModelAuthorizer;
-use Railken\Laravel\Manager\Tokens;
+use Railken\Lem\Authorizer;
+use Railken\Lem\Tokens;
 
-class ArticleAuthorizer extends ModelAuthorizer
+class ArticleAuthorizer extends Authorizer
 {
     protected $permissions = [
         Tokens::PERMISSION_CREATE => 'article.create',

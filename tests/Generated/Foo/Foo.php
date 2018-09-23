@@ -1,10 +1,10 @@
 <?php
 
-namespace Railken\Laravel\Manager\Tests\Generated\Foo;
+namespace Railken\Lem\Tests\Generated\Foo;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Railken\Laravel\Manager\Contracts\EntityContract;
+use Railken\Lem\Contracts\EntityContract;
 
 class Foo extends Model implements EntityContract
 {

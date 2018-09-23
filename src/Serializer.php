@@ -1,16 +1,16 @@
 <?php
 
-namespace Railken\Laravel\Manager;
+namespace Railken\Lem;
 
 use Illuminate\Support\Collection;
 use Railken\Bag;
-use Railken\Laravel\Manager\Contracts\EntityContract;
-use Railken\Laravel\Manager\Contracts\ManagerContract;
-use Railken\Laravel\Manager\Contracts\ModelSerializerContract;
+use Railken\Lem\Contracts\EntityContract;
+use Railken\Lem\Contracts\ManagerContract;
+use Railken\Lem\Contracts\SerializerContract;
 
-abstract class ModelSerializer implements ModelSerializerContract
+abstract class Serializer implements SerializerContract
 {
-    use Traits\HasModelManagerTrait;
+    use Concerns\HasManager;
 
     /**
      * Construct.
@@ -25,8 +25,8 @@ abstract class ModelSerializer implements ModelSerializerContract
     /**
      * Serialize entity.
      *
-     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param Collection                                        $select
+     * @param \Railken\Lem\Contracts\EntityContract $entity
+     * @param Collection                            $select
      *
      * @return \Railken\Bag
      */

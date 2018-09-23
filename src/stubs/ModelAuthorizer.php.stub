@@ -2,10 +2,10 @@
 
 namespace $NAMESPACE$;
 
-use Railken\Laravel\Manager\ModelAuthorizer;
-use Railken\Laravel\Manager\Tokens;
+use Railken\Lem\Authorizer;
+use Railken\Lem\Tokens;
 
-class $NAME$Authorizer extends ModelAuthorizer
+class $NAME$Authorizer extends Authorizer
 {
     /**
      * List of all permissions.

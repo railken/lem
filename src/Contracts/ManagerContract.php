@@ -1,9 +1,9 @@
 <?php
 
-namespace Railken\Laravel\Manager\Contracts;
+namespace Railken\Lem\Contracts;
 
 use Railken\Bag;
-use Railken\Laravel\Manager\Tokens;
+use Railken\Lem\Tokens;
 
 interface ManagerContract
 {
@@ -19,7 +19,7 @@ interface ManagerContract
      *
      * @param array $parameters
      *
-     * @return \Railken\Laravel\Manager\Contracts\EntityContract
+     * @return \Railken\Lem\Contracts\EntityContract
      */
     public function newEntity(array $parameters = []);
 
@@ -43,60 +43,60 @@ interface ManagerContract
     /**
      * Set a repository.
      *
-     * @param \Railken\Laravel\Manager\Contracts\ModelRepositoryContract $repository
+     * @param \Railken\Lem\Contracts\RepositoryContract $repository
      *
      * @return $this
      */
-    public function setRepository(ModelRepositoryContract $repository);
+    public function setRepository(RepositoryContract $repository);
 
     /**
      * Retrieve a repository.
      *
-     * @return \Railken\Laravel\Manager\Contracts\ModelRepositoryContract
+     * @return \Railken\Lem\Contracts\RepositoryContract
      */
     public function getRepository();
 
     /**
      * Set a repository.
      *
-     * @param \Railken\Laravel\Manager\Contracts\ModelSerializerContract $serializer
+     * @param \Railken\Lem\Contracts\SerializerContract $serializer
      *
      * @return $this
      */
-    public function setSerializer(ModelSerializerContract $serializer);
+    public function setSerializer(SerializerContract $serializer);
 
     /**
      * Retrieve the serializer.
      *
-     * @return \Railken\Laravel\Manager\Contracts\ModelSerializerContract
+     * @return \Railken\Lem\Contracts\SerializerContract
      */
     public function getSerializer();
 
     /**
      * Set a authorizer.
      *
-     * @param \Railken\Laravel\Manager\Contracts\ModelAuthorizerContract $authorizer
+     * @param \Railken\Lem\Contracts\AuthorizerContract $authorizer
      *
      * @return $this
      */
-    public function setAuthorizer(ModelAuthorizerContract $authorizer);
+    public function setAuthorizer(AuthorizerContract $authorizer);
 
     /**
      * Retrieve the authorizer.
      *
-     * @return \Railken\Laravel\Manager\Contracts\ModelAuthorizerContract
+     * @return \Railken\Lem\Contracts\AuthorizerContract
      */
     public function getAuthorizer();
 
     /**
-     * @param \Railken\Laravel\Manager\Contracts\ModelValidatorContract $validator
+     * @param \Railken\Lem\Contracts\ValidatorContract $validator
      *
      * @return $this
      */
-    public function setValidator(ModelValidatorContract $validator);
+    public function setValidator(ValidatorContract $validator);
 
     /**
-     * @return \Railken\Laravel\Manager\Contracts\ModelValidatorContract
+     * @return \Railken\Lem\Contracts\ValidatorContract
      */
     public function getValidator();
 
@@ -122,15 +122,6 @@ interface ManagerContract
      * @return string
      */
     public function getException($code);
-
-    /**
-     * Retrieve a permission name given code.
-     *
-     * @param string $code
-     *
-     * @return string
-     */
-    public function getPermission($code);
 
     /**
      * set agent.
@@ -180,7 +171,7 @@ interface ManagerContract
     /**
      * Save the entity.
      *
-     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
+     * @param \Railken\Lem\Contracts\EntityContract $entity
      *
      * @return EntityContract
      */
@@ -189,14 +180,14 @@ interface ManagerContract
     /**
      * Remove a EntityContract.
      *
-     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
+     * @param \Railken\Lem\Contracts\EntityContract $entity
      */
     public function remove(EntityContract $entity);
 
     /**
      * Delete a EntityContract.
      *
-     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
+     * @param \Railken\Lem\Contracts\EntityContract $entity
      *
      * @return ResultContract
      */

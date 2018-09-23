@@ -1,8 +1,8 @@
 <?php
 
-namespace Railken\Laravel\Manager\Attributes;
+namespace Railken\Lem\Attributes;
 
-use Railken\Laravel\Manager\Contracts\EntityContract;
+use Railken\Lem\Contracts\EntityContract;
 
 class EmailAttribute extends TextAttribute
 {

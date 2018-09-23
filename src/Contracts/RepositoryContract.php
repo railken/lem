@@ -1,15 +1,15 @@
 <?php
 
-namespace Railken\Laravel\Manager\Contracts;
+namespace Railken\Lem\Contracts;
 
-interface ModelRepositoryContract
+interface RepositoryContract
 {
     /**
      * Retrieve new instance of entity.
      *
      * @param array $parameters
      *
-     * @return \Railken\Laravel\Manager\Contracts\EntityContract
+     * @return \Railken\Lem\Contracts\EntityContract
      */
     public function newEntity(array $parameters = []);
 
@@ -34,7 +34,7 @@ interface ModelRepositoryContract
      *
      * @param array $parameters
      *
-     * @return \Railken\Laravel\Manager\Contracts\EntityContract
+     * @return \Railken\Lem\Contracts\EntityContract
      */
     public function findOneBy($parameters);
 
@@ -43,7 +43,7 @@ interface ModelRepositoryContract
      *
      * @param int $id
      *
-     * @return \Railken\Laravel\Manager\Contracts\EntityContract
+     * @return \Railken\Lem\Contracts\EntityContract
      */
     public function findOneById($id);
 

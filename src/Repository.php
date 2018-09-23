@@ -1,18 +1,18 @@
 <?php
 
-namespace Railken\Laravel\Manager;
+namespace Railken\Lem;
 
-use Railken\Laravel\Manager\Contracts\ManagerContract;
-use Railken\Laravel\Manager\Contracts\ModelRepositoryContract;
+use Railken\Lem\Contracts\ManagerContract;
+use Railken\Lem\Contracts\RepositoryContract;
 
-abstract class ModelRepository implements ModelRepositoryContract
+abstract class Repository implements RepositoryContract
 {
-    use Traits\HasModelManagerTrait;
+    use Concerns\HasManager;
 
     /**
      * Construct.
      *
-     * @param \Railken\Laravel\Manager\Contracts\ManagerContract $manager
+     * @param \Railken\Lem\Contracts\ManagerContract $manager
      */
     public function __construct(ManagerContract $manager)
     {
@@ -24,7 +24,7 @@ abstract class ModelRepository implements ModelRepositoryContract
      *
      * @param array $parameters
      *
-     * @return \Railken\Laravel\Manager\Contracts\EntityContract
+     * @return \Railken\Lem\Contracts\EntityContract
      */
     public function newEntity(array $parameters = [])
     {
@@ -61,7 +61,7 @@ abstract class ModelRepository implements ModelRepositoryContract
      *
      * @param array $parameters
      *
-     * @return \Railken\Laravel\Manager\Contracts\EntityContract|null|object
+     * @return \Railken\Lem\Contracts\EntityContract|null|object
      */
     public function findOneBy($parameters)
     {
@@ -73,7 +73,7 @@ abstract class ModelRepository implements ModelRepositoryContract
      *
      * @param int $id
      *
-     * @return \Railken\Laravel\Manager\Contracts\EntityContract|null|object
+     * @return \Railken\Lem\Contracts\EntityContract|null|object
      */
     public function findOneById($id)
     {

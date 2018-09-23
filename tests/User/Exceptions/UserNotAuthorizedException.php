@@ -1,9 +1,9 @@
 <?php
 
-namespace Railken\Laravel\Manager\Tests\User\Exceptions;
+namespace Railken\Lem\Tests\User\Exceptions;
 
 use Exception;
-use Railken\Laravel\Manager\Exceptions\ModelNotAuthorizedExceptionContract;
+use Railken\Lem\Exceptions\ModelNotAuthorizedExceptionContract;
 
 class UserNotAuthorizedException extends Exception implements ModelNotAuthorizedExceptionContract
 {

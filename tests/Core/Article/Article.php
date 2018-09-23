@@ -1,11 +1,11 @@
 <?php
 
-namespace Railken\Laravel\Manager\Tests\Core\Article;
+namespace Railken\Lem\Tests\Core\Article;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Railken\Laravel\Manager\Contracts\EntityContract;
-use Railken\Laravel\Manager\Tests\User\User;
+use Railken\Lem\Contracts\EntityContract;
+use Railken\Lem\Tests\User\User;
 
 class Article extends Model implements EntityContract
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Railken\Laravel\Manager\Traits;
+namespace Railken\Lem\Concerns;
 
-use Railken\Laravel\Manager\Contracts\ManagerContract;
+use Railken\Lem\Contracts\ManagerContract;
 
-trait HasModelManagerTrait
+trait HasManager
 {
     /**
      * @var ManagerContract

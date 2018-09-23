@@ -1,6 +1,6 @@
 <?php
 
-namespace Railken\Laravel\Manager\Contracts;
+namespace Railken\Lem\Contracts;
 
 use Railken\Bag;
 
@@ -9,8 +9,8 @@ interface AttributeContract
     /**
      * Validate.
      *
-     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param \Railken\Bag                                      $parameters
+     * @param \Railken\Lem\Contracts\EntityContract $entity
+     * @param \Railken\Bag                          $parameters
      *
      * @return \Illuminate\Support\Collection
      */

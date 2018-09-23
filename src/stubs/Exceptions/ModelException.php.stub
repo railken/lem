@@ -3,7 +3,7 @@
 namespace $NAMESPACE$\Exceptions;
 
 use Exception;
-use Railken\Laravel\Manager\Contracts\ExceptionContract;
+use Railken\Lem\Contracts\ExceptionContract;
 
 abstract class $NAME$Exception extends Exception implements ExceptionContract
 {

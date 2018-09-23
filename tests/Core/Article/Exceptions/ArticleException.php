@@ -1,9 +1,9 @@
 <?php
 
-namespace Railken\Laravel\Manager\Tests\Core\Article\Exceptions;
+namespace Railken\Lem\Tests\Core\Article\Exceptions;
 
 use Exception;
-use Railken\Laravel\Manager\Contracts\ExceptionContract;
+use Railken\Lem\Contracts\ExceptionContract;
 
 abstract class ArticleException extends Exception implements ExceptionContract
 {

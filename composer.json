@@ -1,5 +1,5 @@
 {
-    "name": "railken/laravel-manager",
+    "name": "railken/lem",
     "keywords": ["laravel"],
     "license": "MIT",
     "require": {
@@ -17,10 +17,17 @@
     },
     "autoload": {
         "psr-4" : {
-            "Railken\\Laravel\\Manager\\" : "src/"
+            "Railken\\Lem\\" : "src/"
         }
     },
     "autoload-dev": {
-        "psr-4": { "Railken\\Laravel\\Manager\\Tests\\": "tests/" }
+        "psr-4": { "Railken\\Lem\\Tests\\": "tests/" }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Railken\\Lem\\Providers\\ManagerServiceProvider"
+            ]
+        }
     }
 }

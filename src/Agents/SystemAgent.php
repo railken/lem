@@ -1,8 +1,8 @@
 <?php
 
-namespace Railken\Laravel\Manager\Agents;
+namespace Railken\Lem\Agents;
 
-use Railken\Laravel\Manager\Contracts\AgentContract;
+use Railken\Lem\Contracts\AgentContract;
 
 class SystemAgent implements AgentContract
 {

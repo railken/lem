@@ -1,6 +1,6 @@
 <?php
 
-namespace Railken\Laravel\Manager\Tests\Core\Article\Exceptions;
+namespace Railken\Lem\Tests\Core\Article\Exceptions;
 
 class ArticleTitleNotDefinedException extends ArticleAttributeException
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Railken\Laravel\Manager;
+namespace Railken\Lem;
 
 use Illuminate\Support\Collection;
-use Railken\Laravel\Manager\Contracts\ResultContract;
+use Railken\Lem\Contracts\ResultContract;
 
 class Result implements ResultContract
 {

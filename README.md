@@ -21,7 +21,7 @@ composer require railken/laravel-manager
 - Add the service provider to the `providers` array in `config/app.php`
 
 ```php
-Railken\Laravel\Manager\ManagerServiceProvider::class,
+Railken\Lem\ManagerServiceProvider::class,
 ```
 
 ## Usage
@@ -80,7 +80,7 @@ Array
 So, what about the authorization part? First we have to edit the class User.
 
 ```php
-use Railken\Laravel\Manager\Contracts\AgentContract;
+use Railken\Lem\Contracts\AgentContract;
 
 class User implements AgentContract
 {
@@ -98,7 +98,7 @@ You can set the method can as you wish, it's better if a permission library is u
 If no system permission is needed simply leave return true.
 
 ```php
-use Railken\Laravel\Manager\Agents\SystemAgent;
+use Railken\Lem\Agents\SystemAgent;
 
 $manager = new FooManager(Auth::user());
 $result = $manager->create(['title' => 'f']);
@@ -138,8 +138,8 @@ See [ModelManager](https://github.com/railken/laravel-manager/blob/master/src/Mo
 ```php
 namespace App\Foo;
 
-use Railken\Laravel\Manager\ModelManager;
-use Railken\Laravel\Manager\Contracts\AgentContract;
+use Railken\Lem\ModelManager;
+use Railken\Lem\Contracts\AgentContract;
 
 class FooManager extends ModelManager
 {
@@ -165,7 +165,7 @@ namespace App\Foo;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Railken\Laravel\Manager\Contracts\EntityContract;
+use Railken\Lem\Contracts\EntityContract;
 
 class Foo extends Model implements EntityContract
 {
@@ -203,7 +203,7 @@ See [ModelRepository](https://github.com/railken/laravel-manager/blob/master/src
 ```php
 namespace App\Foo;
 
-use Railken\Laravel\Manager\ModelRepository;
+use Railken\Lem\ModelRepository;
 
 class FooRepository extends ModelRepository
 {
@@ -240,12 +240,12 @@ See an [example](https://github.com/railken/laravel-manager/blob/master/tests/Co
 ```php
 namespace App\Foo;
 
-use Railken\Laravel\Manager\Contracts\AgentContract;
-use Railken\Laravel\Manager\Contracts\ManagerContract;
-use Railken\Laravel\Manager\Contracts\SystemAgentContract;
-use Railken\Laravel\Manager\Contracts\GuestAgentContract;
-use Railken\Laravel\Manager\Contracts\UserAgentContract;
-use Railken\Laravel\Manager\ParameterBag;
+use Railken\Lem\Contracts\AgentContract;
+use Railken\Lem\Contracts\ManagerContract;
+use Railken\Lem\Contracts\SystemAgentContract;
+use Railken\Lem\Contracts\GuestAgentContract;
+use Railken\Lem\Contracts\UserAgentContract;
+use Railken\Lem\ParameterBag;
 
 class FooParameterBag extends ParameterBag
 {
@@ -291,9 +291,9 @@ Remember: always return the collection of errors. You can of course add a specif
 ```php
 namespace App\Foo;
 
-use Railken\Laravel\Manager\Contracts\EntityContract;
-use Railken\Laravel\Manager\Contracts\ModelValidatorContract;
-use Railken\Laravel\Manager\ParameterBag;
+use Railken\Lem\Contracts\EntityContract;
+use Railken\Lem\Contracts\ModelValidatorContract;
+use Railken\Lem\ParameterBag;
 use Illuminate\Support\Collection;
 use App\Foo\Exceptions as Exceptions;
 
@@ -333,8 +333,8 @@ This class will serialize your model
 ```php
 namespace App\Foo;
 
-use Railken\Laravel\Manager\Contracts\ModelSerializerContract;
-use Railken\Laravel\Manager\Contracts\EntityContract;
+use Railken\Lem\Contracts\ModelSerializerContract;
+use Railken\Lem\Contracts\EntityContract;
 use Illuminate\Support\Collection;
 use Railken\Bag;
 

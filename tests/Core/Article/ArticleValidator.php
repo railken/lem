@@ -1,9 +1,9 @@
 <?php
 
-namespace Railken\Laravel\Manager\Tests\Core\Article;
+namespace Railken\Lem\Tests\Core\Article;
 
-use Railken\Laravel\Manager\ModelValidator;
+use Railken\Lem\Validator;
 
-class ArticleValidator extends ModelValidator
+class ArticleValidator extends Validator
 {
 }

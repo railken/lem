@@ -1,16 +1,15 @@
 <?php
 
-namespace Railken\Laravel\Manager\Tests;
+namespace Railken\Lem\Tests;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Railken\Bag;
-use Railken\Laravel\Manager\Tests\Core\Article\ArticleManager;
-use Railken\Laravel\Manager\Tests\User\User;
-use Railken\Laravel\Manager\Tests\User\UserManager;
-use Railken\Laravel\Manager\Tests\User\UserServiceProvider;
+use Railken\Lem\Tests\Core\Article\ArticleManager;
+use Railken\Lem\Tests\User\User;
+use Railken\Lem\Tests\User\UserManager;
 
-class BasicTest extends \Orchestra\Testbench\TestCase
+class BasicTest extends BaseTest
 {
     /**
      * Setup the test environment.
@@ -91,7 +90,7 @@ class BasicTest extends \Orchestra\Testbench\TestCase
     }
 
     /**
-     * @expectedException \Railken\Laravel\Manager\Exceptions\Exception
+     * @expectedException \Railken\Lem\Exceptions\Exception
      */
     public function testCreateOrFail()
     {
@@ -100,7 +99,7 @@ class BasicTest extends \Orchestra\Testbench\TestCase
     }
 
     /**
-     * @expectedException \Railken\Laravel\Manager\Exceptions\Exception
+     * @expectedException \Railken\Lem\Exceptions\Exception
      */
     public function testUpdateOrFail()
     {
@@ -170,21 +169,5 @@ class BasicTest extends \Orchestra\Testbench\TestCase
 
         $this->assertEquals(true, $result->ok());
         $this->assertEquals('a default value', $result->getResource()->title);
-    }
-
-    /**
-     * Get package providers.
-     *
-     * @param \Illuminate\Foundation\Application $app
-     *
-     * @return array
-     */
-    protected function getPackageProviders($app)
-    {
-        return [
-            AppServiceProvider::class,
-            \Railken\Laravel\Manager\ManagerServiceProvider::class,
-            UserServiceProvider::class,
-        ];
     }
 }

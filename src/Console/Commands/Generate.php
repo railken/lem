@@ -1,14 +1,12 @@
 <?php
 
-namespace Railken\Laravel\Manager\Commands;
+namespace Railken\Lem\Console\Commands;
 
 use Illuminate\Console\Command;
-use Railken\Laravel\Manager\Generator;
+use Railken\Lem\Generator;
 
 class Generate extends Command
 {
-    use Traits\PathTrait;
-
     /**
      * The name and signature of the console command.
      *
@@ -29,6 +27,16 @@ class Generate extends Command
     public function __construct()
     {
         parent::__construct();
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return string
+     */
+    public function getAbsolutePathByParameter($path)
+    {
+        return getcwd().'/'.$path;
     }
 
     /**

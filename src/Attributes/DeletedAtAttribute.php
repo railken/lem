@@ -1,6 +1,6 @@
 <?php
 
-namespace Railken\Laravel\Manager\Attributes;
+namespace Railken\Lem\Attributes;
 
 class DeletedAtAttribute extends DateTimeAttribute
 {

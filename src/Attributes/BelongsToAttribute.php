@@ -1,12 +1,12 @@
 <?php
 
-namespace Railken\Laravel\Manager\Attributes;
+namespace Railken\Lem\Attributes;
 
 use Illuminate\Support\Collection;
 use Railken\Bag;
-use Railken\Laravel\Manager\Contracts\BelongsToAttributeContract;
-use Railken\Laravel\Manager\Contracts\EntityContract;
-use Railken\Laravel\Manager\Tokens;
+use Railken\Lem\Contracts\BelongsToAttributeContract;
+use Railken\Lem\Contracts\EntityContract;
+use Railken\Lem\Tokens;
 
 class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeContract
 {
@@ -73,7 +73,7 @@ class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeCont
      *
      * @param EntityContract $entity
      *
-     * @return \Railken\Laravel\Manager\Contracts\ManagerContract
+     * @return \Railken\Lem\Contracts\ManagerContract
      */
     public function getRelationManager(EntityContract $entity)
     {
@@ -85,8 +85,8 @@ class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeCont
     /**
      * Validate.
      *
-     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param \Railken\Bag                                      $parameters
+     * @param \Railken\Lem\Contracts\EntityContract $entity
+     * @param \Railken\Bag                          $parameters
      *
      * @return Collection
      */
@@ -114,8 +114,8 @@ class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeCont
     /**
      * Is a value valid ?
      *
-     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param mixed                                             $value
+     * @param \Railken\Lem\Contracts\EntityContract $entity
+     * @param mixed                                 $value
      *
      * @return bool
      */
@@ -129,8 +129,8 @@ class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeCont
     /**
      * Update entity value.
      *
-     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param \Railken\Bag                                      $parameters
+     * @param \Railken\Lem\Contracts\EntityContract $entity
+     * @param \Railken\Bag                          $parameters
      *
      * @return Collection
      */
@@ -201,8 +201,8 @@ class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeCont
     /**
      * Update entity value.
      *
-     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param \Railken\Bag                                      $parameters
+     * @param \Railken\Lem\Contracts\EntityContract $entity
+     * @param \Railken\Bag                          $parameters
      *
      * @return Collection
      */

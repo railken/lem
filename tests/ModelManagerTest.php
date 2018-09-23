@@ -1,13 +1,13 @@
 <?php
 
-namespace Railken\Laravel\Manager\Tests;
+namespace Railken\Lem\Tests;
 
-use Railken\Laravel\Manager\Tests\User\UserManager;
+use Railken\Lem\Tests\User\UserManager;
 
-class ModelManagerTest extends \Orchestra\Testbench\TestCase
+class ManagerTest extends BaseTest
 {
     /**
-     * @expectedException \Railken\Laravel\Manager\Exceptions\ModelMissingRepositoryException
+     * @expectedException \Railken\Lem\Exceptions\ModelMissingRepositoryException
      */
     /*public function testModelMissingRepositoryExceptionNull()
     {
@@ -15,7 +15,7 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
     }*/
 
     /**
-     * @expectedException \Railken\Laravel\Manager\Exceptions\ModelMissingValidatorException
+     * @expectedException \Railken\Lem\Exceptions\ModelMissingValidatorException
      */
     /*public function testModelMissingValidatorExceptionNull()
     {
@@ -23,7 +23,7 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
     }*/
 
     /**
-     * @expectedException \Railken\Laravel\Manager\Exceptions\ModelMissingAuthorizerException
+     * @expectedException \Railken\Lem\Exceptions\ModelMissingAuthorizerException
      */
     /*public function testModelMissingAuthorizerExceptionNull()
     {
@@ -31,7 +31,7 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
     }*/
 
     /**
-     * @expectedException \Railken\Laravel\Manager\Exceptions\ModelMissingSerializerException
+     * @expectedException \Railken\Lem\Exceptions\ModelMissingSerializerException
      */
     /*public function testModelMissingSerializerExceptionNull()
     {
@@ -39,7 +39,7 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
     }*/
 
     /**
-     * @expectedException \Railken\Laravel\Manager\Exceptions\ExceptionNotDefinedException
+     * @expectedException \Railken\Lem\Exceptions\ExceptionNotDefinedException
      */
     public function testExceptionNotDefinedException()
     {
@@ -47,26 +47,10 @@ class ModelManagerTest extends \Orchestra\Testbench\TestCase
     }
 
     /**
-     * @expectedException \Railken\Laravel\Manager\Exceptions\PermissionNotDefinedException
+     * @expectedException \Railken\Lem\Exceptions\PermissionNotDefinedException
      */
     public function testPermissionNotDefinedException()
     {
-        (new UserManager())->getPermission('WRONG_PERMISSION_CODE');
-    }
-
-    /**
-     * Get package providers.
-     *
-     * @param \Illuminate\Foundation\Application $app
-     *
-     * @return array
-     */
-    protected function getPackageProviders($app)
-    {
-        return [
-            \Railken\Laravel\Manager\ManagerServiceProvider::class,
-            \Railken\Laravel\Manager\Tests\User\UserServiceProvider::class,
-            \Railken\Laravel\Manager\Tests\AppServiceProvider::class,
-        ];
+        (new UserManager())->getAuthorizer()->getPermission('WRONG_PERMISSION_CODE');
     }
 }

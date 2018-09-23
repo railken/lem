@@ -2,12 +2,12 @@
 
 namespace $NAMESPACE$;
 
-use Railken\Laravel\Manager\Contracts\AgentContract;
-use Railken\Laravel\Manager\ModelManager;
-use Railken\Laravel\Manager\Tokens;
-use Railken\Laravel\Manager\Attributes;
+use Railken\Lem\Contracts\AgentContract;
+use Railken\Lem\Manager;
+use Railken\Lem\Tokens;
+use Railken\Lem\Attributes;
 
-class $NAME$Manager extends ModelManager
+class $NAME$Manager extends Manager
 {
     /**
      * Class name entity.

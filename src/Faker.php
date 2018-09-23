@@ -1,13 +1,13 @@
 <?php
 
-namespace Railken\Laravel\Manager;
+namespace Railken\Lem;
 
-use Railken\Laravel\Manager\Contracts\FakerContract;
+use Railken\Lem\Contracts\FakerContract;
 
 abstract class BaseFaker implements FakerContract
 {
     /**
-     * @var \Railken\Laravel\Manager\Contracts\ManagerContract
+     * @var \Railken\Lem\Contracts\ManagerContract
      */
     protected $manager;
 
@@ -22,7 +22,7 @@ abstract class BaseFaker implements FakerContract
     }
 
     /**
-     * @return \Railken\Laravel\Manager\Contracts\EntityContract
+     * @return \Railken\Lem\Contracts\EntityContract
      */
     public function entity()
     {

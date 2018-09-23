@@ -1,8 +1,8 @@
 <?php
 
-namespace Railken\Laravel\Manager\Attributes;
+namespace Railken\Lem\Attributes;
 
-use Railken\Laravel\Manager\Contracts\EntityContract;
+use Railken\Lem\Contracts\EntityContract;
 
 class EnumAttribute extends BaseAttribute
 {
@@ -16,8 +16,8 @@ class EnumAttribute extends BaseAttribute
     /**
      * Is a value valid ?
      *
-     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param mixed                                             $value
+     * @param \Railken\Lem\Contracts\EntityContract $entity
+     * @param mixed                                 $value
      *
      * @return bool
      */

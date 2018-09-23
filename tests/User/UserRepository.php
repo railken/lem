@@ -1,10 +1,10 @@
 <?php
 
-namespace Railken\Laravel\Manager\Tests\User;
+namespace Railken\Lem\Tests\User;
 
-use Railken\Laravel\Manager\ModelRepository;
+use Railken\Lem\Repository;
 
-class UserRepository extends ModelRepository
+class UserRepository extends Repository
 {
     /**
      * return whatever or not the email is unique.

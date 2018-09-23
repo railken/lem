@@ -1,15 +1,15 @@
 <?php
 
-namespace Railken\Laravel\Manager\Tests\Core\Article;
+namespace Railken\Lem\Tests\Core\Article;
 
-use Railken\Laravel\Manager\Attributes;
-use Railken\Laravel\Manager\Contracts\AgentContract;
-use Railken\Laravel\Manager\Contracts\EntityContract;
-use Railken\Laravel\Manager\ModelManager;
-use Railken\Laravel\Manager\Tests\User\UserManager;
-use Railken\Laravel\Manager\Tokens;
+use Railken\Lem\Attributes;
+use Railken\Lem\Contracts\AgentContract;
+use Railken\Lem\Contracts\EntityContract;
+use Railken\Lem\Manager;
+use Railken\Lem\Tests\User\UserManager;
+use Railken\Lem\Tokens;
 
-class ArticleManager extends ModelManager
+class ArticleManager extends Manager
 {
     /**
      * Class name entity.

@@ -2,8 +2,8 @@
 
 namespace $NAMESPACE$;
 
-use Railken\Laravel\Manager\ModelRepository;
+use Railken\Lem\Repository;
 
-class $NAME$Repository extends ModelRepository
+class $NAME$Repository extends Repository
 {
 }

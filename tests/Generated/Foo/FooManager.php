@@ -1,13 +1,13 @@
 <?php
 
-namespace Railken\Laravel\Manager\Tests\Generated\Foo;
+namespace Railken\Lem\Tests\Generated\Foo;
 
-use Railken\Laravel\Manager\Attributes;
-use Railken\Laravel\Manager\Contracts\AgentContract;
-use Railken\Laravel\Manager\ModelManager;
-use Railken\Laravel\Manager\Tokens;
+use Railken\Lem\Contracts\AgentContract;
+use Railken\Lem\Manager;
+use Railken\Lem\Tokens;
+use Railken\Lem\Attributes;
 
-class FooManager extends ModelManager
+class FooManager extends Manager
 {
     /**
      * Class name entity.
@@ -21,7 +21,7 @@ class FooManager extends ModelManager
      *
      * @var string
      */
-    public $comment = '...';
+    public $comment = "...";
 
     /**
      * List of all exceptions.
@@ -46,7 +46,7 @@ class FooManager extends ModelManager
 
         parent::__construct($agent);
     }
-
+    
     /**
      * List of all attributes.
      *
@@ -61,6 +61,6 @@ class FooManager extends ModelManager
             Attributes\CreatedAtAttribute::make(),
             Attributes\UpdatedAtAttribute::make(),
             Attributes\DeletedAtAttribute::make(),
-        ];
+        ];    
     }
 }

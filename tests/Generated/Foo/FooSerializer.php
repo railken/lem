@@ -1,19 +1,19 @@
 <?php
 
-namespace Railken\Laravel\Manager\Tests\Generated\Foo;
+namespace Railken\Lem\Tests\Generated\Foo;
 
 use Illuminate\Support\Collection;
 use Railken\Bag;
-use Railken\Laravel\Manager\Contracts\EntityContract;
-use Railken\Laravel\Manager\ModelSerializer;
-use Railken\Laravel\Manager\Tokens;
+use Railken\Lem\Contracts\EntityContract;
+use Railken\Lem\Serializer;
+use Railken\Lem\Tokens;
 
-class FooSerializer extends ModelSerializer
+class FooSerializer extends Serializer
 {
     /**
      * Serialize entity.
      *
-     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
+     * @param \Railken\Lem\Contracts\EntityContract $entity
      * @param \Illuminate\Support\Collection $select
      *
      * @return \Railken\Bag

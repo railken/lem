@@ -1,6 +1,6 @@
 <?php
 
-namespace Railken\Laravel\Manager\Attributes;
+namespace Railken\Lem\Attributes;
 
 /**
  * This attribute will be automatically updated by eloquent.

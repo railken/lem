@@ -1,13 +1,13 @@
 <?php
 
-namespace Railken\Laravel\Manager\Tests\User;
+namespace Railken\Lem\Tests\User;
 
 use Illuminate\Support\Collection;
 use Railken\Bag;
-use Railken\Laravel\Manager\Contracts\EntityContract;
-use Railken\Laravel\Manager\ModelSerializer;
+use Railken\Lem\Contracts\EntityContract;
+use Railken\Lem\Serializer;
 
-class UserSerializer extends ModelSerializer
+class UserSerializer extends Serializer
 {
     /**
      * Serialize entity.

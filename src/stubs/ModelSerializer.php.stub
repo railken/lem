@@ -4,16 +4,16 @@ namespace $NAMESPACE$;
 
 use Illuminate\Support\Collection;
 use Railken\Bag;
-use Railken\Laravel\Manager\Contracts\EntityContract;
-use Railken\Laravel\Manager\ModelSerializer;
-use Railken\Laravel\Manager\Tokens;
+use Railken\Lem\Contracts\EntityContract;
+use Railken\Lem\Serializer;
+use Railken\Lem\Tokens;
 
-class $NAME$Serializer extends ModelSerializer
+class $NAME$Serializer extends Serializer
 {
     /**
      * Serialize entity.
      *
-     * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
+     * @param \Railken\Lem\Contracts\EntityContract $entity
      * @param \Illuminate\Support\Collection $select
      *
      * @return \Railken\Bag

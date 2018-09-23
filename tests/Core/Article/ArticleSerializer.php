@@ -1,12 +1,12 @@
 <?php
 
-namespace Railken\Laravel\Manager\Tests\Core\Article;
+namespace Railken\Lem\Tests\Core\Article;
 
 use Illuminate\Support\Collection;
-use Railken\Laravel\Manager\Contracts\EntityContract;
-use Railken\Laravel\Manager\ModelSerializer;
+use Railken\Lem\Contracts\EntityContract;
+use Railken\Lem\Serializer;
 
-class ArticleSerializer extends ModelSerializer
+class ArticleSerializer extends Serializer
 {
     /**
      * Serialize entity.

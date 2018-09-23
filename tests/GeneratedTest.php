@@ -1,17 +1,16 @@
 <?php
 
-namespace Railken\Laravel\Manager\Tests;
+namespace Railken\Lem\Tests;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
 use Railken\Bag;
-use Railken\Laravel\Manager\Generator;
-use Railken\Laravel\Manager\Tests\Generated\Foo\FooManager;
-use Railken\Laravel\Manager\Tests\Generated\Foo\FooServiceProvider;
-use Railken\Laravel\Manager\Tests\User\User;
+use Railken\Lem\Generator;
+use Railken\Lem\Tests\Generated\Foo\FooManager;
+use Railken\Lem\Tests\User\User;
 
-class GeneratedTest extends \Orchestra\Testbench\TestCase
+class GeneratedTest extends BaseTest
 {
     /**
      * Setup the test environment.
@@ -52,10 +51,9 @@ class GeneratedTest extends \Orchestra\Testbench\TestCase
 
         File::deleteDirectory(__DIR__.'/Generated/Foo', true);
 
-        $generator->generate(__DIR__.'/Generated/Foo', "Railken\Laravel\Manager\Tests\Generated\Foo");
+        $generator->generate(__DIR__.'/Generated/Foo', "Railken\Lem\Tests\Generated\Foo");
 
         $this->assertEquals(true, File::exists(__DIR__.'/Generated/Foo'));
-        (new FooServiceProvider($this->app))->register();
 
         $user = new User();
         $m = new FooManager($user);
@@ -75,20 +73,5 @@ class GeneratedTest extends \Orchestra\Testbench\TestCase
         $this->assertEquals(true, $m->findOrCreate(['name' => 'test'])->ok());
 
         $this->assertEquals($foo->id, $foo_s->id);
-    }
-
-    /**
-     * Get package providers.
-     *
-     * @param \Illuminate\Foundation\Application $app
-     *
-     * @return array
-     */
-    protected function getPackageProviders($app)
-    {
-        return [
-            AppServiceProvider::class,
-            \Railken\Laravel\Manager\ManagerServiceProvider::class,
-        ];
     }
 }
