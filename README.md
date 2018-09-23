@@ -1,4 +1,4 @@
-# Entity Manager Laravel
+# Lem
 
 [![Build Status](https://travis-ci.org/railken/lem.svg?branch=master)](https://travis-ci.org/railken/lem)
 
