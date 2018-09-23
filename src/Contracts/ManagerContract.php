@@ -103,7 +103,7 @@ interface ManagerContract
     /**
      * Retrieve attributes.
      *
-     * @return array|\Illuminate\Support\Collection
+     * @return \Illuminate\Support\Collection
      */
     public function getAttributes();
 
@@ -113,6 +113,13 @@ interface ManagerContract
      * @return array
      */
     public function getUnique();
+
+    /**
+     * Get name.
+     *
+     * @return string
+     */
+    public function getName();
 
     /**
      * Retrieve an exception class given code.

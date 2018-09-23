@@ -306,7 +306,7 @@ abstract class BaseAttribute implements AttributeContract
      *
      * @param bool $unique
      *
-     * @return bool
+     * @return $this
      */
     public function setUnique(bool $unique): self
     {

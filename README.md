@@ -1,27 +1,23 @@
 # Entity Manager Laravel
 
-[![Build Status](https://travis-ci.org/railken/entity-manager-laravel.svg?branch=master)](https://travis-ci.org/railken/entity-manager-laravel)
+[![Build Status](https://travis-ci.org/railken/lem.svg?branch=master)](https://travis-ci.org/railken/lem)
 
 A precise way to structure your logic to improve readability and maintainability of your code when building API.
 
-## Requirements
+# Requirements
 
-PHP 7.0.0 and later.
-
-## Composer
-
-You can install it via [Composer](https://getcomposer.org/) by typing the
-following command:
-
-```bash
-composer require railken/laravel-manager
-```
+PHP 7.1 and later.
 
 ## Installation
-- Add the service provider to the `providers` array in `config/app.php`
 
-```php
-Railken\Lem\ManagerServiceProvider::class,
+You can install it via [Composer](https://getcomposer.org/) by typing the following command:
+
+```bash
+composer require railken/lara-ore-config
+```
+
+The package will automatically register itself.
+Lem\ManagerServiceProvider::class,
 ```
 
 ## Usage
@@ -47,7 +43,7 @@ if ($result->ok()) {
 
 ```
 
-How can you get an Error during an operation? An error occurs when a validation or authorization fails. The cool thing about it is that you have the total control during each process: using [ModelValidator](#modelvalidator) and [ModelAuthorizer](#modelauthorizer). When you're retrieving errors you're receiving a Collection, it goes pretty well when you're developing an api. Here's an example
+How can you get an Error during an operation? An error occurs when a validation or authorization fails. The cool thing about it is that you have the total control during each process: using [Validator](#modelvalidator) and [Authorizer](#modelauthorizer). When you're retrieving errors you're receiving a Collection, it goes pretty well when you're developing an api. Here's an example
 ```php
 $manager = new FooManager();
 $result = $manager->create(['name' => 'f'));
@@ -124,7 +120,7 @@ Note: if you don't set any agent, the SystemAgent will be used (all granted).
 
 
 
-See [ModelAuthorizer](#modelauthorizer) for more explanations.
+See [Authorizer](#modelauthorizer) for more explanations.
 ### Commands
 
 - Generate a new set of files `php artisan railken:make:manager [path] [namespace]`. E.g. php artisan railken:make:manager App "App\Foo"
@@ -195,17 +191,17 @@ class Foo extends Model implements EntityContract
 }
 ```
 
-### ModelRepository
+### Repository
 This is a Repository, the concept is very similar to the Repository of Symfony, code all your queries here.
 
-See [ModelRepository](https://github.com/railken/laravel-manager/blob/master/src/ModelRepository.php) for more information.
+See [Repository](https://github.com/railken/laravel-manager/blob/master/src/Repository.php) for more information.
 
 ```php
 namespace App\Foo;
 
-use Railken\Lem\ModelRepository;
+use Railken\Lem\Repository;
 
-class FooRepository extends ModelRepository
+class FooRepository extends Repository
 {
 
     /**
@@ -283,7 +279,7 @@ class FooParameterBag extends ParameterBag
 
 ```
 
-### ModelValidator
+### Validator
 Here comes the validator, and again it's very simple. validate() is called whenever a create/update operation is called.
 Remember: always return the collection of errors. You can of course add a specific library for validation and use it here.
 
@@ -292,13 +288,13 @@ Remember: always return the collection of errors. You can of course add a specif
 namespace App\Foo;
 
 use Railken\Lem\Contracts\EntityContract;
-use Railken\Lem\Contracts\ModelValidatorContract;
+use Railken\Lem\Contracts\ValidatorContract;
 use Railken\Lem\ParameterBag;
 use Illuminate\Support\Collection;
 use App\Foo\Exceptions as Exceptions;
 
 
-class FooValidator implements ModelValidatorContract
+class FooValidator implements ValidatorContract
 {
 
     /**
@@ -327,18 +323,18 @@ class FooValidator implements ModelValidatorContract
 
 ```
 
-### ModelSerializer
+### Serializer
 This class will serialize your model
 
 ```php
 namespace App\Foo;
 
-use Railken\Lem\Contracts\ModelSerializerContract;
+use Railken\Lem\Contracts\SerializerContract;
 use Railken\Lem\Contracts\EntityContract;
 use Illuminate\Support\Collection;
 use Railken\Bag;
 
-class FooSerializer implements ModelSerializerContract
+class FooSerializer implements SerializerContract
 {
 
 	/**

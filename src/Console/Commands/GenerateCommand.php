@@ -5,7 +5,7 @@ namespace Railken\Lem\Console\Commands;
 use Illuminate\Console\Command;
 use Railken\Lem\Generator;
 
-class Generate extends Command
+class GenerateCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -22,24 +22,6 @@ class Generate extends Command
     protected $description = 'Generate all basics files';
 
     /**
-     * Create a new command instance.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
-     * @param string $path
-     *
-     * @return string
-     */
-    public function getAbsolutePathByParameter($path)
-    {
-        return getcwd().'/'.$path;
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed
@@ -52,7 +34,7 @@ class Generate extends Command
 
         $generator = new Generator();
         $generator->generate(
-            $path = $this->getAbsolutePathByParameter($this->argument('path')),
+            $path = getcwd().'/'.strval($this->argument('path')),
             $this->argument('namespace')
         );
         $this->info("Manager {$this->argument('namespace')} in {$path} generated.");

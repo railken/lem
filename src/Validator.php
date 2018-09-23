@@ -17,7 +17,7 @@ class Validator implements ValidatorContract
      *
      * @param ManagerContract $manager
      */
-    public function __construct(ManagerContract $manager = null)
+    public function __construct(ManagerContract $manager)
     {
         $this->manager = $manager;
     }
@@ -81,7 +81,7 @@ class Validator implements ValidatorContract
             if ($where->count() > 0 && $q->where($where->toArray())->count() > 0) {
                 $exception = $this->getManager()->getException(Tokens::NOT_UNIQUE);
 
-                $errors->push($exception($where));
+                $errors->push(new $exception($where));
             }
         }
 

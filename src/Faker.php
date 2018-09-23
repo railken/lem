@@ -4,7 +4,7 @@ namespace Railken\Lem;
 
 use Railken\Lem\Contracts\FakerContract;
 
-abstract class BaseFaker implements FakerContract
+abstract class Faker implements FakerContract
 {
     /**
      * @var \Railken\Lem\Contracts\ManagerContract

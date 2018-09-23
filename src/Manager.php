@@ -23,6 +23,11 @@ abstract class Manager implements ManagerContract
     use Concerns\HasValidator;
 
     /**
+     * @var string
+     */
+    protected $entity;
+
+    /**
      * @var Collection
      */
     protected $attributes;

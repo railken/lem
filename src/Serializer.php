@@ -15,9 +15,9 @@ abstract class Serializer implements SerializerContract
     /**
      * Construct.
      *
-     * @param ManagerContract|null $manager
+     * @param ManagerContract $manager
      */
-    public function __construct(ManagerContract $manager = null)
+    public function __construct(ManagerContract $manager)
     {
         $this->manager = $manager;
     }

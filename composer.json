@@ -21,7 +21,9 @@
         }
     },
     "autoload-dev": {
-        "psr-4": { "Railken\\Lem\\Tests\\": "tests/" }
+        "psr-4": { 
+            "Railken\\Lem\\Tests\\": "tests/" 
+        }
     },
     "extra": {
         "laravel": {

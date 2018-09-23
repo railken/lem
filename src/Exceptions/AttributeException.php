@@ -35,11 +35,11 @@ abstract class AttributeException extends \Exception
     /**
      * Construct.
      *
-     * @param mixed $value
+     * @param mixed $code
      */
     public function __construct($code = null)
     {
-        parent::__construct(null);
+        parent::__construct('');
 
         $this->code = sprintf($this->code, $code);
     }
