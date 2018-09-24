@@ -5,9 +5,8 @@ namespace Railken\Lem\Tests\App\Managers;
 use Railken\Lem\Attributes;
 use Railken\Lem\Contracts\EntityContract;
 use Railken\Lem\Manager;
-use Railken\Lem\Tests\App\Managers\UserManager;
 
-class Manager extends Manager
+class ArticleManager extends Manager
 {
     /**
      * List of all attributes.

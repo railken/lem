@@ -1,6 +1,6 @@
 <?php
 
-namespace $NAMESPACE$;
+namespace $NAMESPACE$\Authorizers;
 
 use Railken\Lem\Authorizer;
 use Railken\Lem\Tokens;

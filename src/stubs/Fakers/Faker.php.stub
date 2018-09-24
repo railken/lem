@@ -1,6 +1,6 @@
 <?php
 
-namespace $NAMESPACE$;
+namespace $NAMESPACE$\Fakers;
 
 use Railken\Lem\Faker;
 use Faker\Factory;

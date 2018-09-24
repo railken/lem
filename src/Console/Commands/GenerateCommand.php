@@ -12,7 +12,7 @@ class GenerateCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'make:manager {path} {namespace}';
+    protected $signature = 'make:manager {path} {namespace} {name}';
 
     /**
      * The console command description.
@@ -31,8 +31,10 @@ class GenerateCommand extends Command
         $generator = new Generator();
         $generator->generate(
             $path = getcwd().'/'.strval($this->argument('path')),
-            strval($this->argument('namespace'))
+            strval($this->argument('namespace')),
+            strval($this->argument('name'))
         );
-        $this->info('Manager '.strval($this->argument('namespace'))." in {$path} generated.");
+
+        $this->info('Generated');
     }
 }

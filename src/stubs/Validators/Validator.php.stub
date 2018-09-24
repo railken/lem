@@ -1,6 +1,6 @@
 <?php
 
-namespace $NAMESPACE$;
+namespace $NAMESPACE$\Validators;
 
 use Railken\Lem\Validator;
 

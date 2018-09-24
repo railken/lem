@@ -5,7 +5,7 @@ namespace Railken\Lem\Tests\App\Managers;
 use Railken\Lem\Attributes;
 use Railken\Lem\Manager;
 
-class Manager extends Manager
+class UserManager extends Manager
 {
     /**
      * List of all attributes.

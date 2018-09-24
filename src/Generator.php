@@ -40,14 +40,12 @@ class Generator
      *
      * @param string $path
      * @param string $namespace
+     * @param string $name
      */
-    public function generate(string $path, string $namespace)
+    public function generate(string $path, string $namespace, string $name)
     {
-        $namespaces = collect(explode('\\', $namespace));
-        $name = $namespaces->last();
-        $base_path = $path;
-
         $name = $this->camelize($name);
+
         $vars = [
             'NAMESPACE'       => $namespace,
             'NAME'            => $name,
@@ -56,27 +54,24 @@ class Generator
             'NAME:UPPERCASE'  => strtoupper($name),
         ];
 
-        $this->put($base_path, '/Models/Model.php.stub', '/Models/'.$name, $vars);
-        $this->put($base_path, '/Managers/Manager.php.stub', '/Managers/'.$name.'Manager.php', $vars);
-        $this->put($base_path, '/Repositories/Repository.php.stub', '/Repositories/'.$name.'Repository.php', $vars);
-        $this->put($base_path, '/Validators/Validator.php.stub', '/Validators/'.$name.'Validator.php', $vars);
-        $this->put($base_path, '/Serializers/Serializer.php.stub', '/Serializers/'.$name.'Serializer.php', $vars);
-        $this->put($base_path, '/Authorizers/Authorizer.php.stub', '/Authorizers/'.$name.'Authorizer.php', $vars);
+        $this->put('/Models/Model.php.stub', $path.'/Models/'.$name.'.php', $vars);
+        $this->put('/Managers/Manager.php.stub', $path.'/Managers/'.$name.'Manager.php', $vars);
+        $this->put('/Repositories/Repository.php.stub', $path.'/Repositories/'.$name.'Repository.php', $vars);
+        $this->put('/Validators/Validator.php.stub', $path.'/Validators/'.$name.'Validator.php', $vars);
+        $this->put('/Serializers/Serializer.php.stub', $path.'/Serializers/'.$name.'Serializer.php', $vars);
+        $this->put('/Authorizers/Authorizer.php.stub', $path.'/Authorizers/'.$name.'Authorizer.php', $vars);
     }
 
     /**
      * Generate a new file from $source to $to.
      *
-     * @param string $base_path
      * @param string $source
      * @param string $to
      * @param array  $data
      */
-    public function put($base_path, $source, $to, $data = [])
+    public function put($source, $to, $data = [])
     {
         $content = file_get_contents(__DIR__.'/stubs'.$source);
-
-        $to = $base_path.$to;
 
         $to_dir = dirname($to);
 

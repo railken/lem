@@ -1,6 +1,6 @@
 <?php
 
-namespace $NAMESPACE$;
+namespace $NAMESPACE$\Repositories;
 
 use Railken\Lem\Repository;
 

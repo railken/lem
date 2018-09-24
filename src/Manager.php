@@ -100,25 +100,7 @@ abstract class Manager implements ManagerContract
      */
     public function getName()
     {
-        return array_values(array_slice(explode('\\', $this->getNamespaceBase()), -1))[0];
-    }
-
-    /**
-     * Create a new instance of exception.
-     *
-     * @param string $code
-     * @param mixed  $value
-     *
-     * @return \Exception
-     */
-    public function newException(string $code, $value): Exception
-    {
-        $exception = $this->getException($code);
-
-        return new $exception(
-            strtoupper(Str::kebab($this->getName())),
-            $value
-        );
+        return preg_replace('/Manager$/', '', (new \ReflectionClass($this))->getShortName());
     }
 
     /**
@@ -136,7 +118,7 @@ abstract class Manager implements ManagerContract
      */
     public function getNamespaceBase()
     {
-        return (new \ReflectionClass($this))->getNamespaceName();
+        return preg_replace('/\\\Managers$/', '', (new \ReflectionClass($this))->getNamespaceName());
     }
 
     /**
@@ -144,13 +126,16 @@ abstract class Manager implements ManagerContract
      */
     public function registerClasses()
     {
+        $namespace = $this->getNamespaceBase();
+        $name = $this->getName();
+
         return [
-            'model'      => $this->getNamespaceBase().'\\Model',
-            'serializer' => $this->getNamespaceBase().'\\Serializer',
-            'repository' => $this->getNamespaceBase().'\\Repository',
-            'validator'  => $this->getNamespaceBase().'\\Validator',
-            'authorizer' => $this->getNamespaceBase().'\\Authorizer',
-            'faker'      => $this->getNamespaceBase().'\\Faker',
+            'model'      => "{$namespace}\\Models\\{$name}",
+            'serializer' => "{$namespace}\\Serializers\\{$name}Serializer",
+            'repository' => "{$namespace}\\Repositories\\{$name}Repository",
+            'validator'  => "{$namespace}\\Validators\\{$name}Validator",
+            'authorizer' => "{$namespace}\\Authorizers\\{$name}Authorizer",
+            'faker'      => "{$namespace}\\Fakers\\{$name}Faker",
         ];
     }
 
@@ -185,6 +170,24 @@ abstract class Manager implements ManagerContract
 
         $this->getRepository()->setEntity($this->getEntity());
         $this->bootAttributes();
+    }
+
+    /**
+     * Create a new instance of exception.
+     *
+     * @param string $code
+     * @param mixed  $value
+     *
+     * @return \Exception
+     */
+    public function newException(string $code, $value): Exception
+    {
+        $exception = $this->getException($code);
+
+        return new $exception(
+            strtoupper(Str::kebab($this->getName())),
+            $value
+        );
     }
 
     /**

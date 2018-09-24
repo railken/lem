@@ -1,12 +1,12 @@
 <?php
 
-namespace $NAMESPACE$;
+namespace $NAMESPACE$\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Railken\Lem\Contracts\EntityContract;
 
-class $NAME$Model extends Model implements EntityContract
+class $NAME$ extends Model implements EntityContract
 {
     use SoftDeletes;
 

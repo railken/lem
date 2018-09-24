@@ -2,7 +2,7 @@
 
 namespace Railken\Lem\Tests;
 
-use Railken\Lem\Tests\App\User;
+use Railken\Lem\Tests\App\Managers\UserManager;
 
 class BaseAttributeTest extends BaseTest
 {

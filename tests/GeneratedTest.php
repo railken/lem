@@ -9,7 +9,6 @@ use Railken\Bag;
 use Railken\Lem\Generator;
 use Railken\Lem\Tests\App\Managers\FooManager;
 use Railken\Lem\Tests\App\Models\User;
-use Railken\Lem\Tests\App\Managers\UserManager;
 
 class GeneratedTest extends BaseTest
 {
@@ -50,13 +49,13 @@ class GeneratedTest extends BaseTest
     {
         $generator = new Generator();
 
-        $generator->generate(__DIR__.'/App', "Railken\Lem\Tests\App");
+        $generator->generate(__DIR__.'/App', "Railken\Lem\Tests\App", 'Foo');
 
-        $this->assertEquals(true, File::exists(__DIR__.'/App/Models/Foo'));
-        $this->assertEquals(true, File::exists(__DIR__.'/App/Repositories/FooRepository'));
-        $this->assertEquals(true, File::exists(__DIR__.'/App/Managers/FooManager'));
-        $this->assertEquals(true, File::exists(__DIR__.'/App/Authorizers/FooAuthorizer'));
-        $this->assertEquals(true, File::exists(__DIR__.'/App/Serializers/FooSerializer'));
+        $this->assertEquals(true, File::exists(__DIR__.'/App/Models/Foo.php'));
+        $this->assertEquals(true, File::exists(__DIR__.'/App/Repositories/FooRepository.php'));
+        $this->assertEquals(true, File::exists(__DIR__.'/App/Managers/FooManager.php'));
+        $this->assertEquals(true, File::exists(__DIR__.'/App/Authorizers/FooAuthorizer.php'));
+        $this->assertEquals(true, File::exists(__DIR__.'/App/Serializers/FooSerializer.php'));
 
         $user = new User();
         $m = new FooManager($user);

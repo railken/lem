@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Railken\Lem\Contracts\EntityContract;
 
-class Article extends Model implements EntityContract
+class Foo extends Model implements EntityContract
 {
     use SoftDeletes;
 
@@ -15,29 +15,24 @@ class Article extends Model implements EntityContract
      *
      * @var string
      */
-    protected $table = 'articles';
+    protected $table = 'foo';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['title', 'description', 'deleted_at'];
+    protected $fillable = [
+        'name',
+        'description',
+    ];
 
     /**
      * The attributes that should be mutated to dates.
      *
      * @var array
      */
-    protected $dates = ['deleted_at'];
-
-    /**
-     * Get the author that wrote the article.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function author()
-    {
-        return $this->belongsTo(User::class, 'author_id');
-    }
+    protected $dates = [
+        'deleted_at',
+    ];
 }

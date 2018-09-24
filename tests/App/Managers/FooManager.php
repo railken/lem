@@ -1,26 +1,24 @@
 <?php
 
-namespace $NAMESPACE$\Managers;
+namespace Railken\Lem\Tests\App\Managers;
 
-use Railken\Lem\Contracts\AgentContract;
-use Railken\Lem\Manager;
-use Railken\Lem\Tokens;
 use Railken\Lem\Attributes;
+use Railken\Lem\Manager;
 
 /**
- * @method \$NAMESPACE$\Repository getRepository()
- * @method \$NAMESPACE$\Validator  getValidator()
- * @method \$NAMESPACE$\Serializer getSerializer()
- * @method \$NAMESPACE$\Authorizer getAuthorizer()
+ * @method \Railken\Lem\Tests\App\Repository getRepository()
+ * @method \Railken\Lem\Tests\App\Validator  getValidator()
+ * @method \Railken\Lem\Tests\App\Serializer getSerializer()
+ * @method \Railken\Lem\Tests\App\Authorizer getAuthorizer()
  */
-class $NAME$Manager extends Manager
+class FooManager extends Manager
 {
     /**
      * Describe this manager.
      *
      * @var string
      */
-    public $comment = "...";
+    public $comment = '...';
 
     /**
      * List of all attributes.
