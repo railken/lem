@@ -2,9 +2,7 @@
 
 namespace Railken\Lem\Tests;
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Schema;
 use Railken\Bag;
 use Railken\Lem\Generator;
 use Railken\Lem\Tests\App\Managers\FooManager;
@@ -12,26 +10,6 @@ use Railken\Lem\Tests\App\Models\User;
 
 class GeneratedTest extends BaseTest
 {
-    /**
-     * Setup the test environment.
-     */
-    public function setUp()
-    {
-        $dotenv = new \Dotenv\Dotenv(__DIR__.'/..', '.env');
-        $dotenv->load();
-
-        parent::setUp();
-
-        Schema::dropIfExists('foo');
-
-        Schema::create('foo', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
-        });
-    }
-
     /**
      * Return a new instance of user bag.
      *

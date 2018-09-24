@@ -1,13 +1,13 @@
 <?php
 
-namespace $NAMESPACE$\Fakers;
+namespace Railken\Lem\Tests\App\Fakers;
 
-use Railken\Lem\Faker;
 use Faker\Factory;
 use Railken\Bag;
+use Railken\Lem\Faker;
 
-class $NAME$Faker extends Faker
-{   
+class ArticleFaker extends Faker
+{
     /**
      * @return \Railken\Bag
      */
@@ -16,8 +16,8 @@ class $NAME$Faker extends Faker
         $faker = Factory::create();
 
         $bag = new Bag();
-        $bag->set('name', $faker->name);
-        $bag->set('description', $faker->text);
+        $bag->set('title', $faker->title);
+        $bag->set('author', UserFaker::make()->parameters()->toArray());
 
         return $bag;
     }

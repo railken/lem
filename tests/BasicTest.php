@@ -2,51 +2,12 @@
 
 namespace Railken\Lem\Tests;
 
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Railken\Bag;
 use Railken\Lem\Tests\App\Managers\ArticleManager;
 use Railken\Lem\Tests\App\Managers\UserManager;
 
 class BasicTest extends BaseTest
 {
-    /**
-     * Setup the test environment.
-     */
-    public function setUp()
-    {
-        $dotenv = new \Dotenv\Dotenv(__DIR__.'/..', '.env');
-        $dotenv->load();
-
-        parent::setUp();
-
-        Schema::dropIfExists('comments');
-        Schema::dropIfExists('articles');
-        Schema::dropIfExists('users');
-        Schema::dropIfExists('foo');
-
-        Schema::create('users', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('username')->nullable();
-            $table->string('email')->unique()->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->softDeletes();
-            $table->timestamps();
-        });
-
-        Schema::create('articles', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('title');
-            $table->string('description')->nullable();
-            $table->string('notes')->nullable();
-            $table->integer('author_id')->unsigned();
-            $table->timestamps();
-            $table->softDeletes();
-            $table->foreign('author_id')->references('id')->on('users');
-        });
-    }
-
     /**
      * Return a new instance of user bag.
      *

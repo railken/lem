@@ -60,6 +60,7 @@ class Generator
         $this->put('/Validators/Validator.php.stub', $path.'/Validators/'.$name.'Validator.php', $vars);
         $this->put('/Serializers/Serializer.php.stub', $path.'/Serializers/'.$name.'Serializer.php', $vars);
         $this->put('/Authorizers/Authorizer.php.stub', $path.'/Authorizers/'.$name.'Authorizer.php', $vars);
+        $this->put('/Fakers/Faker.php.stub', $path.'/Fakers/'.$name.'Faker.php', $vars);
     }
 
     /**

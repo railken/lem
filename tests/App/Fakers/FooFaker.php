@@ -1,13 +1,13 @@
 <?php
 
-namespace $NAMESPACE$\Fakers;
+namespace Railken\Lem\Tests\App\Fakers;
 
-use Railken\Lem\Faker;
 use Faker\Factory;
 use Railken\Bag;
+use Railken\Lem\Faker;
 
-class $NAME$Faker extends Faker
-{   
+class FooFaker extends Faker
+{
     /**
      * @return \Railken\Bag
      */
