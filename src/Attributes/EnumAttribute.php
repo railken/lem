@@ -14,6 +14,18 @@ class EnumAttribute extends BaseAttribute
     protected $options = [];
 
     /**
+     * Create a new instance.
+     *
+     * @param string $name
+     * @param array  $options
+     */
+    public function __construct(string $name = null, array $options = [])
+    {
+        $this->setOptions($options);
+        parent::__construct($name);
+    }
+
+    /**
      * Is a value valid ?
      *
      * @param \Railken\Lem\Contracts\EntityContract $entity
