@@ -5,8 +5,8 @@ namespace Railken\Lem\Tests;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Railken\Bag;
-use Railken\Lem\Tests\Core\Article;
-use Railken\Lem\Tests\Core\User;
+use Railken\Lem\Tests\App\Managers\ArticleManager;
+use Railken\Lem\Tests\App\Managers\UserManager;
 
 class BasicTest extends BaseTest
 {
@@ -62,7 +62,7 @@ class BasicTest extends BaseTest
      */
     public function testBasics()
     {
-        $um = new User\Manager();
+        $um = new UserManager();
 
         // Testing validation
         $this->assertEquals('USER_USERNAME_NOT_DEFINED', $um->create($this->getUserBag()->remove('username'))->getError()->getCode());
@@ -93,7 +93,7 @@ class BasicTest extends BaseTest
      */
     public function testCreateOrFail()
     {
-        $um = new User\Manager();
+        $um = new UserManager();
         $um->createOrFail($this->getUserBag()->remove('username'));
     }
 
@@ -102,7 +102,7 @@ class BasicTest extends BaseTest
      */
     public function testUpdateOrFail()
     {
-        $um = new User\Manager();
+        $um = new UserManager();
         $user = $um->create($this->getUserBag())->getResource();
         $um->updateOrFail($user, $this->getUserBag()->set('username', '1'));
     }
@@ -112,12 +112,12 @@ class BasicTest extends BaseTest
      */
     public function testArticles()
     {
-        $um = new User\Manager();
+        $um = new UserManager();
         $user = $um->create(['email' => 'test1@test.net', 'username' => 'test1', 'password' => microtime()])->getResource();
 
         // $generator = new Generator();
 
-        $am = new Article\Manager($user);
+        $am = new ArticleManager($user);
 
         $ab = ['title' => 'foo', 'description' => 'bar', 'author_id' => $user->id];
 
@@ -163,10 +163,10 @@ class BasicTest extends BaseTest
 
     public function testDefaultValue()
     {
-        $um = new User\Manager();
+        $um = new UserManager();
         $user = $um->create(['email' => 'test1@test.net', 'username' => 'test1', 'password' => microtime()])->getResource();
 
-        $am = new Article\Manager();
+        $am = new ArticleManager();
 
         $result = $am->create(['author_id' => $user->id]);
 

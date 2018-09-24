@@ -2,7 +2,7 @@
 
 namespace Railken\Lem\Tests;
 
-use Railken\Lem\Tests\Core\User;
+use Railken\Lem\Tests\App\Managers\UserManager;
 
 class ManagerTest extends BaseTest
 {
@@ -11,7 +11,7 @@ class ManagerTest extends BaseTest
      */
     public function testExceptionNotDefinedException()
     {
-        (new User\Manager())->getException('WRONG_EXCEPTION_CODE');
+        (new UserManager())->getException('WRONG_EXCEPTION_CODE');
     }
 
     /**
@@ -19,6 +19,6 @@ class ManagerTest extends BaseTest
      */
     public function testPermissionNotDefinedException()
     {
-        (new User\Manager())->getAuthorizer()->getPermission('WRONG_PERMISSION_CODE');
+        (new UserManager())->getAuthorizer()->getPermission('WRONG_PERMISSION_CODE');
     }
 }

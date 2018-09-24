@@ -12,7 +12,7 @@ class GenerateCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'railken:make:manager {path} {namespace}'; // e.g. "php artisan railken:make:manager src Core\User"
+    protected $signature = 'make:manager {path} {namespace}';
 
     /**
      * The console command description.
@@ -28,15 +28,11 @@ class GenerateCommand extends Command
      */
     public function handle()
     {
-        if (!is_string($this->argument('namespace'))) {
-            throw new \Exception('Wut?');
-        }
-
         $generator = new Generator();
         $generator->generate(
             $path = getcwd().'/'.strval($this->argument('path')),
-            $this->argument('namespace')
+            strval($this->argument('namespace'))
         );
-        $this->info("Manager {$this->argument('namespace')} in {$path} generated.");
+        $this->info('Manager '.strval($this->argument('namespace'))." in {$path} generated.");
     }
 }

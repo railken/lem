@@ -1,0 +1,24 @@
+<?php
+
+namespace $NAMESPACE$;
+
+use Railken\Lem\Faker;
+use Faker\Factory;
+use Railken\Bag;
+
+class $NAME$Faker extends Faker
+{   
+    /**
+     * @return \Railken\Bag
+     */
+    public function parameters()
+    {
+        $faker = Factory::create();
+
+        $bag = new Bag();
+        $bag->set('name', $faker->name);
+        $bag->set('description', $faker->description);
+
+        return $bag;
+    }
+}

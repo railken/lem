@@ -7,8 +7,9 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
 use Railken\Bag;
 use Railken\Lem\Generator;
-use Railken\Lem\Tests\Core\Foo;
-use Railken\Lem\Tests\Core\User;
+use Railken\Lem\Tests\App\Managers\FooManager;
+use Railken\Lem\Tests\App\Models\User;
+use Railken\Lem\Tests\App\Managers\UserManager;
 
 class GeneratedTest extends BaseTest
 {
@@ -49,14 +50,16 @@ class GeneratedTest extends BaseTest
     {
         $generator = new Generator();
 
-        File::deleteDirectory(__DIR__.'/Core/Foo', true);
+        $generator->generate(__DIR__.'/App', "Railken\Lem\Tests\App");
 
-        $generator->generate(__DIR__.'/Core/Foo', "Railken\Lem\Tests\Core\Foo");
+        $this->assertEquals(true, File::exists(__DIR__.'/App/Models/Foo'));
+        $this->assertEquals(true, File::exists(__DIR__.'/App/Repositories/FooRepository'));
+        $this->assertEquals(true, File::exists(__DIR__.'/App/Managers/FooManager'));
+        $this->assertEquals(true, File::exists(__DIR__.'/App/Authorizers/FooAuthorizer'));
+        $this->assertEquals(true, File::exists(__DIR__.'/App/Serializers/FooSerializer'));
 
-        $this->assertEquals(true, File::exists(__DIR__.'/Core/Foo'));
-
-        $user = new User\Model();
-        $m = new Foo\Manager($user);
+        $user = new User();
+        $m = new FooManager($user);
 
         $bag = new Bag(['name' => 'ban']);
 
