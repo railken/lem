@@ -56,6 +56,7 @@ class Generator
 
         $this->put('/Models/Model.php.stub', $path.'/Models/'.$name.'.php', $vars);
         $this->put('/Managers/Manager.php.stub', $path.'/Managers/'.$name.'Manager.php', $vars);
+        $this->put('/Schemas/Schema.php.stub', $path.'/Schemas/'.$name.'Schema.php', $vars);
         $this->put('/Repositories/Repository.php.stub', $path.'/Repositories/'.$name.'Repository.php', $vars);
         $this->put('/Validators/Validator.php.stub', $path.'/Validators/'.$name.'Validator.php', $vars);
         $this->put('/Serializers/Serializer.php.stub', $path.'/Serializers/'.$name.'Serializer.php', $vars);

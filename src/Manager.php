@@ -22,6 +22,8 @@ abstract class Manager implements ManagerContract
     use Concerns\HasAuthorizer;
     use Concerns\HasSerializer;
     use Concerns\HasValidator;
+    use Concerns\HasSchema;
+    use Concerns\CallMethods;
 
     /**
      * @var string
@@ -136,40 +138,26 @@ abstract class Manager implements ManagerContract
             'validator'  => "{$namespace}\\Validators\\{$name}Validator",
             'authorizer' => "{$namespace}\\Authorizers\\{$name}Authorizer",
             'faker'      => "{$namespace}\\Fakers\\{$name}Faker",
+            'schema'     => "{$namespace}\\Schemas\\{$name}Schema",
         ];
     }
 
     /**
-     * Initialize components.
+     * Boot components.
      */
     public function boot()
     {
-        $classes = $this->registerClasses();
+        $this->callMethods('boot', [$this->registerClasses()]);
+    }
 
+    /**
+     * Boot entity.
+     *
+     * @param array $classes
+     */
+    public function bootEntity(array $classes)
+    {
         $this->entity = $classes['model'];
-        $this->validator = new $classes['validator']($this);
-        $this->repository = new $classes['repository']();
-        $this->serializer = new $classes['serializer']($this);
-        $this->authorizer = new $classes['authorizer']($this);
-
-        if ($this->validator === null) {
-            throw new Exceptions\ModelMissingValidatorException($this);
-        }
-
-        if ($this->serializer === null) {
-            throw new Exceptions\ModelMissingSerializerException($this);
-        }
-
-        if ($this->repository === null) {
-            throw new Exceptions\ModelMissingRepositoryException($this);
-        }
-
-        if ($this->authorizer === null) {
-            throw new Exceptions\ModelMissingAuthorizerException($this);
-        }
-
-        $this->getRepository()->setEntity($this->getEntity());
-        $this->bootAttributes();
     }
 
     /**
@@ -487,7 +475,7 @@ abstract class Manager implements ManagerContract
     {
         $r = [];
 
-        foreach ($this->attributes as $attribute) {
+        foreach ($this->getSchema()->getAttributes() as $attribute) {
             $r[] = $attribute::make()->setManager($this);
         }
 

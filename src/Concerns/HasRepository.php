@@ -34,4 +34,15 @@ trait HasRepository
     {
         return $this->repository;
     }
+
+    /**
+     * Boot the component.
+     *
+     * @param array $classes
+     */
+    public function bootRepository(array $classes)
+    {
+        $this->setRepository(new $classes['repository']());
+        $this->getRepository()->setEntity($this->getEntity());
+    }
 }

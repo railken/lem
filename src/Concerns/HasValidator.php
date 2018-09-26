@@ -30,4 +30,14 @@ trait HasValidator
     {
         return $this->validator;
     }
+
+    /**
+     * Boot the component.
+     *
+     * @param array $classes
+     */
+    public function bootValidator(array $classes)
+    {
+        $this->setValidator(new $classes['validator']($this));
+    }
 }

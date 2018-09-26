@@ -34,4 +34,14 @@ trait HasAuthorizer
     {
         return $this->authorizer;
     }
+
+    /**
+     * Boot the component.
+     *
+     * @param array $classes
+     */
+    public function bootAuthorizer(array $classes)
+    {
+        $this->setAuthorizer(new $classes['authorizer']($this));
+    }
 }

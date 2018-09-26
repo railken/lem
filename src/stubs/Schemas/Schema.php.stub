@@ -1,25 +1,18 @@
 <?php
 
-namespace Railken\Lem\Tests\App\Managers;
+namespace $NAMESPACE$\Schemas;
 
+use Railken\Lem\Schema;
 use Railken\Lem\Attributes;
-use Railken\Lem\Manager;
 
-class FooManager extends Manager
+class $NAME$Schema extends Schema
 {
     /**
-     * Describe this manager.
-     *
-     * @var string
-     */
-    public $comment = '...';
-
-    /**
-     * List of all attributes.
+     * Get all the attributes.
      *
      * @var array
      */
-    protected function createAttributes()
+    public function getAttributes()
     {
         return [
             Attributes\IdAttribute::make(),

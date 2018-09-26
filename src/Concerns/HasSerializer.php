@@ -34,4 +34,14 @@ trait HasSerializer
     {
         return $this->serializer;
     }
+
+    /**
+     * Boot the component.
+     *
+     * @param array $classes
+     */
+    public function bootSerializer(array $classes)
+    {
+        $this->setSerializer(new $classes['serializer']($this));
+    }
 }
