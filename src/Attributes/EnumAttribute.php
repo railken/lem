@@ -7,6 +7,13 @@ use Railken\Lem\Contracts\EntityContract;
 class EnumAttribute extends BaseAttribute
 {
     /**
+     * Is the attribute fillable.
+     *
+     * @var bool
+     */
+    protected $fillable = true;
+
+    /**
      * List of values.
      *
      * @var array
