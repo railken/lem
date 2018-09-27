@@ -2,6 +2,7 @@
 
 namespace Railken\Lem\Concerns;
 
+use Illuminate\Support\Collection;
 use Railken\Lem\Contracts\SchemaContract;
 
 trait HasSchema
@@ -43,5 +44,15 @@ trait HasSchema
     public function bootSchema(array $classes)
     {
         $this->setSchema(new $classes['schema']($this));
+
+        $attributes = new Collection();
+
+        foreach ($this->getSchema()->getAttributes() as $attribute) {
+            $attributes[$attribute->getName()] = $attribute;
+            $attribute->setManager($this);
+            $attribute->boot();
+        }
+
+        $this->attributes = $attributes;
     }
 }
