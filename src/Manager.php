@@ -203,22 +203,6 @@ abstract class Manager implements ManagerContract
     }
 
     /**
-     * Initialize attributes.
-     */
-    public function bootAttributes()
-    {
-        $attributes = new Collection();
-
-        foreach ($this->createAttributes() as $attribute) {
-            $attributes[$attribute->getName()] = $attribute;
-            $attribute->setManager($this);
-            $attribute->boot();
-        }
-
-        $this->attributes = $attributes;
-    }
-
-    /**
      * Retrieve attributes.
      *
      * @return \Illuminate\Support\Collection
@@ -464,21 +448,5 @@ abstract class Manager implements ManagerContract
         $entity = $this->getRepository()->findOneBy($criteria);
 
         return $entity !== null ? $this->update($entity, $parameters) : $this->create($parameters);
-    }
-
-    /**
-     * Create attributes.
-     *
-     * @return array
-     */
-    protected function createAttributes()
-    {
-        $r = [];
-
-        foreach ($this->getSchema()->getAttributes() as $attribute) {
-            $r[] = $attribute::make()->setManager($this);
-        }
-
-        return $r;
     }
 }
