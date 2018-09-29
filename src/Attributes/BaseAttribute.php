@@ -303,7 +303,7 @@ abstract class BaseAttribute implements AttributeContract
     {
         $method = $this->default;
 
-        return $method !== null ? $method($entity) : null;
+        return $method !== null ? $method($entity, $this) : null;
     }
 
     /**
