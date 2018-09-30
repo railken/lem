@@ -11,6 +11,13 @@ use Railken\Lem\Tokens;
 class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeContract
 {
     /**
+     * Is the attribute fillable.
+     *
+     * @var bool
+     */
+    protected $fillable = true;
+    
+    /**
      * @var string
      */
     protected $relationName;
