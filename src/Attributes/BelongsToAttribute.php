@@ -16,7 +16,7 @@ class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeCont
      * @var bool
      */
     protected $fillable = true;
-    
+
     /**
      * @var string
      */
