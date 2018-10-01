@@ -126,12 +126,12 @@ abstract class Manager implements ManagerContract
     /**
      * Register Components.
      */
-    public function registerClasses()
+    public function retrieveClasses()
     {
         $namespace = $this->getNamespaceBase();
         $name = $this->getName();
 
-        return [
+        return array_merge([
             'model'      => "{$namespace}\\Models\\{$name}",
             'serializer' => "{$namespace}\\Serializers\\{$name}Serializer",
             'repository' => "{$namespace}\\Repositories\\{$name}Repository",
@@ -139,6 +139,16 @@ abstract class Manager implements ManagerContract
             'authorizer' => "{$namespace}\\Authorizers\\{$name}Authorizer",
             'faker'      => "{$namespace}\\Fakers\\{$name}Faker",
             'schema'     => "{$namespace}\\Schemas\\{$name}Schema",
+        ], $this->registerClasses());
+    }
+
+    /**
+     * Register Components.
+     */
+    public function registerClasses()
+    {
+        return [
+            // ...
         ];
     }
 
@@ -147,7 +157,7 @@ abstract class Manager implements ManagerContract
      */
     public function boot()
     {
-        $this->callMethods('boot', [$this->registerClasses()]);
+        $this->callMethods('boot', [$this->retrieveClasses()]);
     }
 
     /**
