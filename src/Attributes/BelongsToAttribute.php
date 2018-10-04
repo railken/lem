@@ -156,6 +156,7 @@ class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeCont
 
             if (is_array($val) || ($val instanceof \stdClass)) {
                 $params = json_decode((string) json_encode($val), true);
+
                 $rentity = $entity->{$this->getRelationName()};
 
                 $unique_keys = $m->getAttributes()->filter(function ($attribute) {
@@ -166,7 +167,7 @@ class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeCont
 
                 $params = $this->filterRelationParameters(new Bag($params));
 
-                if ($entity->exists) {
+                if ($entity->exists && $rentity !== null) {
                     $result = $m->update($rentity, $params);
                 } else {
                     $result = $criteria->count() === 0 ? $m->create($params) : $m->findOrCreate($criteria, $params);
