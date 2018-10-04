@@ -43,6 +43,7 @@ abstract class AttributeException extends \Exception
     {
         $code = sprintf($this->code, $model, $attribute);
         $message = sprintf($this->message, $value);
+        $this->label = $attribute;
         $this->value = $value;
         $this->code = $code;
 
