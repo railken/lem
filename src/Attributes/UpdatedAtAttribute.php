@@ -20,4 +20,11 @@ class UpdatedAtAttribute extends DateTimeAttribute
      * @var string
      */
     protected $comment = 'Indicate the date when the record was last updated';
+
+    /**
+     * Is the attribute fillable.
+     *
+     * @var bool
+     */
+    protected $fillable = false;
 }

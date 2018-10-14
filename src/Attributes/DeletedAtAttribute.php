@@ -17,4 +17,11 @@ class DeletedAtAttribute extends DateTimeAttribute
      * @var string
      */
     protected $comment = 'Indicate the date when the record was soft-deleted';
+
+    /**
+     * Is the attribute fillable.
+     *
+     * @var bool
+     */
+    protected $fillable = false;
 }

@@ -2,7 +2,7 @@
 
 namespace Railken\Lem\Attributes;
 
-class CreatedAtAttribute extends BaseAttribute
+class CreatedAtAttribute extends DateTimeAttribute
 {
     /**
      * Name of the attribute.
@@ -17,4 +17,11 @@ class CreatedAtAttribute extends BaseAttribute
      * @var string
      */
     protected $comment = 'Indicate the date when the record was created';
+
+    /**
+     * Is the attribute fillable.
+     *
+     * @var bool
+     */
+    protected $fillable = false;
 }
