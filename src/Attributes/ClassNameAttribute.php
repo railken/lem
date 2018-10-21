@@ -36,7 +36,7 @@ class ClassNameAttribute extends TextAttribute
     public function valid(EntityContract $entity, $value)
     {
         foreach ($this->getOptions() as $option) {
-            if (class_exists($value) && (new $value()) instanceof $option) {
+            if (class_exists($value) && is_subclass_of($value, $option)) {
                 return true;
             }
         }
