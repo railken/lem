@@ -215,6 +215,10 @@ abstract class BaseAttribute implements AttributeContract
     {
         $errors = new Collection();
 
+        if (!$this->getFillable()) {
+            return $errors;
+        }
+
         if (!$parameters->has($this->name) && !$entity->exists) {
             $default = $this->getDefault($entity);
 

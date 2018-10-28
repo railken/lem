@@ -87,15 +87,11 @@ class BasicTest extends BaseTest
 
         $user->addPermission('article.create');
 
-        $this->assertEquals(7, $am->create($ab)->getErrors()->count());
+        $this->assertEquals(3, $am->create($ab)->getErrors()->count());
 
-        $this->assertEquals('ARTICLE_ID_NOT_AUTHORIZED', $am->create($ab)->getError(0)->getCode());
-        $this->assertEquals('ARTICLE_TITLE_NOT_AUTHORIZED', $am->create($ab)->getError(1)->getCode());
-        $this->assertEquals('ARTICLE_DESCRIPTION_NOT_AUTHORIZED', $am->create($ab)->getError(2)->getCode());
-        $this->assertEquals('ARTICLE_AUTHOR_ID_NOT_AUTHORIZED', $am->create($ab)->getError(3)->getCode());
-        $this->assertEquals('ARTICLE_CREATED_AT_NOT_AUTHORIZED', $am->create($ab)->getError(4)->getCode());
-        $this->assertEquals('ARTICLE_UPDATED_AT_NOT_AUTHORIZED', $am->create($ab)->getError(5)->getCode());
-        $this->assertEquals('ARTICLE_DELETED_AT_NOT_AUTHORIZED', $am->create($ab)->getError(6)->getCode());
+        $this->assertEquals('ARTICLE_TITLE_NOT_AUTHORIZED', $am->create($ab)->getError(0)->getCode());
+        $this->assertEquals('ARTICLE_DESCRIPTION_NOT_AUTHORIZED', $am->create($ab)->getError(1)->getCode());
+        $this->assertEquals('ARTICLE_AUTHOR_ID_NOT_AUTHORIZED', $am->create($ab)->getError(2)->getCode());
 
         $user->addPermission('article.attributes.id.*');
         $user->addPermission('article.attributes.title.*');
