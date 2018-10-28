@@ -4,7 +4,7 @@ namespace Railken\Lem\Attributes;
 
 use Railken\Lem\Contracts\EntityContract;
 
-class BooleanAttribute extends BaseAttribute
+class BooleanAttribute extends NumberAttribute
 {
     /**
      * Is a value valid ?
