@@ -16,6 +16,18 @@ class BooleanAttribute extends NumberAttribute
      */
     public function valid(EntityContract $entity, $value)
     {
-        return 1 === $value || 0 === $value || true === $value || false === $value;
+        return 1 == intval($value) || 0 == intval($value);
+    }
+
+    /**
+     * Retrieve default value.
+     *
+     * @param \Railken\Lem\Contracts\EntityContract $entity
+     *
+     * @return mixed
+     */
+    public function getDefault(EntityContract $entity)
+    {
+        return 0;
     }
 }
