@@ -88,4 +88,22 @@ class TextAttribute extends BaseAttribute
 
         return $this;
     }
+
+    /**
+     * Set Required.
+     *
+     * @param bool $required
+     *
+     * @return $this
+     */
+    public function setRequired(bool $required): BaseAttribute
+    {
+        parent::setRequired($required);
+
+        if ($this->getMinLength() === 0) {
+            $this->setMinLength(1);
+        }
+
+        return $this;
+    }
 }
