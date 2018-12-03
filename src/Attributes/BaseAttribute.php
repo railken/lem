@@ -247,7 +247,7 @@ abstract class BaseAttribute implements AttributeContract
         $errors = new Collection();
 
         if ($parameters->exists($this->name)) {
-            $entity->fill([$this->name => $parameters->get($this->name)]);
+            $entity->fill([$this->name => $this->parse($parameters->get($this->name))]);
         }
 
         return $errors;
@@ -404,5 +404,17 @@ abstract class BaseAttribute implements AttributeContract
     public function getFillable()
     {
         return $this->fillable;
+    }
+
+    /**
+     * Parse value
+     *
+     * @param mixed $value
+     *
+     * @return mixed
+     */
+    public function parse($value)
+    {
+        return $value;
     }
 }

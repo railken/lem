@@ -20,14 +20,14 @@ class BooleanAttribute extends NumberAttribute
     }
 
     /**
-     * Retrieve default value.
+     * Parse value
      *
-     * @param \Railken\Lem\Contracts\EntityContract $entity
+     * @param mixed $value
      *
      * @return mixed
      */
-    public function getDefault(EntityContract $entity)
+    public function parse($value)
     {
-        return 0;
+        return intval($value);
     }
 }
