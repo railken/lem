@@ -178,7 +178,7 @@ abstract class BaseAttribute implements AttributeContract
         if ($this->required && !$entity->exists && !$parameters->exists($this->name)) {
             $errors->push($this->newException(Tokens::NOT_DEFINED, $value));
         }
-        
+
         if ($this->unique && $value !== null && $this->isUnique($entity, $value)) {
             $errors->push($this->newException(Tokens::NOT_UNIQUE, $value));
         }
@@ -407,7 +407,7 @@ abstract class BaseAttribute implements AttributeContract
     }
 
     /**
-     * Parse value
+     * Parse value.
      *
      * @param mixed $value
      *

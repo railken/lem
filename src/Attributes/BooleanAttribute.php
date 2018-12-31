@@ -20,7 +20,7 @@ class BooleanAttribute extends NumberAttribute
     }
 
     /**
-     * Parse value
+     * Parse value.
      *
      * @param mixed $value
      *

@@ -120,7 +120,7 @@ class Repository implements RepositoryContract
     /**
      * Return query.
      *
-     * @return \Illuminate\Database\Query\Builder
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function getQuery()
     {
@@ -130,7 +130,7 @@ class Repository implements RepositoryContract
     /**
      * Return query.
      *
-     * @return \Illuminate\Database\Query\Builder
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function newQuery()
     {
