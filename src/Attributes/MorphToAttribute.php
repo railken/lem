@@ -2,11 +2,8 @@
 
 namespace Railken\Lem\Attributes;
 
-use Illuminate\Support\Collection;
-use Railken\Bag;
 use Railken\Lem\Contracts\BelongsToAttributeContract;
 use Railken\Lem\Contracts\EntityContract;
-use Railken\Lem\Tokens;
 
 class MorphToAttribute extends BelongsToAttribute implements BelongsToAttributeContract
 {
@@ -19,7 +16,7 @@ class MorphToAttribute extends BelongsToAttribute implements BelongsToAttributeC
      * @var string
      */
     protected $relationKey;
-    
+
     /**
      * Set the key of the relation.
      *
@@ -80,7 +77,7 @@ class MorphToAttribute extends BelongsToAttribute implements BelongsToAttributeC
         $key = $entity->{$this->getRelationKey()};
 
         if (!isset($this->relations[$key])) {
-            throw new \Exception(sprintf("No valid key %s found for relations %s", $key, json_encode($this->relations)));
+            throw new \Exception(sprintf('No valid key %s found for relations %s', $key, json_encode($this->relations)));
         }
 
         $class = $this->relations[$key];
