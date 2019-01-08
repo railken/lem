@@ -28,6 +28,8 @@ class ObjectAttribute extends TextAttribute
      */
     public function getDefault(EntityContract $entity)
     {
-        return (object) [];
+        $method = $this->default;
+
+        return $method !== null ? $method($entity, $this) : (object) [];
     }
 }

@@ -28,6 +28,8 @@ class ArrayAttribute extends TextAttribute
      */
     public function getDefault(EntityContract $entity)
     {
-        return [];
+        $method = $this->default;
+
+        return $method !== null ? $method($entity, $this) : [];
     }
 }
