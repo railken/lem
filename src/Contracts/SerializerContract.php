@@ -12,7 +12,7 @@ interface SerializerContract
      * @param \Railken\Lem\Contracts\EntityContract $entity
      * @param Collection                            $select
      *
-     * @return Collection
+     * @return \Railken\Bag
      */
     public function serialize(EntityContract $entity, Collection $select = null);
 }
