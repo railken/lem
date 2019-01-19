@@ -66,14 +66,14 @@ interface RepositoryContract
     /**
      * Return query.
      *
-     * @return \Illuminate\Database\Query\Builder
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function newQuery();
 
     /**
      * Return query.
      *
-     * @return \Illuminate\Database\Query\Builder
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function getQuery();
 }
