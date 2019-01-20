@@ -37,7 +37,7 @@ abstract class BaseTest extends \Orchestra\Testbench\TestCase
             $table->string('title');
             $table->string('description')->nullable();
             $table->string('notes')->nullable();
-            $table->integer('author_id')->unsigned();
+            $table->integer('author_id')->nullable()->unsigned();
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('author_id')->references('id')->on('users');
