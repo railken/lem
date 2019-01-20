@@ -207,6 +207,14 @@ class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeCont
     }
 
     /**
+     * @return array
+     */
+    public function getAliases()
+    {
+        return [$this->getName(), $this->getRelationName()];
+    }
+
+    /**
      * Update entity value.
      *
      * @param \Railken\Lem\Contracts\EntityContract $entity

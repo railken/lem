@@ -45,11 +45,15 @@ trait TestableBaseTrait
      */
     public function requiredParametersTest(ManagerContract $manager, Bag $parameters)
     {
-        $result = $manager->create($parameters->only($manager->getAttributes()->filter(function($attribute) {
-            return $attribute->getRequired();
-        })->map(function($attribute) {
-            return $attribute->getName();
-        })->toArray()));
+        $attributes = [];
+
+        foreach ($manager->getAttributes() as $attribute) {
+            if ($attribute->getRequired()) {
+                $attributes = array_merge($attributes, $attribute->getAliases());
+            }
+        }
+
+        $result = $manager->create($parameters->only($attributes));
         $this->assertResultOrPrint($result);
     }
 

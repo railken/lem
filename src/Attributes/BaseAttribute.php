@@ -283,6 +283,14 @@ abstract class BaseAttribute implements AttributeContract
     }
 
     /**
+     * @return array
+     */
+    public function getAliases()
+    {
+        return [$this->getName()];
+    }
+
+    /**
      * Set default value.
      *
      * @param Closure $default
