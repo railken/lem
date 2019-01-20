@@ -35,7 +35,22 @@ trait TestableBaseTrait
      */
     public function testBasics()
     {
+        $this->requiredParametersTest($this->getManager(), $this->getParameters());
         $this->commonTest($this->getManager(), $this->getParameters());
+    }
+
+    /**
+     * @param \Railken\Lem\Contracts\ManagerContract $manager
+     * @param \Railken\Bag                           $parameters
+     */
+    public function requiredParametersTest(ManagerContract $manager, Bag $parameters)
+    {
+        $result = $manager->create($parameters->only($manager->getAttributes()->filter(function($attribute) {
+            return $attribute->getRequired();
+        })->map(function($attribute) {
+            return $attribute->getName();
+        })->toArray()));
+        $this->assertResultOrPrint($result);
     }
 
     /**
@@ -46,12 +61,6 @@ trait TestableBaseTrait
      */
     public function commonTest(ManagerContract $manager, Bag $parameters)
     {
-        $result = $manager->create($parameters->only($manager->getAttributes()->filter(function($attribute) {
-            return $attribute->getRequired();
-        })->map(function($attribute) {
-            return $attribute->getName();
-        })->toArray()));
-        $this->assertResultOrPrint($result);
 
         $result = $manager->create($parameters);
         $this->assertResultOrPrint($result);
