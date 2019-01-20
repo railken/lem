@@ -46,6 +46,13 @@ trait TestableBaseTrait
      */
     public function commonTest(ManagerContract $manager, Bag $parameters)
     {
+        $result = $manager->create($parameters->only($manager->getAttributes()->filter(function($attribute) {
+            return $attribute->getRequired();
+        })->map(function($attribute) {
+            return $attribute->getName();
+        })->toArray()));
+        $this->assertResultOrPrint($result);
+
         $result = $manager->create($parameters);
         $this->assertResultOrPrint($result);
 
