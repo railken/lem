@@ -42,7 +42,7 @@ abstract class AttributeException extends \Exception
     public function __construct($model = null, $attribute = null, $value = null)
     {
         $code = sprintf($this->code, $model, $attribute);
-        $message = sprintf($this->message, $value);
+        $message = sprintf($this->message, $attribute);
         $this->label = $attribute;
         $this->value = $value;
         $this->code = $code;
