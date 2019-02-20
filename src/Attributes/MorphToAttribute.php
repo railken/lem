@@ -66,6 +66,26 @@ class MorphToAttribute extends BelongsToAttribute implements BelongsToAttributeC
     }
 
     /**
+     * Is a value valid ?
+     *
+     * @param \Railken\Lem\Contracts\EntityContract $entity
+     * @param mixed                                 $value
+     *
+     * @return bool
+     */
+    public function valid(EntityContract $entity, $value)
+    {   
+        $key = $entity->{$this->getRelationKey()};
+
+        if (!isset($this->relations[$key])) {
+            return false;
+        }
+
+
+        return $value instanceof $key;
+    }
+
+    /**
      * Retrieve relation manager.
      *
      * @param EntityContract $entity
@@ -75,10 +95,6 @@ class MorphToAttribute extends BelongsToAttribute implements BelongsToAttributeC
     public function getRelationManager(EntityContract $entity)
     {
         $key = $entity->{$this->getRelationKey()};
-
-        if (!isset($this->relations[$key])) {
-            throw new \Exception(sprintf('No valid key %s found for relations %s', $key, json_encode($this->relations)));
-        }
 
         $class = $this->relations[$key];
 
