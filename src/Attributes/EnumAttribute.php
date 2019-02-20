@@ -42,7 +42,7 @@ class EnumAttribute extends BaseAttribute
      */
     public function valid(EntityContract $entity, $value)
     {
-        return in_array($value, $this->getOptions());
+        return in_array($value, $this->getOptions(), true);
     }
 
     /**

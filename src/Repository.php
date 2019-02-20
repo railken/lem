@@ -80,7 +80,7 @@ class Repository implements RepositoryContract
      *
      * @param array $parameters
      *
-     * @return \Railken\Lem\Contracts\EntityContract|null|object
+     * @return \Railken\Lem\Contracts\EntityContract|object|null
      */
     public function findOneBy($parameters = [])
     {
@@ -92,7 +92,7 @@ class Repository implements RepositoryContract
      *
      * @param int $id
      *
-     * @return \Railken\Lem\Contracts\EntityContract|null|object
+     * @return \Railken\Lem\Contracts\EntityContract|object|null
      */
     public function findOneById($id)
     {
