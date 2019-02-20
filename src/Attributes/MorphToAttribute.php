@@ -74,13 +74,12 @@ class MorphToAttribute extends BelongsToAttribute implements BelongsToAttributeC
      * @return bool
      */
     public function valid(EntityContract $entity, $value)
-    {   
+    {
         $key = $entity->{$this->getRelationKey()};
 
         if (!isset($this->relations[$key])) {
             return false;
         }
-
 
         return $value instanceof $key;
     }
