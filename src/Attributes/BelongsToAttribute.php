@@ -171,13 +171,7 @@ class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeCont
 
                 $rentity = $entity->{$this->getRelationName()};
 
-                $unique_keys = $m->getAttributes()->filter(function ($attribute) {
-                    return $attribute->getUnique();
-                })->keys()->toArray();
-
-                $criteria = (new Bag($params))->only($unique_keys);
-
-                $params = $this->filterRelationParameters(new Bag($params));
+                $criteria = $this->filterRelationParameters($entity, new Bag($params));
 
                 if ($entity->exists && $rentity !== null) {
                     $result = $m->update($rentity, $params);
@@ -213,9 +207,21 @@ class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeCont
         return $errors;
     }
 
-    public function filterRelationParameters(Bag $parameters)
+    /**
+     * @param EntityContract $entity
+     * @param Bag $parameters
+     *
+     * @return Bag
+     */
+    public function filterRelationParameters(EntityContract $entity, Bag $parameters): Bag
     {
-        return $parameters;
+        $m = $this->getRelationManager($entity);
+
+        $unique_keys = $m->getAttributes()->filter(function ($attribute) {
+            return $attribute->getUnique();
+        })->keys()->toArray();
+
+        return (new Bag($parameters))->only($unique_keys);
     }
 
     /**
