@@ -425,4 +425,15 @@ abstract class BaseAttribute implements AttributeContract
     {
         return $value;
     }
+
+    /**
+     * Get type
+     *
+     * @return string
+     */
+    public function getType()
+    {
+       return preg_replace('/Attribute$/', '', (new \ReflectionClass($this))->getShortName());
+    }
+    
 }
