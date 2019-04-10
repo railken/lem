@@ -2,9 +2,9 @@
 
 namespace Railken\Lem\Attributes;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Railken\Lem\Contracts\BelongsToAttributeContract;
 use Railken\Lem\Contracts\EntityContract;
-use Illuminate\Database\Eloquent\Relations\Relation;
 
 class MorphToAttribute extends BelongsToAttribute implements BelongsToAttributeContract
 {
@@ -83,7 +83,7 @@ class MorphToAttribute extends BelongsToAttribute implements BelongsToAttributeC
         }
 
         $classMorphKey = Relation::getMorphedModel($key);
-        
+
         return $value instanceof $classMorphKey || $value instanceof $key;
     }
 

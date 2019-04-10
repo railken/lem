@@ -2,12 +2,11 @@
 
 namespace Railken\Lem\Attributes;
 
-use Railken\Bag;
 use Railken\Lem\Contracts\EntityContract;
 use Ramsey\Uuid\Uuid;
 
 class UuidAttribute extends TextAttribute
-{   
+{
     /**
      * Name attribute.
      *

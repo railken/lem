@@ -10,7 +10,7 @@ class IdAttribute extends BaseAttribute
      * @var string
      */
     public $comment = 'Indentify the entity';
-    
+
     /**
      * Name attribute.
      *
