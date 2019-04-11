@@ -160,27 +160,34 @@ class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeCont
             $val = $parameters->get($this->getRelationName());
 
             if (is_array($val) || ($val instanceof \stdClass)) {
+
                 $m = $this->getRelationManager($entity);
 
-                $params = json_decode((string) json_encode($val), true);
-
-                $rentity = $entity->{$this->getRelationName()};
-
-                $criteria = $this->filterRelationParameters($entity, new Bag($params));
-
-                if ($entity->exists && $rentity !== null) {
-                    $result = $m->update($rentity, $params);
-                } else {
-                    $result = $criteria->count() === 0 ? $m->create($params) : $m->findOrCreate($criteria, $params);
+                if (!$m) {
+                    $errors->push($this->newException(Tokens::NOT_VALID, $parameters->get($this->getName())));
                 }
 
-                if (!$result->ok()) {
-                    $errors = $errors->merge($result->getErrors());
+                if ($errors->count() === 0) {
+                    $params = json_decode((string) json_encode($val), true);
 
-                    return $errors;
+                    $rentity = $entity->{$this->getRelationName()};
+
+                    $criteria = $this->filterRelationParameters($entity, new Bag($params));
+
+                    if ($entity->exists && $rentity !== null) {
+                        $result = $m->update($rentity, $params);
+                    } else {
+                        $result = $criteria->count() === 0 ? $m->create($params) : $m->findOrCreate($criteria, $params);
+                    }
+
+                    if (!$result->ok()) {
+                        $errors = $errors->merge($result->getErrors());
+
+                        return $errors;
+                    }
+
+                    $parameters->set($this->getRelationName(), $result->getResource());
                 }
-
-                $parameters->set($this->getRelationName(), $result->getResource());
             }
         }
 

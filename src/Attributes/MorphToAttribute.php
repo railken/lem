@@ -98,6 +98,10 @@ class MorphToAttribute extends BelongsToAttribute implements BelongsToAttributeC
     {
         $key = $entity->{$this->getRelationKey()};
 
+        if (!isset($this->relations[$key])) {
+            return null;
+        }
+
         $class = $this->relations[$key];
 
         return new $class($this->getManager()->getAgent());
