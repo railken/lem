@@ -84,7 +84,11 @@ class MorphToAttribute extends BelongsToAttribute implements BelongsToAttributeC
 
         $classMorphKey = Relation::getMorphedModel($key);
 
-        return $value instanceof $classMorphKey || $value instanceof $key;
+        if ($classMorphKey) {
+            $key = $classMorphKey;
+        }
+
+        return class_exists($key) && $value instanceof $key;
     }
 
     /**
