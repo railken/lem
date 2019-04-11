@@ -145,26 +145,21 @@ class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeCont
     {
         $errors = new Collection();
 
-
         if (!$parameters->has($this->getRelationName())) {
-
             if ($parameters->get($this->getName())) {
                 $m = $this->getRelationManager($entity);
 
                 $value = $m->getRepository()->findOneById($parameters->get($this->getName()));
                 $parameters->set($this->getRelationName(), $value);
-            } else if ($parameters->exists($this->getName())) {
+            } elseif ($parameters->exists($this->getName())) {
                 $parameters->set($this->getRelationName(), $parameters->get($this->getName()));
             }
         }
 
         if ($parameters->has($this->getRelationName())) {
-
-
             $val = $parameters->get($this->getRelationName());
 
             if (is_array($val) || ($val instanceof \stdClass)) {
-
                 $m = $this->getRelationManager($entity);
 
                 $params = json_decode((string) json_encode($val), true);
@@ -209,7 +204,7 @@ class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeCont
 
     /**
      * @param EntityContract $entity
-     * @param Bag $parameters
+     * @param Bag            $parameters
      *
      * @return Bag
      */
