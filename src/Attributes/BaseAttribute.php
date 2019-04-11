@@ -435,4 +435,14 @@ abstract class BaseAttribute implements AttributeContract
     {
         return preg_replace('/Attribute$/', '', (new \ReflectionClass($this))->getShortName());
     }
+
+    /**
+     * Get descriptor.
+     *
+     * @return array
+     */
+    public function getDescriptor()
+    {
+        return [];
+    }
 }
