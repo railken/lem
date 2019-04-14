@@ -110,4 +110,11 @@ class MorphToAttribute extends BelongsToAttribute implements BelongsToAttributeC
 
         return new $class($this->getManager()->getAgent());
     }
+
+    public function getDescriptor()
+    {
+        return [
+            'relation_key' => $this->getRelationKey()
+        ];
+    }
 }
