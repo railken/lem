@@ -459,4 +459,14 @@ abstract class Manager implements ManagerContract
 
         return $entity !== null ? $this->update($entity, $parameters) : $this->create($parameters);
     }
+    
+    /**
+     * Get descriptor.
+     *
+     * @return array
+     */
+    public function getDescriptor()
+    {
+        return [];
+    }
 }

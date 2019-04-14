@@ -48,6 +48,13 @@ abstract class BaseAttribute implements AttributeContract
     protected $fillable = false;
 
     /**
+     * Is the attribute hidden.
+     *
+     * @var bool
+     */
+    protected $hidden = false;
+
+    /**
      * A comment.
      *
      * @var string
@@ -415,6 +422,30 @@ abstract class BaseAttribute implements AttributeContract
     public function getFillable()
     {
         return $this->fillable;
+    }
+
+    /**
+     * Set hidden.
+     *
+     * @param bool $hidden
+     *
+     * @return $this
+     */
+    public function setHidden(bool $hidden): self
+    {
+        $this->hidden = $hidden;
+
+        return $this;
+    }
+
+    /**
+     * Is the attribute hidden?
+     *
+     * @return bool
+     */
+    public function getHidden()
+    {
+        return $this->hidden;
     }
 
     /**

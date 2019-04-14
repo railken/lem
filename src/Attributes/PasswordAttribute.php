@@ -22,6 +22,13 @@ class PasswordAttribute extends TextAttribute
     protected $minLength = 8;
 
     /**
+     * Is the attribute hidden.
+     *
+     * @var bool
+     */
+    protected $hidden = true;
+
+    /**
      * Is a value valid ?
      *
      * @param EntityContract $entity
