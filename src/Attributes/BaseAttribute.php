@@ -215,9 +215,7 @@ abstract class BaseAttribute implements AttributeContract
     {
         $errors = new Collection();
 
-        if (!$this->getFillable()) {
-            return $errors;
-        }
+        $default = null;
 
         if (!$parameters->has($this->name) && !$entity->exists) {
             $default = $this->getDefault($entity);
@@ -225,6 +223,11 @@ abstract class BaseAttribute implements AttributeContract
             if ($default !== null) {
                 $parameters->set($this->name, $default);
             }
+        }
+
+        // Skip check fillable if has a default value
+        if (!$this->getFillable() && $default === null) {
+            return $errors;
         }
 
         $errors = $errors->merge($this->authorize(Tokens::PERMISSION_FILL, $entity, $parameters));
@@ -247,7 +250,7 @@ abstract class BaseAttribute implements AttributeContract
         $errors = new Collection();
 
         if ($parameters->exists($this->name)) {
-            $entity->fill([$this->name => $this->parse($parameters->get($this->name))]);
+            $entity->setAttribute($this->name, $this->parse($parameters->get($this->name)));
         }
 
         return $errors;
