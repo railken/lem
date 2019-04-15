@@ -6,6 +6,8 @@ use Railken\Lem\Contracts\AgentContract;
 
 class SystemAgent implements AgentContract
 {
+    public $id = 0;
+    
     /**
      * Has permission.
      *

@@ -13,6 +13,7 @@ use Railken\Lem\Contracts\EntityContract;
 use Railken\Lem\Exceptions as Exceptions;
 use Railken\Lem\Tokens;
 use Respect\Validation\Validator as v;
+use Illuminate\Support\Facades\Cache;
 
 abstract class BaseAttribute implements AttributeContract
 {
@@ -161,9 +162,19 @@ abstract class BaseAttribute implements AttributeContract
 
         $permission = $this->getPermission($action);
 
-        if (!$this->getManager()->getAgent()->can($permission)) {
+
+        $keyCache = sprintf("lem:permission:%s:%s:%s", $this->getManager()->getAgent()->id, $permission, $entity->id);
+
+        if (!Cache::has($keyCache)) {
+            Cache::set($keyCache, $this->getManager()->getAgent()->can($permission), 3600);
+        }
+
+        $result = Cache::get($keyCache);
+        
+        if (!$result) {
             $errors->push($this->newException(Tokens::NOT_AUTHORIZED, $permission));
         }
+        
 
         return $errors;
     }
