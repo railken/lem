@@ -3,10 +3,9 @@
 namespace Railken\Lem\Concerns;
 
 use Closure;
-use Illuminate\Support\Collection;
 
 trait Listeners
-{   
+{
     public static $listeners = [];
 
     public static function iniListeners(string $name)

@@ -8,10 +8,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Railken\Bag;
 use Railken\Lem\Contracts\AgentContract;
+use Railken\Lem\Contracts\AttributeContract;
 use Railken\Lem\Contracts\EntityContract;
 use Railken\Lem\Contracts\ManagerContract;
 use Railken\Lem\Contracts\ResultContract;
-use Railken\Lem\Contracts\AttributeContract;
 
 /**
  * Abstract Manager class.
@@ -161,7 +161,7 @@ abstract class Manager implements ManagerContract
     {
         $this->callMethods('boot', [$this->retrieveClasses()]);
         static::fire('boot', (object) [
-            'manager' => $this
+            'manager' => $this,
         ]);
     }
 
@@ -228,7 +228,7 @@ abstract class Manager implements ManagerContract
     }
 
     /**
-     * Add an attribute
+     * Add an attribute.
      *
      * @param \Railken\Lem\Contracts\AttributeContract
      */
@@ -484,7 +484,7 @@ abstract class Manager implements ManagerContract
 
         return $entity !== null ? $this->update($entity, $parameters) : $this->create($parameters->merge($criteria));
     }
-    
+
     /**
      * Get descriptor.
      *

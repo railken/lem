@@ -160,7 +160,6 @@ class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeCont
             $val = $parameters->get($this->getRelationName());
 
             if (is_array($val) || ($val instanceof \stdClass)) {
-
                 $m = $this->getRelationManager($entity);
 
                 if (!$m) {

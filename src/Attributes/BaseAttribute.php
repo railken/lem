@@ -5,6 +5,7 @@ namespace Railken\Lem\Attributes;
 use Closure;
 use Exception;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Railken\Bag;
 use Railken\Lem\Concerns;
@@ -13,7 +14,6 @@ use Railken\Lem\Contracts\EntityContract;
 use Railken\Lem\Exceptions as Exceptions;
 use Railken\Lem\Tokens;
 use Respect\Validation\Validator as v;
-use Illuminate\Support\Facades\Cache;
 
 abstract class BaseAttribute implements AttributeContract
 {
@@ -162,19 +162,17 @@ abstract class BaseAttribute implements AttributeContract
 
         $permission = $this->getPermission($action);
 
-
-        $keyCache = sprintf("lem:permission:%s:%s:%s", $this->getManager()->getAgent()->id, $permission, $entity->id);
+        $keyCache = sprintf('lem:permission:%s:%s:%s', $this->getManager()->getAgent()->id, $permission, $entity->id);
 
         if (!Cache::has($keyCache)) {
             Cache::set($keyCache, $this->getManager()->getAgent()->can($permission), 3600);
         }
 
         $result = Cache::get($keyCache);
-        
+
         if (!$result) {
             $errors->push($this->newException(Tokens::NOT_AUTHORIZED, $permission));
         }
-        
 
         return $errors;
     }
@@ -502,7 +500,7 @@ abstract class BaseAttribute implements AttributeContract
     }
 
     /**
-     * Push readable
+     * Push readable.
      *
      * @param \Railken\Lem\Contracts\EntityContract $entity
      * @param \Railken\Bag                          $parameters
@@ -512,5 +510,5 @@ abstract class BaseAttribute implements AttributeContract
     public function pushReadable(EntityContract $entity, Bag $parameters)
     {
         return $parameters;
-    }   
+    }
 }
