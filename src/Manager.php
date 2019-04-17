@@ -312,13 +312,15 @@ abstract class Manager implements ManagerContract
                 $result->addErrors($this->fill($entity, $parameters)->getErrors());
             }
 
+            if ($result->ok()) {
+                $result->addErrors($this->save($entity)->getErrors());
+            }
+
             if (!$result->ok()) {
                 DB::rollBack();
 
                 return $result;
             }
-
-            $this->save($entity);
 
             $result->getResources()->push($entity);
 
@@ -356,11 +358,19 @@ abstract class Manager implements ManagerContract
      *
      * @param \Railken\Lem\Contracts\EntityContract $entity
      *
-     * @return bool
+     * @return Result
      */
     public function save(EntityContract $entity)
     {
-        return $entity->save();
+        $result = new Result();
+
+        $saving = $entity->save();
+
+        foreach ($this->getAttributes() as $attribute) {
+            $result->addErrors($attribute->save($entity));
+        }
+
+        return $result;
     }
 
     /**

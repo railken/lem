@@ -490,4 +490,14 @@ abstract class BaseAttribute implements AttributeContract
     {
         return [];
     }
+
+    /**
+     * Save attribute.
+     *
+     * @param \Railken\Lem\Contracts\EntityContract $entity
+     */
+    public function save(EntityContract $entity)
+    {
+        return Collection::make();
+    }   
 }
