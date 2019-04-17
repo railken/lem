@@ -34,6 +34,10 @@ abstract class Serializer implements SerializerContract
     {
         $bag = new Bag($entity->toArray());
 
+        foreach ($this->getManager()->getAttributes() as $attribute) {
+            $attribute->pushReadable($entity, $bag);
+        }
+
         if ($select) {
             $bag = $bag->only($select->toArray());
         }

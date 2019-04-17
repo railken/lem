@@ -499,5 +499,18 @@ abstract class BaseAttribute implements AttributeContract
     public function save(EntityContract $entity)
     {
         return Collection::make();
+    }
+
+    /**
+     * Push readable
+     *
+     * @param \Railken\Lem\Contracts\EntityContract $entity
+     * @param \Railken\Bag                          $parameters
+     *
+     * @return $parameters
+     */
+    public function pushReadable(EntityContract $entity, Bag $parameters)
+    {
+        return $parameters;
     }   
 }
