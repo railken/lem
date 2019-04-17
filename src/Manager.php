@@ -11,6 +11,7 @@ use Railken\Lem\Contracts\AgentContract;
 use Railken\Lem\Contracts\EntityContract;
 use Railken\Lem\Contracts\ManagerContract;
 use Railken\Lem\Contracts\ResultContract;
+use Railken\Lem\Contracts\AttributeContract;
 
 /**
  * Abstract Manager class.
@@ -24,6 +25,7 @@ abstract class Manager implements ManagerContract
     use Concerns\HasValidator;
     use Concerns\HasSchema;
     use Concerns\CallMethods;
+    use Concerns\Listeners;
 
     /**
      * @var string
@@ -158,6 +160,9 @@ abstract class Manager implements ManagerContract
     public function boot()
     {
         $this->callMethods('boot', [$this->retrieveClasses()]);
+        static::fire('boot', (object) [
+            'manager' => $this
+        ]);
     }
 
     /**
@@ -220,6 +225,16 @@ abstract class Manager implements ManagerContract
     public function getAttributes()
     {
         return $this->attributes;
+    }
+
+    /**
+     * Add an attribute
+     *
+     * @param \Railken\Lem\Contracts\AttributeContract
+     */
+    public function addAttribute(AttributeContract $attribute)
+    {
+        $this->attributes[$attribute->getName()] = $attribute;
     }
 
     /**
@@ -467,7 +482,7 @@ abstract class Manager implements ManagerContract
         $parameters = $this->castParameters($parameters);
         $entity = $this->getRepository()->findOneBy($criteria);
 
-        return $entity !== null ? $this->update($entity, $parameters) : $this->create($parameters);
+        return $entity !== null ? $this->update($entity, $parameters) : $this->create($parameters->merge($criteria));
     }
     
     /**
