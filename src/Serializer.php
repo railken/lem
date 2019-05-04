@@ -41,9 +41,7 @@ abstract class Serializer implements SerializerContract
         if ($select) {
             $bag = $bag->only($select->toArray());
         }
-
-        $bag = $bag->only($this->getManager()->getAuthorizer()->getAuthorizedAttributes(Tokens::PERMISSION_SHOW, $entity)->keys()->toArray());
-
+                
         return $bag;
     }
 }
