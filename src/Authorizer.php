@@ -79,10 +79,10 @@ class Authorizer implements AuthorizerContract
         return $errors;
     }
 
-    public function getAuthorizedAttributes(string $action, EntityContract $entity)
+    public function getAuthorizedAttributes(string $action)
     {
         return $this->getManager()->getAttributes()->filter(function ($attribute) use ($action, $entity) {
-            $errors = $attribute->authorize($action, $entity, []);
+            $errors = $attribute->authorize($action, []);
 
             return $errors->count() === 0;
         });

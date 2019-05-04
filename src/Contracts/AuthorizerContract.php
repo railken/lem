@@ -17,5 +17,5 @@ interface AuthorizerContract
      */
     public function authorize(string $action, EntityContract $entity, Bag $parameters);
 
-    public function getAuthorizedAttributes(string $action, EntityContract $entity);
+    public function getAuthorizedAttributes(string $action);
 }

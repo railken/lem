@@ -151,30 +151,43 @@ abstract class BaseAttribute implements AttributeContract
      * Is a value valid ?
      *
      * @param string                                $action
+     * @param mixed                                 $value
+     *
+     * @return Collection
+     */
+    public function authorize(string $action, $value)
+    {
+        $permission = $this->getPermission($action);
+
+        $result = $this->getManager()->getAgent()->can($permission);
+
+        if (!$result) {
+            return Collection::make([$this->newException(Tokens::NOT_AUTHORIZED, $permission)]);
+        }
+
+        return Collection::make();
+    }
+
+    /**
+     * Is a value valid ?
+     *
+     * @param string                                $action
      * @param \Railken\Lem\Contracts\EntityContract $entity
      * @param mixed                                 $value
      *
      * @return Collection
      */
-    public function authorize(string $action, EntityContract $entity, $value)
+    public function authorizeByEntity(string $action, EntityContract $entity, $value)
     {
-        $errors = new Collection();
-
         $permission = $this->getPermission($action);
 
-        $keyCache = sprintf('lem:permission:%s:%s:%s', $this->getManager()->getAgent()->id, $permission, $entity->id);
-
-        if (!Cache::has($keyCache)) {
-            Cache::set($keyCache, $this->getManager()->getAgent()->can($permission), 3600);
-        }
-
-        $result = Cache::get($keyCache);
+        $result = $this->getManager()->getAgent()->can($permission);
 
         if (!$result) {
-            $errors->push($this->newException(Tokens::NOT_AUTHORIZED, $permission));
+            return Collection::make([$this->newException(Tokens::NOT_AUTHORIZED, $permission)]);
         }
 
-        return $errors;
+        return Collection::make();
     }
 
     /**
@@ -239,7 +252,9 @@ abstract class BaseAttribute implements AttributeContract
             if ($default !== null) {
                 $parameters->set($this->name, $default);
             }
+
         }
+
 
         // Skip check fillable if has a default value
         if (!$this->getFillable() && $default === null) {
