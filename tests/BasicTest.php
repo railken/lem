@@ -111,8 +111,8 @@ class BasicTest extends BaseTest
             'description' => $resource->description,
             'author_id'   => $resource->author->id,
             'id'          => $resource->id,
-            'created_at'  => $resource->created_at,
-            'updated_at'  => $resource->updated_at,
+            'created_at'  => (string) $resource->created_at,
+            'updated_at'  => (string) $resource->updated_at,
         ], $am->serializer->serialize($resource)->toArray());
 
         $um->remove($user);
