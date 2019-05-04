@@ -149,8 +149,14 @@ class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeCont
             if ($parameters->get($this->getName())) {
                 $m = $this->getRelationManager($entity);
 
-                $value = $m->getRepository()->findOneById($parameters->get($this->getName()));
-                $parameters->set($this->getRelationName(), $value);
+                if (!$m) {
+                    $errors->push($this->newException(Tokens::NOT_VALID, $parameters->get($this->getName())));
+                }
+
+                if ($errors->count() === 0) {
+                    $value = $m->getRepository()->findOneById($parameters->get($this->getName()));
+                    $parameters->set($this->getRelationName(), $value);
+                }
             } elseif ($parameters->exists($this->getName())) {
                 $parameters->set($this->getRelationName(), $parameters->get($this->getName()));
             }
