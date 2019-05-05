@@ -85,8 +85,8 @@ abstract class BaseAttribute implements AttributeContract
      * List of all permissions.
      */
     protected $permissions = [
-        Tokens::PERMISSION_FILL => '%s.attributes.%s.fill',
-        Tokens::PERMISSION_SHOW => '%s.attributes.%s.show',
+        Tokens::PERMISSION_WRITE => '%s.attributes.%s.write',
+        Tokens::PERMISSION_READ => '%s.attributes.%s.read',
     ];
 
     /**
@@ -261,7 +261,7 @@ abstract class BaseAttribute implements AttributeContract
             return $errors;
         }
 
-        $errors = $errors->merge($this->authorize(Tokens::PERMISSION_FILL, $entity, $parameters));
+        $errors = $errors->merge($this->authorize(Tokens::PERMISSION_WRITE, $entity, $parameters));
         $errors = $errors->merge($this->validate($entity, $parameters));
         $errors = $errors->merge($this->fill($entity, $parameters));
 

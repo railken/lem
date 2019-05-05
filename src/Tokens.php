@@ -13,4 +13,6 @@ class Tokens
     const PERMISSION_UPDATE = 'UPDATE';
     const PERMISSION_SHOW = 'SHOW';
     const PERMISSION_REMOVE = 'REMOVE';
+    const PERMISSION_READ = 'READ';
+    const PERMISSION_WRITE = 'WRITE';
 }

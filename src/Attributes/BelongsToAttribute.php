@@ -204,7 +204,7 @@ class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeCont
             }
         }
 
-        $errors = $errors->merge($this->authorize(Tokens::PERMISSION_FILL, $entity, $parameters));
+        $errors = $errors->merge($this->authorize(Tokens::PERMISSION_WRITE, $entity, $parameters));
         $errors = $errors->merge($this->validate($entity, $parameters));
 
         if ($errors->count() === 0) {
