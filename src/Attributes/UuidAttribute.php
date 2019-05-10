@@ -15,6 +15,13 @@ class UuidAttribute extends TextAttribute
     protected $name = 'uuid';
 
     /**
+     * Is the attribute fillable.
+     *
+     * @var bool
+     */
+    protected $fillable = false;
+
+    /**
      * Retrieve default value.
      *
      * @param \Railken\Lem\Contracts\EntityContract $entity
