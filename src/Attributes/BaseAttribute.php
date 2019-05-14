@@ -124,17 +124,19 @@ abstract class BaseAttribute implements AttributeContract
      *
      * @param string $code
      * @param mixed  $value
+     * @param mixed $error
      *
      * @return \Exception
      */
-    public function newException(string $code, $value): Exception
+    public function newException(string $code, $value, string $error = null): Exception
     {
         $exception = $this->getException($code);
 
         return new $exception(
             strtoupper(Str::kebab($this->getManager()->getName())),
             strtoupper(Str::kebab($this->getName())),
-            $value
+            $value,
+            $error
         );
     }
 

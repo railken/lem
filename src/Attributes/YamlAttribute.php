@@ -6,26 +6,50 @@ use Railken\Bag;
 use Railken\Lem\Contracts\EntityContract;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
+use Railken\Lem\Tokens;
 
 class YamlAttribute extends TextAttribute
 {
     /**
      * Is a value valid ?
      *
-     * @param \Railken\Lem\Contracts\EntityContract $entity
-     * @param mixed                                 $value
+     * @param EntityContract $entity
+     * @param mixed          $value
      *
      * @return bool
      */
     public function valid(EntityContract $entity, $value)
     {
+        return true;
+    }
+
+    /**
+     * Validate.
+     *
+     * @param \Railken\Lem\Contracts\EntityContract $entity
+     * @param \Railken\Bag                          $parameters
+     *
+     * @return Collection
+     */
+    public function validate(EntityContract $entity, Bag $parameters)
+    {
+        $errors = parent::validate($entity, $parameters);
+
+
+        if ($errors->count() > 0) {
+            return $errors;
+        }
+
+        $value = (string) $parameters->get($this->name);
+
+
         try {
             $value = Yaml::parse($value);
         } catch (ParseException $exception) {
-            return false;
+            $errors->push($this->newException(Tokens::NOT_VALID, $value, $exception->getMessage()));
         }
 
-        return true;
+        return $errors;
     }
 
     /**
