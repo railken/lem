@@ -5,6 +5,12 @@ namespace Railken\Lem\Contracts;
 use Railken\Bag;
 use Railken\Lem\Tokens;
 
+/**
+ * @method ResultContract findOrCreateOrFail(Bag|array $criteria, Bag|array $parameters = null)
+ * @method ResultContract createOrFail($parameters)
+ * @method ResultContract updateOrFail(EntityContract $entity, $parameters, $permission)
+ * @method ResultContract updateOrCreateOrFail(Bag|array $criteria, Bag|array $parameters)
+*/
 interface ManagerContract
 {
     /**

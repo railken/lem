@@ -15,10 +15,6 @@ use Railken\Lem\Contracts\ResultContract;
 
 /**
  * Abstract Manager class.
- *
- * @method Result createOrFail($parameters)
- * @method Result updateOrFail(EntityContract $entity, $parameters, $permission)
- * @method Result updateOrCreateOrFail(Bag|array $criteria, Bag|array $parameters)
  */
 abstract class Manager implements ManagerContract
 {

@@ -33,7 +33,7 @@ interface EntityContract
     /**
      * Delete the model from the database.
      *
-     * @return bool|null
+     * @return bool|null|int
      *
      * @throws \Exception
      */
