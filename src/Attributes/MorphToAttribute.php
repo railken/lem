@@ -102,6 +102,18 @@ class MorphToAttribute extends BelongsToAttribute implements BelongsToAttributeC
     {
         $key = $entity->{$this->getRelationKey()};
 
+        return $key !== null ? $this->getRelationManagerByKey($key) : null;
+    }
+
+    /**
+     * Retrieve relation manager by string type.
+     *
+     * @param string $key
+     *
+     * @return \Railken\Lem\Contracts\ManagerContract
+     */
+    public function getRelationManagerByKey(string $key)
+    {
         if (!isset($this->relations[$key])) {
             return null;
         }
