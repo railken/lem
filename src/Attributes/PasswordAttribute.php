@@ -40,4 +40,14 @@ class PasswordAttribute extends TextAttribute
     {
         return v::length($this->getMinLength(), $this->getMaxLength())->validate($value);
     }
+    
+    /**
+     * Is readable
+     *
+     * @return bool
+     */
+    public function isReadable(): bool
+    {
+        return false;
+    }
 }
