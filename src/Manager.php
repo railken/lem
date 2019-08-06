@@ -506,4 +506,28 @@ abstract class Manager implements ManagerContract
             return $attribute->getName();
         })->values();
     }
+
+    /**
+     * Get attribute names
+     *
+     * @return Collection
+     */
+    public function getPrimaryAttributes()
+    {
+        return $this->attributes->filter(function ($attribute) {
+            return $attribute->getRequired() && $attribute->getFillable() && $attribute->isReadable();
+        });
+    }
+
+    /**
+     * Get attribute names
+     *
+     * @return Collection
+     */
+    public function getPrimaryAttributeNames()
+    {
+        return $this->getPrimaryAttributes()->map(function ($attribute) {
+            return $attribute->getName();
+        });
+    }
 }

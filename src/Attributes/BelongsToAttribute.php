@@ -78,11 +78,11 @@ class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeCont
     /**
      * Retrieve relation manager.
      *
-     * @param EntityContract $entity
+     * @param ?EntityContract $entity
      *
      * @return \Railken\Lem\Contracts\ManagerContract
      */
-    public function getRelationManager(EntityContract $entity)
+    public function getRelationManager(EntityContract $entity = null)
     {
         $class = $this->relationManager;
 
@@ -256,5 +256,15 @@ class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeCont
         }
 
         return $errors;
+    }
+    
+    /**
+     * Is readable
+     *
+     * @return bool
+     */
+    public function isReadable(): bool
+    {
+        return false;
     }
 }

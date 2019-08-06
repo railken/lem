@@ -528,4 +528,14 @@ abstract class BaseAttribute implements AttributeContract
     {
         return $parameters;
     }
+
+    /**
+     * Is readable
+     *
+     * @return bool
+     */
+    public function isReadable(): bool
+    {
+        return true;
+    }
 }
