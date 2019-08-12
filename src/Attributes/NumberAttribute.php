@@ -8,6 +8,13 @@ use Respect\Validation\Validator as v;
 class NumberAttribute extends TextAttribute
 {
     /**
+     * Schema of the attribute
+     *
+     * @var string
+     */
+    protected $schema = 'float';
+
+    /**
      * Is a value valid ?
      *
      * @param \Railken\Lem\Contracts\EntityContract $entity

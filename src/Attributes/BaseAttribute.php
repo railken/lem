@@ -70,6 +70,20 @@ abstract class BaseAttribute implements AttributeContract
     protected $default;
 
     /**
+     * Default value.
+     *
+     * @var Closure
+     */
+    protected $validator;
+
+    /**
+     * Schema of the attribute
+     *
+     * @var string
+     */
+    protected $schema = 'basic';
+
+    /**
      * List of all exceptions used in validation.
      *
      * @var array
@@ -343,6 +357,20 @@ abstract class BaseAttribute implements AttributeContract
     }
 
     /**
+     * Set default value.
+     *
+     * @param Closure $validator
+     *
+     * @return $this
+     */
+    public function setValidator(Closure $validator): self
+    {
+        $this->validator = $validator;
+
+        return $this;
+    }
+
+    /**
      * Retrieve default value.
      *
      * @param \Railken\Lem\Contracts\EntityContract $entity
@@ -539,5 +567,15 @@ abstract class BaseAttribute implements AttributeContract
     public function isReadable(): bool
     {
         return true;
+    }
+
+    /**
+     * Get schema of attribute
+     *
+     * @return string
+     */
+    public function getSchema(): string
+    {
+        return $this->schema;
     }
 }

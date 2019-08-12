@@ -28,6 +28,13 @@ class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeCont
     protected $relationManager;
 
     /**
+     * Schema of the attribute
+     *
+     * @var string
+     */
+    protected $schema = 'integer';
+
+    /**
      * Set the name of the relation.
      *
      * @param string $relationName

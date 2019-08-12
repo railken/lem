@@ -7,6 +7,13 @@ use Railken\Lem\Contracts\EntityContract;
 class BooleanAttribute extends NumberAttribute
 {
     /**
+     * Schema of the attribute
+     *
+     * @var string
+     */
+    protected $schema = 'boolean';
+
+    /**
      * Is a value valid ?
      *
      * @param EntityContract $entity

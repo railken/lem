@@ -21,6 +21,13 @@ class EnumAttribute extends BaseAttribute
     protected $options = [];
 
     /**
+     * Schema of the attribute
+     *
+     * @var string
+     */
+    protected $schema = 'text';
+
+    /**
      * Create a new instance.
      *
      * @param string $name

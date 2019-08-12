@@ -22,6 +22,13 @@ class UuidAttribute extends TextAttribute
     protected $fillable = false;
 
     /**
+     * Schema of the attribute
+     *
+     * @var string
+     */
+    protected $schema = 'uuid';
+
+    /**
      * Retrieve default value.
      *
      * @param \Railken\Lem\Contracts\EntityContract $entity

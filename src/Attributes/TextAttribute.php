@@ -29,6 +29,13 @@ class TextAttribute extends BaseAttribute
     protected $maxLength = 255;
 
     /**
+     * Schema of the attribute
+     *
+     * @var string
+     */
+    protected $schema = 'text';
+
+    /**
      * Is a value valid ?
      *
      * @param EntityContract $entity
