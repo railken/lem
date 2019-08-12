@@ -38,7 +38,9 @@ class TextAttribute extends BaseAttribute
      */
     public function valid(EntityContract $entity, $value)
     {
-        return v::length($this->getMinLength(), $this->getMaxLength())->validate($value);
+        $validator = $this->validator;
+
+        return $validator ? $validator($entity, $value) : v::length($this->getMinLength(), $this->getMaxLength())->validate($value);
     }
 
     /**

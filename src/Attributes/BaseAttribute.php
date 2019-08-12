@@ -231,7 +231,9 @@ abstract class BaseAttribute implements AttributeContract
      */
     public function valid(EntityContract $entity, $value)
     {
-        return v::length(1, 255)->validate($value);
+        $validator = $this->validator;
+
+        return $validator ? $validator($entity, $value) : true;
     }
 
     /**
