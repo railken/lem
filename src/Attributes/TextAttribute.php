@@ -33,7 +33,7 @@ class TextAttribute extends BaseAttribute
      *
      * @var string
      */
-    protected $schema = 'text';
+    protected $schema = 'string';
 
     /**
      * Is a value valid ?
