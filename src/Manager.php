@@ -71,6 +71,16 @@ abstract class Manager implements ManagerContract
     }
 
     /**
+     * make
+     *
+     * @param AgentContract $agent
+     */
+    public static function make(AgentContract $agent = null)
+    {
+        return new static($agent);
+    }
+
+    /**
      * @param string $method
      * @param array  $args
      *
