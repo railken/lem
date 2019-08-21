@@ -6,12 +6,21 @@ use Railken\Lem\Contracts\RepositoryContract;
 
 class Repository implements RepositoryContract
 {
+    use Concerns\HasManager;
+
     /**
      * Entity class.
      *
      * @param string $entity
      */
     protected $entity;
+
+    /**
+     * Scopes.
+     *
+     * @param array
+     */
+    protected static $scopes = [];
 
     /**
      * Retrieve new instance of entity.
@@ -134,6 +143,22 @@ class Repository implements RepositoryContract
      */
     public function newQuery()
     {
-        return $this->newEntity()->newQuery()->select($this->newEntity()->getTable().'.*');
+        $query = $this->newEntity()->newQuery();
+
+        $this->applyScopes($query);
+
+        return $query->select($this->newEntity()->getTable().'.*');
+    }
+
+    public static function addScope($scope)
+    {
+        static::$scopes[] = $scope;
+    }
+
+    public function applyScopes($query)
+    {
+        foreach (static::$scopes as $scope) {
+            $scope->apply($this->getManager(), $query);
+        }
     }
 }

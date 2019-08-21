@@ -6,6 +6,7 @@ use Railken\Lem\Contracts\RepositoryContract;
 
 trait HasRepository
 {
+
     /**
      * @var \Railken\Lem\Contracts\RepositoryContract
      */
@@ -43,6 +44,7 @@ trait HasRepository
     public function bootRepository(array $classes)
     {
         $this->setRepository(new $classes['repository']());
+        $this->getRepository()->setManager($this);
         $this->getRepository()->setEntity($this->getEntity());
     }
 }
