@@ -438,6 +438,8 @@ abstract class Manager implements ManagerContract
 
         try {
             DB::beginTransaction();
+
+            static::$history = $this->getAgent();
             $entity->delete();
             DB::commit();
         } catch (Exception $e) {
