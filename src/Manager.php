@@ -53,9 +53,9 @@ abstract class Manager implements ManagerContract
     protected $agent;
 
     /**
-     * @var []
+     * @var AgentContract
      */
-    protected static $history = [];
+    public static $history;
 
     /**
      * @var array
@@ -345,6 +345,8 @@ abstract class Manager implements ManagerContract
             }
 
             if ($result->ok()) {
+                static::$history = $this->getAgent();
+
                 $result->addErrors($this->save($entity)->getErrors());
             }
 
@@ -355,8 +357,6 @@ abstract class Manager implements ManagerContract
             }
 
             $result->getResources()->push($entity);
-
-            static::$history[$entity->id] = $this->getAgent();
 
             DB::commit();
         } catch (Exception $e) {
@@ -550,8 +550,8 @@ abstract class Manager implements ManagerContract
         });
     }
 
-    public function getHistory($id)
+    public function getHistory()
     {
-        return isset(static::$history[$id]) ? static::$history[$id] : null;
+        return static::$history;
     }
 }
