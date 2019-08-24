@@ -16,7 +16,7 @@ class ObjectAttribute extends TextAttribute
      */
     public function valid(EntityContract $entity, $value)
     {
-        return is_object($value) || is_array($value);
+        return true;
     }
 
     /**
