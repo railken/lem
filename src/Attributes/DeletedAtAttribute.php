@@ -24,4 +24,11 @@ class DeletedAtAttribute extends DateTimeAttribute
      * @var bool
      */
     protected $fillable = false;
+
+    /**
+     * Is the attribute hidden.
+     *
+     * @var bool
+     */
+    protected $hidden = true;
 }
