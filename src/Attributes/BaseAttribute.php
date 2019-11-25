@@ -556,6 +556,10 @@ abstract class BaseAttribute implements AttributeContract
      */
     public function pushReadable(EntityContract $entity, Bag $parameters)
     {
+        $name = $this->getName();
+
+        $parameters->set($name, $entity->$name);
+        
         return $parameters;
     }
 

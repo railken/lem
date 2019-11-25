@@ -32,14 +32,16 @@ abstract class Serializer implements SerializerContract
      */
     public function serialize(EntityContract $entity, Collection $select = null)
     {
-        $bag = new Bag($entity->toArray());
+        $bag = new Bag();
+
+        $bag->set('id', $entity->id);
 
         foreach ($this->getManager()->getAttributes() as $attribute) {
-            $attribute->pushReadable($entity, $bag);
-        }
+            $name = $attribute->getName();
 
-        if ($select) {
-            $bag = $bag->only($select->toArray());
+            $bag->set($name, $entity->$name);
+
+            //$attribute->pushReadable($entity, $bag);
         }
                 
         return $bag;
