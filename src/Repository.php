@@ -105,7 +105,7 @@ class Repository implements RepositoryContract
      */
     public function findOneById($id)
     {
-        return $this->findOneBy(['id' => $id]);
+        return $this->findOneBy([$this->newEntity()->getTable().'.id' => $id]);
     }
 
     /**
