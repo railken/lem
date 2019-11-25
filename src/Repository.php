@@ -81,7 +81,7 @@ class Repository implements RepositoryContract
      */
     public function findBy($parameters = [])
     {
-        return $this->getQuery()->where($parameters)->get();
+        return $this->getQuery()->where($this->filterParameters($parameters))->get();
     }
 
     /**
@@ -93,7 +93,7 @@ class Repository implements RepositoryContract
      */
     public function findOneBy($parameters = [])
     {
-        return $this->getQuery()->where($parameters)->first();
+        return $this->getQuery()->where($this->filterParameters($parameters))->first();
     }
 
     /**
@@ -105,7 +105,7 @@ class Repository implements RepositoryContract
      */
     public function findOneById($id)
     {
-        return $this->findOneBy([$this->newEntity()->getTable().'.id' => $id]);
+        return $this->findOneBy(['id' => $id]);
     }
 
     /**
@@ -148,6 +148,17 @@ class Repository implements RepositoryContract
         $this->applyScopes($query);
 
         return $query->select($this->newEntity()->getTable().'.*');
+    }
+
+    public function filterParameters(array $parameters = []): array
+    {
+        $parameters = collect($parameters)->mapWithKeys(function ($item, $key) {
+            $key = count(explode(".", $key)) > 1 ? $key : $this->newEntity()->getTable().".".$key;
+
+            return [$key => $item];
+        })->toArray();
+
+        return $parameters;
     }
 
     public static function addScope($scope)
