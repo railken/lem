@@ -39,7 +39,9 @@ abstract class Serializer implements SerializerContract
         foreach ($this->getManager()->getAttributes() as $attribute) {
             $name = $attribute->getName();
 
-            $bag->set($name, $entity->$name);
+            if (!$attribute->getHidden()) {
+                $bag->set($name, $entity->$name);
+            }
 
             //$attribute->pushReadable($entity, $bag);
         }
