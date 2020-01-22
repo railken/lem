@@ -14,6 +14,13 @@ class BooleanAttribute extends NumberAttribute
     protected $schema = 'boolean';
 
     /**
+     * Default value.
+     *
+     * @var mixed
+     */
+    protected $defaultValue = false;
+
+    /**
      * Is a value valid ?
      *
      * @param EntityContract $entity

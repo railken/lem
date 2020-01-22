@@ -63,11 +63,18 @@ abstract class BaseAttribute implements AttributeContract
     protected $comment;
 
     /**
-     * Default value.
+     * Default closure.
      *
      * @var Closure
      */
     protected $default;
+
+    /**
+     * Default value.
+     *
+     * @var mixed
+     */
+    protected $defaultValue = null;
 
     /**
      * Default value.
@@ -128,8 +135,11 @@ abstract class BaseAttribute implements AttributeContract
      */
     public function bootPermissions()
     {
+        $name = Str::kebab($this->getManager()->getName());
+        $pName = Str::kebab($this->getName());
+
         foreach ($this->permissions as $token => $permission) {
-            $this->permissions[$token] = sprintf($permission, Str::kebab($this->getManager()->getName()), Str::kebab($this->getName()));
+            $this->permissions[$token] = sprintf($permission, $pName, $name);
         }
     }
 
@@ -381,7 +391,7 @@ abstract class BaseAttribute implements AttributeContract
     {
         $method = $this->default;
 
-        return $method !== null ? $method($entity, $this) : null;
+        return $method !== null ? $method($entity, $this) : $this->defaultValue;
     }
 
     /**
