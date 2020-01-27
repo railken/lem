@@ -139,7 +139,7 @@ abstract class BaseAttribute implements AttributeContract
         $pName = Str::kebab($this->getName());
 
         foreach ($this->permissions as $token => $permission) {
-            $this->permissions[$token] = sprintf($permission, $pName, $name);
+            $this->permissions[$token] = sprintf($permission, $name, $pName);
         }
     }
 
