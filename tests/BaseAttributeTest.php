@@ -16,19 +16,17 @@ class BaseAttributeTest extends BaseTest
         return \Railken\Lem\Attributes\EmailAttribute::make()->setManager(new UserManager());
     }
 
-    /**
-     * @expectedException \Railken\Lem\Exceptions\ExceptionNotDefinedException
-     */
     public function testExceptionNotDefinedException()
     {
+        $this->expectException(\Railken\Lem\Exceptions\ExceptionNotDefinedException::class);
+
         $this->getAttribute()->getException('WRONG_EXCEPTION_CODE');
     }
 
-    /**
-     * @expectedException \Railken\Lem\Exceptions\PermissionNotDefinedException
-     */
     public function testPermissionNotDefinedException()
     {
+        $this->expectException(\Railken\Lem\Exceptions\PermissionNotDefinedException::class);
+        
         $this->getAttribute()->getPermission('WRONG_PERMISSION_CODE');
     }
 }

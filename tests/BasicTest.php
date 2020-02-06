@@ -49,20 +49,18 @@ class BasicTest extends BaseTest
         $um->remove($resource);
     }
 
-    /**
-     * @expectedException \Railken\Lem\Exceptions\Exception
-     */
     public function testCreateOrFail()
     {
+        $this->expectException(\Railken\Lem\Exceptions\Exception::class);
+
         $um = new UserManager();
         $um->createOrFail($this->getUserBag()->remove('username'));
     }
 
-    /**
-     * @expectedException \Railken\Lem\Exceptions\Exception
-     */
     public function testUpdateOrFail()
     {
+        $this->expectException(\Railken\Lem\Exceptions\Exception::class);
+
         $um = new UserManager();
         $user = $um->create($this->getUserBag())->getResource();
         $um->updateOrFail($user, $this->getUserBag()->set('username', '1'));

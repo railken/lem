@@ -10,7 +10,7 @@ use Railken\Lem\Tests\BaseTest;
 
 class UuidAttributeTest extends BaseTest
 {
-    public function testValidationYamlAttribute()
+    public function testValidationUuidAttribute()
     {
         $attribute = new UuidAttribute();
         $attribute->setManager(new FooManager());
