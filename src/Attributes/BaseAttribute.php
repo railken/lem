@@ -280,7 +280,6 @@ abstract class BaseAttribute implements AttributeContract
             if ($default !== null) {
                 $parameters->set($this->name, $default);
             }
-
         }
 
 
