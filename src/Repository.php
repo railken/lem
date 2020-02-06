@@ -172,4 +172,9 @@ class Repository implements RepositoryContract
             $scope->apply($this->getManager(), $query);
         }
     }
+
+    public function resetScopes()
+    {
+        static::$scopes = [];
+    }
 }
