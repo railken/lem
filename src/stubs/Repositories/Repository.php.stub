@@ -1,9 +1,0 @@
-<?php
-
-namespace $NAMESPACE$\Repositories;
-
-use Railken\Lem\Repository;
-
-class $NAME$Repository extends Repository
-{
-}

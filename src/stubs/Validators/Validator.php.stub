@@ -1,9 +1,0 @@
-<?php
-
-namespace $NAMESPACE$\Validators;
-
-use Railken\Lem\Validator;
-
-class $NAME$Validator extends Validator
-{
-}
