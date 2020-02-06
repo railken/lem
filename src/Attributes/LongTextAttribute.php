@@ -9,7 +9,7 @@ class LongTextAttribute extends TextAttribute
      *
      * @var int
      */
-    protected $maxLength = 65535;
+    protected $maxLength = 4000000;
 
     /**
      * Schema of the attribute
