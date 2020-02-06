@@ -20,6 +20,12 @@ class YamlAttribute extends TextAttribute
      */
     public function valid(EntityContract $entity, $value)
     {
+        try {
+            $value = Yaml::parse($value);
+        } catch (ParseException $exception) {
+            return false;
+        }
+
         return true;
     }
 
@@ -41,7 +47,6 @@ class YamlAttribute extends TextAttribute
         }
 
         $value = (string) $parameters->get($this->name);
-
 
         try {
             $value = Yaml::parse($value);
