@@ -29,13 +29,7 @@ class Repository implements RepositoryContract
      */
     public function newEntity()
     {
-        $entity = $this->getEntity();
-
-        if ($entity == null) {
-            throw new Exceptions\RepositoryEntityNotDefinedException();
-        }
-
-        return new $entity();
+        return $this->manager->newEntity();
     }
 
     /**
@@ -173,7 +167,7 @@ class Repository implements RepositoryContract
         }
     }
 
-    public function resetScopes()
+    public static function resetScopes()
     {
         static::$scopes = [];
     }
