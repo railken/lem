@@ -30,6 +30,11 @@ abstract class Manager implements ManagerContract
     /**
      * @var string
      */
+    protected $name;
+
+    /**
+     * @var string
+     */
     protected $entity;
 
     /**
@@ -73,6 +78,7 @@ abstract class Manager implements ManagerContract
     public function __construct(AgentContract $agent = null, bool $boot = true)
     {
         $this->setAgent($agent);
+        $this->setName(preg_replace('/Manager$/', '', (new \ReflectionClass($this))->getShortName()));
 
         if ($boot) {
             $this->boot();
@@ -117,13 +123,23 @@ abstract class Manager implements ManagerContract
     }
 
     /**
+     * set name.
+     *
+     * @param string $name
+     */
+    public function setName(string $name)
+    {
+        $this->name = $name;
+    }
+
+    /**
      * Get name.
      *
      * @return string
      */
     public function getName()
     {
-        return preg_replace('/Manager$/', '', (new \ReflectionClass($this))->getShortName());
+        return $this->name;
     }
 
     /**
