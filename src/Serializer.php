@@ -8,7 +8,7 @@ use Railken\Lem\Contracts\EntityContract;
 use Railken\Lem\Contracts\ManagerContract;
 use Railken\Lem\Contracts\SerializerContract;
 
-abstract class Serializer implements SerializerContract
+class Serializer implements SerializerContract
 {
     use Concerns\HasManager;
 
