@@ -68,11 +68,15 @@ abstract class Manager implements ManagerContract
      * Construct.
      *
      * @param AgentContract $agent
+     * @param bool $boot
      */
-    public function __construct(AgentContract $agent = null)
+    public function __construct(AgentContract $agent = null, bool $boot = true)
     {
         $this->setAgent($agent);
-        $this->boot();
+
+        if ($boot) {
+            $this->boot();
+        }
     }
 
     /**
