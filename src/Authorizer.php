@@ -9,6 +9,7 @@ use Railken\Bag;
 use Railken\Lem\Contracts\AuthorizerContract;
 use Railken\Lem\Contracts\EntityContract;
 use Railken\Lem\Contracts\ManagerContract;
+use Railken\Lem\Tokens;
 
 class Authorizer implements AuthorizerContract
 {
@@ -39,6 +40,16 @@ class Authorizer implements AuthorizerContract
     public function __construct(ManagerContract $manager)
     {
         $this->manager = $manager;
+
+        $name = $manager->getName();
+
+        $this->permissions = [
+            Tokens::PERMISSION_CREATE => $name.'.create',
+            Tokens::PERMISSION_UPDATE => $name.'.update',
+            Tokens::PERMISSION_SHOW   => $name.'.show',
+            Tokens::PERMISSION_REMOVE => $name.'.remove'
+        ];
+
     }
 
     /**
