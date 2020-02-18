@@ -5,6 +5,7 @@ namespace Railken\Lem\Attributes;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Railken\Lem\Contracts\BelongsToAttributeContract;
 use Railken\Lem\Contracts\EntityContract;
+use Railken\Lem\Contracts\ManagerContract;
 
 class MorphToAttribute extends BelongsToAttribute implements BelongsToAttributeContract
 {
@@ -123,6 +124,12 @@ class MorphToAttribute extends BelongsToAttribute implements BelongsToAttributeC
         }
 
         $class = $this->relations[$key];
+
+        if ($class instanceof ManagerContract) {
+            $manager = clone $class;
+            $manager->setAgent($this->getManager()->getAgent());
+            return $manager;
+        }
 
         return new $class($this->getManager()->getAgent());
     }

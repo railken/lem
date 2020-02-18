@@ -7,6 +7,7 @@ use Railken\Bag;
 use Railken\Lem\Contracts\BelongsToAttributeContract;
 use Railken\Lem\Contracts\EntityContract;
 use Railken\Lem\Tokens;
+use Railken\Lem\Contracts\ManagerContract;
 
 class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeContract
 {
@@ -93,6 +94,12 @@ class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeCont
     {
         $class = $this->relationManager;
 
+        if ($class instanceof ManagerContract) {
+            $manager = clone $class;
+            $manager->setAgent($this->getManager()->getAgent());
+            return $manager;
+        }
+
         return new $class($this->getManager()->getAgent());
     }
 
@@ -164,8 +171,10 @@ class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeCont
                     $value = $m->getRepository()->findOneBy([
                         $this->getRelationManager($entity)->newEntity()->getTable().".id" => $parameters->get($this->getName())
                     ]);
+
                     $parameters->set($this->getRelationName(), $value);
                 }
+
             } elseif ($parameters->exists($this->getName())) {
                 $parameters->set($this->getRelationName(), $parameters->get($this->getName()));
             }
