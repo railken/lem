@@ -8,6 +8,7 @@ class Tokens
     const NOT_VALID = 'NOT_VALID';
     const NOT_UNIQUE = 'NOT_UNIQUE';
     const NOT_AUTHORIZED = 'NOT_AUTHORIZED';
+    const NOT_MUTABLE = 'NOT_MUTABLE';
     const PERMISSION_FILL = 'FILL';
     const PERMISSION_CREATE = 'CREATE';
     const PERMISSION_UPDATE = 'UPDATE';

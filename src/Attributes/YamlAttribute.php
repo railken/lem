@@ -62,15 +62,16 @@ class YamlAttribute extends TextAttribute
      *
      * @param \Railken\Lem\Contracts\EntityContract $entity
      * @param \Railken\Bag                          $parameters
+     * @param string $permission
      *
      * @return Collection
      */
-    public function update(EntityContract $entity, Bag $parameters)
+    public function update(EntityContract $entity, Bag $parameters, $permission = Tokens::PERMISSION_UPDATE)
     {
         if (is_object($parameters->get($this->name)) || is_array($parameters->get($this->name))) {
             $parameters->set($this->name, Yaml::dump($parameters));
         }
 
-        return parent::update($entity, $parameters);
+        return parent::update($entity, $parameters, $permission);
     }
 }

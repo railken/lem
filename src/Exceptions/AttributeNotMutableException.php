@@ -2,19 +2,19 @@
 
 namespace Railken\Lem\Exceptions;
 
-class AttributeNotValidException extends AttributeException
+class AttributeNotMutableException extends AttributeException
 {
     /**
      * The code to identify the error.
      *
      * @var string
      */
-    protected $code = '%s_%s_NOT_VALID';
+    protected $code = '%s_%s_NOT_MUTABLE';
 
     /**
      * The message.
      *
      * @var string
      */
-    protected $message = 'The attribute `%s` is not valid';
+    protected $message = 'The value cannot be changed';
 }

@@ -91,6 +91,14 @@ abstract class BaseAttribute implements AttributeContract
     protected $schema = 'basic';
 
     /**
+     * Is the value mutable
+     *
+     * @var bool
+     */
+    protected $mutable = true;
+
+
+    /**
      * List of all exceptions used in validation.
      *
      * @var array
@@ -98,6 +106,7 @@ abstract class BaseAttribute implements AttributeContract
     protected $exceptions = [
         Tokens::NOT_DEFINED    => Exceptions\AttributeNotDefinedException::class,
         Tokens::NOT_VALID      => Exceptions\AttributeNotValidException::class,
+        Tokens::NOT_MUTABLE    => Exceptions\AttributeNotMutableException::class,
         Tokens::NOT_AUTHORIZED => Exceptions\AttributeNotAuthorizedException::class,
         Tokens::NOT_UNIQUE     => Exceptions\AttributeNotUniqueException::class,
     ];
@@ -265,10 +274,11 @@ abstract class BaseAttribute implements AttributeContract
      *
      * @param \Railken\Lem\Contracts\EntityContract $entity
      * @param \Railken\Bag                          $parameters
+     * @param string                                $permission
      *
      * @return Collection
      */
-    public function update(EntityContract $entity, Bag $parameters)
+    public function update(EntityContract $entity, Bag $parameters, $permission = Tokens::PERMISSION_UPDATE)
     {
         $errors = new Collection();
 
@@ -290,30 +300,38 @@ abstract class BaseAttribute implements AttributeContract
 
         $errors = $errors->merge($this->authorize(Tokens::PERMISSION_WRITE, $entity, $parameters));
         $errors = $errors->merge($this->validate($entity, $parameters));
-        $errors = $errors->merge($this->fill($entity, $parameters));
+        $errors = $errors->merge($this->fill($entity, $parameters, $permission));
 
         return $errors;
     }
+
 
     /**
      * Update entity value.
      *
      * @param \Railken\Lem\Contracts\EntityContract $entity
      * @param \Railken\Bag                          $parameters
+     * @param string                                $permission
      *
      * @return Collection
      */
-    public function fill(EntityContract $entity, Bag $parameters)
+    public function fill(EntityContract $entity, Bag $parameters, $permission = Tokens::PERMISSION_UPDATE)
     {
         $errors = new Collection();
 
         if ($parameters->exists($this->name)) {
-            $entity->setAttribute($this->name, $this->parse($parameters->get($this->name)));
+
+            $value = $this->parse($parameters->get($this->name));
+
+            if ($permission === Tokens::PERMISSION_UPDATE && !$this->isMutable()) {
+                $errors->push($this->newException(Tokens::NOT_MUTABLE, $value));
+            } else {
+                $entity->setAttribute($this->name, $value);
+            }
         }
 
         return $errors;
     }
-
     /**
      * Is a value valid ?
      *
@@ -590,5 +608,29 @@ abstract class BaseAttribute implements AttributeContract
     public function getSchema(): string
     {
         return $this->schema;
+    }
+
+    /**
+     * Is mutable
+     *
+     * @return bool
+     */
+    public function isMutable(): bool
+    {
+        return $this->mutable;
+    }
+
+    /**
+     * Set mutable
+     *
+     * @param bool $mutable
+     *
+     * @return $this
+     */
+    public function setMutable(bool $mutable): self
+    {
+        $this->mutable = $mutable;
+
+        return $this;
     }
 }

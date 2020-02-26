@@ -361,7 +361,7 @@ abstract class Manager implements ManagerContract
             }
 
             if ($result->ok()) {
-                $result->addErrors($this->fill($entity, $parameters)->getErrors());
+                $result->addErrors($this->fill($entity, $parameters, $permission)->getErrors());
             }
 
             if ($result->ok()) {
@@ -393,15 +393,16 @@ abstract class Manager implements ManagerContract
      *
      * @param EntityContract $entity
      * @param Bag|array      $parameters
+     * @param string                                $permission
      *
      * @return Result
      */
-    public function fill(EntityContract $entity, $parameters)
+    public function fill(EntityContract $entity, $parameters, $permission = Tokens::PERMISSION_UPDATE)
     {
         $result = new Result();
 
         foreach ($this->getAttributes() as $attribute) {
-            $result->addErrors($attribute->update($entity, $parameters));
+            $result->addErrors($attribute->update($entity, $parameters, $permission));
         }
 
         return $result;

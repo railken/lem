@@ -152,10 +152,11 @@ class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeCont
      *
      * @param \Railken\Lem\Contracts\EntityContract $entity
      * @param \Railken\Bag                          $parameters
+     * @param string $permission
      *
      * @return Collection
      */
-    public function update(EntityContract $entity, Bag $parameters)
+    public function update(EntityContract $entity, Bag $parameters, $permission = Tokens::PERMISSION_UPDATE)
     {
         $errors = new Collection();
 
@@ -226,7 +227,7 @@ class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeCont
         $errors = $errors->merge($this->validate($entity, $parameters));
 
         if ($errors->count() === 0) {
-            $errors = $errors->merge($this->fill($entity, $parameters));
+            $errors = $errors->merge($this->fill($entity, $parameters, $permission));
         }
 
         return $errors;
@@ -262,15 +263,23 @@ class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeCont
      *
      * @param \Railken\Lem\Contracts\EntityContract $entity
      * @param \Railken\Bag                          $parameters
+     * @param string $permission
      *
      * @return Collection
      */
-    public function fill(EntityContract $entity, Bag $parameters)
+    public function fill(EntityContract $entity, Bag $parameters, $permission = Tokens::PERMISSION_UPDATE)
     {
         $errors = new Collection();
 
         if ($parameters->exists($this->getRelationName())) {
-            $this->getRelationBuilder($entity)->associate($parameters->get($this->getRelationName()));
+            
+            $value = $parameters->get($this->getRelationName());
+
+            if ($permission === Tokens::PERMISSION_UPDATE && !$this->isMutable()) {
+                $errors->push($this->newException(Tokens::NOT_MUTABLE, $value));
+            } else {
+                $this->getRelationBuilder($entity)->associate($value);
+            }
         }
 
         return $errors;
