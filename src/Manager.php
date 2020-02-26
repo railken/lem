@@ -350,10 +350,6 @@ abstract class Manager implements ManagerContract
         $result = new Result();
 
         try {
-            DB::beginTransaction();
-
-
-
             $result->addErrors($this->getAuthorizer()->authorize($permission, $entity, $parameters));
 
             if ($result->ok()) {
@@ -371,16 +367,13 @@ abstract class Manager implements ManagerContract
             }
 
             if (!$result->ok()) {
-                DB::rollBack();
 
                 return $result;
             }
 
             $result->getResources()->push($entity);
 
-            DB::commit();
         } catch (Exception $e) {
-            DB::rollBack();
 
             throw $e;
         }
@@ -458,13 +451,9 @@ abstract class Manager implements ManagerContract
         }
 
         try {
-            DB::beginTransaction();
-
             static::$history = $this->getAgent();
             $entity->delete();
-            DB::commit();
         } catch (Exception $e) {
-            DB::rollBack();
 
             throw $e;
         }
