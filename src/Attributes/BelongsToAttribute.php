@@ -74,9 +74,9 @@ class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeCont
     /**
      * Set relation manager.
      *
-     * @param string $relationManager
+     * @param mixed $relationManager
      */
-    public function setRelationManager(string $relationManager): self
+    public function setRelationManager($relationManager): self
     {
         $this->relationManager = $relationManager;
 
