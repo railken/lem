@@ -77,6 +77,10 @@ abstract class Manager implements ManagerContract
      */
     public function __construct(AgentContract $agent = null, bool $boot = true)
     {
+        if (!$agent) {
+            $agent = new Agents\SystemAgent();
+        }
+
         $this->setAgent($agent);
         $this->setName(preg_replace('/Manager$/', '', (new \ReflectionClass($this))->getShortName()));
 
@@ -292,7 +296,7 @@ abstract class Manager implements ManagerContract
     public function setAgent(AgentContract $agent = null)
     {
         if (!$agent) {
-            $agent = new Agents\SystemAgent();
+            $agent = new Agents\GuestAgent();
         }
 
         $this->agent = $agent;
