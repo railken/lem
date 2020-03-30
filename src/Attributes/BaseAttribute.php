@@ -84,6 +84,13 @@ abstract class BaseAttribute implements AttributeContract
     protected $validator;
 
     /**
+     * Attribute type
+     *
+     * @var string
+     */
+    protected $type = 'basic';
+
+    /**
      * Schema of the attribute
      *
      * @var string
@@ -129,6 +136,8 @@ abstract class BaseAttribute implements AttributeContract
         if ($name !== null) {
             $this->name = $name;
         }
+
+        $this->type = preg_replace('/Attribute$/', '', (new \ReflectionClass($this))->getShortName());
     }
 
     /**
@@ -544,13 +553,27 @@ abstract class BaseAttribute implements AttributeContract
     }
 
     /**
+     * Set type.
+     *
+     * @param string $type
+     *
+     * @return $this
+     */
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
      * Get type.
      *
      * @return string
      */
     public function getType()
     {
-        return preg_replace('/Attribute$/', '', (new \ReflectionClass($this))->getShortName());
+        return $this->type;
     }
 
     /**
@@ -598,6 +621,21 @@ abstract class BaseAttribute implements AttributeContract
     public function isReadable(): bool
     {
         return true;
+    }
+
+
+    /**
+     * set schema of attribute
+     *
+     * @param string $schema
+     *
+     * @return $this
+     */
+    public function setSchema(string $schema): self
+    {
+        $this->schema = $schema;
+
+        return $this;
     }
 
     /**
