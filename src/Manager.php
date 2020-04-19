@@ -287,6 +287,23 @@ abstract class Manager implements ManagerContract
     }
 
     /**
+     * As agent.
+     *
+     * @param AgentContract $agent
+     *
+     * @return $this
+     */
+    public function asAgent(AgentContract $agent = null)
+    {
+        $new = clone $this;
+        $new->setAgent($agent);
+        $new->setRepository(clone $this->getRepository());
+        $new->getRepository()->setManager($new);
+
+        return $new;
+    }
+
+    /**
      * set agent.
      *
      * @param AgentContract $agent
