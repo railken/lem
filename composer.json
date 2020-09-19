@@ -7,8 +7,8 @@
         "railken/bag": "^1.2.8",
         "respect/validation": "^1.1",
         "nikic/php-parser": "^4.0",
-        "symfony/yaml": "^4.2",
-        "symfony/validator": "^4.2"
+        "symfony/yaml": "4.*|5.*",
+        "symfony/validator": "4.*|5.*"
     },
     "require-dev": {
         "phpunit/phpunit": "*",

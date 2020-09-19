@@ -12,9 +12,6 @@ abstract class BaseTest extends \Orchestra\Testbench\TestCase
      */
     public function setUp(): void
     {
-        $dotenv = \Dotenv\Dotenv::create(__DIR__.'/..', '.env');
-        $dotenv->load();
-
         parent::setUp();
 
         Schema::dropIfExists('comments');
