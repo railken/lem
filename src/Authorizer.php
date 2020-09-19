@@ -41,7 +41,7 @@ class Authorizer implements AuthorizerContract
     {
         $this->manager = $manager;
 
-        $name = $manager->getName();
+        $name = strtolower($manager->getName());
 
         $this->permissions = [
             Tokens::PERMISSION_CREATE => $name.'.create',
