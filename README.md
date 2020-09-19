@@ -1,6 +1,6 @@
 # Lem
 
-[![Actions Status](https://github.com/railken/lem/workflows/test/badge.svg)](https://github.com/railken/lem/actions)
+[![Actions Status](https://github.com/railken/lem/workflows/Test/badge.svg)](https://github.com/railken/lem/actions)
 
 A precise way to structure your logic to improve readability and maintainability of your code when building API.
 
