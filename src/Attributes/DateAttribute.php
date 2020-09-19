@@ -2,7 +2,7 @@
 
 namespace Railken\Lem\Attributes;
 
-class DateAttribute extends BaseAttribute
+class DateAttribute extends DateTimeAttribute
 {
     /**
      * Schema of the attribute
@@ -17,4 +17,11 @@ class DateAttribute extends BaseAttribute
      * @var bool
      */
     protected $fillable = true;
+
+    /**
+     * Format of date
+     *
+     * @var string
+     */
+    protected $format = 'Y-m-d';
 }
