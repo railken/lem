@@ -1,6 +1,6 @@
 # Lem
 
-[![Build Status](https://travis-ci.org/railken/lem.svg?branch=master)](https://travis-ci.org/railken/lem)
+[![Actions Status](https://github.com/railken/lem/workflows/test/badge.svg)](https://github.com/railken/lem/actions)
 
 A precise way to structure your logic to improve readability and maintainability of your code when building API.
 
