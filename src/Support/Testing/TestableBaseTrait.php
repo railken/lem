@@ -69,6 +69,13 @@ trait TestableBaseTrait
         $this->assertResultOrPrint($result);
 
         $resource = $result->getResource();
+
+        $parameters = $parameters->only($manager->getAttributes()->filter(function ($a) {
+            return $a->isMutable();
+        })->map(function ($a) {
+            return $a->getName();
+        })->toArray());
+
         $result = $manager->update($resource, $parameters);
         $this->assertResultOrPrint($result);
 
