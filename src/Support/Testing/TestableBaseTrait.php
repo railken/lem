@@ -55,6 +55,10 @@ trait TestableBaseTrait
 
         $result = $manager->create($parameters->only($attributes));
         $this->assertResultOrPrint($result);
+        $resource = $result->getResource();
+        
+        $result = $manager->remove($resource);
+        $this->assertResultOrPrint($result);
     }
 
     /**
