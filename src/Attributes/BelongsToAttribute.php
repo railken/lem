@@ -173,6 +173,10 @@ class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeCont
                         $this->getRelationManager($entity)->newEntity()->getTable().".id" => $parameters->get($this->getName())
                     ]);
 
+                    if (!$value) {
+                        $errors->push($this->newException(Tokens::NOT_VALID, $parameters->get($this->getName())));
+                    }
+
                     $parameters->set($this->getRelationName(), $value);
                 }
 
