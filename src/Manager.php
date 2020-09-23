@@ -388,14 +388,11 @@ abstract class Manager implements ManagerContract
             }
 
             if (!$result->ok()) {
-
                 return $result;
             }
 
             $result->getResources()->push($entity);
-
         } catch (Exception $e) {
-
             throw $e;
         }
 
@@ -475,7 +472,6 @@ abstract class Manager implements ManagerContract
             static::$history = $this->getAgent();
             $entity->delete();
         } catch (Exception $e) {
-
             throw $e;
         }
 

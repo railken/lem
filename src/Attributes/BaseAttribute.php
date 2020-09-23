@@ -329,7 +329,6 @@ abstract class BaseAttribute implements AttributeContract
         $errors = new Collection();
 
         if ($parameters->exists($this->name)) {
-
             $value = $this->parse($parameters->get($this->name));
 
             if ($permission === Tokens::PERMISSION_UPDATE && !$this->isMutable()) {

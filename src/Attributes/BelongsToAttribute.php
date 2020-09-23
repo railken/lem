@@ -179,7 +179,6 @@ class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeCont
 
                     $parameters->set($this->getRelationName(), $value);
                 }
-
             } elseif ($parameters->exists($this->getName())) {
                 $parameters->set($this->getRelationName(), $parameters->get($this->getName()));
             }
@@ -276,7 +275,6 @@ class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeCont
         $errors = new Collection();
 
         if ($parameters->exists($this->getRelationName())) {
-            
             $value = $parameters->get($this->getRelationName());
 
             if ($permission === Tokens::PERMISSION_UPDATE && !$this->isMutable()) {

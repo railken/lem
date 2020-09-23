@@ -49,7 +49,6 @@ class Authorizer implements AuthorizerContract
             Tokens::PERMISSION_SHOW   => $name.'.show',
             Tokens::PERMISSION_REMOVE => $name.'.remove'
         ];
-
     }
 
     /**

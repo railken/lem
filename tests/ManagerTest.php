@@ -14,7 +14,7 @@ class ManagerTest extends BaseTest
     }
 
     /**
-     * @expectedException 
+     * @expectedException
      */
     public function testPermissionNotDefinedException()
     {
