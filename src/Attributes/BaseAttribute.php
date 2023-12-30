@@ -608,7 +608,7 @@ abstract class BaseAttribute implements AttributeContract
         $name = $this->getName();
 
         $parameters->set($name, $entity->$name);
-        
+
         return $parameters;
     }
 

@@ -4,16 +4,16 @@ namespace Railken\Lem;
 
 class Tokens
 {
-    const NOT_DEFINED = 'NOT_DEFINED';
-    const NOT_VALID = 'NOT_VALID';
-    const NOT_UNIQUE = 'NOT_UNIQUE';
-    const NOT_AUTHORIZED = 'NOT_AUTHORIZED';
-    const NOT_MUTABLE = 'NOT_MUTABLE';
-    const PERMISSION_FILL = 'FILL';
-    const PERMISSION_CREATE = 'CREATE';
-    const PERMISSION_UPDATE = 'UPDATE';
-    const PERMISSION_SHOW = 'SHOW';
-    const PERMISSION_REMOVE = 'REMOVE';
-    const PERMISSION_READ = 'READ';
-    const PERMISSION_WRITE = 'WRITE';
+    public const NOT_DEFINED = 'NOT_DEFINED';
+    public const NOT_VALID = 'NOT_VALID';
+    public const NOT_UNIQUE = 'NOT_UNIQUE';
+    public const NOT_AUTHORIZED = 'NOT_AUTHORIZED';
+    public const NOT_MUTABLE = 'NOT_MUTABLE';
+    public const PERMISSION_FILL = 'FILL';
+    public const PERMISSION_CREATE = 'CREATE';
+    public const PERMISSION_UPDATE = 'UPDATE';
+    public const PERMISSION_SHOW = 'SHOW';
+    public const PERMISSION_REMOVE = 'REMOVE';
+    public const PERMISSION_READ = 'READ';
+    public const PERMISSION_WRITE = 'WRITE';
 }

@@ -45,7 +45,7 @@ class Serializer implements SerializerContract
 
             //$attribute->pushReadable($entity, $bag);
         }
-                
+
         return $bag;
     }
 }

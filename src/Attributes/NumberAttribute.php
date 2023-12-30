@@ -42,7 +42,7 @@ class NumberAttribute extends TextAttribute
     public function newException(string $code, $value, string $error = null): Exception
     {
         if ($code === Tokens::NOT_VALID) {
-            $error = sprintf("The value must be a number, with max %s digits and max %s decimal digits", $this->getPrecision()-$this->getScale(), $this->getScale());
+            $error = sprintf("The value must be a number, with max %s digits and max %s decimal digits", $this->getPrecision() - $this->getScale(), $this->getScale());
         }
 
         return parent::newException($code, $value, $error);
@@ -61,7 +61,7 @@ class NumberAttribute extends TextAttribute
     {
         return
             v::numeric()->validate($value) &&
-            preg_match(sprintf("/^[-+]?[0-9]{1,%s}(?:\.[0-9]{1,%s})?$/", $this->precision-$this->scale, $this->scale), $value);
+            preg_match(sprintf("/^[-+]?[0-9]{1,%s}(?:\.[0-9]{1,%s})?$/", $this->precision - $this->scale, $this->scale), $value);
     }
 
     /**

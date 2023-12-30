@@ -286,7 +286,7 @@ class BelongsToAttribute extends BaseAttribute implements BelongsToAttributeCont
 
         return $errors;
     }
-    
+
     /**
      * Is readable
      *

@@ -6,7 +6,6 @@ use Railken\Lem\Contracts\RepositoryContract;
 
 trait HasRepository
 {
-
     /**
      * @var \Railken\Lem\Contracts\RepositoryContract
      */
