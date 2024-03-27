@@ -4,9 +4,9 @@ namespace Railken\Lem\Tests\Attributes;
 
 use Railken\Lem\Attributes\UrlAttribute;
 use Railken\Lem\Tests\App\Models\Foo;
-use Railken\Lem\Tests\BaseTest;
+use Railken\Lem\Tests\Base;
 
-class UrlAttributeTest extends BaseTest
+class UrlAttributeTest extends Base
 {
     public function testValidationUrlAttribute()
     {

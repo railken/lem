@@ -4,7 +4,7 @@ namespace Railken\Lem\Tests;
 
 use Railken\Lem\Tests\App\Managers\UserManager;
 
-class BaseAttributeTest extends BaseTest
+class BaseAttributeTest extends Base
 {
     /**
      * Get attribute.

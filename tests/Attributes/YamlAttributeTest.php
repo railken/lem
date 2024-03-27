@@ -6,9 +6,9 @@ use Railken\Bag;
 use Railken\Lem\Attributes\YamlAttribute;
 use Railken\Lem\Tests\App\Managers\FooManager;
 use Railken\Lem\Tests\App\Models\Foo;
-use Railken\Lem\Tests\BaseTest;
+use Railken\Lem\Tests\Base;
 
-class YamlAttributeTest extends BaseTest
+class YamlAttributeTest extends Base
 {
     public function testValidationYamlAttribute()
     {

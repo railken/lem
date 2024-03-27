@@ -6,9 +6,9 @@ use Railken\Bag;
 use Railken\Lem\Attributes\UuidAttribute;
 use Railken\Lem\Tests\App\Managers\FooManager;
 use Railken\Lem\Tests\App\Models\Foo;
-use Railken\Lem\Tests\BaseTest;
+use Railken\Lem\Tests\Base;
 
-class UuidAttributeTest extends BaseTest
+class UuidAttributeTest extends Base
 {
     public function testValidationUuidAttribute()
     {

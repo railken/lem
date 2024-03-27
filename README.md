@@ -6,7 +6,7 @@ A precise way to structure your logic to improve readability and maintainability
 
 # Requirements
 
-PHP 7.1 and later.
+PHP 8.1 and later.
 
 ## Installation
 

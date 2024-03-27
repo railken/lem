@@ -4,7 +4,7 @@ namespace Railken\Lem\Tests;
 
 use Railken\Lem\Tests\App\Managers\UserManager;
 
-class ManagerTest extends BaseTest
+class ManagerTest extends Base
 {
     public function testExceptionNotDefinedException()
     {

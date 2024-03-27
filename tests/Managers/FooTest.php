@@ -5,9 +5,9 @@ namespace Railken\Lem\Tests\Managers;
 use Railken\Lem\Support\Testing\TestableBaseTrait;
 use Railken\Lem\Tests\App\Fakers\FooFaker;
 use Railken\Lem\Tests\App\Managers\FooManager;
-use Railken\Lem\Tests\BaseTest;
+use Railken\Lem\Tests\Base;
 
-class FooTest extends BaseTest
+class FooTest extends Base
 {
     use TestableBaseTrait;
 

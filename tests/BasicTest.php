@@ -6,7 +6,7 @@ use Railken\Bag;
 use Railken\Lem\Tests\App\Managers\ArticleManager;
 use Railken\Lem\Tests\App\Managers\UserManager;
 
-class BasicTest extends BaseTest
+class BasicTest extends Base
 {
     /**
      * Return a new instance of user bag.
