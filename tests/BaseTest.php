@@ -14,6 +14,8 @@ abstract class BaseTest extends \Orchestra\Testbench\TestCase
     {
         parent::setUp();
 
+        print_r(env("DB_USERNAME"));
+        
         Schema::dropIfExists('comments');
         Schema::dropIfExists('articles');
         Schema::dropIfExists('users');
