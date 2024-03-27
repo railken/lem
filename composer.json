@@ -5,7 +5,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.2",
         "railken/bag": "^2.0.0",
         "respect/validation": "^2.2",
         "nikic/php-parser": "^4.18",
