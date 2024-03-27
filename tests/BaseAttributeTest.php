@@ -26,7 +26,7 @@ class BaseAttributeTest extends Base
     public function testPermissionNotDefinedException()
     {
         $this->expectException(\Railken\Lem\Exceptions\PermissionNotDefinedException::class);
-        
+
         $this->getAttribute()->getPermission('WRONG_PERMISSION_CODE');
     }
 }
