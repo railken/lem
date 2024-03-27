@@ -13,6 +13,7 @@ abstract class Faker implements FakerContract
      */
     public static function make()
     {
+        /** @phpstan-ignore-next-line */
         return new static();
     }
 }

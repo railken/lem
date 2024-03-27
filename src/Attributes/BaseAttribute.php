@@ -145,6 +145,7 @@ abstract class BaseAttribute implements AttributeContract
      */
     public static function make()
     {
+        /** @phpstan-ignore-next-line */
         return new static(...func_get_args());
     }
 
