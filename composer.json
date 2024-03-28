@@ -9,8 +9,8 @@
         "railken/bag": "^2.0.0",
         "respect/validation": "^2.2",
         "nikic/php-parser": "^4.18",
-        "symfony/yaml": "^6.4",
-        "symfony/validator": "^6.0 || ^7.0",
+        "symfony/yaml": "6.* || 7.*",
+        "symfony/validator": "6.* || 7.*",
         "ext-intl": "*"
     },
     "require-dev": {
