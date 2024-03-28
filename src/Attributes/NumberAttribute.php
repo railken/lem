@@ -60,7 +60,7 @@ class NumberAttribute extends TextAttribute
     public function valid(EntityContract $entity, $value)
     {
         return
-            v::numeric()->validate($value) &&
+            v::numericVal()->validate($value) &&
             preg_match(sprintf("/^[-+]?[0-9]{1,%s}(?:\.[0-9]{1,%s})?$/", $this->precision - $this->scale, $this->scale), $value);
     }
 
