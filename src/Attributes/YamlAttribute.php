@@ -8,7 +8,7 @@ use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
 use Railken\Lem\Tokens;
 
-class YamlAttribute extends TextAttribute
+class YamlAttribute extends LongTextAttribute
 {
     /**
      * Is a value valid ?
