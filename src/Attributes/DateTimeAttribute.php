@@ -25,7 +25,7 @@ class DateTimeAttribute extends BaseAttribute
      *
      * @var string
      */
-    protected $format = 'Y-m-d H:i:s';
+    protected $format = 'c';
 
     /**
      * Is a value valid ?
