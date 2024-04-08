@@ -16,7 +16,7 @@
     "require-dev": {
         "phpunit/phpunit": "*",
         "orchestra/testbench": "*",
-        "friendsofphp/php-cs-fixer": "^3.52"
+        "friendsofphp/php-cs-fixer": "^3.53"
     },
     "autoload": {
         "psr-4": {
