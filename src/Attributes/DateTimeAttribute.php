@@ -37,9 +37,17 @@ class DateTimeAttribute extends BaseAttribute
      */
     public function valid(EntityContract $entity, $value)
     {
-        $d = \DateTime::createFromFormat($this->getFormat(), $value);
+        if ($value instanceof \DateTime) {
+            return true;
+        };
 
-        return $d && $d->format($this->getFormat()) === $value;
+        try {
+            $dt = new \DateTime($value);
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        return $dt && $dt->format($this->format) == $value;
     }
 
     /**
